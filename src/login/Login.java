@@ -3,8 +3,11 @@ package login;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -16,38 +19,36 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
 import componentesVisuales.AvatarCircular;
 import componentesVisuales.BotonAnimacion;
-import componentesVisuales.Linea;
+import componentesVisuales.JTextFieldModificado;
 import interfaz.Principal;
 import logica.ManejoDeSesion;
 import logica.TiendaDeComputadoras;
+import javax.swing.JTextField;
 
-import java.awt.Toolkit;
-import interfaz.Principal;
 public class Login extends JFrame {
-
 
 	private static final long serialVersionUID = 1L;
 	private JPanel panelGeneral;
 	private JPasswordField passwordField;
-	private JTextField userField;
-	private  String usuario = "informatica2024";
-	private  static String pass = "1234"; 
+	private String userInicial = "Introduzca su nombre de usuario";
+	private String usuario = "informatica2024";
+	private String passInicial = "Introduzca su contraseña";
+	private static String pass = "1234"; 
 	private static String pass1 = "4321";
 	private String admin = "gerente2024"; 
 	AbstractButton seleccGerente;
 	private String user = null;
 	private static boolean visible = false;
 	private static Principal principal;
+	private JButton btnHacerVisible;
+	private JTextField textField;
 
 	public Login() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/gui/icons/logoPeque\u00F1o1.jpg")));
@@ -67,12 +68,78 @@ public class Login extends JFrame {
 		panelGeneral.add(avatarCircular);
 
 		passwordField = new JPasswordField();
+		passwordField.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if(String.valueOf(passwordField.getPassword()).equals(passInicial)){
+					passwordField.setText("");
+					passwordField.setForeground(Color.BLACK);
+					passwordField.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(0, 153, 204)));
+					btnHacerVisible.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(0, 153, 204)));
+				}
+				else {
+					passwordField.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(0, 153, 204)));
+					btnHacerVisible.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(0, 153, 204)));
+				}
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(String.valueOf(passwordField.getPassword()).isEmpty()){
+					passwordField.setText(passInicial);
+					passwordField.setForeground(Color.GRAY);
+					passwordField.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(0, 0, 0)));
+					btnHacerVisible.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(0, 0, 0)));
+				}
+				else {
+					passwordField.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(0, 0, 0)));
+					btnHacerVisible.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(0, 0, 0)));
+				}
+			}
+		});
 		passwordField.setEchoChar('*');
 		passwordField.setBackground(new Color(255, 255, 255));
 		passwordField.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(0, 0, 0)));
 		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		passwordField.setBounds(75, 351, 310, 16);
+		passwordField.setBounds(75, 344, 278, 23);
+		passwordField.setText(passInicial);
+		passwordField.setForeground(Color.GRAY);
 		panelGeneral.add(passwordField);
+		
+		JTextFieldModificado userField = new JTextFieldModificado();
+		userField.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if(userField.getText().equals(userInicial)){
+					userField.setText("");
+					userField.setForeground(Color.BLACK);
+					userField.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(0, 153, 204)));
+				}
+				else {
+					userField.setForeground(Color.BLACK);
+					userField.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(0, 153, 204)));
+				}
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(userField.getText().isEmpty()){
+					userField.setText(userInicial);
+					userField.setForeground(Color.GRAY);
+					userField.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(0, 0, 0)));
+				}
+				else {
+					userField.setForeground(Color.BLACK);
+					userField.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(0, 0, 0)));
+				}
+			}
+		});
+		userField.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(0, 0, 0)));
+		userField.setText(userInicial);
+		userField.setForeground(Color.GRAY);
+		userField.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		userField.setLimite(25);
+		userField.setBounds(75, 271, 310, 23);
+		panelGeneral.add(userField);
+		panelGeneral.add(userField);
 
 		final BotonAnimacion btnIniciar = new BotonAnimacion();
 		btnIniciar.setFocusable(false);
@@ -150,14 +217,6 @@ public class Login extends JFrame {
 		labelUser.setBounds(130, 237, 162, 23);
 		panelGeneral.add(labelUser);
 
-		userField = new JTextField();
-		userField.setBackground(new Color(255, 255, 255));
-		userField.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		userField.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(0, 0, 0)));
-		userField.setBounds(75, 271, 310, 16);
-		panelGeneral.add(userField);
-		userField.setColumns(10);
-
 		JLabel iconUser = new JLabel("");
 		iconUser.setIcon(new ImageIcon(Login.class.getResource("/gui/icons/usuarios3.png")));
 		iconUser.setBounds(73, 233, 47, 27);
@@ -168,8 +227,8 @@ public class Login extends JFrame {
 		label.setBounds(85, 313, 40, 27);
 		panelGeneral.add(label);
 
-		final JButton btnHacerVisible = new JButton("");
-		btnHacerVisible.setBorder(null);
+		btnHacerVisible = new JButton("");
+		btnHacerVisible.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(0, 0, 0)));
 		btnHacerVisible.setFocusable(false);
 		btnHacerVisible.setIcon(new ImageIcon(Login.class.getResource("/gui/icons/mostrar pass.png")));
 		btnHacerVisible.addActionListener(new ActionListener() {
@@ -187,11 +246,16 @@ public class Login extends JFrame {
 			}
 
 		});
-
 		btnHacerVisible.setBackground(new Color(255, 255, 255));
-		btnHacerVisible.setBounds(383, 337, 29, 23);
+		btnHacerVisible.setBounds(353, 344, 32, 23);
 		panelGeneral.add(btnHacerVisible);
-
+		
+		textField = new JTextField();
+		textField.setEditable(false);
+		textField.setBounds(187, 102, 3, 20);
+		panelGeneral.add(textField);
+		textField.setColumns(10);
+		
 		setLocationRelativeTo(null);
 
 	}

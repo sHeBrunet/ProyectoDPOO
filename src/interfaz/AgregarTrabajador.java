@@ -1,13 +1,9 @@
 package interfaz;
 
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -17,13 +13,32 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SpinnerDateModel;
+import javax.swing.UIManager;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
+
+import inicializaciones.InicializacionDeDatos;
+import logica.Gerente;
 import logica.TiendaDeComputadoras;
 import logica.Trabajador;
-import logica.Gerente;
-import inicializaciones.*;
 
-import java.util.ArrayList;
 public class AgregarTrabajador extends JDialog {
+	
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPanel = new JPanel();
 	private JTextField numTrabajador;
@@ -326,20 +341,17 @@ public class AgregarTrabajador extends JDialog {
 					//tienda.eliminarTrabajador1(pos);
 					trabaj.remove(pos);
 					/* if(actualizarNo() != 0) {
-						
+						numTrabajador.setText(String.valueOf(actualizarNo()));
 					} */
-					numTrabajador.setText(String.valueOf(actualizarNo()));
-					((DefaultTableModel) table.getModel()).removeRow(pos);
-					
+					((DefaultTableModel) table.getModel()).removeRow(pos);			
 				} else {
 					JOptionPane.showMessageDialog(AgregarTrabajador.this, "Antes de eliminar debe de seleccionar un trabajador de la tabla");
 				}
 			}
 
-			private ArrayList<Trabajador> actualizarNo() {
-			    trabaj.remove(noTrabajador);
-				return trabaj;
-			}
+			/*private int actualizarNo() {
+			    return noTrabajador;
+			}*/
 		});
 
 		panel_1 = new JPanel();
