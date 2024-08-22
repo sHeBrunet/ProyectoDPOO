@@ -66,14 +66,9 @@ private Microprocesador micro;
 		}
 		
 	 public void setProcesadorCompatible(Microprocesador micro) {
-		 if(micro != null) { //Validar Microprocesadores compatibles
+ //Validar Microprocesadores compatibles
 		this.micro =micro;
-			 }
-			 else
-			 {
-				 throw new IllegalArgumentException("la tarjeta madre debe de tener un microprocesador compatible compatible");
-			 }
-		 }
+	 }
 	
 
 }

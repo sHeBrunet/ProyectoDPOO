@@ -34,7 +34,7 @@ public class Microprocesador extends ComponenteOrdenador {
 			}
 		}
 		if(!correcto) {
-			throw new IllegalArgumentException("Las conexiones deben de ser de tipo(Primaria, Secundaria, Técnico Medio, Bachillerato, Universitario");
+			throw new IllegalArgumentException("Las conexiones deben de ser tipo (LGA 1151,LGA 1200,LGA 1700,AM3,AM4,AM5,TR4).");
 		}
 	}
 

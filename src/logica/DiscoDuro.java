@@ -5,11 +5,11 @@ public class DiscoDuro extends ComponenteOrdenador {
 	private float capacidad;
 	private String tipoDeConexion;
 
-	public DiscoDuro(int cantDisponible, String numSerie, String marca, String modelo, float precio, float capacidad, String tipoDeConexion) {
+	public DiscoDuro(int cantDisponible, String numSerie, String marca, String modelo, float precio, boolean almacenamiento, float capacidad, String tipoDeConexion) {
 		super(cantDisponible, numSerie, marca, modelo, precio);
-		setTipoDeConexion(tipoDeConexion);
-		setCapacidad(capacidad);
 		setAlmacenamiento(almacenamiento);
+		setCapacidad(capacidad);
+		setTipoDeConexion(tipoDeConexion);
 	}
 	public float getCapacidad() {
 		return capacidad;

@@ -138,14 +138,18 @@ public class Principal extends JFrame {
 		mntmNewMenuItem_4 = new JMenuItem("Vender Productos");
 		mntmNewMenuItem_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					VenderPieza dialog = new VenderPieza(Principal.this, tiendaC, null);
-					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-					dialog.setLocationRelativeTo(null);
-					dialog.setVisible(true);
-				} catch (Throwable e3) {
-					e3.printStackTrace();
-				}
+			    try {
+			        if (tiendaC != null) {
+			            VenderPieza dialog = new VenderPieza(Principal.this, tiendaC, null);
+			            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			            dialog.setLocationRelativeTo(null);
+			            dialog.setVisible(true);
+			        } else {
+			            System.out.println("Error: tiendaC es null");
+			        }
+			    } catch (Throwable e3) {
+			        e3.printStackTrace();
+			    }
 			}
 		});
 		mntmNewMenuItem_4.setBackground(Color.WHITE);

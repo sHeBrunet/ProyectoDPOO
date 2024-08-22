@@ -62,7 +62,7 @@ public class InicializacionDeDatos {
 		}
 	}
 //Llamada a todos los datos de los productos
-	public void llamarInicializaciones(TiendaDeComputadoras tienda) {
+	public static void llamarInicializaciones(TiendaDeComputadoras tienda) {
 		inicializarMouses(tienda);
 		inicializarMonitores(tienda);
 		inicializarChasis(tienda);
@@ -73,6 +73,8 @@ public class InicializacionDeDatos {
 		inicializarMemoriasRAM(tienda);
 		inicializarDiscosDuros(tienda);
 		inicializarExtension(tienda);
+		inicializarTarjetasMadre(tienda);
+		inicializarMicroprocesador(tienda);
 		
 	}
 	
@@ -99,14 +101,14 @@ public class InicializacionDeDatos {
 
 	public static void inicializarMonitores(TiendaDeComputadoras tienda) {
 		ArrayList<Monitor> monitores = new ArrayList<>();
-		monitores.add(new Monitor(5, "MN12345", "Acer", "Nitro XV272U Pbmiiprzx", 299.99f, "1440p"));
+		monitores.add(new Monitor(5, "MN12345", "Acer", "Nitro XV272U Pbmiiprzx", 299.99f, "1080p"));
 		monitores.add(new Monitor(8, "MN12346", "Dell", "S2422H", 149.99f, "1080p"));
-		monitores.add(new Monitor(6, "MN12347", "Samsung", "Odyssey G7", 499.99f, "1440p"));
+		monitores.add(new Monitor(6, "MN12347", "Samsung", "Odyssey G7", 499.99f, "1080p"));
 		monitores.add(new Monitor(7, "MN12348", "LG", "UltraGear 27GN950", 799.99f, "4K"));
-		monitores.add(new Monitor(9, "MN12349", "BenQ", "EX2780Q", 399.99f, "1440p"));
+		monitores.add(new Monitor(9, "MN12349", "BenQ", "EX2780Q", 399.99f, "1080p"));
 		monitores.add(new Monitor(6, "MN12350", "Acer", "Predator XB273K", 899.99f, "4K"));
 		monitores.add(new Monitor(10, "MN12351", "Dell", "U2720Q", 599.99f, "4K"));
-		monitores.add(new Monitor(7, "MN12352", "Samsung", "Odyssey G9", 1499.99f, "1440p"));
+		monitores.add(new Monitor(7, "MN12352", "Samsung", "Odyssey G9", 1499.99f, "1080p"));
 		monitores.add(new Monitor(8, "MN12353", "LG", "UltraFine 5K", 1299.99f, "5K"));
 		monitores.add(new Monitor(11, "MN12354", "BenQ", "PD3220U", 1199.99f, "4K"));
 		ArrayList<ComponenteOrdenador> c = new ArrayList<ComponenteOrdenador>();
@@ -117,15 +119,15 @@ public class InicializacionDeDatos {
 	public static void inicializarChasis(TiendaDeComputadoras tienda) {
 		ArrayList<Chasis> chasis = new ArrayList<>();
 		chasis.add(new Chasis(7, "C12345", "Cooler Master", "MasterBox Q300L", 59.99f, "Metal"));
-		chasis.add(new Chasis(10, "C12346", "Thermaltake", "Versa H15", 49.99f, "Metal"));
+		chasis.add(new Chasis(10, "C12346", "Thermaltake", "Versa H15", 49.99f, "Fibra de Carbono"));
 		chasis.add(new Chasis(5, "C12347", "NZXT", "H510", 79.99f, "Metal"));
 		chasis.add(new Chasis(8, "C12348", "Corsair", "iCUE 4000X", 99.99f, "Metal"));
 		chasis.add(new Chasis(6, "C12349", "Fractal Design", "Meshify C", 89.99f, "Metal"));
 		chasis.add(new Chasis(9, "C12350", "Cooler Master", "MasterBox NR600", 69.99f, "Metal"));
-		chasis.add(new Chasis(11, "C12351", "Thermaltake", "Core P3", 109.99f, "Metal"));
+		chasis.add(new Chasis(11, "C12351", "Thermaltake", "Core P3", 109.99f, "Aluminio"));
 		chasis.add(new Chasis(7, "C12352", "NZXT", "H710", 139.99f, "Metal"));
 		chasis.add(new Chasis(10, "C12353", "Corsair", "Crystal Series 680X", 199.99f, "Metal"));
-		chasis.add(new Chasis(8, "C12354", "Fractal Design", "Define R6", 149.99f, "Metal"));
+		chasis.add(new Chasis(8, "C12354", "Fractal Design", "Define R6", 149.99f, "Acero"));
 		ArrayList<ComponenteOrdenador> c = new ArrayList<ComponenteOrdenador>();
 		c.addAll(chasis);
 		tienda.agregarComponenteI(c);
@@ -135,7 +137,7 @@ public class InicializacionDeDatos {
 		ArrayList<Teclado> teclados = new ArrayList<>();
 		teclados.add(new Teclado(12, "T12345", "HyperX", "Alloy Origins Core", 89.99f, true));
 		teclados.add(new Teclado(9, "T12346", "Logitech", "G213 Prodigy", 49.99f, true));
-		teclados.add(new Teclado(10, "T12347", "Razer", "BlackWidow V3", 129.99f, true));
+		teclados.add(new Teclado(10, "T12347", "Razer", "BlackWidow V3", 129.99f, false));
 		teclados.add(new Teclado(8, "T12348", "Corsair", "K95 RGB Platinum", 199.99f, true));
 		teclados.add(new Teclado(7, "T12349", "SteelSeries", "Apex Pro", 179.99f, true));
 		teclados.add(new Teclado(11, "T12350", "HyperX", "Alloy FPS Pro", 99.99f, true));
@@ -150,16 +152,16 @@ public class InicializacionDeDatos {
 	/**********************************Bocina***************************************************************/
 	public static void inicializarBocinas(TiendaDeComputadoras tienda) {
 		ArrayList<Bocina> bocinas = new ArrayList<>();
-		bocinas.add(new Bocina(20, "B12345", "Logitech", "Z333", 49.99f, "2.1 canales"));
-		bocinas.add(new Bocina(15, "B12346", "JBL", "Clip 4", 59.99f, "Bluetooth"));
-		bocinas.add(new Bocina(18, "B12347", "Sony", "SRS-XB12", 39.99f, "Bluetooth"));
-		bocinas.add(new Bocina(22, "B12348", "Bose", "SoundLink Micro", 99.99f, "Bluetooth"));
-		bocinas.add(new Bocina(25, "B12349", "Ultimate Ears", "Wonderboom 2", 79.99f, "Bluetooth"));
-		bocinas.add(new Bocina(20, "B12350", "Logitech", "Z407", 89.99f, "2.1 canales"));
-		bocinas.add(new Bocina(15, "B12351", "JBL", "Flip 5", 119.99f, "Bluetooth"));
-		bocinas.add(new Bocina(18, "B12352", "Sony", "SRS-XB23", 99.99f, "Bluetooth"));
-		bocinas.add(new Bocina(22, "B12353", "Bose", "SoundLink Revolve", 199.99f, "Bluetooth"));
-		bocinas.add(new Bocina(25, "B12354", "Ultimate Ears", "Boom 3", 149.99f, "Bluetooth"));
+		bocinas.add(new Bocina(20, "B12345", "Logitech", "Z333", 49.99f, "inalámbrica"));
+		bocinas.add(new Bocina(15, "B12346", "JBL", "Clip 4", 59.99f, "inalámbrica"));
+		bocinas.add(new Bocina(18, "B12347", "Sony", "SRS-XB12", 39.99f, "inalámbrica"));
+		bocinas.add(new Bocina(22, "B12348", "Bose", "SoundLink Micro", 99.99f, "inalámbrica"));
+		bocinas.add(new Bocina(25, "B12349", "Ultimate Ears", "Wonderboom 2", 79.99f, "inalámbrica"));
+		bocinas.add(new Bocina(20, "B12350", "Logitech", "Z407", 89.99f, "cable"));
+		bocinas.add(new Bocina(15, "B12351", "JBL", "Flip 5", 119.99f, "inalámbrica"));
+		bocinas.add(new Bocina(18, "B12352", "Sony", "SRS-XB23", 99.99f, "inalámbrica"));
+		bocinas.add(new Bocina(22, "B12353", "Bose", "SoundLink Revolve", 199.99f, "inalámbrica"));
+		bocinas.add(new Bocina(25, "B12354", "Ultimate Ears", "Boom 3", 149.99f, "inalámbrica"));
 		ArrayList<ComponenteOrdenador> c = new ArrayList<ComponenteOrdenador>();
 		c.addAll(bocinas);
 		tienda.agregarComponenteI(c);
@@ -201,16 +203,16 @@ public class InicializacionDeDatos {
 	/*********************************MemoriasRAM*************************************************************/
 	public static void inicializarMemoriasRAM(TiendaDeComputadoras tienda) {
 		ArrayList<MemoriaRam> memoriasRAM = new ArrayList<>();
-		memoriasRAM.add(new MemoriaRam(20, "MR12345", "Crucial", "Ballistix Sport LT", 79.99f, 16, "DDR4"));
-		memoriasRAM.add(new MemoriaRam(15, "MR12346", "Corsair", "Vengeance LPX", 89.99f, 16, "DDR4"));
-		memoriasRAM.add(new MemoriaRam(18, "MR12347", "G.Skill", "Trident Z Neo", 99.99f, 32, "DDR4"));
-		memoriasRAM.add(new MemoriaRam(22, "MR12348", "Kingston", "HyperX Fury", 69.99f, 8, "DDR4"));
-		memoriasRAM.add(new MemoriaRam(25, "MR12349", "Crucial", "Ballistix Max", 129.99f, 32, "DDR4"));
-		memoriasRAM.add(new MemoriaRam(20, "MR12350", "Corsair", "Dominator Platinum RGB", 149.99f, 32, "DDR4"));
-		memoriasRAM.add(new MemoriaRam(15, "MR12351", "G.Skill", "Trident Z5", 199.99f, 64, "DDR5"));
-		memoriasRAM.add(new MemoriaRam(18, "MR12352", "Kingston", "HyperX Predator", 109.99f, 16, "DDR4"));
-		memoriasRAM.add(new MemoriaRam(22, "MR12353", "Crucial", "Ballistix 5600 MHz", 249.99f, 64, "DDR5"));
-		memoriasRAM.add(new MemoriaRam(25, "MR12354", "Corsair", "Vengeance RGB Pro", 139.99f, 32, "DDR4"));
+		memoriasRAM.add(new MemoriaRam(20, "MR12345", "Crucial", "Ballistix Sport LT", 79.99f,  false,16, "DDR-4"));
+		memoriasRAM.add(new MemoriaRam(15, "MR12346", "Corsair", "Vengeance LPX", 89.99f, false, 16, "DDR-4"));
+		memoriasRAM.add(new MemoriaRam(18, "MR12347", "G.Skill", "Trident Z Neo", 99.99f,  false,32, "DDR-4"));
+		memoriasRAM.add(new MemoriaRam(22, "MR12348", "Kingston", "HyperX Fury", 69.99f, false, 8, "DDR-4"));
+		memoriasRAM.add(new MemoriaRam(25, "MR12349", "Crucial", "Ballistix Max", 129.99f,  false,32, "DDR-4"));
+		memoriasRAM.add(new MemoriaRam(20, "MR12350", "Corsair", "Dominator Platinum RGB", 149.99f, false, 32, "DDR-4"));
+		memoriasRAM.add(new MemoriaRam(15, "MR12351", "G.Skill", "Trident Z5", 199.99f,  false,64, "DDR-5"));
+		memoriasRAM.add(new MemoriaRam(18, "MR12352", "Kingston", "HyperX Predator", 109.99f,  false, 16, "DDR-4"));
+		memoriasRAM.add(new MemoriaRam(22, "MR12353", "Crucial", "Ballistix 5600 MHz", 249.99f,  false, 64, "DDR-5"));
+		memoriasRAM.add(new MemoriaRam(25, "MR12354", "Corsair", "Vengeance RGB Pro", 139.99f,  false, 32, "DDR-4"));
 		ArrayList<ComponenteOrdenador> c = new ArrayList<ComponenteOrdenador>();
 		c.addAll(memoriasRAM);
 		tienda.agregarComponenteI(c);
@@ -218,16 +220,16 @@ public class InicializacionDeDatos {
 	/*********************************DiscoDuro*************************************************************/
 	public static void inicializarDiscosDuros(TiendaDeComputadoras tienda) {
 		ArrayList<DiscoDuro> discosDuros = new ArrayList<>();
-		discosDuros.add(new DiscoDuro(10, "DD12345", "Toshiba", "Canvio Basics", 49.99f, 1000, "USB"));
-		discosDuros.add(new DiscoDuro(8, "DD12346", "Samsung", "T5", 129.99f, 500, "USB-C"));
-		discosDuros.add(new DiscoDuro(12, "DD12347", "WD", "My Passport", 59.99f, 2000, "USB"));
-		discosDuros.add(new DiscoDuro(9, "DD12348", "Seagate", "Backup Plus", 69.99f, 4000, "USB"));
-		discosDuros.add(new DiscoDuro(11, "DD12349", "Toshiba", "Canvio Advance", 79.99f, 2000, "USB"));
-		discosDuros.add(new DiscoDuro(10, "DD12350", "Samsung", "T7", 149.99f, 1000, "USB-C"));
-		discosDuros.add(new DiscoDuro(8, "DD12351", "WD", "My Book", 89.99f, 8000, "USB"));
-		discosDuros.add(new DiscoDuro(12, "DD12352", "Seagate", "Expansion", 99.99f, 5000, "USB"));
-		discosDuros.add(new DiscoDuro(9, "DD12353", "Toshiba", "N300", 129.99f, 6000, "SATA"));
-		discosDuros.add(new DiscoDuro(11, "DD12354", "Samsung", "970 EVO Plus", 199.99f, 2000, "NVMe"));
+		discosDuros.add(new DiscoDuro(10, "DD12345", "Toshiba", "Canvio Basics", 49.99f, true, 1000, "IDE"));
+		discosDuros.add(new DiscoDuro(8, "DD12346", "Samsung", "T5", 129.99f, true, 4000, "SATA"));
+		discosDuros.add(new DiscoDuro(12, "DD12347", "WD", "My Passport", 59.99f, true, 3000, "SATA-3"));
+		discosDuros.add(new DiscoDuro(9, "DD12348", "Seagate", "Backup Plus", 69.99f, true, 4000, "SATA-2"));
+		discosDuros.add(new DiscoDuro(11, "DD12349", "Toshiba", "Canvio Advance", 79.99f, true, 2000, "SATA"));
+		discosDuros.add(new DiscoDuro(10, "DD12350", "Samsung", "T7", 149.99f, true, 1000, "SATA-3"));
+		discosDuros.add(new DiscoDuro(8, "DD12351", "WD", "My Book", 89.99f, true, 8000, "IDE"));
+		discosDuros.add(new DiscoDuro(12, "DD12352", "Seagate", "Expansion", 99.99f, true, 5000, "SATA"));
+		discosDuros.add(new DiscoDuro(9, "DD12353", "Toshiba", "N300", 129.99f, true, 6000, "SATA"));
+		discosDuros.add(new DiscoDuro(11, "DD12354", "Samsung", "970 EVO Plus", 199.99f, true, 7000, "SATA-3"));
 		ArrayList<ComponenteOrdenador> c = new ArrayList<ComponenteOrdenador>();
 		c.addAll(discosDuros);
 		tienda.agregarComponenteI(c);
@@ -248,56 +250,56 @@ public class InicializacionDeDatos {
 	public static void inicializarTarjetasMadre(TiendaDeComputadoras tienda) {
 		ArrayList<TarjetaMadre> tarjetasMadre = new ArrayList<>();
 		TarjetaMadre tarjetaMadre1 = new TarjetaMadre(5, "TM12345", "ASUS", "Prime B660M-A", 129.99f, "LGA 1700");
-		tarjetaMadre1.agregarMemoriaRAMCompatible(new MemoriaRam(20, "MR12345", "Crucial", "Ballistix Sport LT", 79.99f, 16, "DDR4"));
-		tarjetaMadre1.agregarDiscoDuroCompatible(new DiscoDuro(10, "DD12345", "Toshiba", "Canvio Basics", 49.99f, 1000, "USB"));
+		tarjetaMadre1.agregarMemoriaRAMCompatible(new MemoriaRam(20, "MR12345", "Crucial", "Ballistix Sport LT", 79.99f,  false,16, "DDR-4"));
+		tarjetaMadre1.agregarDiscoDuroCompatible(new DiscoDuro(10, "DD12345", "Toshiba", "Canvio Basics", 49.99f, true, 1000, "IDE"));
 		tarjetaMadre1.setProcesadorCompatible(new Microprocesador(4, "MP12346", "Intel", "Core i5-12600K", 319.99f, "LGA 1700", 3.6f));
 		tarjetasMadre.add(tarjetaMadre1);
 
 		TarjetaMadre tarjetaMadre2 = new TarjetaMadre(4, "TM12346", "Gigabyte", "X670E Aorus Elite AX", 299.99f, "AM4");
-		tarjetaMadre2.agregarMemoriaRAMCompatible(new MemoriaRam(15, "MR12346", "Corsair", "Vengeance LPX", 89.99f, 16, "DDR4"));
-		tarjetaMadre2.agregarDiscoDuroCompatible(new DiscoDuro(8, "DD12346", "Samsung", "T5", 129.99f, 500, "USB-C"));
+		tarjetaMadre2.agregarMemoriaRAMCompatible(new MemoriaRam(15, "MR12346", "Corsair", "Vengeance LPX", 89.99f,  false, 16, "DDR-4"));
+		tarjetaMadre2.agregarDiscoDuroCompatible(new DiscoDuro(8, "DD12346", "Samsung", "T5", 129.99f, true, 500, "SATA-3"));
 		tarjetaMadre2.setProcesadorCompatible(new Microprocesador(5, "MP12345", "AMD", "Ryzen 5 5600X", 299.99f, "AM4", 3.7f));
 		tarjetasMadre.add(tarjetaMadre2);
 
 		TarjetaMadre tarjetaMadre3 = new TarjetaMadre(6, "TM12347", "MSI", "MAG B550 TOMAHAWK", 189.99f, "AM4");
-		tarjetaMadre3.agregarMemoriaRAMCompatible(new MemoriaRam(18, "MR12347", "G.Skill", "Trident Z Neo", 99.99f, 32, "DDR4"));
-		tarjetaMadre3.agregarDiscoDuroCompatible(new DiscoDuro(12, "DD12347", "WD", "My Passport", 59.99f, 2000, "USB"));
+		tarjetaMadre3.agregarMemoriaRAMCompatible(new MemoriaRam(18, "MR12347", "G.Skill", "Trident Z Neo", 99.99f,  false,32, "DDR-4"));
+		tarjetaMadre3.agregarDiscoDuroCompatible(new DiscoDuro(12, "DD12347", "WD", "My Passport", 59.99f, true, 2000, "IDE"));
 		tarjetaMadre3.setProcesadorCompatible(new Microprocesador(6, "MP12347", "AMD", "Ryzen 7 5800X3D", 449.99f, "AM4", 3.8f));
 		tarjetasMadre.add(tarjetaMadre3);
 
 		TarjetaMadre tarjetaMadre4 = new TarjetaMadre(7, "TM12348", "ASRock", "B450M PRO4", 99.99f, "AM4");
-		tarjetaMadre4.agregarMemoriaRAMCompatible(new MemoriaRam(22, "MR12348", "Kingston", "HyperX Fury", 69.99f, 8, "DDR4"));
-		tarjetaMadre4.agregarDiscoDuroCompatible(new DiscoDuro(9, "DD12348", "Seagate", "Backup Plus", 69.99f, 4000, "USB"));
+		tarjetaMadre4.agregarMemoriaRAMCompatible(new MemoriaRam(22, "MR12348", "Kingston", "HyperX Fury", 69.99f,  false, 8, "DDR-4"));
+		tarjetaMadre4.agregarDiscoDuroCompatible(new DiscoDuro(9, "DD12348", "Seagate", "Backup Plus", 69.99f, true, 4000, "IDE"));
 		tarjetaMadre4.setProcesadorCompatible(new Microprocesador(5, "MP12349", "AMD", "Ryzen 9 5900X", 549.99f, "AM4", 3.7f));
 		tarjetasMadre.add(tarjetaMadre4);
 
 		TarjetaMadre tarjetaMadre5 = new TarjetaMadre(5, "TM12349", "ASUS", "ROG Strix Z690-E", 399.99f, "LGA 1700");
-		tarjetaMadre5.agregarMemoriaRAMCompatible(new MemoriaRam(25, "MR12349", "Crucial", "Ballistix Max", 129.99f, 32, "DDR4"));
-		tarjetaMadre5.agregarDiscoDuroCompatible(new DiscoDuro(11, "DD12349", "Toshiba", "Canvio Advance", 79.99f, 2000, "USB"));
+		tarjetaMadre5.agregarMemoriaRAMCompatible(new MemoriaRam(25, "MR12349", "Crucial", "Ballistix Max", 129.99f,  false,32, "DDR-4"));
+		tarjetaMadre5.agregarDiscoDuroCompatible(new DiscoDuro(11, "DD12349", "Toshiba", "Canvio Advance", 79.99f, true, 2000, "SATA-2"));
 		tarjetaMadre5.setProcesadorCompatible(new Microprocesador(4, "MP12350", "Intel", "Core i9-13900K", 599.99f, "LGA 1700", 3.8f));
 		tarjetasMadre.add(tarjetaMadre5);
 
 		TarjetaMadre tarjetaMadre6 = new TarjetaMadre(6, "TM12350", "Gigabyte", "Z690 AORUS MASTER", 349.99f, "LGA 1700");
-		tarjetaMadre6.agregarMemoriaRAMCompatible(new MemoriaRam(20, "MR12350", "Corsair", "Dominator Platinum RGB", 149.99f, 32, "DDR4"));
-		tarjetaMadre6.agregarDiscoDuroCompatible(new DiscoDuro(10, "DD12350", "Samsung", "T7", 149.99f, 1000, "USB-C"));
+		tarjetaMadre6.agregarMemoriaRAMCompatible(new MemoriaRam(20, "MR12350", "Corsair", "Dominator Platinum RGB", 149.99f,  false, 32, "DDR-4"));
+		tarjetaMadre6.agregarDiscoDuroCompatible(new DiscoDuro(10, "DD12350", "Samsung", "T7", 149.99f, true, 1000, "SATA-3"));
 		tarjetaMadre6.setProcesadorCompatible(new Microprocesador(6, "MP12351", "AMD", "Ryzen 9 7900X", 649.99f, "AM5", 4.0f));
 		tarjetasMadre.add(tarjetaMadre6);
 
 		TarjetaMadre tarjetaMadre7 = new TarjetaMadre(7, "TM12351", "MSI", "MEG Z590 ACE", 299.99f, "LGA 1200");
-		tarjetaMadre7.agregarMemoriaRAMCompatible(new MemoriaRam(15, "MR12351", "G.Skill", "Trident Z5", 199.99f, 64, "DDR5"));
-		tarjetaMadre7.agregarDiscoDuroCompatible(new DiscoDuro(8, "DD12351", "WD", "My Book", 89.99f, 8000, "USB"));
+		tarjetaMadre7.agregarMemoriaRAMCompatible(new MemoriaRam(15, "MR12351", "G.Skill", "Trident Z5", 199.99f,  false, 64, "DDR-5"));
+		tarjetaMadre7.agregarDiscoDuroCompatible(new DiscoDuro(8, "DD12351", "WD", "My Book", 89.99f, true, 8000, "SATA-3"));
 		tarjetaMadre7.setProcesadorCompatible(new Microprocesador(7, "MP12352", "Intel", "Core i3-12100F", 129.99f, "LGA 1700", 3.3f));
 		tarjetasMadre.add(tarjetaMadre7);
 
 		TarjetaMadre tarjetaMadre8 = new TarjetaMadre(5, "TM12352", "ASRock", "X570 Phantom Gaming", 249.99f, "AM4");
-		tarjetaMadre8.agregarMemoriaRAMCompatible(new MemoriaRam(18, "MR12352", "Kingston", "HyperX Predator", 109.99f, 16, "DDR4"));
-		tarjetaMadre8.agregarDiscoDuroCompatible(new DiscoDuro(12, "DD12352", "Seagate", "Expansion", 99.99f, 5000, "USB"));
+		tarjetaMadre8.agregarMemoriaRAMCompatible(new MemoriaRam(18, "MR12352", "Kingston", "HyperX Predator", 109.99f,  false,16, "DDR-4"));
+		tarjetaMadre8.agregarDiscoDuroCompatible(new DiscoDuro(12, "DD12352", "Seagate", "Expansion", 99.99f, true, 5000, "SATA-2"));
 		tarjetaMadre8.setProcesadorCompatible(new Microprocesador(6, "MP12347", "AMD", "Ryzen 7 5800X3D", 449.99f, "AM4", 3.8f));
 		tarjetasMadre.add(tarjetaMadre8);
 
 		TarjetaMadre tarjetaMadre9 = new TarjetaMadre(6, "TM12353", "Gigabyte", "B450M DS3H", 79.99f, "AM4");
-		tarjetaMadre9.agregarMemoriaRAMCompatible(new MemoriaRam(22, "MR12348", "Kingston", "HyperX Fury", 69.99f, 8, "DDR4"));
-		tarjetaMadre9.agregarDiscoDuroCompatible(new DiscoDuro(9, "DD12348", "Seagate", "Backup Plus", 69.99f, 4000, "USB"));
+		tarjetaMadre9.agregarMemoriaRAMCompatible(new MemoriaRam(22, "MR12348", "Kingston", "HyperX Fury", 69.99f,  false, 8, "DDR-4"));
+		tarjetaMadre9.agregarDiscoDuroCompatible(new DiscoDuro(9, "DD12348", "Seagate", "Backup Plus", 69.99f, true, 4000, "SATA"));
 		tarjetaMadre9.setProcesadorCompatible(new Microprocesador(5, "MP12349", "AMD", "Ryzen 9 5900X", 549.99f, "AM4", 3.7f));
 		tarjetasMadre.add(tarjetaMadre9);
 		
@@ -326,12 +328,14 @@ public class InicializacionDeDatos {
 	/**************************************PARA LOS COMBOBOX**************************************************************/
 	public static ArrayList<String> resolucionVideo(){
 		ArrayList<String> resoluciones = new ArrayList<String>();
-		resoluciones.add("144");
-		resoluciones.add("240");
-		resoluciones.add("360");
-		resoluciones.add("480");
-		resoluciones.add("720");
-		resoluciones.add("1080");
+		resoluciones.add("144p");
+		resoluciones.add("240p");
+		resoluciones.add("360p");
+		resoluciones.add("480p");
+		resoluciones.add("720p");
+		resoluciones.add("1080p");
+		resoluciones.add("4k");
+		resoluciones.add("5k");
 		return resoluciones;
 	}
 	public static ArrayList<String> nivelesEscolar(){
@@ -361,6 +365,7 @@ public class InicializacionDeDatos {
 		conexion.add("LGA 1700");
 		conexion.add("AM4");      //AMD
 		conexion.add("AM3+");
+		conexion.add("AM5");
 		conexion.add("TR4");
 
 		return conexion;
@@ -376,6 +381,12 @@ public class InicializacionDeDatos {
 		conector.add("TR4");
 
 		return conector;
+	}
+	public static ArrayList<String> conectividad(){
+		ArrayList<String> c = new ArrayList<String>();
+		c.add("Cable");
+		c.add("Inalámbrica");
+		return c;
 	}
 
 	public static ArrayList<String> refrigeracion(){
@@ -411,11 +422,11 @@ public class InicializacionDeDatos {
 
 	public static ArrayList<String> marcasExtension() {
 		ArrayList<String> extension = new ArrayList<String>();
-		extension.add("Acer");
-		extension.add("Dell");
-		extension.add("Asus");
-		extension.add("LG");
-		extension.add("Samsung");
+		extension.add("Mercado Libre");
+		extension.add("Amazon");
+		extension.add("V5.1");
+		extension.add("ViTech");
+		extension.add("Apple");
 		return extension;
 	}
 	public static ArrayList<String> marcasPantalla() {
@@ -514,6 +525,26 @@ public class InicializacionDeDatos {
 		marcasR.add("Razer");
 		return marcasR;
 	}
+	public static ArrayList<String> materialesChasis() {
+		ArrayList<String> materiales= new ArrayList<String>();
+		materiales.add("Metal");
+		materiales.add("Aluminio");
+		materiales.add("Fibra de Carbono");
+		materiales.add("Acero");
+		return materiales;
+	}
+	public static ArrayList<String> capacidadesDisco() {
+		ArrayList<String> capacidades = new ArrayList<String>();
+		capacidades.add("1000");
+		capacidades.add("2000");
+		capacidades.add("4000");
+		capacidades.add("5000");
+		capacidades.add("6000");
+		capacidades.add("7000");
+		capacidades.add("8000");
+		return capacidades;
+	}
+	
 	/*********************************************************MODELOS X MARCAS *******************************************************************/
 	/********************PANTALLAS*******************/
 	public static ArrayList<String> pantallasAcer() {

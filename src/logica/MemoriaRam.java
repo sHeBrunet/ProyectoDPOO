@@ -5,11 +5,11 @@ public class MemoriaRam extends ComponenteOrdenador {
 	private float cantEspacio;
 	private String tipoDeMemoria;
 
-	public MemoriaRam(int cantDisponible, String numSerie, String marca, String modelo, float precio, float cantEspacio, String tipoDeMemoria) {
+	public MemoriaRam(int cantDisponible, String numSerie, String marca, String modelo, float precio,  boolean espacio, float cantEspacio, String tipoDeMemoria) {
 		super(cantDisponible, numSerie, marca, modelo, precio);
 		setCantEspacio(cantEspacio);
-		setTipoDeMemoria(tipoDeMemoria);
 		setEspacio(espacio);
+		setTipoDeMemoria(tipoDeMemoria);
 	}
 
 	public float getCantEspacio() {
@@ -20,10 +20,10 @@ public class MemoriaRam extends ComponenteOrdenador {
 			if(cantEspacio >= 4096 && cantEspacio <= 131072) {
 				this.cantEspacio = cantEspacio;
 			}
-			else if(isEspacio() == false) {
-				if(cantEspacio >= 4 && cantEspacio <= 128) {
-					this.cantEspacio = cantEspacio;
-				}
+		}
+		else if(isEspacio() == false) {
+			if(cantEspacio >= 4 && cantEspacio <= 128) {
+				this.cantEspacio = cantEspacio;
 			}
 		}
 		else {
@@ -34,7 +34,7 @@ public class MemoriaRam extends ComponenteOrdenador {
 		return tipoDeMemoria;
 	}
 	public void setTipoDeMemoria(String tipoDeMemoria) {
-		if(tipoDeMemoria.equalsIgnoreCase("DDR")|| tipoDeMemoria.equalsIgnoreCase("DDR-2" )|| tipoDeMemoria.equalsIgnoreCase("DDR-3")) {
+		if(tipoDeMemoria.equalsIgnoreCase("DDR")|| tipoDeMemoria.equalsIgnoreCase("DDR-2" )|| tipoDeMemoria.equalsIgnoreCase("DDR-3") || tipoDeMemoria.equalsIgnoreCase("DDR-4")|| tipoDeMemoria.equalsIgnoreCase("DDR-5")) {
 			this.tipoDeMemoria = tipoDeMemoria;
 		}
 		else {

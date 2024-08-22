@@ -25,7 +25,7 @@ public class Monitor extends ComponenteOrdenador {
 			}
 		}
 		if(!correcto) {
-			throw new IllegalArgumentException("La resolucion debe de ser de tipo (144, 240, 360, 480, 720, 1080");
+			throw new IllegalArgumentException("La resolucion debe de ser de tipo (144p, 240p, 360p, 480p, 720p, 1080p, 4k, 5k");
 		}
 	}
 
