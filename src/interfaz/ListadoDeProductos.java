@@ -85,7 +85,7 @@ public class ListadoDeProductos extends JDialog {
 		btnBorrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int pos = tableTrabajadores.getSelectedRow();
-				int pos1 = tableGerentes.getSelectedRow();
+				int pos1 = tableGerentes.getSelectedRow(); 
 				if (pos != -1) {
 					Object t = tableTrabajadores.getValueAt(pos, 0);
 					tienda.eliminarTrabajador1(pos);

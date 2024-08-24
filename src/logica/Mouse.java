@@ -1,22 +1,21 @@
 package logica;
 
 public class Mouse extends ComponenteOrdenador {
-	private int numDeBotones;
+	private String conectividad;
 
-	public Mouse(int cantDisponible, String numSerie, String marca, String modelo, float precio, int numDeBotones) {
+	public Mouse(int cantDisponible, String numSerie, String marca, String modelo, float precio, String conectividad) {
 		super(cantDisponible, numSerie, marca, modelo, precio);
-		setNumDeBotones(numDeBotones);
+		setConectividad(conectividad);
 	}
-	public int getNumDeBotones() {
-		return numDeBotones;
+	public String getConectividad() {
+		return conectividad;
 	}
-	public void setNumDeBotones(int numDeBotones) {
-		if(numDeBotones >= 2 && numDeBotones <= 12) {
-			this.numDeBotones = numDeBotones;
+	public void setConectividad(String conectividad) {
+		if(conectividad.equalsIgnoreCase("cable") || conectividad.equalsIgnoreCase("inalámbrica")) {
+			this.conectividad = conectividad;
 		}
 		else {
-			throw new IllegalArgumentException("La cantidad de botones de un mouse debe de estar entre 2 y 12");
+			throw new IllegalArgumentException("El tipo de conectividad debe de ser inalámbrica o por cable");
 		}
 	}
-
 }

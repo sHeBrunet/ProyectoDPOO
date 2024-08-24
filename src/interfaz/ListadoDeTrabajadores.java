@@ -37,7 +37,7 @@ public class ListadoDeTrabajadores extends JDialog {
 
 	public ListadoDeTrabajadores(Principal principal, TiendaDeComputadoras t) {
 		super(principal, true);
-		p = principal;
+		p = principal; 
 		tienda = t;
 		setTitle("Gerentes y Trabajadores");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -97,7 +97,7 @@ public class ListadoDeTrabajadores extends JDialog {
 					((DefaultTableModel) tableGerentes.getModel()).removeRow(pos1);
 				} else {
 					JOptionPane.showMessageDialog(ListadoDeTrabajadores.this, "Antes de eliminar debe de seleccionar un trabajador de la tabla");
-				}
+				} 
 			}
 		});
 		panelBotones.add(btnBorrar);

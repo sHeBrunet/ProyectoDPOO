@@ -26,7 +26,8 @@ public class Microprocesador extends ComponenteOrdenador {
 	public void setTipoDeConexion(String tipoDeConexion) {
 		boolean correcto = false;
 		ArrayList<String> conexiones = new ArrayList<String>();
-		conexiones = InicializacionDeDatos.conexiones();
+		conexiones = InicializacionDeDatos.conexionesIntel();
+		conexiones.addAll(InicializacionDeDatos.conexionesAMD());
 		for(String r: conexiones) {
 			if(tipoDeConexion.equalsIgnoreCase(r)) {
 				correcto = true;

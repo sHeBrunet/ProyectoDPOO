@@ -216,7 +216,7 @@ public class AgregarTrabajador extends JDialog {
 				boolean datoIncorrecto = false;
 				String nombre = nombreT.getText();
 				String apellidos = apellidosT.getText();
-				String ci = CiT.getText();
+				String ci = CiT.getText(); 
 				String salarioB = salarioT.getText();
 				String cargo = (String) cargoT.getSelectedItem();
 				String nivelE = (String) NivelE.getSelectedItem();
@@ -331,7 +331,7 @@ public class AgregarTrabajador extends JDialog {
 		lblNewLabel.setIcon(new ImageIcon(AgregarTrabajador.class.getResource("/gui/icons/logoPeque\u00F1o1.jpg")));
 		panel.add(lblNewLabel);
 
-		btnEliminar = new JButton("Eliminar");
+		btnEliminar = new JButton("Eliminar"); 
 		btnEliminar.setBounds(797, 647, 70, 22);
 		panel.add(btnEliminar);
 		btnEliminar.addActionListener(new ActionListener() {

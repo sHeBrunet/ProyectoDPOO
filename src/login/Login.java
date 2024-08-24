@@ -43,7 +43,6 @@ public class Login extends JFrame {
 	private static String pass = "1234"; 
 	private static String pass1 = "4321";
 	private String admin = "gerente2024"; 
-	AbstractButton seleccGerente;
 	private String user = null;
 	private static boolean visible = false;
 	private static Principal principal;
@@ -54,7 +53,7 @@ public class Login extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/gui/icons/logoPeque\u00F1o1.jpg")));
 		setUndecorated(true);
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 		setBounds(100, 100, 485, 548);
 		panelGeneral = new JPanel();
 		panelGeneral.setBackground(Color.WHITE);

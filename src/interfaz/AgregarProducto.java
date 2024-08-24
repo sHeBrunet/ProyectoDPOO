@@ -351,7 +351,7 @@ public class AgregarProducto extends JDialog {
 
 			private int actualizarNo() {
 				int j = 0;
-				int num = 0;
+				int num = 0; 
 				Integer o;
 				while(j < noT.size()) {
 						o = noT.get(j);

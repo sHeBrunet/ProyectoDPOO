@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>src/gui/icons/photo_5062105677371124742_m.png</name>
+			<type>1</type>
+			<location>C:/Users/kbrun/OneDrive/Pictures/photo_5062105677371124742_m.png</location>
+		</link>
+	</linkedResources>
 </projectDescription>

@@ -61,7 +61,7 @@ public class InicializacionDeDatos {
 			e.printStackTrace();
 		}
 	}
-//Llamada a todos los datos de los productos
+	//Llamada a todos los datos de los productos
 	public static void llamarInicializaciones(TiendaDeComputadoras tienda) {
 		inicializarMouses(tienda);
 		inicializarMonitores(tienda);
@@ -75,25 +75,25 @@ public class InicializacionDeDatos {
 		inicializarExtension(tienda);
 		inicializarTarjetasMadre(tienda);
 		inicializarMicroprocesador(tienda);
-		
+
 	}
-	
+
 
 	//Datos para los productos
 
 
 	public static void inicializarMouses(TiendaDeComputadoras tienda) {
 		ArrayList<Mouse> mouses = new ArrayList<>();
-		mouses.add(new Mouse(10, "M12345", "HyperX", "Pulsefire Core", 29.99f, 6));
-		mouses.add(new Mouse(15, "M12346", "Logitech", "G203 LIGHTSYNC", 39.99f, 6));
-		mouses.add(new Mouse(12, "M12347", "SteelSeries", "Rival 3", 49.99f, 6));
-		mouses.add(new Mouse(8, "M12348", "Corsair", "Harpoon RGB Wireless", 59.99f, 6));
-		mouses.add(new Mouse(20, "M12349", "Razer", "Viper Mini", 69.99f, 6));
-		mouses.add(new Mouse(11, "M12350", "HyperX", "Pulsefire Surge", 34.99f, 7));
-		mouses.add(new Mouse(16, "M12351", "Logitech", "G305 LIGHTSPEED", 44.99f, 7));
-		mouses.add(new Mouse(13, "M12352", "SteelSeries", "Rival 3 Wireless", 54.99f, 7));
-		mouses.add(new Mouse(9, "M12353", "Corsair", "Katar Pro XT", 64.99f, 7));
-		mouses.add(new Mouse(21, "M12354", "Razer", "Viper Ultimate", 74.99f, 7));
+		mouses.add(new Mouse(10, "M12345", "HyperX", "Pulsefire Core", 29.99f, "Inalámbrica"));
+		mouses.add(new Mouse(15, "M12346", "Logitech", "G203 LIGHTSYNC", 39.99f, "Inalámbrica"));
+		mouses.add(new Mouse(12, "M12347", "SteelSeries", "Rival 3", 49.99f, "Cable"));
+		mouses.add(new Mouse(8, "M12348", "Corsair", "Harpoon RGB Wireless", 34.78f, "Inalámbrica"));
+		mouses.add(new Mouse(20, "M12349", "Razer", "Viper Mini", 69.99f, "Inalámbrica"));
+		mouses.add(new Mouse(11, "M12350", "HyperX", "Pulsefire Surge", 34.99f, "Inalámbrica"));
+		mouses.add(new Mouse(16, "M12351", "Logitech", "G305 LIGHTSPEED", 44.99f, "Cable"));
+		mouses.add(new Mouse(13, "M12352", "SteelSeries", "Rival 3 Wireless", 54.99f,"Inalámbrica"));
+		mouses.add(new Mouse(9, "M12353", "Corsair", "Katar Pro XT", 64.99f, "Inalámbrica"));
+		mouses.add(new Mouse(21, "M12354", "Razer", "Viper Ultimate", 74.99f, "Inalámbrica"));
 		ArrayList<ComponenteOrdenador> c = new ArrayList<ComponenteOrdenador>();
 		c.addAll(mouses);
 		tienda.agregarComponenteI(c);
@@ -140,7 +140,7 @@ public class InicializacionDeDatos {
 		teclados.add(new Teclado(10, "T12347", "Razer", "BlackWidow V3", 129.99f, false));
 		teclados.add(new Teclado(8, "T12348", "Corsair", "K95 RGB Platinum", 199.99f, true));
 		teclados.add(new Teclado(7, "T12349", "SteelSeries", "Apex Pro", 179.99f, true));
-		teclados.add(new Teclado(11, "T12350", "HyperX", "Alloy FPS Pro", 99.99f, true));
+		teclados.add(new Teclado(11, "T12350", "HyperX", "Alloy FPS Pro", 99.99f, false));
 		teclados.add(new Teclado(10, "T12351", "Logitech", "G915 TKL", 229.99f, true));
 		teclados.add(new Teclado(9, "T12352", "Razer", "Huntsman Mini", 119.99f, true));
 		teclados.add(new Teclado(8, "T12353", "Corsair", "K70 RGB MK.2", 159.99f, true));
@@ -152,16 +152,16 @@ public class InicializacionDeDatos {
 	/**********************************Bocina***************************************************************/
 	public static void inicializarBocinas(TiendaDeComputadoras tienda) {
 		ArrayList<Bocina> bocinas = new ArrayList<>();
-		bocinas.add(new Bocina(20, "B12345", "Logitech", "Z333", 49.99f, "inalámbrica"));
-		bocinas.add(new Bocina(15, "B12346", "JBL", "Clip 4", 59.99f, "inalámbrica"));
-		bocinas.add(new Bocina(18, "B12347", "Sony", "SRS-XB12", 39.99f, "inalámbrica"));
-		bocinas.add(new Bocina(22, "B12348", "Bose", "SoundLink Micro", 99.99f, "inalámbrica"));
-		bocinas.add(new Bocina(25, "B12349", "Ultimate Ears", "Wonderboom 2", 79.99f, "inalámbrica"));
-		bocinas.add(new Bocina(20, "B12350", "Logitech", "Z407", 89.99f, "cable"));
-		bocinas.add(new Bocina(15, "B12351", "JBL", "Flip 5", 119.99f, "inalámbrica"));
-		bocinas.add(new Bocina(18, "B12352", "Sony", "SRS-XB23", 99.99f, "inalámbrica"));
-		bocinas.add(new Bocina(22, "B12353", "Bose", "SoundLink Revolve", 199.99f, "inalámbrica"));
-		bocinas.add(new Bocina(25, "B12354", "Ultimate Ears", "Boom 3", 149.99f, "inalámbrica"));
+		bocinas.add(new Bocina(20, "B12345", "Logitech", "Z333", 49.99f, "Inalámbrica"));
+		bocinas.add(new Bocina(15, "B12346", "JBL", "Clip 4", 59.99f, "Inalámbrica"));
+		bocinas.add(new Bocina(18, "B12347", "Sony", "SRS-XB12", 39.99f, "Inalámbrica"));
+		bocinas.add(new Bocina(22, "B12348", "HR Open", "SoundLink Micro", 99.99f, "Cable"));
+		bocinas.add(new Bocina(25, "B12349", "1Hora", "Wonderboom 2", 79.99f, "Inalámbrica"));
+		bocinas.add(new Bocina(20, "B12350", "Logitech", "Z407", 89.99f, "Cable"));
+		bocinas.add(new Bocina(15, "B12351", "JBL", "Flip 5", 119.99f, "Inalámbrica"));
+		bocinas.add(new Bocina(18, "B12352", "Sony", "SRS-XB23", 99.99f, "Inalámbrica"));
+		bocinas.add(new Bocina(22, "B12353", "1Hora", "SoundLink Revolve", 199.99f, "Inalámbrica"));
+		bocinas.add(new Bocina(25, "B12354", "HR Open", "Boom 3", 149.99f, "Cable"));
 		ArrayList<ComponenteOrdenador> c = new ArrayList<ComponenteOrdenador>();
 		c.addAll(bocinas);
 		tienda.agregarComponenteI(c);
@@ -169,16 +169,16 @@ public class InicializacionDeDatos {
 	/**********************************Fuentes***************************************************************/
 	public static void inicializarFuentes(TiendaDeComputadoras tienda) {
 		ArrayList<Fuente> fuentes = new ArrayList<>();
-		fuentes.add(new Fuente(10, "F12345", "Thermaltake", "Smart 500W", 49.99f, 500));
-		fuentes.add(new Fuente(8, "F12346", "Corsair", "CX550F RGB", 79.99f, 550));
-		fuentes.add(new Fuente(12, "F12347", "EVGA", "600 W1", 59.99f, 600));
-		fuentes.add(new Fuente(9, "F12348", "Seasonic", "S12III 650", 69.99f, 650));
-		fuentes.add(new Fuente(11, "F12349", "Cooler Master", "MWE Gold 750", 89.99f, 750));
-		fuentes.add(new Fuente(10, "F12350", "Thermaltake", "Toughpower GF1 850W", 129.99f, 850));
-		fuentes.add(new Fuente(8, "F12351", "Corsair", "RM850x", 139.99f, 850));
-		fuentes.add(new Fuente(12, "F12352", "EVGA", "SuperNOVA 1000 G5", 159.99f, 1000));
-		fuentes.add(new Fuente(9, "F12353", "Seasonic", "Focus GX-1000", 179.99f, 1000));
-		fuentes.add(new Fuente(11, "F12354", "Cooler Master", "V850 SFX Gold", 199.99f, 850));
+		fuentes.add(new Fuente(10, "F12345", "Thermaltake", "Smart 500W", 49.99f, "Gold"));
+		fuentes.add(new Fuente(8, "F12346", "Corsair", "CX550F RGB", 79.99f, "Silver"));
+		fuentes.add(new Fuente(12, "F12347", "EVGA", "600 W1", 59.99f, "Platinum"));
+		fuentes.add(new Fuente(9, "F12348", "Seasonic", "S12III 650", 69.99f, "Platinum"));
+		fuentes.add(new Fuente(11, "F12349", "Be Quiet!", "MWE 750", 89.99f, "Gold"));
+		fuentes.add(new Fuente(10, "F12350", "Thermaltake", "Toughpower GF1 850W", 129.99f, "Bronze"));
+		fuentes.add(new Fuente(8, "F12351", "Corsair", "RM850x", 139.99f, "Silver"));
+		fuentes.add(new Fuente(12, "F12352", "EVGA", "SuperNOVA 1000 G5", 159.99f, "Gold"));
+		fuentes.add(new Fuente(9, "F12353", "Seasonic", "Focus GX-1000", 179.99f, "Platinum"));
+		fuentes.add(new Fuente(11, "F12354", "Be Quiet!", "V850 SFX", 199.99f, "Silver"));
 		ArrayList<ComponenteOrdenador> c = new ArrayList<ComponenteOrdenador>();
 		c.addAll(fuentes);
 		tienda.agregarComponenteI(c);
@@ -187,14 +187,14 @@ public class InicializacionDeDatos {
 	public static void inicializarTarjetasVideo(TiendaDeComputadoras tienda) {
 		ArrayList<TarjetaDeVideo> tarjetasVideo = new ArrayList<>();
 		tarjetasVideo.add(new TarjetaDeVideo(5, "TV12345", "AMD", "Radeon RX 6600", 329.99f, "Aire"));
-		tarjetasVideo.add(new TarjetaDeVideo(4, "TV12346", "NVIDIA", "GeForce RTX 4060", 499.99f, "Líquido"));
+		tarjetasVideo.add(new TarjetaDeVideo(4, "TV12346", "Gigabyte", "GeForce RTX 3070", 499.99f, "Líquido"));
 		tarjetasVideo.add(new TarjetaDeVideo(6, "TV12347", "AMD", "Radeon RX 6700 XT", 479.99f, "Aire"));
-		tarjetasVideo.add(new TarjetaDeVideo(7, "TV12348", "NVIDIA", "GeForce RTX 3070", 599.99f, "Mixto"));
+		tarjetasVideo.add(new TarjetaDeVideo(7, "TV12348", "MSI", "GeForce RTX 3070", 599.99f, "Mixto"));
 		tarjetasVideo.add(new TarjetaDeVideo(5, "TV12349", "AMD", "Radeon RX 6800", 579.99f, "Aire"));
-		tarjetasVideo.add(new TarjetaDeVideo(4, "TV12350", "NVIDIA", "GeForce RTX 3080", 699.99f, "Líquido"));
+		tarjetasVideo.add(new TarjetaDeVideo(4, "TV12350", "Gigabyte", "GeForce RTX 3080", 699.99f, "Líquido"));
 		tarjetasVideo.add(new TarjetaDeVideo(6, "TV12351", "AMD", "Radeon RX 6900 XT", 999.99f, "Aire"));
-		tarjetasVideo.add(new TarjetaDeVideo(7, "TV12352", "NVIDIA", "GeForce RTX 3090", 1499.99f, "Líquido"));
-		tarjetasVideo.add(new TarjetaDeVideo(5, "TV12353", "AMD", "Radeon RX 6500 XT", 199.99f, "Aire"));
+		tarjetasVideo.add(new TarjetaDeVideo(7, "TV12352", "ASUS", "GeForce RTX 3090", 1499.99f, "Líquido"));
+		tarjetasVideo.add(new TarjetaDeVideo(5, "TV12353", "MSI", "Radeon RX 6500 XT", 199.99f, "Aire"));
 		tarjetasVideo.add(new TarjetaDeVideo(4, "TV12354", "NVIDIA", "GeForce RTX 3050", 249.99f, "Líquido"));
 		ArrayList<ComponenteOrdenador> c = new ArrayList<ComponenteOrdenador>();
 		c.addAll(tarjetasVideo);
@@ -204,7 +204,7 @@ public class InicializacionDeDatos {
 	public static void inicializarMemoriasRAM(TiendaDeComputadoras tienda) {
 		ArrayList<MemoriaRam> memoriasRAM = new ArrayList<>();
 		memoriasRAM.add(new MemoriaRam(20, "MR12345", "Crucial", "Ballistix Sport LT", 79.99f,  false,16, "DDR-4"));
-		memoriasRAM.add(new MemoriaRam(15, "MR12346", "Corsair", "Vengeance LPX", 89.99f, false, 16, "DDR-4"));
+		memoriasRAM.add(new MemoriaRam(15, "MR12346", "Corsair", "Vengeance LPX", 89.99f, false, 16, "DDR-3"));
 		memoriasRAM.add(new MemoriaRam(18, "MR12347", "G.Skill", "Trident Z Neo", 99.99f,  false,32, "DDR-4"));
 		memoriasRAM.add(new MemoriaRam(22, "MR12348", "Kingston", "HyperX Fury", 69.99f, false, 8, "DDR-4"));
 		memoriasRAM.add(new MemoriaRam(25, "MR12349", "Crucial", "Ballistix Max", 129.99f,  false,32, "DDR-4"));
@@ -237,11 +237,11 @@ public class InicializacionDeDatos {
 	/*********************************Extension*************************************************************/
 	public static void inicializarExtension(TiendaDeComputadoras tienda) {
 		ArrayList<Adaptador> adaptadores = new ArrayList<>();
-		adaptadores.add(new Adaptador(10, "A45", "Amazon Basics", "Canvio Basics", 49.99f));
-		adaptadores.add(new Adaptador(10, "U12345", "UGREEN", "Canvio Basics", 49.99f));
-		adaptadores.add(new Adaptador(10, "A2345", "Anker", "Canvio Basics", 49.99f));
+		adaptadores.add(new Adaptador(10, "A45", "Amazon", "Canvio Basics", 49.99f));
+		adaptadores.add(new Adaptador(10, "U12345", "Mercado Libre", "Canvio Basics 2B", 49.99f));
+		adaptadores.add(new Adaptador(10, "A2345", "ViTech", "Canvio Basics 5A", 49.99f));
 		adaptadores.add(new Adaptador(10, "App2345", "Apple", "Canvio Basics", 49.99f));
-		adaptadores.add(new Adaptador(10, "Be12345", "Belkin", "Canvio Basics", 49.99f));
+		adaptadores.add(new Adaptador(10, "Be12345", "V5.1", "Canvio Basics 8C", 49.99f));
 
 		ArrayList<ComponenteOrdenador> c = new ArrayList<ComponenteOrdenador>();
 		c.addAll(adaptadores);
@@ -302,7 +302,7 @@ public class InicializacionDeDatos {
 		tarjetaMadre9.agregarDiscoDuroCompatible(new DiscoDuro(9, "DD12348", "Seagate", "Backup Plus", 69.99f, true, 4000, "SATA"));
 		tarjetaMadre9.setProcesadorCompatible(new Microprocesador(5, "MP12349", "AMD", "Ryzen 9 5900X", 549.99f, "AM4", 3.7f));
 		tarjetasMadre.add(tarjetaMadre9);
-		
+
 		ArrayList<ComponenteOrdenador> c = new ArrayList<ComponenteOrdenador>();
 		c.addAll(tarjetasMadre);
 		tienda.agregarComponenteI(c);
@@ -334,8 +334,8 @@ public class InicializacionDeDatos {
 		resoluciones.add("480p");
 		resoluciones.add("720p");
 		resoluciones.add("1080p");
-		resoluciones.add("4k");
-		resoluciones.add("5k");
+		resoluciones.add("4K");
+		resoluciones.add("5K");
 		return resoluciones;
 	}
 	public static ArrayList<String> nivelesEscolar(){
@@ -358,19 +358,22 @@ public class InicializacionDeDatos {
 		cargo.add("Gerente");
 		return cargo;
 	}
-	public static ArrayList<String> conexiones(){
+	public static ArrayList<String> conexionesIntel(){
 		ArrayList<String> conexion = new ArrayList<String>();
 		conexion.add("LGA 1151"); //Intel
 		conexion.add("LGA 1200");
 		conexion.add("LGA 1700");
+
+		return conexion;
+	}
+	public static ArrayList<String> conexionesAMD(){
+		ArrayList<String> conexion = new ArrayList<String>();
 		conexion.add("AM4");      //AMD
 		conexion.add("AM3+");
 		conexion.add("AM5");
 		conexion.add("TR4");
-
 		return conexion;
 	}
-
 	public static ArrayList<String> conectores(){
 		ArrayList<String> conector = new ArrayList<String>();
 		conector.add("LGA 1151");
@@ -416,6 +419,7 @@ public class InicializacionDeDatos {
 		names.add("Memoria RAM");
 		names.add("Microprocesador");
 		names.add("Disco Duro");
+		names.add("Adaptador");
 		return names;
 	}
 	/*********************  MARCAS ORGANIZADAS DE MENOR A MAYOR PRECIO (APROXIMADAMENTE) ********************************/
@@ -544,7 +548,14 @@ public class InicializacionDeDatos {
 		capacidades.add("8000");
 		return capacidades;
 	}
-	
+	public static ArrayList<String> tiposDeMemoriaRAM(){
+		ArrayList<String> tipos = new ArrayList<String>();
+		tipos.add("DDR-3");
+		tipos.add("DDR-4");
+		tipos.add("DDR-5");
+		return tipos;
+	}
+
 	/*********************************************************MODELOS X MARCAS *******************************************************************/
 	/********************PANTALLAS*******************/
 	public static ArrayList<String> pantallasAcer() {
@@ -1006,6 +1017,15 @@ public class InicializacionDeDatos {
 		mouseRazer.add("Basilisk Ultimate");
 		mouseRazer.add("DeathAdder V3 Pro");
 		return mouseRazer;
+	}
+	public static ArrayList<String> eficiencia() {
+		ArrayList<String> eficiencias = new ArrayList<String>();
+		eficiencias.add("80 PLUS");
+		eficiencias.add("Bronze");
+		eficiencias.add("Silver");
+		eficiencias.add("Gold");
+		eficiencias.add("Platinum");
+		return eficiencias;
 	}
 
 

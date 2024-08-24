@@ -1,24 +1,25 @@
 package logica;
 
 public class Fuente extends ComponenteOrdenador {
-	private float potencia;
+	private String eficiencia;
 	
-	public Fuente(int cantDisponible, String numSerie, String marca, String modelo, float precio, float potencia) {
+	public Fuente(int cantDisponible, String numSerie, String marca, String modelo, float precio, String eficiencia) {
 		super(cantDisponible, numSerie, marca, modelo, precio);
-		setPotencia(potencia);
+		setEficiencia(eficiencia);
 	}
-	public float getPotencia() {
-		return potencia;
+
+	public String getEficiencia() {
+		return eficiencia;
 	}
-	public void setPotencia(float potencia) {
-		if(potencia >= 300 || potencia <= 2000) {
-		this.potencia = potencia;
+
+	public void setEficiencia(String eficiencia) {
+		if(eficiencia.equalsIgnoreCase("80 PLUS") || eficiencia.equalsIgnoreCase("Bronze") || eficiencia.equalsIgnoreCase("Silver") || eficiencia.equalsIgnoreCase("Gold") || eficiencia.equalsIgnoreCase("Platinum")) {
+			this.eficiencia  = eficiencia;
 		}
 		else {
-			throw new IllegalArgumentException("La potencia de una fuente debe de estar entre 300 y 2000 W");
+			throw new IllegalArgumentException("El tipo de eficiencia debe de ser de tipo (80 PLUS, Bronze, Silver, Gold, Platinum)");
 		}
 	}
-
-
+	
 
 }
