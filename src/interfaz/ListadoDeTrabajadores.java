@@ -34,6 +34,7 @@ public class ListadoDeTrabajadores extends JDialog {
 	private JTable tableGerentes;
 	private DefaultTableModel model;
 	private JButton btnAceptar;
+	private boolean cambios = false;
 
 	public ListadoDeTrabajadores(Principal principal, TiendaDeComputadoras t) {
 		super(principal, true);
@@ -66,7 +67,13 @@ public class ListadoDeTrabajadores extends JDialog {
 		btnAtras = new JButton("Atrás");
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
+				if(cambios) {
+					int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea salir? No se guardarán los cambios realizados", "", 0, 3);
+					if(i==0)
+						setVisible(false);
+				}
+				else
+					setVisible(false);
 			}
 		});
 
@@ -75,14 +82,20 @@ public class ListadoDeTrabajadores extends JDialog {
 
 		getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		getContentPane().add(panelBotones, BorderLayout.SOUTH);
-		
+
 		btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(cambios) {
+					JOptionPane.showMessageDialog(ListadoDeTrabajadores.this, "Cambios guardados satisfactoriamente");
+					setVisible(false);
+				}
+				else
+					JOptionPane.showMessageDialog(ListadoDeTrabajadores.this, "No ha realizado ningún cambio");	
 			}
 		});
 		panelBotones.add(btnAceptar);
-		
+
 		btnBorrar = new JButton("Borrar");
 		btnBorrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -90,11 +103,20 @@ public class ListadoDeTrabajadores extends JDialog {
 				int pos1 = tableGerentes.getSelectedRow();
 				if (pos != -1) {
 					Object t = tableTrabajadores.getValueAt(pos, 0);
-					tienda.eliminarTrabajador1(pos);
-					((DefaultTableModel) tableTrabajadores.getModel()).removeRow(pos);
+					int[] rows = tableTrabajadores.getSelectedRows();
+					for(int i = 0; i < rows.length; i++){
+						((DefaultTableModel) tableTrabajadores.getModel()).removeRow(rows[i]-i);;
+						tienda.eliminarTrabajador1(i);
+					}
+					cambios = true;
 				} else if (pos1 != -1) {
-					tienda.eliminarTrabajador1(pos1);
-					((DefaultTableModel) tableGerentes.getModel()).removeRow(pos1);
+					if(tienda.hallarGerentes() > 1) {
+						((DefaultTableModel) tableGerentes.getModel()).removeRow(pos1);
+						tienda.eliminarTrabajador1(pos1);
+						cambios = true;
+					}
+					else
+						JOptionPane.showMessageDialog(ListadoDeTrabajadores.this, "Error: Al menos debe haber un gerente en la empresa");
 				} else {
 					JOptionPane.showMessageDialog(ListadoDeTrabajadores.this, "Antes de eliminar debe de seleccionar un trabajador de la tabla");
 				} 

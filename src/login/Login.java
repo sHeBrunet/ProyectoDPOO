@@ -11,7 +11,6 @@ import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
@@ -30,7 +30,6 @@ import componentesVisuales.JTextFieldModificado;
 import interfaz.Principal;
 import logica.ManejoDeSesion;
 import logica.TiendaDeComputadoras;
-import javax.swing.JTextField;
 
 public class Login extends JFrame {
 

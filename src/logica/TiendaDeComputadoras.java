@@ -38,6 +38,11 @@ public class TiendaDeComputadoras {
 	public ArrayList<Trabajador> getTrabajadores() {
 		return (ArrayList<Trabajador>) trabajadores.clone();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<ComponenteOrdenador> getComponentes(){
+		return (ArrayList<ComponenteOrdenador>) componentes.clone();
+	}
 
 	public int buscarTrabajador(String ci){
 		int pos = -1;
@@ -90,6 +95,208 @@ public class TiendaDeComputadoras {
 			trabajadores.remove(posicion);
 		}
 
+	}
+	
+	public int hallarGerentes() {
+		int count = 0;
+		for(Trabajador t: trabajadores) {
+			if(t instanceof Gerente)
+				count++;
+		}
+		return count;
+	}
+	
+	
+	public void eliminarAdaptadores(int posicion) {
+		int count = 0;
+		int i;
+		boolean stop = false;
+		if(posicion >= 0 && posicion < componentes.size()) {
+			for(i = 0; i < componentes.size() && !stop; i++) {
+				if(componentes.get(i) instanceof Adaptador)
+					count++;
+				if(count == posicion) {
+					stop = true;
+				}	
+			}
+			componentes.remove(i);
+		}
+	}
+	
+	public void eliminarBocinas(int posicion) {
+		int count = 0;
+		int i;
+		boolean stop = false;
+		if(posicion >= 0 && posicion < componentes.size()) {
+			for(i = 0; i < componentes.size() && !stop; i++) {
+				if(componentes.get(i) instanceof Bocina)
+					count++;
+				if(count == posicion) {
+					stop = true;
+				}	
+			}
+			componentes.remove(i);
+		}
+	}
+	
+	public void eliminarChasis(int posicion) {
+		int count = 0;
+		int i;
+		boolean stop = false;
+		if(posicion >= 0 && posicion < componentes.size()) {
+			for(i = 0; i < componentes.size() && !stop; i++) {
+				if(componentes.get(i) instanceof Chasis)
+					count++;
+				if(count == posicion) {
+					stop = true;
+				}	
+			}
+			componentes.remove(i);
+		}
+	}
+	
+	public void eliminarDiscos(int posicion) {
+		int count = 0;
+		int i;
+		boolean stop = false;
+		if(posicion >= 0 && posicion < componentes.size()) {
+			for(i = 0; i < componentes.size() && !stop; i++) {
+				if(componentes.get(i) instanceof DiscoDuro)
+					count++;
+				if(count == posicion) {
+					stop = true;
+				}	
+			}
+			componentes.remove(i);
+		}
+	}
+	
+	public void eliminarFuentes(int posicion) {
+		int count = 0;
+		int i;
+		boolean stop = false;
+		if(posicion >= 0 && posicion < componentes.size()) {
+			for(i = 0; i < componentes.size() && !stop; i++) {
+				if(componentes.get(i) instanceof Fuente)
+					count++;
+				if(count == posicion) {
+					stop = true;
+				}	
+			}
+			componentes.remove(i);
+		}
+	}
+	
+	public void eliminarMicros(int posicion) {
+		int count = 0;
+		int i;
+		boolean stop = false;
+		if(posicion >= 0 && posicion < componentes.size()) {
+			for(i = 0; i < componentes.size() && !stop; i++) {
+				if(componentes.get(i) instanceof Microprocesador)
+					count++;
+				if(count == posicion) {
+					stop = true;
+				}	
+			}
+			componentes.remove(i);
+		}
+	}
+	
+	public void eliminarMonitores(int posicion) {
+		int count = 0;
+		int i;
+		boolean stop = false;
+		if(posicion >= 0 && posicion < componentes.size()) {
+			for(i = 0; i < componentes.size() && !stop; i++) {
+				if(componentes.get(i) instanceof Monitor)
+					count++;
+				if(count == posicion) {
+					stop = true;
+				}	
+			}
+			componentes.remove(i);
+		}
+	}
+	
+	public void eliminarMotherboards(int posicion) {
+		int count = 0;
+		int i;
+		boolean stop = false;
+		if(posicion >= 0 && posicion < componentes.size()) {
+			for(i = 0; i < componentes.size() && !stop; i++) {
+				if(componentes.get(i) instanceof TarjetaMadre)
+					count++;
+				if(count == posicion) {
+					stop = true;
+				}	
+			}
+			componentes.remove(i);
+		}
+	}
+	
+	public void eliminarMouses(int posicion) {
+		int count = 0;
+		int i;
+		boolean stop = false;
+		if(posicion >= 0 && posicion < componentes.size()) {
+			for(i = 0; i < componentes.size() && !stop; i++) {
+				if(componentes.get(i) instanceof Mouse)
+					count++;
+				if(count == posicion) {
+					stop = true;
+				}	
+			}
+			componentes.remove(i);
+		}
+	}
+	
+	public void eliminarRAM(int posicion) {
+		int count = 0;
+		int i;
+		boolean stop = false;
+		if(posicion >= 0 && posicion < componentes.size()) {
+			for(i = 0; i < componentes.size() && !stop; i++) {
+				if(componentes.get(i) instanceof MemoriaRam)
+					count++;
+				if(count == posicion) {
+					stop = true;
+				}	
+			}
+			componentes.remove(i);
+		}
+	}
+	
+	public void eliminarTarjetaVideo(int posicion) {
+		int count = 0;
+		int i;
+		boolean stop = false;
+		if(posicion >= 0 && posicion < componentes.size()) {
+			for(i = 0; i < componentes.size() && !stop; i++) {
+				if(componentes.get(i) instanceof TarjetaDeVideo)
+					count++;
+				if(count == posicion) {
+					stop = true;
+				}	
+			}
+			componentes.remove(i);
+		}
+	}
+	
+	public void eliminarTeclados(int posicion) {
+		int count = 0;
+		int i;
+		boolean stop = false;
+		if(posicion >= 0 && posicion < componentes.size()) {
+			for(i = 0; i < componentes.size() && !stop; i++) {
+				if(componentes.get(i) instanceof Teclado)
+					count++;
+				if(count == posicion) {
+					stop = true;
+				}	
+			}
+			componentes.remove(i);
+		}
 	}
 
 	public ArrayList<Gerente> getGerentes() {	
