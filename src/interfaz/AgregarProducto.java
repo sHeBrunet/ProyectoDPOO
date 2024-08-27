@@ -416,7 +416,7 @@ public class AgregarProducto extends JDialog {
 		return act;
 	}
 	private void iniciarDatos() {
-		actualizarNoTrabajador();
+		//actualizarNoTrabajador();
 		nombreT.setText("");
 		apellidosT.setText("");
 		CiT.setText("");
@@ -429,14 +429,14 @@ public class AgregarProducto extends JDialog {
 	}
 
 
-	private void actualizarNoTrabajador() {
+	/*private void actualizarNoTrabajador() {
 		if( tienda.noTrabajadorAct() != tienda.getCantTrabajadores()) {
 			numTrabajador.setText(String.valueOf(tienda.noTrabajadorAct()));
 		}
 		else  {
 			numTrabajador.setText(String.valueOf(tienda.getUltimoNoTrabajador() + i));
 		}
-	}
+	}*/
 
 
 

@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -28,8 +29,6 @@ import logica.TarjetaDeVideo;
 import logica.TarjetaMadre;
 import logica.Teclado;
 import logica.TiendaDeComputadoras;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class ListadoDeProductos extends JDialog {
 
@@ -53,8 +52,9 @@ public class ListadoDeProductos extends JDialog {
 	private static JTable tableTeclados;
 	private static JTable tableAdaptadores;
 	private boolean cambios = false;
+	private static ArrayList <String> piezasElim = new ArrayList <>();
 	private static boolean tablasLlenas = false;
-	private static int i;
+	private static int count;
 
 	public ListadoDeProductos(Principal principal, TiendaDeComputadoras t) {
 		super(principal, true);
@@ -141,7 +141,6 @@ public class ListadoDeProductos extends JDialog {
 		tabbedPane.addTab("Tarjetas de Video", panelTarjetas);
 		tabbedPane.addTab("Teclados", panelTeclados);
 
-
 		JPanel panelBotones = new JPanel();
 		btnAtras = new JButton("Atrás");
 		btnAtras.setFocusable(false);
@@ -151,8 +150,7 @@ public class ListadoDeProductos extends JDialog {
 					int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea salir? No se guardarán los cambios realizados", "", 0, 3);
 					if(i==0) {
 						setVisible(false);
-						limpiarTablas();
-						tablasLlenas = false;
+						piezasElim.clear();
 					}
 				}
 				else
@@ -171,9 +169,11 @@ public class ListadoDeProductos extends JDialog {
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(cambios) {
-					JOptionPane.showMessageDialog(ListadoDeProductos.this, "Cambios guardados satisfactoriamente");		
+					int count = tienda.eliminarPiezas(piezasElim);
+					JOptionPane.showMessageDialog(ListadoDeProductos.this, "Cambios guardados satisfactoriamente. Se eliminaron " + count + " piezas");		
 					setVisible(false);
 					cambios = false;
+					piezasElim.clear();
 				}
 				else
 					JOptionPane.showMessageDialog(ListadoDeProductos.this, "No ha realizado ningún cambio");	
@@ -187,6 +187,7 @@ public class ListadoDeProductos extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea borrar la pieza seleccionada?", "", 0, 3);
 				if(i==0) {		
+					cambios = true;
 					int posAd = tableAdaptadores.getSelectedRow();
 					int posB = tableBocinas.getSelectedRow(); 
 					int posC = tableChasis.getSelectedRow();
@@ -202,86 +203,74 @@ public class ListadoDeProductos extends JDialog {
 
 					if (posAd != -1) {
 						String ID = (String) tableAdaptadores.getValueAt(posAd, 5);
+						piezasElim.add(ID);
 						((DefaultTableModel) tableAdaptadores.getModel()).removeRow(posAd);
-						tienda.eliminarPieza(ID);
-						cambios = true;
 						limpiarAdaptadores();
 						llenarTablaAdaptadores(modelAdaptadores);
-					} else if (posB != -1) {
+						} else if (posB != -1) {
 						String ID = (String) tableBocinas.getValueAt(posB, 5);
+						piezasElim.add(ID);
 						((DefaultTableModel) tableBocinas.getModel()).removeRow(posB);
-						tienda.eliminarPieza(ID);
-						cambios = true;
 						limpiarBocinas();
 						llenarTablaBocinas(modelBocinas);
 					} else if (posC != -1) {
 						String ID = (String) tableChasis.getValueAt(posC, 5);
+						piezasElim.add(ID);
 						((DefaultTableModel) tableChasis.getModel()).removeRow(posC);
-						tienda.eliminarPieza(ID);
-						cambios = true;
 						limpiarChasis();
 						llenarTablaChasis(modelChasis);
 					} else if (posD != -1) {
 						String ID = (String) tableDiscos.getValueAt(posD, 5);
+						piezasElim.add(ID);
 						((DefaultTableModel) tableDiscos.getModel()).removeRow(posD);
-						tienda.eliminarPieza(ID);
-						cambios = true;
 						limpiarDiscos();
 						llenarTablaDiscos(modelDiscos);
 					} else if (posF != -1) {
 						String ID = (String) tableFuentes.getValueAt(posF, 5);
+						piezasElim.add(ID);
 						((DefaultTableModel) tableFuentes.getModel()).removeRow(posF);
-						tienda.eliminarPieza(ID);
-						cambios = true;
 						limpiarFuentes();
 						llenarTablaFuentes(modelFuentes);
 					} else if (posMic != -1) {
 						String ID = (String) tableMicros.getValueAt(posMic, 5);
+						piezasElim.add(ID);
 						((DefaultTableModel) tableMicros.getModel()).removeRow(posMic);
-						tienda.eliminarPieza(ID);
-						cambios = true;
 						limpiarMicros();
 						llenarTablaMicros(modelMicros);
 					} else if (posMon != -1) {
 						String ID = (String) tableMonitores.getValueAt(posMon, 5);
+						piezasElim.add(ID);
 						((DefaultTableModel) tableMonitores.getModel()).removeRow(posMon);
-						tienda.eliminarPieza(ID);
-						cambios = true;
 						limpiarMonitores();
 						llenarTablaMonitores(modelMonitores);
 					} else if (posMoth != -1) {
 						String ID = (String) tableMotherboards.getValueAt(posMoth, 5);
+						piezasElim.add(ID);
 						((DefaultTableModel) tableMotherboards.getModel()).removeRow(posMoth);
-						tienda.eliminarPieza(ID);
-						cambios = true;
 						limpiarMotherboards();
 						llenarTablaMotherboards(modelMotherboards);
 					} else if (posMous != -1) {
 						String ID = (String) tableMouses.getValueAt(posMous, 5);
+						piezasElim.add(ID);
 						((DefaultTableModel) tableMouses.getModel()).removeRow(posMous);
-						tienda.eliminarPieza(ID);
-						cambios = true;
 						limpiarMouses();
 						llenarTablaMouses(modelMouse);
 					} else if (posR != -1) {
 						String ID = (String) tableRAM.getValueAt(posR, 5);
+						piezasElim.add(ID);
 						((DefaultTableModel) tableRAM.getModel()).removeRow(posR);
-						tienda.eliminarPieza(ID);
-						cambios = true;
 						limpiarRAM();
 						llenarTablaRAM(modelRAM);
 					} else if (posTV != -1) {
 						String ID = (String) tableTarjetas.getValueAt(posTV, 5);
+						piezasElim.add(ID);
 						((DefaultTableModel) tableTarjetas.getModel()).removeRow(posTV);
-						tienda.eliminarPieza(ID);
-						cambios = true;
 						limpiarTarjetas();
 						llenarTablaTarjetaVideo(modelTarjetas);
 					} else if (posT != -1) {
 						String ID = (String) tableTeclados.getValueAt(posT, 5);
+						piezasElim.add(ID);
 						((DefaultTableModel) tableTeclados.getModel()).removeRow(posT);		
-						tienda.eliminarPieza(ID);
-						cambios = true;
 						limpiarTeclados();
 						llenarTablaTeclados(modelTeclados);
 					} else {
@@ -292,8 +281,10 @@ public class ListadoDeProductos extends JDialog {
 		});
 		panelBotones.add(btnBorrar);
 
-		if(!tablasLlenas) 
+		if(!tablasLlenas) {
 			inicializar();
+		}
+		piezasElim.clear();
 		llenarTablaAdaptadores(modelAdaptadores);
 		llenarTablaBocinas(modelBocinas);
 		llenarTablaChasis(modelChasis);
@@ -306,101 +297,255 @@ public class ListadoDeProductos extends JDialog {
 		llenarTablaRAM(modelRAM);
 		llenarTablaTarjetaVideo(modelTarjetas);
 		llenarTablaTeclados(modelTeclados);
+		
 	}
+	
+	/*private static void llenarPrueba(DefaultTableModel model) {
+		if(!piezasElim.isEmpty())
+		for(String p: piezasElim) {
+			model.addRow(new Object[] {p});
+		}
+	}*/
+	
 
 	private static void llenarTablaAdaptadores(DefaultTableModel model) {
-		i = 1;
+		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
-			if(c instanceof Adaptador) 
-				model.addRow(new Object[]{i++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+			if(c instanceof Adaptador) {
+				if(!piezasElim.isEmpty()) {
+					boolean encontrado = false;
+					for(int i = 0; i < piezasElim.size(); i++) {
+						if(c.getNumSerie().equals(piezasElim.get(i))) {
+							encontrado = true;
+						}
+					}
+					if(!encontrado)
+						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+				}
+				else {
+					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+				}
+			}
 		}
 	}
 
 	private static void llenarTablaBocinas(DefaultTableModel model) {
-		i = 1;
+		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
 			if(c instanceof Bocina) 
-				model.addRow(new Object[]{i++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+				if(!piezasElim.isEmpty()) {
+					boolean encontrado = false;
+					for(int i = 0; i < piezasElim.size(); i++) {
+						if(c.getNumSerie().equals(piezasElim.get(i))) {
+							encontrado = true;
+						}
+					}
+					if(!encontrado)
+						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+				}
+				else {
+					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+				}
 		}
 	}
 
 	private static void llenarTablaChasis(DefaultTableModel model) {
-		i= 1;
+		count= 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
 			if (c instanceof Chasis)
-				model.addRow(new Object[]{i++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+				if(!piezasElim.isEmpty()) {
+					boolean encontrado = false;
+					for(int i = 0; i < piezasElim.size(); i++) {
+						if(c.getNumSerie().equals(piezasElim.get(i))) {
+							encontrado = true;
+						}
+					}
+					if(!encontrado)
+						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+				}
+				else {
+					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+				}
 		}
 	}
 
 	private static void llenarTablaDiscos(DefaultTableModel model) {
-		i= 1;
+		count= 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
 			if(c instanceof DiscoDuro) 
-				model.addRow(new Object[]{i++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+				if(!piezasElim.isEmpty()) {
+					boolean encontrado = false;
+					for(int i = 0; i < piezasElim.size(); i++) {
+						if(c.getNumSerie().equals(piezasElim.get(i))) {
+							encontrado = true;
+						}
+					}
+					if(!encontrado)
+						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+				}
+				else {
+					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+				}
 		}
 	}
 
 	private static void llenarTablaFuentes(DefaultTableModel model) {
-		i = 1;
+		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
 			if(c instanceof Fuente) 
-				model.addRow(new Object[]{i++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+				if(!piezasElim.isEmpty()) {
+					boolean encontrado = false;
+					for(int i = 0; i < piezasElim.size(); i++) {
+						if(c.getNumSerie().equals(piezasElim.get(i))) {
+							encontrado = true;
+						}
+					}
+					if(!encontrado)
+						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+				}
+				else {
+					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+				}
 		}
 	}
 
 	private static void llenarTablaMicros(DefaultTableModel model) {
-		i = 1;
+		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
 			if(c instanceof Microprocesador) 
-				model.addRow(new Object[]{i++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+				if(!piezasElim.isEmpty()) {
+					boolean encontrado = false;
+					for(int i = 0; i < piezasElim.size(); i++) {
+						if(c.getNumSerie().equals(piezasElim.get(i))) {
+							encontrado = true;
+						}
+					}
+					if(!encontrado)
+						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+				}
+				else {
+					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+				}
 		}
 	}
 
 	private static void llenarTablaMonitores(DefaultTableModel model) {
-		i = 1;
+		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
 			if(c instanceof Monitor) 
-				model.addRow(new Object[]{i++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+				if(!piezasElim.isEmpty()) {
+					boolean encontrado = false;
+					for(int i = 0; i < piezasElim.size(); i++) {
+						if(c.getNumSerie().equals(piezasElim.get(i))) {
+							encontrado = true;
+						}
+					}
+					if(!encontrado)
+						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+				}
+				else {
+					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+				}
 		}
 	}
 
 	private static void llenarTablaMotherboards(DefaultTableModel model) {
-		i = 1;
+		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
 			if(c instanceof TarjetaMadre) 
-				model.addRow(new Object[]{i++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+				if(!piezasElim.isEmpty()) {
+					boolean encontrado = false;
+					for(int i = 0; i < piezasElim.size(); i++) {
+						if(c.getNumSerie().equals(piezasElim.get(i))) {
+							encontrado = true;
+						}
+					}
+					if(!encontrado)
+						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+				}
+				else {
+					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+				}
 		}
 	}
 
 	private static void llenarTablaMouses(DefaultTableModel model) {
-		i = 1;
+		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
 			if(c instanceof Mouse) 
-				model.addRow(new Object[]{i++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+				if(!piezasElim.isEmpty()) {
+					boolean encontrado = false;
+					for(int i = 0; i < piezasElim.size(); i++) {
+						if(c.getNumSerie().equals(piezasElim.get(i))) {
+							encontrado = true;
+						}
+					}
+					if(!encontrado)
+						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+				}
+				else {
+					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+				}
 		}
 	}
 
 	private static void llenarTablaRAM(DefaultTableModel model) {
-		i = 1;
+		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
 			if(c instanceof MemoriaRam) 
-				model.addRow(new Object[]{i++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+				if(!piezasElim.isEmpty()) {
+					boolean encontrado = false;
+					for(int i = 0; i < piezasElim.size(); i++) {
+						if(c.getNumSerie().equals(piezasElim.get(i))) {
+							encontrado = true;
+						}
+					}
+					if(!encontrado)
+						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+				}
+				else {
+					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+				}
 		}
 	}
 
 	private static void llenarTablaTarjetaVideo(DefaultTableModel model) {
-		i = 1;
+		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
 			if(c instanceof TarjetaDeVideo) 
-				model.addRow(new Object[]{i++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+				if(!piezasElim.isEmpty()) {
+					boolean encontrado = false;
+					for(int i = 0; i < piezasElim.size(); i++) {
+						if(c.getNumSerie().equals(piezasElim.get(i))) {
+							encontrado = true;
+						}
+					}
+					if(!encontrado)
+						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+				}
+				else {
+					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+				}
 		}
 	}
 
 	private static void llenarTablaTeclados(DefaultTableModel model) {
-		i = 1;
+		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
 			if(c instanceof Teclado) 
-				model.addRow(new Object[]{i++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+				if(!piezasElim.isEmpty()) {
+					boolean encontrado = false;
+					for(int i = 0; i < piezasElim.size(); i++) {
+						if(c.getNumSerie().equals(piezasElim.get(i))) {
+							encontrado = true;
+						}
+					}
+					if(!encontrado)
+						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+				}
+				else {
+					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+				}
 		}
 	}
 
@@ -470,21 +615,5 @@ public class ListadoDeProductos extends JDialog {
 			((DefaultTableModel) tableTeclados.getModel()).removeRow(0);
 	}
 
-	private static void limpiarTablas() {
-		tienda.getComponentes().clear();
-		limpiarAdaptadores();
-		/*limpiarBocinas();
-		limpiarChasis();
-		limpiarDiscos();
-		limpiarFuentes();
-		limpiarFuentes();
-		limpiarMicros();
-		limpiarMonitores();
-		limpiarMotherboards();
-		limpiarMouses();
-		limpiarRAM();
-		limpiarTarjetas();
-		limpiarTeclados();*/
-	}
 }
 

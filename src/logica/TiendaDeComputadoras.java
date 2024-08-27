@@ -1,7 +1,6 @@
 package logica;
 
 import java.util.ArrayList;
-import inicializaciones.InicializacionDeDatos;
 
 
 public class TiendaDeComputadoras {
@@ -9,7 +8,6 @@ public class TiendaDeComputadoras {
 	private String ID;
 	private String direccion;
 	private String telefono;
-	private Gerente gerente;
 
 	private static TiendaDeComputadoras instancia;
 	private ArrayList<Trabajador> trabajadores;
@@ -104,39 +102,50 @@ public class TiendaDeComputadoras {
 		}
 
 	}
-	public void eliminarTrabajador1(String ID){
-		boolean stop = false;
-		int pos = 0;
-		for(int i = 0; i < trabajadores.size() && !stop; i++) {
-			if(trabajadores.get(i).getCI().equals(ID)) {
-				stop = true;
-				pos = i;
-			}
-		}
-		trabajadores.remove(pos);
-	}
-
-
-	public int hallarGerentes() {
+	public int eliminarTrabajadores(ArrayList <String> eliminados){
 		int count = 0;
-		for(Trabajador t: trabajadores) {
-			if(t instanceof Gerente)
-				count++;
+		for(int i = 0; i < trabajadores.size(); i++) {
+			boolean stop = false;
+			for(int j = 0; j < eliminados.size() && !stop; j++) {
+				if(trabajadores.get(i).getCI().equals(eliminados.get(j))) {
+					trabajadores.remove(i);
+					count++;
+					stop = true;
+					eliminados.remove(j);
+				}
+			}
 		}
 		return count;
 	}
 
 
-	public void eliminarPieza(String ID) {
-		int pos = 0;
-		boolean stop = false;
-		for(int i = 0; i < componentes.size() && !stop; i++) {
-			if(componentes.get(i).getNumSerie().equals(ID)) {
-				stop = true;	
-				pos = i;
-			}	
+	public int hallarGerentes(ArrayList <String> eliminados) {
+		int count = 0;
+		for(Trabajador t: trabajadores) {
+			if(t instanceof Gerente) {
+				for(int i = 0; i < eliminados.size(); i++) {
+					if(t.getCI().equals(eliminados.get(i)))
+						count++;
+				}
+			}
 		}
-		componentes.remove(pos);
+		return getGerentes().size() - count;
+	}
+
+	public int eliminarPiezas(ArrayList <String> eliminadas) {
+		int count = 0;
+		for(int i = 0; i < componentes.size(); i++) {
+			boolean stop = false;
+			for(int j = 0; j < eliminadas.size() && !stop; j++) {
+				if(componentes.get(i).getNumSerie().equals(eliminadas.get(j))) {
+					componentes.remove(i);
+					stop = true;
+					count++;
+					eliminadas.remove(j);
+				}
+			}
+		}
+		return count;
 	}
 
 	public ArrayList<Gerente> getGerentes() {	
@@ -196,6 +205,7 @@ public class TiendaDeComputadoras {
 			numeros.add(t.getNumero());
 		return numeros;
 	}
+	
 	public int noTrabajadorAct() {
 		int j = 1;
 		int num = 0;
