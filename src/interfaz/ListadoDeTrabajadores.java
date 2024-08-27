@@ -26,15 +26,16 @@ import java.awt.event.ActionEvent;
 public class ListadoDeTrabajadores extends JDialog {
 
 	private static final long serialVersionUID = 1L;
-	private TiendaDeComputadoras tienda;
+	private static TiendaDeComputadoras tienda;
 	private Principal p;
 	private JButton btnBorrar;
 	private JButton btnAtras;
-	private JTable tableTrabajadores;
-	private JTable tableGerentes;
+	private static JTable tableTrabajadores;
+	private static JTable tableGerentes;
 	private DefaultTableModel model;
 	private JButton btnAceptar;
 	private boolean cambios = false;
+	private static boolean tablasLlenas = false;
 
 	public ListadoDeTrabajadores(Principal principal, TiendaDeComputadoras t) {
 		super(principal, true);
@@ -99,52 +100,74 @@ public class ListadoDeTrabajadores extends JDialog {
 		btnBorrar = new JButton("Borrar");
 		btnBorrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int pos = tableTrabajadores.getSelectedRow();
-				int pos1 = tableGerentes.getSelectedRow();
-				if (pos != -1) {
-					Object t = tableTrabajadores.getValueAt(pos, 0);
-					int[] rows = tableTrabajadores.getSelectedRows();
-					for(int i = 0; i < rows.length; i++){
-						((DefaultTableModel) tableTrabajadores.getModel()).removeRow(rows[i]-i);;
-						tienda.eliminarTrabajador1(i);
-					}
-					cambios = true;
-				} else if (pos1 != -1) {
-					if(tienda.hallarGerentes() > 1) {
-						((DefaultTableModel) tableGerentes.getModel()).removeRow(pos1);
-						tienda.eliminarTrabajador1(pos1);
+				int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea borrar al trabajador seleccionado?", "", 0, 3);
+				if(i==0) {	
+					int pos = tableTrabajadores.getSelectedRow();
+					int pos1 = tableGerentes.getSelectedRow();
+					if (pos != -1) {
+						String ID = (String) tableTrabajadores.getValueAt(pos, 3);
+						((DefaultTableModel) tableTrabajadores.getModel()).removeRow(pos);
+						tienda.eliminarTrabajador1(ID);
 						cambios = true;
+						limpiarTrabajadores();
+						llenarTablaTrabajadores(modelTrabajadores);
+					} else if (pos1 != -1) {
+						if(tienda.hallarGerentes() > 1) {
+							String ID = (String) tableGerentes.getValueAt(pos1, 3);
+							((DefaultTableModel) tableGerentes.getModel()).removeRow(pos1);
+							tienda.eliminarTrabajador1(ID);
+							cambios = true;
+							limpiarGerentes();
+							llenarTablaGerentes(modelGerentes);
+						}
+						else
+							JOptionPane.showMessageDialog(ListadoDeTrabajadores.this, "Error: Al menos debe haber un gerente en la empresa");
+					} else {
+						JOptionPane.showMessageDialog(ListadoDeTrabajadores.this, "Antes de eliminar debe de seleccionar un trabajador de la tabla");
 					}
-					else
-						JOptionPane.showMessageDialog(ListadoDeTrabajadores.this, "Error: Al menos debe haber un gerente en la empresa");
-				} else {
-					JOptionPane.showMessageDialog(ListadoDeTrabajadores.this, "Antes de eliminar debe de seleccionar un trabajador de la tabla");
-				} 
+				}
 			}
 		});
 		panelBotones.add(btnBorrar);
-		inicializaciones.InicializacionDeDatos.crearGerentes(tienda);
-		inicializaciones.InicializacionDeDatos.crearTrabajadores(tienda);
 
-		llenarTablaGerentes(tienda, modelGerentes);
-		llenarTablaTrabajadores(tienda, modelTrabajadores);
-
+		if(!tablasLlenas) 
+			inicializar();
+		llenarTablaGerentes(modelGerentes);
+		llenarTablaTrabajadores(modelTrabajadores);
 	}
 
-	private static void llenarTablaTrabajadores(TiendaDeComputadoras tienda, DefaultTableModel model) {
+	private static void llenarTablaTrabajadores(DefaultTableModel model) {
+		int i = 1;
 		for (Trabajador t : tienda.getTrabajadores()) {
 			if (!t.getCargo().equals("Gerente"))
-				model.addRow(new Object[]{t.getNumero(), t.getNombre(), t.getApellidos(), t.getCI(), t.getSalarioBasico(), t.getNivelEscolar(), t.getCargo()});
+				model.addRow(new Object[]{i++, t.getNombre(), t.getApellidos(), t.getCI(), t.getSalarioBasico(), t.getNivelEscolar(), t.getCargo()});
 		}
 	}
 
-	private static void llenarTablaGerentes(TiendaDeComputadoras tienda, DefaultTableModel model) {
+	private static void llenarTablaGerentes(DefaultTableModel model) {
+		int i = 1;
 		for (Trabajador t : tienda.getGerentes()) {
 			Gerente g = (Gerente) t;
 			SimpleDateFormat formFecha = new SimpleDateFormat("dd/mm/yyyy");
 			String fecha = formFecha.format((Date) g.getFechaOcupCargo());
-			model.addRow(new Object[]{g.getNumero(), g.getNombre(), g.getApellidos(), g.getCI(), g.getSalarioBasico(), g.getNivelEscolar(), g.getCargo(), fecha});
+			model.addRow(new Object[]{i++, g.getNombre(), g.getApellidos(), g.getCI(), g.getSalarioBasico(), g.getNivelEscolar(), g.getCargo(), fecha});
 		}
+	}
+	
+	private static void limpiarTrabajadores() {
+		while(((DefaultTableModel) tableTrabajadores.getModel()).getRowCount() > 0)
+			((DefaultTableModel) tableTrabajadores.getModel()).removeRow(0);
+	}
+	
+	private static void limpiarGerentes() {
+		while(((DefaultTableModel) tableGerentes.getModel()).getRowCount() > 0)
+			((DefaultTableModel) tableGerentes.getModel()).removeRow(0);
+	}
+	
+	private static void inicializar() {
+		inicializaciones.InicializacionDeDatos.crearGerentes(tienda);
+		inicializaciones.InicializacionDeDatos.crearTrabajadores(tienda);
+		tablasLlenas = true;
 	}
 
 

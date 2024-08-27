@@ -28,6 +28,8 @@ import logica.TarjetaDeVideo;
 import logica.TarjetaMadre;
 import logica.Teclado;
 import logica.TiendaDeComputadoras;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class ListadoDeProductos extends JDialog {
 
@@ -37,20 +39,21 @@ public class ListadoDeProductos extends JDialog {
 	private JButton btnBorrar;
 	private JButton btnAtras;
 	private JButton btnAceptar;
-	private String[] columnNames = {"No.", "Marca", "Modelo", "Precio", "Cantidad"};
-	private JTable tableBocinas;
-	private JTable tableChasis;
-	private JTable tableDiscos;
-	private JTable tableFuentes;
-	private JTable tableMicros;
-	private JTable tableMonitores;
-	private JTable tableMotherboards;
-	private JTable tableMouses;
-	private JTable tableRAM;
-	private JTable tableTarjetas;
-	private JTable tableTeclados;
-	private JTable tableAdaptadores;
+	private String[] columnNames = {"No.", "Marca", "Modelo", "Precio", "Cantidad", "No. Serie"};
+	private static JTable tableBocinas;
+	private static JTable tableChasis;
+	private static JTable tableDiscos;
+	private static JTable tableFuentes;
+	private static JTable tableMicros;
+	private static JTable tableMonitores;
+	private static JTable tableMotherboards;
+	private static JTable tableMouses;
+	private static JTable tableRAM;
+	private static JTable tableTarjetas;
+	private static JTable tableTeclados;
+	private static JTable tableAdaptadores;
 	private boolean cambios = false;
+	private static boolean tablasLlenas = false;
 	private static int i;
 
 	public ListadoDeProductos(Principal principal, TiendaDeComputadoras t) {
@@ -146,8 +149,11 @@ public class ListadoDeProductos extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				if(cambios) {
 					int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea salir? No se guardarán los cambios realizados", "", 0, 3);
-					if(i==0)
+					if(i==0) {
 						setVisible(false);
+						limpiarTablas();
+						tablasLlenas = false;
+					}
 				}
 				else
 					setVisible(false);
@@ -167,6 +173,7 @@ public class ListadoDeProductos extends JDialog {
 				if(cambios) {
 					JOptionPane.showMessageDialog(ListadoDeProductos.this, "Cambios guardados satisfactoriamente");		
 					setVisible(false);
+					cambios = false;
 				}
 				else
 					JOptionPane.showMessageDialog(ListadoDeProductos.this, "No ha realizado ningún cambio");	
@@ -178,202 +185,306 @@ public class ListadoDeProductos extends JDialog {
 		btnBorrar.setFocusable(false);
 		btnBorrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int posAd = tableAdaptadores.getSelectedRow();
-				int posB = tableBocinas.getSelectedRow(); 
-				int posC = tableChasis.getSelectedRow();
-				int posD = tableDiscos.getSelectedRow();
-				int posF = tableFuentes.getSelectedRow();
-				int posMic = tableMicros.getSelectedRow();
-				int posMon = tableMonitores.getSelectedRow();
-				int posMoth = tableMotherboards.getSelectedRow();
-				int posMous = tableMouses.getSelectedRow();
-				int posR = tableRAM.getSelectedRow();
-				int posTV = tableTarjetas.getSelectedRow();
-				int posT = tableTeclados.getSelectedRow();
+				int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea borrar la pieza seleccionada?", "", 0, 3);
+				if(i==0) {		
+					int posAd = tableAdaptadores.getSelectedRow();
+					int posB = tableBocinas.getSelectedRow(); 
+					int posC = tableChasis.getSelectedRow();
+					int posD = tableDiscos.getSelectedRow();
+					int posF = tableFuentes.getSelectedRow();
+					int posMic = tableMicros.getSelectedRow();
+					int posMon = tableMonitores.getSelectedRow();
+					int posMoth = tableMotherboards.getSelectedRow();
+					int posMous = tableMouses.getSelectedRow();
+					int posR = tableRAM.getSelectedRow();
+					int posTV = tableTarjetas.getSelectedRow();
+					int posT = tableTeclados.getSelectedRow();
 
-				if (posAd != -1) {
-					((DefaultTableModel) tableAdaptadores.getModel()).removeRow(posAd);
-					tienda.eliminarAdaptadores(posAd);
-					cambios = true;
-				} else if (posB != -1) {
-					((DefaultTableModel) tableBocinas.getModel()).removeRow(posB);
-					tienda.eliminarBocinas(posB);
-					cambios = true;
-				} else if (posC != -1) {
-					((DefaultTableModel) tableChasis.getModel()).removeRow(posC);
-					tienda.eliminarChasis(posC);
-					cambios = true;
-				} else if (posD != -1) {
-					((DefaultTableModel) tableDiscos.getModel()).removeRow(posD);
-					tienda.eliminarDiscos(posD);
-					cambios = true;
-				} else if (posF != -1) {
-					((DefaultTableModel) tableFuentes.getModel()).removeRow(posF);
-					tienda.eliminarFuentes(posF);
-					cambios = true;
-				} else if (posMic != -1) {
-					((DefaultTableModel) tableMicros.getModel()).removeRow(posMic);
-					tienda.eliminarMicros(posMic);
-					cambios = true;
-				} else if (posMon != -1) {
-					((DefaultTableModel) tableMonitores.getModel()).removeRow(posMon);
-					tienda.eliminarMonitores(posMon);
-					cambios = true;
-				} else if (posMoth != -1) {
-					((DefaultTableModel) tableMotherboards.getModel()).removeRow(posMoth);
-					tienda.eliminarMotherboards(posMoth);
-					cambios = true;
-				} else if (posMous != -1) {
-					((DefaultTableModel) tableMouses.getModel()).removeRow(posMous);
-					tienda.eliminarMouses(posMous);
-					cambios = true;
-				} else if (posR != -1) {
-					((DefaultTableModel) tableRAM.getModel()).removeRow(posR);
-					tienda.eliminarRAM(posR);
-					cambios = true;
-				} else if (posTV != -1) {
-					((DefaultTableModel) tableTarjetas.getModel()).removeRow(posTV);
-					tienda.eliminarTarjetaVideo(posTV);
-					cambios = true;
-				} else if (posT != -1) {
-					((DefaultTableModel) tableTeclados.getModel()).removeRow(posT);
-					tienda.eliminarTeclados(posT);
-					cambios = true;
-				} else {
-					JOptionPane.showMessageDialog(ListadoDeProductos.this, "Antes de eliminar debe de seleccionar un componente de la tabla");
+					if (posAd != -1) {
+						String ID = (String) tableAdaptadores.getValueAt(posAd, 5);
+						((DefaultTableModel) tableAdaptadores.getModel()).removeRow(posAd);
+						tienda.eliminarPieza(ID);
+						cambios = true;
+						limpiarAdaptadores();
+						llenarTablaAdaptadores(modelAdaptadores);
+					} else if (posB != -1) {
+						String ID = (String) tableBocinas.getValueAt(posB, 5);
+						((DefaultTableModel) tableBocinas.getModel()).removeRow(posB);
+						tienda.eliminarPieza(ID);
+						cambios = true;
+						limpiarBocinas();
+						llenarTablaBocinas(modelBocinas);
+					} else if (posC != -1) {
+						String ID = (String) tableChasis.getValueAt(posC, 5);
+						((DefaultTableModel) tableChasis.getModel()).removeRow(posC);
+						tienda.eliminarPieza(ID);
+						cambios = true;
+						limpiarChasis();
+						llenarTablaChasis(modelChasis);
+					} else if (posD != -1) {
+						String ID = (String) tableDiscos.getValueAt(posD, 5);
+						((DefaultTableModel) tableDiscos.getModel()).removeRow(posD);
+						tienda.eliminarPieza(ID);
+						cambios = true;
+						limpiarDiscos();
+						llenarTablaDiscos(modelDiscos);
+					} else if (posF != -1) {
+						String ID = (String) tableFuentes.getValueAt(posF, 5);
+						((DefaultTableModel) tableFuentes.getModel()).removeRow(posF);
+						tienda.eliminarPieza(ID);
+						cambios = true;
+						limpiarFuentes();
+						llenarTablaFuentes(modelFuentes);
+					} else if (posMic != -1) {
+						String ID = (String) tableMicros.getValueAt(posMic, 5);
+						((DefaultTableModel) tableMicros.getModel()).removeRow(posMic);
+						tienda.eliminarPieza(ID);
+						cambios = true;
+						limpiarMicros();
+						llenarTablaMicros(modelMicros);
+					} else if (posMon != -1) {
+						String ID = (String) tableMonitores.getValueAt(posMon, 5);
+						((DefaultTableModel) tableMonitores.getModel()).removeRow(posMon);
+						tienda.eliminarPieza(ID);
+						cambios = true;
+						limpiarMonitores();
+						llenarTablaMonitores(modelMonitores);
+					} else if (posMoth != -1) {
+						String ID = (String) tableMotherboards.getValueAt(posMoth, 5);
+						((DefaultTableModel) tableMotherboards.getModel()).removeRow(posMoth);
+						tienda.eliminarPieza(ID);
+						cambios = true;
+						limpiarMotherboards();
+						llenarTablaMotherboards(modelMotherboards);
+					} else if (posMous != -1) {
+						String ID = (String) tableMouses.getValueAt(posMous, 5);
+						((DefaultTableModel) tableMouses.getModel()).removeRow(posMous);
+						tienda.eliminarPieza(ID);
+						cambios = true;
+						limpiarMouses();
+						llenarTablaMouses(modelMouse);
+					} else if (posR != -1) {
+						String ID = (String) tableRAM.getValueAt(posR, 5);
+						((DefaultTableModel) tableRAM.getModel()).removeRow(posR);
+						tienda.eliminarPieza(ID);
+						cambios = true;
+						limpiarRAM();
+						llenarTablaRAM(modelRAM);
+					} else if (posTV != -1) {
+						String ID = (String) tableTarjetas.getValueAt(posTV, 5);
+						((DefaultTableModel) tableTarjetas.getModel()).removeRow(posTV);
+						tienda.eliminarPieza(ID);
+						cambios = true;
+						limpiarTarjetas();
+						llenarTablaTarjetaVideo(modelTarjetas);
+					} else if (posT != -1) {
+						String ID = (String) tableTeclados.getValueAt(posT, 5);
+						((DefaultTableModel) tableTeclados.getModel()).removeRow(posT);		
+						tienda.eliminarPieza(ID);
+						cambios = true;
+						limpiarTeclados();
+						llenarTablaTeclados(modelTeclados);
+					} else {
+						JOptionPane.showMessageDialog(ListadoDeProductos.this, "Antes de eliminar debe de seleccionar un componente de la tabla");
+					}
 				}
 			}
 		});
 		panelBotones.add(btnBorrar);
 
-		inicializar();
-		llenarTablaAdaptadores(tienda, modelAdaptadores);
-		llenarTablaBocinas(tienda, modelBocinas);
-		llenarTablaChasis(tienda, modelChasis);
-		llenarTablaDiscos(tienda, modelDiscos);
-		llenarTablaFuentes(tienda, modelFuentes);
-		llenarTablaMicros(tienda, modelMicros);
-		llenarTablaMonitores(tienda, modelMonitores);
-		llenarTablaMotherboards(tienda, modelMotherboards);
-		llenarTablaMouses(tienda, modelMouse);
-		llenarTablaRAM(tienda, modelRAM);
-		llenarTablaTarjetaVideo(tienda, modelTarjetas);
-		llenarTablaTeclados(tienda, modelTeclados);
+		if(!tablasLlenas) 
+			inicializar();
+		llenarTablaAdaptadores(modelAdaptadores);
+		llenarTablaBocinas(modelBocinas);
+		llenarTablaChasis(modelChasis);
+		llenarTablaDiscos(modelDiscos);
+		llenarTablaFuentes(modelFuentes);
+		llenarTablaMicros(modelMicros);
+		llenarTablaMonitores(modelMonitores);
+		llenarTablaMotherboards(modelMotherboards);
+		llenarTablaMouses(modelMouse);
+		llenarTablaRAM(modelRAM);
+		llenarTablaTarjetaVideo(modelTarjetas);
+		llenarTablaTeclados(modelTeclados);
 	}
 
-	private static void llenarTablaAdaptadores(TiendaDeComputadoras tienda, DefaultTableModel model) {
+	private static void llenarTablaAdaptadores(DefaultTableModel model) {
 		i = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
 			if(c instanceof Adaptador) 
-				model.addRow(new Object[]{i++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible()});
+				model.addRow(new Object[]{i++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
 		}
 	}
 
-	private static void llenarTablaBocinas(TiendaDeComputadoras tienda, DefaultTableModel model) {
+	private static void llenarTablaBocinas(DefaultTableModel model) {
 		i = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
 			if(c instanceof Bocina) 
-				model.addRow(new Object[]{i++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible()});
+				model.addRow(new Object[]{i++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
 		}
 	}
 
-	private static void llenarTablaChasis(TiendaDeComputadoras tienda, DefaultTableModel model) {
+	private static void llenarTablaChasis(DefaultTableModel model) {
 		i= 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
 			if (c instanceof Chasis)
-				model.addRow(new Object[]{i++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible()});
+				model.addRow(new Object[]{i++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
 		}
 	}
 
-	private static void llenarTablaDiscos(TiendaDeComputadoras tienda, DefaultTableModel model) {
+	private static void llenarTablaDiscos(DefaultTableModel model) {
 		i= 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
 			if(c instanceof DiscoDuro) 
-				model.addRow(new Object[]{i++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible()});
+				model.addRow(new Object[]{i++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
 		}
 	}
 
-	private static void llenarTablaFuentes(TiendaDeComputadoras tienda, DefaultTableModel model) {
+	private static void llenarTablaFuentes(DefaultTableModel model) {
 		i = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
 			if(c instanceof Fuente) 
-				model.addRow(new Object[]{i++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible()});
+				model.addRow(new Object[]{i++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
 		}
 	}
 
-	private static void llenarTablaMicros(TiendaDeComputadoras tienda, DefaultTableModel model) {
+	private static void llenarTablaMicros(DefaultTableModel model) {
 		i = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
 			if(c instanceof Microprocesador) 
-				model.addRow(new Object[]{i++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible()});
+				model.addRow(new Object[]{i++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
 		}
 	}
 
-	private static void llenarTablaMonitores(TiendaDeComputadoras tienda, DefaultTableModel model) {
+	private static void llenarTablaMonitores(DefaultTableModel model) {
 		i = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
 			if(c instanceof Monitor) 
-				model.addRow(new Object[]{i++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible()});
+				model.addRow(new Object[]{i++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
 		}
 	}
 
-	private static void llenarTablaMotherboards(TiendaDeComputadoras tienda, DefaultTableModel model) {
+	private static void llenarTablaMotherboards(DefaultTableModel model) {
 		i = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
 			if(c instanceof TarjetaMadre) 
-				model.addRow(new Object[]{i++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible()});
+				model.addRow(new Object[]{i++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
 		}
 	}
 
-	private static void llenarTablaMouses(TiendaDeComputadoras tienda, DefaultTableModel model) {
+	private static void llenarTablaMouses(DefaultTableModel model) {
 		i = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
 			if(c instanceof Mouse) 
-				model.addRow(new Object[]{i++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible()});
+				model.addRow(new Object[]{i++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
 		}
 	}
 
-	private static void llenarTablaRAM(TiendaDeComputadoras tienda, DefaultTableModel model) {
+	private static void llenarTablaRAM(DefaultTableModel model) {
 		i = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
 			if(c instanceof MemoriaRam) 
-				model.addRow(new Object[]{i++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible()});
+				model.addRow(new Object[]{i++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
 		}
 	}
 
-	private static void llenarTablaTarjetaVideo(TiendaDeComputadoras tienda, DefaultTableModel model) {
+	private static void llenarTablaTarjetaVideo(DefaultTableModel model) {
 		i = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
 			if(c instanceof TarjetaDeVideo) 
-				model.addRow(new Object[]{i++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible()});
+				model.addRow(new Object[]{i++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
 		}
 	}
 
-	private static void llenarTablaTeclados(TiendaDeComputadoras tienda, DefaultTableModel model) {
+	private static void llenarTablaTeclados(DefaultTableModel model) {
 		i = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
 			if(c instanceof Teclado) 
-				model.addRow(new Object[]{i++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible()});
+				model.addRow(new Object[]{i++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
 		}
 	}
 
 	private static void inicializar() {
-		inicializaciones.InicializacionDeDatos.inicializarBocinas(tienda);
-		inicializaciones.InicializacionDeDatos.inicializarChasis(tienda);
-		inicializaciones.InicializacionDeDatos.inicializarDiscosDuros(tienda);
-		inicializaciones.InicializacionDeDatos.inicializarFuentes(tienda);
-		inicializaciones.InicializacionDeDatos.inicializarMemoriasRAM(tienda);
-		inicializaciones.InicializacionDeDatos.inicializarMicroprocesador(tienda);
-		inicializaciones.InicializacionDeDatos.inicializarMonitores(tienda);
-		inicializaciones.InicializacionDeDatos.inicializarMouses(tienda);
-		inicializaciones.InicializacionDeDatos.inicializarTarjetasMadre(tienda);
-		inicializaciones.InicializacionDeDatos.inicializarTarjetasVideo(tienda);
-		inicializaciones.InicializacionDeDatos.inicializarTeclados(tienda);
-		inicializaciones.InicializacionDeDatos.inicializarExtension(tienda);
+		inicializaciones.InicializacionDeDatos.llamarInicializaciones(tienda);
+		tablasLlenas = true;
 	}
 
-	private static void actualizarTablas(){
 
+	private static void limpiarAdaptadores() {
+		while(((DefaultTableModel) tableAdaptadores.getModel()).getRowCount() > 0)
+			((DefaultTableModel) tableAdaptadores.getModel()).removeRow(0);
+	}
+
+	private static void limpiarBocinas() {
+		while(((DefaultTableModel) tableBocinas.getModel()).getRowCount() > 0)
+			((DefaultTableModel) tableBocinas.getModel()).removeRow(0);
+	}
+
+	private static void limpiarChasis() {
+		while(((DefaultTableModel) tableChasis.getModel()).getRowCount() > 0)
+			((DefaultTableModel) tableChasis.getModel()).removeRow(0);
+	}
+
+	private static void limpiarDiscos() {
+		while(((DefaultTableModel) tableDiscos.getModel()).getRowCount() > 0)
+			((DefaultTableModel) tableDiscos.getModel()).removeRow(0);
+	}
+
+	private static void limpiarFuentes() {
+		while(((DefaultTableModel) tableFuentes.getModel()).getRowCount() > 0)
+			((DefaultTableModel) tableFuentes.getModel()).removeRow(0);
+	}
+
+	private static void limpiarMicros() {
+		while(((DefaultTableModel) tableMicros.getModel()).getRowCount() > 0)
+			((DefaultTableModel) tableMicros.getModel()).removeRow(0);
+	}
+
+	private static void limpiarMonitores() {
+		while(((DefaultTableModel) tableMonitores.getModel()).getRowCount() > 0)
+			((DefaultTableModel) tableMonitores.getModel()).removeRow(0);
+	}
+
+	private static void limpiarMotherboards() {
+		while(((DefaultTableModel) tableMotherboards.getModel()).getRowCount() > 0)
+			((DefaultTableModel) tableMotherboards.getModel()).removeRow(0);
+	}
+
+	private static void limpiarMouses() {
+		while(((DefaultTableModel) tableMouses.getModel()).getRowCount() > 0)
+			((DefaultTableModel) tableMouses.getModel()).removeRow(0);
+	}
+
+	private static void limpiarRAM() {
+		while(((DefaultTableModel) tableRAM.getModel()).getRowCount() > 0)
+			((DefaultTableModel) tableRAM.getModel()).removeRow(0);
+	}
+
+	private static void limpiarTarjetas() {
+		while(((DefaultTableModel) tableTarjetas.getModel()).getRowCount() > 0)
+			((DefaultTableModel) tableTarjetas.getModel()).removeRow(0);
+	}
+
+	private static void limpiarTeclados() {
+		while(((DefaultTableModel) tableTeclados.getModel()).getRowCount() > 0)
+			((DefaultTableModel) tableTeclados.getModel()).removeRow(0);
+	}
+
+	private static void limpiarTablas() {
+		tienda.getComponentes().clear();
+		limpiarAdaptadores();
+		/*limpiarBocinas();
+		limpiarChasis();
+		limpiarDiscos();
+		limpiarFuentes();
+		limpiarFuentes();
+		limpiarMicros();
+		limpiarMonitores();
+		limpiarMotherboards();
+		limpiarMouses();
+		limpiarRAM();
+		limpiarTarjetas();
+		limpiarTeclados();*/
 	}
 }
 

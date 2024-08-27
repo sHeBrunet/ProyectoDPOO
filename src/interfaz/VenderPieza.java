@@ -137,10 +137,10 @@ public class VenderPieza extends JDialog {
 
 			primeraVisualizacionAtributo();
 
-			JLabel Componenetelabel = new JLabel("Componenetes:");
-			Componenetelabel.setFont(new Font("Tahoma", Font.BOLD, 15));
-			Componenetelabel.setBounds(12, 78, 141, 16);
-			FiltradodeProducto.add(Componenetelabel);
+			JLabel Componentelabel = new JLabel("Componentes:");
+			Componentelabel.setFont(new Font("Tahoma", Font.BOLD, 15));
+			Componentelabel.setBounds(12, 78, 141, 16);
+			FiltradodeProducto.add(Componentelabel);
 
 			comboBoxComponenetes = new JComboBox();
 			comboBoxComponenetes.addActionListener(new ActionListener() {

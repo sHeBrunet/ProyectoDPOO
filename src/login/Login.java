@@ -30,6 +30,8 @@ import componentesVisuales.JTextFieldModificado;
 import interfaz.Principal;
 import logica.ManejoDeSesion;
 import logica.TiendaDeComputadoras;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Login extends JFrame {
 
@@ -47,6 +49,7 @@ public class Login extends JFrame {
 	private static Principal principal;
 	private JButton btnHacerVisible;
 	private JTextField textField;
+	private BotonAnimacion btnIniciar;
 
 	public Login() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/gui/icons/logoPeque\u00F1o1.jpg")));
@@ -66,6 +69,13 @@ public class Login extends JFrame {
 		panelGeneral.add(avatarCircular);
 
 		passwordField = new JPasswordField();
+		passwordField.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if(c==KeyEvent.VK_ENTER)
+					btnIniciar.doClick();
+			}
+		});
 		passwordField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -102,8 +112,16 @@ public class Login extends JFrame {
 		passwordField.setText(passInicial);
 		passwordField.setForeground(Color.GRAY);
 		panelGeneral.add(passwordField);
-		
+
 		JTextFieldModificado userField = new JTextFieldModificado();
+		userField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if(c==KeyEvent.VK_ENTER)
+					btnIniciar.doClick();
+			}
+		});
 		userField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -139,7 +157,7 @@ public class Login extends JFrame {
 		panelGeneral.add(userField);
 		panelGeneral.add(userField);
 
-		final BotonAnimacion btnIniciar = new BotonAnimacion();
+		btnIniciar = new BotonAnimacion();
 		btnIniciar.setFocusable(false);
 		btnIniciar.addMouseListener(new MouseAdapter() {
 			public void mouseEntered(MouseEvent e) {
@@ -150,53 +168,53 @@ public class Login extends JFrame {
 			}
 		});
 		btnIniciar.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		        if (!userField.getText().isEmpty() && !String.valueOf(passwordField.getPassword()).isEmpty()) {
-		            if ((usuario.equals(userField.getText()) && pass.equals(String.valueOf(passwordField.getPassword()))) || 
-		                (admin.equals(userField.getText()) && pass1.equals(String.valueOf(passwordField.getPassword())))) {
-		                
-		                // Cerrar sesión anterior
-		                ManejoDeSesion manejo = ManejoDeSesion.getInstance();
-		                if (manejo != null) {
-		                    manejo.cerrarSesion();
-		                } else {
-		                    System.out.println("ManejoDeSesion es null");
-		                }
-		                
-		                // Iniciar nueva sesión
-		                user = userField.getText();
-		                String password = String.valueOf(passwordField.getPassword());
-		                ManejoDeSesion.getInstance().setUsername(user);
-		                ManejoDeSesion.getInstance().setPassword(password); 
-		                dispose();
-		                
-		                try {
-		                    UIManager.setLookAndFeel("com.jtattoo.plaf.luna.LunaLookAndFeel");
-		                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e1) {
-		                    e1.printStackTrace();
-		                    JOptionPane.showMessageDialog(null, "Error al aplicar el LookAndFeel.", "ERROR", JOptionPane.ERROR_MESSAGE);
-		                }
-		                
-		                EventQueue.invokeLater(new Runnable() {
-		                    public void run() {
-		                        try {
-		                            if (principal == null) {
-		                                principal = new Principal(TiendaDeComputadoras.getInstancia(), ManejoDeSesion.getInstance());
-		                            }
-		                            principal.setLocationRelativeTo(null);
-		                            principal.setVisible(true);
-		                        } catch (Exception e) {
-		                            e.printStackTrace();
-		                        }
-		                    }
-		                });
-		            } else {
-		                JOptionPane.showMessageDialog(null, "Nombre de usuario o contraseña incorrecta.", "ERROR", JOptionPane.ERROR_MESSAGE);
-		            }
-		        } else {
-		            JOptionPane.showMessageDialog(null, "Por favor, rellene todos los campos.", "ERROR", JOptionPane.WARNING_MESSAGE);
-		        }
-		    }
+			public void actionPerformed(ActionEvent e) {
+				if (!userField.getText().isEmpty() && !String.valueOf(passwordField.getPassword()).isEmpty()) {
+					if ((usuario.equals(userField.getText()) && pass.equals(String.valueOf(passwordField.getPassword()))) || 
+							(admin.equals(userField.getText()) && pass1.equals(String.valueOf(passwordField.getPassword())))) {
+
+						// Cerrar sesión anterior
+						ManejoDeSesion manejo = ManejoDeSesion.getInstance();
+						if (manejo != null) {
+							manejo.cerrarSesion();
+						} else {
+							System.out.println("ManejoDeSesion es null");
+						}
+
+						// Iniciar nueva sesión
+						user = userField.getText();
+						String password = String.valueOf(passwordField.getPassword());
+						ManejoDeSesion.getInstance().setUsername(user);
+						ManejoDeSesion.getInstance().setPassword(password); 
+						dispose();
+
+						try {
+							UIManager.setLookAndFeel("com.jtattoo.plaf.luna.LunaLookAndFeel");
+						} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e1) {
+							e1.printStackTrace();
+							JOptionPane.showMessageDialog(null, "Error al aplicar el LookAndFeel.", "ERROR", JOptionPane.ERROR_MESSAGE);
+						}
+
+						EventQueue.invokeLater(new Runnable() {
+							public void run() {
+								try {
+									if (principal == null) {
+										principal = new Principal(TiendaDeComputadoras.getInstancia(), ManejoDeSesion.getInstance());
+									}
+									principal.setLocationRelativeTo(null);
+									principal.setVisible(true);
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+							}
+						});
+					} else {
+						JOptionPane.showMessageDialog(null, "Nombre de usuario o contraseña incorrecta.", "ERROR", JOptionPane.ERROR_MESSAGE);
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "Por favor, rellene todos los campos.", "ERROR", JOptionPane.WARNING_MESSAGE);
+				}
+			}
 		});
 		btnIniciar.setBackground(new Color(135, 206, 250));
 		btnIniciar.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -247,13 +265,13 @@ public class Login extends JFrame {
 		btnHacerVisible.setBackground(new Color(255, 255, 255));
 		btnHacerVisible.setBounds(353, 344, 32, 23);
 		panelGeneral.add(btnHacerVisible);
-		
+
 		textField = new JTextField();
 		textField.setEditable(false);
 		textField.setBounds(187, 102, 3, 20);
 		panelGeneral.add(textField);
 		textField.setColumns(10);
-		
+
 		setLocationRelativeTo(null);
 
 	}
