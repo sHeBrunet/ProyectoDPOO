@@ -23,38 +23,38 @@ public class InicializacionDeDatos {
 
 		// Datos para los trabajadores
 
-		tienda.agregarTrabajador(new Trabajador(2, "María", "Gómez Gónzalez", "93052789095", 4000,"Preuniversitario", "Asistente"));
-		tienda.agregarTrabajador(new Trabajador(3, "Pedro", "Rodríguez Villarreal", "94060890136",1000, "Técnico Medio", "Cajero"));
-		tienda.agregarTrabajador(new Trabajador(4, "Ana", "López Pérez", "95071901456", 900, "Secundaria", "Técnico"));
-		tienda.agregarTrabajador(new Trabajador(5, "Luis", "Martínez Cordovéz", "96081012753",4500, "Universitario", "Técnico"));
-		tienda.agregarTrabajador(new Trabajador(6, "Laura", "Sánchez Sueiro", "87090123789",2000, "Preuniversitario", "Técnico"));
-		tienda.agregarTrabajador(new Trabajador(7, "Carlos", "García Mujillo", "78011234560", 1230, "Secundaria", "Asistente"));
-		tienda.agregarTrabajador(new Trabajador(8, "Lucía", "Hernández Salazar", "89012345789", 1234, "Secundaria", "Cajero"));
-		tienda.agregarTrabajador(new Trabajador(9, "Jorge", "Díaz García", "90120256542", 3453, "Universitario", "Técnico"));
-		tienda.agregarTrabajador(new Trabajador(10, "Sofía", "Morales Montero", "01040567712", 3456, "Preuniversitario", "Cajero"));
+		tienda.agregarTrabajador(new Trabajador("MG93", "María", "Gómez Gónzalez", "93052789095", 4000,"Preuniversitario", "Asistente"));
+		tienda.agregarTrabajador(new Trabajador("PR94", "Pedro", "Rodríguez Villarreal", "94060890136",1000, "Técnico Medio", "Cajero"));
+		tienda.agregarTrabajador(new Trabajador("AL95", "Ana", "López Pérez", "95071901456", 900, "Secundaria", "Técnico"));
+		tienda.agregarTrabajador(new Trabajador("LM96", "Luis", "Martínez Cordovéz", "96081012753",4500, "Universitario", "Técnico"));
+		tienda.agregarTrabajador(new Trabajador("LS87", "Laura", "Sánchez Sueiro", "87090123789",2000, "Preuniversitario", "Técnico"));
+		tienda.agregarTrabajador(new Trabajador("CG78", "Carlos", "García Mujillo", "78011234560", 1230, "Secundaria", "Asistente"));
+		tienda.agregarTrabajador(new Trabajador("LH89", "Lucía", "Hernández Salazar", "89012345789", 1234, "Secundaria", "Cajero"));
+		tienda.agregarTrabajador(new Trabajador("JD90", "Jorge", "Díaz García", "90120256542", 3453, "Universitario", "Técnico"));
+		tienda.agregarTrabajador(new Trabajador("SM01", "Sofía", "Morales Montero", "01040567712", 3456, "Preuniversitario", "Cajero"));
 
-		tienda.agregarTrabajador(new Trabajador(11, "Andrés", "Castillo Gusmán", "72041679456", 1234, "Secundaria", "Cajero"));
-		tienda.agregarTrabajador(new Trabajador(12, "Marta", "Vargas Castro", "93051780542", 2000, "Técnico Medio", "Asistente"));
-		tienda.agregarTrabajador(new Trabajador(13, "Fernando", "Ramírez Montenegro", "84061891789", 3000, "Universitario", "Asistente"));
-		tienda.agregarTrabajador(new Trabajador(14, "Claudia", "Torres Gutierrez", "75071902542", 4000, "Preuniversitario", "Asistente"));
-		tienda.agregarTrabajador(new Trabajador(15, "Diego", "Rojas Trujillo", "96081013324", 4000, "Técnico Medio", "Técnico"));
+		tienda.agregarTrabajador(new Trabajador("AC72", "Andrés", "Castillo Gusmán", "72041679456", 1234, "Secundaria", "Cajero"));
+		tienda.agregarTrabajador(new Trabajador("MV93", "Marta", "Vargas Castro", "93051780542", 2000, "Técnico Medio", "Asistente"));
+		tienda.agregarTrabajador(new Trabajador("FR84", "Fernando", "Ramírez Montenegro", "84061891789", 3000, "Universitario", "Asistente"));
+		tienda.agregarTrabajador(new Trabajador("CT75", "Claudia", "Torres Gutierrez", "75071902542", 4000, "Preuniversitario", "Asistente"));
+		tienda.agregarTrabajador(new Trabajador("DR96", "Diego", "Rojas Trujillo", "96081013324", 4000, "Técnico Medio", "Técnico"));
 
-		tienda.agregarTrabajador(new Trabajador(16, "Elena", "Jiménez Pacheco", "77090124785", 3400, "Secundaria", "Auxiliar de Limpieza"));
-		tienda.agregarTrabajador(new Trabajador(17, "Pablo", "Mendoza Carvajal", "88011235785", 4000, "Universitario", "Asistente"));
-		tienda.agregarTrabajador(new Trabajador(18, "Teresa", "Salazar Ramos", "99012346654", 3000, "Preuniversitario", "Cajero"));
-		tienda.agregarTrabajador(new Trabajador(19, "Ricardo", "Cruz Ronaldo", "90122157863", 2300, "Secundaria", "Auxiliar de Limpieza"));
-		tienda.agregarTrabajador(new Trabajador(20, "Julia", "Ortega Cross", "01031568324", 1000, "Secundaria", "Técnico"));
+		tienda.agregarTrabajador(new Trabajador("EJ77", "Elena", "Jiménez Pacheco", "77090124785", 3400, "Secundaria", "Auxiliar de Limpieza"));
+		tienda.agregarTrabajador(new Trabajador("PM88", "Pablo", "Mendoza Carvajal", "88011235785", 4000, "Universitario", "Asistente"));
+		tienda.agregarTrabajador(new Trabajador("TS99", "Teresa", "Salazar Ramos", "99012346654", 3000, "Preuniversitario", "Cajero"));
+		tienda.agregarTrabajador(new Trabajador("RC90", "Ricardo", "Cruz Ronaldo", "90122157863", 2300, "Secundaria", "Auxiliar de Limpieza"));
+		tienda.agregarTrabajador(new Trabajador("JO01", "Julia", "Ortega Cross", "01031568324", 1000, "Secundaria", "Técnico"));
 
-		tienda.agregarTrabajador(new Trabajador(21, "David", "Aguilar Casilla", "82111680452", 1000, "Secundaria", "Auxiliar de Limpieza"));
-		tienda.agregarTrabajador(new Trabajador(22, "Carmen", "Gómez Piqué", "73021781421", 3000, "Preuniversitario", "Asistente"));
-		tienda.agregarTrabajador(new Trabajador(23, "Miguel", "Pérez Vázquez", "64061892245", 4000, "Universitario", "Económico"));
-		tienda.agregarTrabajador(new Trabajador(24, "Patricia", "Rodríguez Machado", "85071903354", 2300, "Técnico Medio", "Cajero"));
-		tienda.agregarTrabajador(new Trabajador(25, "Alejandro", "López Ramirez", "96081014657", 3000, "Universitario", "Técnico"));
+		tienda.agregarTrabajador(new Trabajador("DA82", "David", "Aguilar Casilla", "82111680452", 1000, "Secundaria", "Auxiliar de Limpieza"));
+		tienda.agregarTrabajador(new Trabajador("CG73", "Carmen", "Gómez Piqué", "73021781421", 3000, "Preuniversitario", "Asistente"));
+		tienda.agregarTrabajador(new Trabajador("MP64", "Miguel", "Pérez Vázquez", "64061892245", 4000, "Universitario", "Económico"));
+		tienda.agregarTrabajador(new Trabajador("PR85", "Patricia", "Rodríguez Machado", "85071903354", 2300, "Técnico Medio", "Cajero"));
+		tienda.agregarTrabajador(new Trabajador("AL96", "Alejandro", "López Ramirez", "96081014657", 3000, "Universitario", "Técnico"));
 
-		tienda.agregarTrabajador(new Trabajador(27, "Santiago", "Sánchez Cano", "78011236895", 2000, "Secundaria", "Asistente"));
-		tienda.agregarTrabajador(new Trabajador(28, "Gabriela", "García Mendoza", "89012347741", 2000, "Secundaria", "Asistente"));
-		tienda.agregarTrabajador(new Trabajador(29, "Raúl", "Hernández García", "90121458101", 1000, "Universitario", "Cajero"));
-		tienda.agregarTrabajador(new Trabajador(30, "Isabel", "Díaz Ruz", "01011569014", 2000, "Preuniversitario", "Diseñador"));
+		tienda.agregarTrabajador(new Trabajador("SS78", "Santiago", "Sánchez Cano", "78011236895", 2000, "Secundaria", "Asistente"));
+		tienda.agregarTrabajador(new Trabajador("GG89", "Gabriela", "García Mendoza", "89012347741", 2000, "Secundaria", "Asistente"));
+		tienda.agregarTrabajador(new Trabajador("RH90", "Raúl", "Hernández García", "90121458101", 1000, "Universitario", "Cajero"));
+		tienda.agregarTrabajador(new Trabajador("ID01", "Isabel", "Díaz Ruz", "01011569014", 2000, "Preuniversitario", "Diseñador"));
 
 	}
 	
@@ -68,8 +68,8 @@ public class InicializacionDeDatos {
 			Date fecha1 = new Date(2023, 7, 10);
 			@SuppressWarnings("deprecation")
 			Date fecha2 = new Date(2022, 6, 10);
-			Trabajador t = new Gerente(1, "Juan", "Pérez Carrodegua", "92040678014", 5000, "Universitario", "Gerente", fecha1);
-			Trabajador t1 = new Gerente(26, "Verónica", "Martínez González", "97090125954", 5000, "Universitario", "Gerente", fecha2);
+			Trabajador t = new Gerente("JP92", "Juan", "Pérez Carrodegua", "92040678014", 5000, "Universitario", "Gerente", fecha1);
+			Trabajador t1 = new Gerente("VM97", "Verónica", "Martínez González", "97090125954", 5000, "Universitario", "Gerente", fecha2);
 			tienda.agregarTrabajador((Trabajador)t);
 			tienda.agregarTrabajador((Trabajador)t1);
 		} catch (Exception e) {

@@ -33,7 +33,7 @@ public class ListadoDeTrabajadores extends JDialog {
 	private DefaultTableModel model;
 	private JButton btnAceptar;
 	private boolean cambios = false;
-	private static ArrayList <String> trabElim = new ArrayList<>();
+	private static ArrayList <String> trabAElim = new ArrayList<>();
 	private static boolean tablasLlenas = false;
 	private static int count;
 
@@ -72,7 +72,7 @@ public class ListadoDeTrabajadores extends JDialog {
 					int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea salir? No se guardarán los cambios realizados", "", 0, 3);
 					if(i==0) {
 						setVisible(false);
-						trabElim.clear();
+						trabAElim.clear();
 					}
 				}
 				else
@@ -90,10 +90,10 @@ public class ListadoDeTrabajadores extends JDialog {
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(cambios) {
-					int count = tienda.eliminarTrabajadores(trabElim);
+					int count = tienda.eliminarTrabajadores(trabAElim);
 					JOptionPane.showMessageDialog(ListadoDeTrabajadores.this, "Cambios guardados satisfactoriamente. Se eliminaron " + count + " trabajadores");		
 					setVisible(false);
-					trabElim.clear();
+					trabAElim.clear();
 				}
 				else
 					JOptionPane.showMessageDialog(ListadoDeTrabajadores.this, "No ha realizado ningún cambio");	
@@ -111,14 +111,14 @@ public class ListadoDeTrabajadores extends JDialog {
 					int pos1 = tableGerentes.getSelectedRow();
 					if (pos != -1) {
 						String ID = (String) tableTrabajadores.getValueAt(pos, 3);
-						trabElim.add(ID);
+						trabAElim.add(ID);
 						((DefaultTableModel) tableTrabajadores.getModel()).removeRow(pos);
 						limpiarTrabajadores();
 						llenarTablaTrabajadores(modelTrabajadores);
 					} else if (pos1 != -1) {
-						if(tienda.hallarGerentes(trabElim) > 1) {
+						if(tienda.hallarGerentes(trabAElim) > 1) {
 							String ID = (String) tableGerentes.getValueAt(pos1, 3);
-							trabElim.add(ID);
+							trabAElim.add(ID);
 							((DefaultTableModel) tableGerentes.getModel()).removeRow(pos1);
 							limpiarGerentes();
 							llenarTablaGerentes(modelGerentes);
@@ -143,10 +143,10 @@ public class ListadoDeTrabajadores extends JDialog {
 		count = 1;
 		for (Trabajador t : tienda.getTrabajadores()) {
 			if (!t.getCargo().equals("Gerente"))
-				if(!trabElim.isEmpty()) {
+				if(!trabAElim.isEmpty()) {
 					boolean encontrado = false;
-					for(int i = 0; i < trabElim.size(); i++) {
-						if(t.getCI().equals(trabElim.get(i))) {
+					for(int i = 0; i < trabAElim.size(); i++) {
+						if(t.getCI().equals(trabAElim.get(i))) {
 							encontrado = true;
 						}
 					}
@@ -164,10 +164,10 @@ public class ListadoDeTrabajadores extends JDialog {
 			Gerente g = (Gerente) t;
 			SimpleDateFormat formFecha = new SimpleDateFormat("dd/mm/yyyy");
 			String fecha = formFecha.format((Date) g.getFechaOcupCargo());
-			if(!trabElim.isEmpty()) {
+			if(!trabAElim.isEmpty()) {
 				boolean encontrado = false;
-				for(int i = 0; i < trabElim.size(); i++) {
-					if(g.getCI().equals(trabElim.get(i))) {
+				for(int i = 0; i < trabAElim.size(); i++) {
+					if(g.getCI().equals(trabAElim.get(i))) {
 						encontrado = true;
 					}
 				}

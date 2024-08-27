@@ -52,7 +52,7 @@ public class ListadoDeProductos extends JDialog {
 	private static JTable tableTeclados;
 	private static JTable tableAdaptadores;
 	private boolean cambios = false;
-	private static ArrayList <String> piezasElim = new ArrayList <>();
+	private static ArrayList <String> piezasAElim = new ArrayList <>();
 	private static boolean tablasLlenas = false;
 	private static int count;
 
@@ -150,7 +150,7 @@ public class ListadoDeProductos extends JDialog {
 					int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea salir? No se guardarán los cambios realizados", "", 0, 3);
 					if(i==0) {
 						setVisible(false);
-						piezasElim.clear();
+						piezasAElim.clear();
 					}
 				}
 				else
@@ -169,11 +169,11 @@ public class ListadoDeProductos extends JDialog {
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(cambios) {
-					int count = tienda.eliminarPiezas(piezasElim);
+					int count = tienda.eliminarPiezas(piezasAElim);
 					JOptionPane.showMessageDialog(ListadoDeProductos.this, "Cambios guardados satisfactoriamente. Se eliminaron " + count + " piezas");		
 					setVisible(false);
 					cambios = false;
-					piezasElim.clear();
+					piezasAElim.clear();
 				}
 				else
 					JOptionPane.showMessageDialog(ListadoDeProductos.this, "No ha realizado ningún cambio");	
@@ -203,73 +203,73 @@ public class ListadoDeProductos extends JDialog {
 
 					if (posAd != -1) {
 						String ID = (String) tableAdaptadores.getValueAt(posAd, 5);
-						piezasElim.add(ID);
+						piezasAElim.add(ID);
 						((DefaultTableModel) tableAdaptadores.getModel()).removeRow(posAd);
 						limpiarAdaptadores();
 						llenarTablaAdaptadores(modelAdaptadores);
 						} else if (posB != -1) {
 						String ID = (String) tableBocinas.getValueAt(posB, 5);
-						piezasElim.add(ID);
+						piezasAElim.add(ID);
 						((DefaultTableModel) tableBocinas.getModel()).removeRow(posB);
 						limpiarBocinas();
 						llenarTablaBocinas(modelBocinas);
 					} else if (posC != -1) {
 						String ID = (String) tableChasis.getValueAt(posC, 5);
-						piezasElim.add(ID);
+						piezasAElim.add(ID);
 						((DefaultTableModel) tableChasis.getModel()).removeRow(posC);
 						limpiarChasis();
 						llenarTablaChasis(modelChasis);
 					} else if (posD != -1) {
 						String ID = (String) tableDiscos.getValueAt(posD, 5);
-						piezasElim.add(ID);
+						piezasAElim.add(ID);
 						((DefaultTableModel) tableDiscos.getModel()).removeRow(posD);
 						limpiarDiscos();
 						llenarTablaDiscos(modelDiscos);
 					} else if (posF != -1) {
 						String ID = (String) tableFuentes.getValueAt(posF, 5);
-						piezasElim.add(ID);
+						piezasAElim.add(ID);
 						((DefaultTableModel) tableFuentes.getModel()).removeRow(posF);
 						limpiarFuentes();
 						llenarTablaFuentes(modelFuentes);
 					} else if (posMic != -1) {
 						String ID = (String) tableMicros.getValueAt(posMic, 5);
-						piezasElim.add(ID);
+						piezasAElim.add(ID);
 						((DefaultTableModel) tableMicros.getModel()).removeRow(posMic);
 						limpiarMicros();
 						llenarTablaMicros(modelMicros);
 					} else if (posMon != -1) {
 						String ID = (String) tableMonitores.getValueAt(posMon, 5);
-						piezasElim.add(ID);
+						piezasAElim.add(ID);
 						((DefaultTableModel) tableMonitores.getModel()).removeRow(posMon);
 						limpiarMonitores();
 						llenarTablaMonitores(modelMonitores);
 					} else if (posMoth != -1) {
 						String ID = (String) tableMotherboards.getValueAt(posMoth, 5);
-						piezasElim.add(ID);
+						piezasAElim.add(ID);
 						((DefaultTableModel) tableMotherboards.getModel()).removeRow(posMoth);
 						limpiarMotherboards();
 						llenarTablaMotherboards(modelMotherboards);
 					} else if (posMous != -1) {
 						String ID = (String) tableMouses.getValueAt(posMous, 5);
-						piezasElim.add(ID);
+						piezasAElim.add(ID);
 						((DefaultTableModel) tableMouses.getModel()).removeRow(posMous);
 						limpiarMouses();
 						llenarTablaMouses(modelMouse);
 					} else if (posR != -1) {
 						String ID = (String) tableRAM.getValueAt(posR, 5);
-						piezasElim.add(ID);
+						piezasAElim.add(ID);
 						((DefaultTableModel) tableRAM.getModel()).removeRow(posR);
 						limpiarRAM();
 						llenarTablaRAM(modelRAM);
 					} else if (posTV != -1) {
 						String ID = (String) tableTarjetas.getValueAt(posTV, 5);
-						piezasElim.add(ID);
+						piezasAElim.add(ID);
 						((DefaultTableModel) tableTarjetas.getModel()).removeRow(posTV);
 						limpiarTarjetas();
 						llenarTablaTarjetaVideo(modelTarjetas);
 					} else if (posT != -1) {
 						String ID = (String) tableTeclados.getValueAt(posT, 5);
-						piezasElim.add(ID);
+						piezasAElim.add(ID);
 						((DefaultTableModel) tableTeclados.getModel()).removeRow(posT);		
 						limpiarTeclados();
 						llenarTablaTeclados(modelTeclados);
@@ -284,7 +284,7 @@ public class ListadoDeProductos extends JDialog {
 		if(!tablasLlenas) {
 			inicializar();
 		}
-		piezasElim.clear();
+		piezasAElim.clear();
 		llenarTablaAdaptadores(modelAdaptadores);
 		llenarTablaBocinas(modelBocinas);
 		llenarTablaChasis(modelChasis);
@@ -312,10 +312,10 @@ public class ListadoDeProductos extends JDialog {
 		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
 			if(c instanceof Adaptador) {
-				if(!piezasElim.isEmpty()) {
+				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
-					for(int i = 0; i < piezasElim.size(); i++) {
-						if(c.getNumSerie().equals(piezasElim.get(i))) {
+					for(int i = 0; i < piezasAElim.size(); i++) {
+						if(c.getNumSerie().equals(piezasAElim.get(i))) {
 							encontrado = true;
 						}
 					}
@@ -333,10 +333,10 @@ public class ListadoDeProductos extends JDialog {
 		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
 			if(c instanceof Bocina) 
-				if(!piezasElim.isEmpty()) {
+				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
-					for(int i = 0; i < piezasElim.size(); i++) {
-						if(c.getNumSerie().equals(piezasElim.get(i))) {
+					for(int i = 0; i < piezasAElim.size(); i++) {
+						if(c.getNumSerie().equals(piezasAElim.get(i))) {
 							encontrado = true;
 						}
 					}
@@ -353,10 +353,10 @@ public class ListadoDeProductos extends JDialog {
 		count= 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
 			if (c instanceof Chasis)
-				if(!piezasElim.isEmpty()) {
+				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
-					for(int i = 0; i < piezasElim.size(); i++) {
-						if(c.getNumSerie().equals(piezasElim.get(i))) {
+					for(int i = 0; i < piezasAElim.size(); i++) {
+						if(c.getNumSerie().equals(piezasAElim.get(i))) {
 							encontrado = true;
 						}
 					}
@@ -373,10 +373,10 @@ public class ListadoDeProductos extends JDialog {
 		count= 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
 			if(c instanceof DiscoDuro) 
-				if(!piezasElim.isEmpty()) {
+				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
-					for(int i = 0; i < piezasElim.size(); i++) {
-						if(c.getNumSerie().equals(piezasElim.get(i))) {
+					for(int i = 0; i < piezasAElim.size(); i++) {
+						if(c.getNumSerie().equals(piezasAElim.get(i))) {
 							encontrado = true;
 						}
 					}
@@ -393,10 +393,10 @@ public class ListadoDeProductos extends JDialog {
 		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
 			if(c instanceof Fuente) 
-				if(!piezasElim.isEmpty()) {
+				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
-					for(int i = 0; i < piezasElim.size(); i++) {
-						if(c.getNumSerie().equals(piezasElim.get(i))) {
+					for(int i = 0; i < piezasAElim.size(); i++) {
+						if(c.getNumSerie().equals(piezasAElim.get(i))) {
 							encontrado = true;
 						}
 					}
@@ -413,10 +413,10 @@ public class ListadoDeProductos extends JDialog {
 		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
 			if(c instanceof Microprocesador) 
-				if(!piezasElim.isEmpty()) {
+				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
-					for(int i = 0; i < piezasElim.size(); i++) {
-						if(c.getNumSerie().equals(piezasElim.get(i))) {
+					for(int i = 0; i < piezasAElim.size(); i++) {
+						if(c.getNumSerie().equals(piezasAElim.get(i))) {
 							encontrado = true;
 						}
 					}
@@ -433,10 +433,10 @@ public class ListadoDeProductos extends JDialog {
 		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
 			if(c instanceof Monitor) 
-				if(!piezasElim.isEmpty()) {
+				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
-					for(int i = 0; i < piezasElim.size(); i++) {
-						if(c.getNumSerie().equals(piezasElim.get(i))) {
+					for(int i = 0; i < piezasAElim.size(); i++) {
+						if(c.getNumSerie().equals(piezasAElim.get(i))) {
 							encontrado = true;
 						}
 					}
@@ -453,10 +453,10 @@ public class ListadoDeProductos extends JDialog {
 		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
 			if(c instanceof TarjetaMadre) 
-				if(!piezasElim.isEmpty()) {
+				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
-					for(int i = 0; i < piezasElim.size(); i++) {
-						if(c.getNumSerie().equals(piezasElim.get(i))) {
+					for(int i = 0; i < piezasAElim.size(); i++) {
+						if(c.getNumSerie().equals(piezasAElim.get(i))) {
 							encontrado = true;
 						}
 					}
@@ -473,10 +473,10 @@ public class ListadoDeProductos extends JDialog {
 		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
 			if(c instanceof Mouse) 
-				if(!piezasElim.isEmpty()) {
+				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
-					for(int i = 0; i < piezasElim.size(); i++) {
-						if(c.getNumSerie().equals(piezasElim.get(i))) {
+					for(int i = 0; i < piezasAElim.size(); i++) {
+						if(c.getNumSerie().equals(piezasAElim.get(i))) {
 							encontrado = true;
 						}
 					}
@@ -493,10 +493,10 @@ public class ListadoDeProductos extends JDialog {
 		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
 			if(c instanceof MemoriaRam) 
-				if(!piezasElim.isEmpty()) {
+				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
-					for(int i = 0; i < piezasElim.size(); i++) {
-						if(c.getNumSerie().equals(piezasElim.get(i))) {
+					for(int i = 0; i < piezasAElim.size(); i++) {
+						if(c.getNumSerie().equals(piezasAElim.get(i))) {
 							encontrado = true;
 						}
 					}
@@ -513,10 +513,10 @@ public class ListadoDeProductos extends JDialog {
 		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
 			if(c instanceof TarjetaDeVideo) 
-				if(!piezasElim.isEmpty()) {
+				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
-					for(int i = 0; i < piezasElim.size(); i++) {
-						if(c.getNumSerie().equals(piezasElim.get(i))) {
+					for(int i = 0; i < piezasAElim.size(); i++) {
+						if(c.getNumSerie().equals(piezasAElim.get(i))) {
 							encontrado = true;
 						}
 					}
@@ -533,10 +533,10 @@ public class ListadoDeProductos extends JDialog {
 		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
 			if(c instanceof Teclado) 
-				if(!piezasElim.isEmpty()) {
+				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
-					for(int i = 0; i < piezasElim.size(); i++) {
-						if(c.getNumSerie().equals(piezasElim.get(i))) {
+					for(int i = 0; i < piezasAElim.size(); i++) {
+						if(c.getNumSerie().equals(piezasAElim.get(i))) {
 							encontrado = true;
 						}
 					}

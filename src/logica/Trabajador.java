@@ -1,11 +1,9 @@
 package logica;
 import java.util.ArrayList;
 
-import javax.swing.JComboBox;
-
 import inicializaciones.InicializacionDeDatos;
 public class Trabajador {
-	private int numero;
+	private String id;
 	private String nombre;
 	private String apellidos;
 	private String CI;
@@ -14,9 +12,9 @@ public class Trabajador {
 	private String cargo;
 
 
-	public Trabajador(int numero,String nombre, String apellidos, String cI, float salarioBasico, String nivelEscolar,
+	public Trabajador(String id,String nombre, String apellidos, String cI, float salarioBasico, String nivelEscolar,
 			String cargo) {
-		this.numero = numero;
+		this.id = id;
 		setNombre(nombre);
 		setApellidos(apellidos);
 		setCI(cI);
@@ -24,6 +22,7 @@ public class Trabajador {
 		setNivelEscolar(nivelEscolar);
 		setCargo(cargo);
 	}
+	
 	public String getNombre() {
 		return nombre;
 	}
@@ -111,12 +110,8 @@ public class Trabajador {
 		return dia >= 1 && dia <= diasPorMes; // Validar el rango del día
 	}
 
-	public int getNumero() {
-		return numero;
-	}
-	@Override
-	public String toString() {
-		return String.valueOf(numero) + "-" + nombre;
+	public String getNumero() {
+		return id;
 	}
 
 	public float getSalarioBasico() {

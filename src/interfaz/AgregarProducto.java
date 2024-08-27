@@ -61,7 +61,6 @@ public class AgregarProducto extends JDialog {
 	private JPanel panel_1;
 	private JButton btnAtrs;
 	private int noTrabajador = 0;
-	private int i = 1;
 	private ArrayList<Trabajador> trabaj;
 	private ArrayList<Integer> noT;
 
@@ -70,8 +69,7 @@ public class AgregarProducto extends JDialog {
 
 		InicializacionDeDatos.crearTrabajadores(tiendaC);
 		InicializacionDeDatos.crearGerentes(tiendaC);
-		
-		trabaj = new ArrayList<Trabajador>();
+		trabaj = new ArrayList<Trabajador>(tienda.getTrabajadores());
 		noT = new ArrayList<Integer>();
 		p = principal;
 		tienda = tiendaC;
@@ -276,11 +274,11 @@ public class AgregarProducto extends JDialog {
 								JOptionPane.showMessageDialog(null, "Error al convertir la fecha: " + ex.getMessage());
 								ex.printStackTrace();
 							}
-							trabajador = new Gerente(noTrabajador, nombre, apellidos, ci, salario, nivelE, cargo, fecha);
+							//trabajador = new Gerente(noTrabajador, nombre, apellidos, ci, salario, nivelE, cargo, fecha);
 						} else {
-							trabajador = new Trabajador(noTrabajador, nombre, apellidos, ci, salario, nivelE, cargo);
+							//trabajador = new Trabajador(noTrabajador, nombre, apellidos, ci, salario, nivelE, cargo);
 						}
-						trab = trabajador;
+						//trab = trabajador;
 						trabaj.add(trab);
 						noT.add(noTrabajador);
 
@@ -293,7 +291,6 @@ public class AgregarProducto extends JDialog {
 						} else {
 							tableModel.addRow(new Object[]{noTrabajador, nombre, apellidos, ci, salario, nivelE, cargo, ""});
 						}
-						i++;
 						iniciarDatos();
 					} catch (NumberFormatException ex) {
 						JOptionPane.showMessageDialog(AgregarProducto.this, "El salario debe ser un número válido.");

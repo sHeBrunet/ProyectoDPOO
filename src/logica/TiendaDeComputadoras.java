@@ -102,18 +102,23 @@ public class TiendaDeComputadoras {
 		}
 
 	}
-	public int eliminarTrabajadores(ArrayList <String> eliminados){
-		int count = 0;
-		for(int i = 0; i < trabajadores.size(); i++) {
-			boolean stop = false;
-			for(int j = 0; j < eliminados.size() && !stop; j++) {
-				if(trabajadores.get(i).getCI().equals(eliminados.get(j))) {
+	public int eliminarTrabajadores(ArrayList <String> trabAElim){
+		int count = 0; int j = 0; int i = 0;
+		boolean stop = false;
+		while(i < trabajadores.size() && !trabAElim.isEmpty()) {
+			while(j < trabAElim.size() && !stop) {
+				if(trabajadores.get(i).getCI().equalsIgnoreCase(trabAElim.get(j))) {
 					trabajadores.remove(i);
-					count++;
 					stop = true;
-					eliminados.remove(j);
-				}
+					count++;
+					trabAElim.remove(j);
+				} else 
+					j++;
 			}
+			if(!stop)
+				i++;
+			j = 0;
+			stop = false;
 		}
 		return count;
 	}
@@ -132,18 +137,23 @@ public class TiendaDeComputadoras {
 		return getGerentes().size() - count;
 	}
 
-	public int eliminarPiezas(ArrayList <String> eliminadas) {
-		int count = 0;
-		for(int i = 0; i < componentes.size(); i++) {
-			boolean stop = false;
-			for(int j = 0; j < eliminadas.size() && !stop; j++) {
-				if(componentes.get(i).getNumSerie().equals(eliminadas.get(j))) {
+	public int eliminarPiezas(ArrayList <String> piezasAElim) {
+		int count = 0; int j = 0; int i = 0;
+		boolean stop = false;
+		while(i < componentes.size() && !piezasAElim.isEmpty()) {
+			while(j < piezasAElim.size() && !stop) {
+				if(componentes.get(i).getNumSerie().equalsIgnoreCase(piezasAElim.get(j))) {
 					componentes.remove(i);
 					stop = true;
 					count++;
-					eliminadas.remove(j);
-				}
+					piezasAElim.remove(j);
+				} else 
+					j++;
 			}
+			if(!stop)
+				i++;
+			j = 0;
+			stop = false;
 		}
 		return count;
 	}
@@ -198,27 +208,6 @@ public class TiendaDeComputadoras {
 
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
-	}
-	public ArrayList<Integer> obtenerNo() {
-		ArrayList<Integer> numeros = new ArrayList<Integer>();
-		for(Trabajador t: trabajadores) 
-			numeros.add(t.getNumero());
-		return numeros;
-	}
-	
-	public int noTrabajadorAct() {
-		int j = 1;
-		int num = 0;
-		ArrayList<Integer> numeros = new ArrayList<Integer>();
-		numeros = obtenerNo();
-		if(numeros.contains(j)) {
-			num = getCantTrabajadores();
-		}
-		else {
-			num = j;
-		}
-
-		return num;
 	}
 
 	public boolean agregarComponenteI(ArrayList<ComponenteOrdenador> c){

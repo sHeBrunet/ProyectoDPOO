@@ -65,9 +65,6 @@ public class AgregarTrabajador extends JDialog {
 	public AgregarTrabajador(Principal principal, TiendaDeComputadoras tiendaC) {
 		super(principal, true);
 
-		InicializacionDeDatos.crearTrabajadores(tiendaC);
-		InicializacionDeDatos.crearGerentes(tiendaC);
-
 		trabaj = new ArrayList<Trabajador>();
 		tienda = tiendaC;
 
@@ -113,15 +110,15 @@ public class AgregarTrabajador extends JDialog {
 		lblSalarioT.setBounds(12, 139, 128, 16);
 		panelAgregarTrabajadores.add(lblSalarioT);
 
-		JLabel lblNewLabel_1_1_1_1_2 = new JLabel("Nivel Escolar:");
-		lblNewLabel_1_1_1_1_2.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblNewLabel_1_1_1_1_2.setBounds(12, 167, 128, 16);
-		panelAgregarTrabajadores.add(lblNewLabel_1_1_1_1_2);
+		JLabel lblNivelEsc = new JLabel("Nivel Escolar:");
+		lblNivelEsc.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNivelEsc.setBounds(12, 167, 128, 16);
+		panelAgregarTrabajadores.add(lblNivelEsc);
 
-		JLabel lblNewLabel_1_1_1_1_2_1 = new JLabel("Cargo:");
-		lblNewLabel_1_1_1_1_2_1.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblNewLabel_1_1_1_1_2_1.setBounds(12, 195, 128, 16);
-		panelAgregarTrabajadores.add(lblNewLabel_1_1_1_1_2_1);
+		JLabel lblCargo = new JLabel("Cargo:");
+		lblCargo.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblCargo.setBounds(12, 195, 128, 16);
+		panelAgregarTrabajadores.add(lblCargo);
 
 		nombreT = new JTextField();
 		nombreT.setFont(new Font("Arial", Font.PLAIN, 15));
@@ -171,10 +168,10 @@ public class AgregarTrabajador extends JDialog {
 		panelAgregarTrabajadores.add(spinnerFecha);
 		spinnerFecha.setVisible(false);
 
-		JLabel lblNewLabel_1 = new JLabel("No. trabajador:");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblNewLabel_1.setBounds(12, 27, 128, 16);
-		panelAgregarTrabajadores.add(lblNewLabel_1);
+		JLabel lblNoTrabajador = new JLabel("No. trabajador:");
+		lblNoTrabajador.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNoTrabajador.setBounds(12, 27, 128, 16);
+		panelAgregarTrabajadores.add(lblNoTrabajador);
 
 		numTrabajador = new JTextField();
 		numTrabajador.setEditable(false);
@@ -271,9 +268,9 @@ public class AgregarTrabajador extends JDialog {
 								JOptionPane.showMessageDialog(null, "Error al convertir la fecha: " + ex.getMessage());
 								ex.printStackTrace();
 							}
-							trabajador = new Gerente(noTrabajador, nombre, apellidos, ci, salario, nivelE, cargo, fecha);
+							trabajador = new Gerente(Integer.toString(noTrabajador), nombre, apellidos, ci, salario, nivelE, cargo, fecha);
 						} else {
-							trabajador = new Trabajador(noTrabajador, nombre, apellidos, ci, salario, nivelE, cargo);
+							trabajador = new Trabajador(Integer.toString(noTrabajador), nombre, apellidos, ci, salario, nivelE, cargo);
 						}
 						trab = trabajador;
 						trabaj.add(trab);
@@ -281,6 +278,9 @@ public class AgregarTrabajador extends JDialog {
 						JOptionPane.showMessageDialog(AgregarTrabajador.this, "Trabajador agregado a la tabla de manera satisfactoria");
 
 						if (cargo.equals("Gerente")) {
+							/*LocalDate fechaActual = LocalDate;
+							DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+							String fechaFormateada = fechaActual.format(formato);*/
 							SimpleDateFormat formFecha = new SimpleDateFormat("dd/mm/yyyy");
 							String fecha = formFecha.format((Date) spinnerFecha.getValue());
 							tableModel.addRow(new Object[]{noTrabajador, nombre, apellidos, ci, salario, nivelE, cargo, fecha});
@@ -419,6 +419,4 @@ public class AgregarTrabajador extends JDialog {
 			}
 		}
 	}
-
-
 }
