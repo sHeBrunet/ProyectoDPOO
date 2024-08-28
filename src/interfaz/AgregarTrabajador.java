@@ -56,7 +56,7 @@ public class AgregarTrabajador extends JDialog {
 	private JButton btnGuardar;
 	private JLabel fechaOcupTextLabel;
 	private Trabajador trab;
-	private JPanel panel_1;
+	private JPanel panelSecundario;
 	private JButton btnAtrs;
 	private int noTrabajador = 0;
 	private int contador = 0;
@@ -76,18 +76,18 @@ public class AgregarTrabajador extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 
-		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 890, 682);
-		panel.setBackground(UIManager.getColor("Button.disabledShadow"));
-		contentPanel.add(panel);
-		panel.setLayout(null);
+		JPanel panelPrincipal = new JPanel();
+		panelPrincipal.setBounds(0, 0, 890, 682);
+		panelPrincipal.setBackground(UIManager.getColor("Button.disabledShadow"));
+		contentPanel.add(panelPrincipal);
+		panelPrincipal.setLayout(null);
 
 		JPanel panelAgregarTrabajadores = new JPanel();
 		panelAgregarTrabajadores.setBounds(29, 87, 837, 296);
 		panelAgregarTrabajadores.setForeground(UIManager.getColor("Button.frame"));
 		panelAgregarTrabajadores.setBorder(new TitledBorder(new LineBorder(new Color(0, 88, 168)), "Agregar Trabajador", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panelAgregarTrabajadores.setBackground(UIManager.getColor("Button.light"));
-		panel.add(panelAgregarTrabajadores);
+		panelPrincipal.add(panelAgregarTrabajadores);
 		panelAgregarTrabajadores.setLayout(null);
 
 		JLabel lblnombreT = new JLabel("Nombre:");
@@ -302,7 +302,7 @@ public class AgregarTrabajador extends JDialog {
 		panelTrabajadoresAgregados.setBounds(29, 399, 837, 237);
 		panelTrabajadoresAgregados.setBorder(new TitledBorder(null, "Trabajadores Agregados", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelTrabajadoresAgregados.setBackground(UIManager.getColor("Button.disabledShadow"));
-		panel.add(panelTrabajadoresAgregados);
+		panelPrincipal.add(panelTrabajadoresAgregados);
 		panelTrabajadoresAgregados.setLayout(new BorderLayout(0, 0));
 
 		tableModel = new DefaultTableModel();
@@ -322,31 +322,34 @@ public class AgregarTrabajador extends JDialog {
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel.setBounds(12, 12, 76, 60);
 		lblNewLabel.setIcon(new ImageIcon(AgregarTrabajador.class.getResource("/gui/icons/logoPeque\u00F1o1.jpg")));
-		panel.add(lblNewLabel);
+		panelPrincipal.add(lblNewLabel);
 
 		btnEliminar = new JButton("Eliminar"); 
 		btnEliminar.setBounds(797, 647, 70, 22);
-		panel.add(btnEliminar);
+		panelPrincipal.add(btnEliminar);
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int pos = table.getSelectedRow();
-				if (pos != -1) {
-					trabaj.remove(pos);		
-					while(((DefaultTableModel) table.getModel()).getRowCount() > 0)
-						((DefaultTableModel) table.getModel()).removeRow(0);
-					agregarTabla();
-					numTrabajador.setText(Integer.toString(--contador));
-				} else {
-					JOptionPane.showMessageDialog(AgregarTrabajador.this, "Antes de eliminar debe de seleccionar un trabajador de la tabla");
+				int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar el trabajador seleccionado?", "", 0, 3);
+				if(i==0) {		
+					int pos = table.getSelectedRow();
+					if (pos != -1) {
+						trabaj.remove(pos);		
+						while(((DefaultTableModel) table.getModel()).getRowCount() > 0)
+							((DefaultTableModel) table.getModel()).removeRow(0);
+						agregarTabla();
+						numTrabajador.setText(Integer.toString(--contador));
+					} else {
+						JOptionPane.showMessageDialog(AgregarTrabajador.this, "Antes de eliminar debe de seleccionar un trabajador de la tabla");
+					}
 				}
 			}
 		});
 
-		panel_1 = new JPanel();
-		panel_1.setBackground(Color.WHITE);
-		panel_1.setBounds(0, 683, 890, 33);
-		contentPanel.add(panel_1);
-		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		panelSecundario = new JPanel();
+		panelSecundario.setBackground(Color.WHITE);
+		panelSecundario.setBounds(0, 683, 890, 33);
+		contentPanel.add(panelSecundario);
+		panelSecundario.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		btnAtrs = new JButton("Atr\u00E1s");
 		btnAtrs.addActionListener(new ActionListener() {
@@ -362,10 +365,10 @@ public class AgregarTrabajador extends JDialog {
 					setVisible(false);
 			}
 		});
-		panel_1.add(btnAtrs);
+		panelSecundario.add(btnAtrs);
 
 		btnGuardar = new JButton("Aceptar");
-		panel_1.add(btnGuardar);
+		panelSecundario.add(btnGuardar);
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(actualizarLista() == true) {

@@ -184,7 +184,7 @@ public class ListadoDeProductos extends JDialog {
 		btnBorrar.setFocusable(false);
 		btnBorrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea borrar la pieza seleccionada?", "", 0, 3);
+				int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar la pieza seleccionada?", "", 0, 3);
 				if(i==0) {		
 					cambios = true;
 					int posAd = tableAdaptadores.getSelectedRow();

@@ -1,6 +1,6 @@
 package logica;
 
-public abstract class ComponenteOrdenador {
+public class ComponenteOrdenador {
 	protected int cantDisponible;
 	protected String numSerie;
 	protected String marca;

@@ -423,7 +423,7 @@ public class InicializacionDeDatos {
 		tienda.setTelefono("76417449");
 	}
 	
-	public static ArrayList<String> nameComponenete() {
+	public static ArrayList<String> nameComponente() {
 		ArrayList<String> names= new ArrayList<String>();
 		names.add("Teclado");
 		names.add("Ratón");
@@ -455,7 +455,7 @@ public class InicializacionDeDatos {
 		ArrayList<String> marcasP = new ArrayList<String>();
 		marcasP.add("Acer");
 		marcasP.add("Dell");
-		marcasP.add("Asus");
+		marcasP.add("ASUS");
 		marcasP.add("LG");
 		marcasP.add("Samsung");
 		return marcasP;

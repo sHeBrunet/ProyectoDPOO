@@ -1,55 +1,42 @@
 package interfaz;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
+import javax.swing.table.DefaultTableModel;
 
 import logica.Adaptador;
 import logica.Bocina;
 import logica.Chasis;
 import logica.Fuente;
-import logica.MemoriaRam;
 import logica.Monitor;
 import logica.Mouse;
 import logica.TarjetaDeVideo;
 import logica.TarjetaMadre;
 import logica.Teclado;
 import logica.TiendaDeComputadoras;
-import javax.swing.border.MatteBorder;
-import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableModel;
-
-import java.awt.Color;
-import javax.swing.border.LineBorder;
-import javax.swing.JSpinner;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JLabel;
-import java.awt.Font;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import javax.swing.JComboBox;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.JRadioButton;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.JCheckBox;
-import javax.swing.ImageIcon;
-import javax.swing.border.BevelBorder;
-import javax.swing.UIManager;
-import java.awt.event.MouseMotionAdapter;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.SpinnerModel;
 
 public class VenderPieza extends JDialog {
 	private final JPanel contentPanel = new JPanel();
@@ -178,12 +165,12 @@ public class VenderPieza extends JDialog {
 			comboBoxModelo.setBounds(157, 375, 257, 20);
 			FiltradodeProducto.add(comboBoxModelo);
 			if (nombre == null) {
-				llenarComboBox(comboBoxComponenetes, inicializaciones.InicializacionDeDatos.nameComponenete());
+				llenarComboBox(comboBoxComponenetes, inicializaciones.InicializacionDeDatos.nameComponente());
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasTeclado());
 				Atributo1.setText("Retroiluminacion:");
 				componenetesVentaLibreNV();
 			} else {
-				List<String> itemExp1 = inicializaciones.InicializacionDeDatos.nameComponenete();
+				List<String> itemExp1 = inicializaciones.InicializacionDeDatos.nameComponente();
 				itemExp1.remove(nombreDeComponente);
 				itemExp1.add(0, nombreDeComponente);
 				llenarComboBox(comboBoxComponenetes, (ArrayList<String>) itemExp1);

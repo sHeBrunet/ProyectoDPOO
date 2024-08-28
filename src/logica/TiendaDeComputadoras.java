@@ -79,11 +79,25 @@ public class TiendaDeComputadoras {
 	}
 
 	public boolean agregarP(ArrayList<ComponenteOrdenador> piezas) {
+		int j = 0;
 		boolean act = false;
+		boolean stop = false;
+		for(int i = 0; i < componentes.size() && !piezas.isEmpty(); i++) {
+			while(j < piezas.size() && !stop) {
+				if(componentes.get(i).getNumSerie().equalsIgnoreCase(piezas.get(j).getNumSerie())) {
+					stop = true;
+					piezas.remove(j);
+				}
+				else
+					j++;
+			}
+			j = 0;
+			stop = false;
+		}
 		if(!piezas.isEmpty()) {
+			act = true;
 			for(ComponenteOrdenador c: piezas) {
 				componentes.add(c);
-				act = true;
 			}
 		}
 		return act;
