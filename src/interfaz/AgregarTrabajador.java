@@ -60,29 +60,22 @@ public class AgregarTrabajador extends JDialog {
 	private JButton btnEliminar;
 	private JTable table;
 	private DefaultTableModel tableModel;
-	private Principal p;
 	private TiendaDeComputadoras tienda;
 	private JButton btnGuardar;
 	private JLabel fechaOcupTextLabel;
 	private Trabajador trab;
-	private JPanel panel_1;
+	private JPanel panelSecundario;
 	private JButton btnAtrs;
 	private int noTrabajador = 0;
-	private int i = 1;
+	private int contador = 0;
 	private ArrayList<Trabajador> trabaj;
-	private ArrayList<Integer> noT;
 	private JTextField ciT;
+
 
 	public AgregarTrabajador(Principal principal, TiendaDeComputadoras tiendaC) {
 		super(principal, true);
 		setResizable(false);
-
-		InicializacionDeDatos.crearTrabajadores(tiendaC);
-		InicializacionDeDatos.crearGerentes(tiendaC);
-
 		trabaj = new ArrayList<Trabajador>();
-		noT = new ArrayList<Integer>();
-		p = principal;
 		tienda = tiendaC;
 
 		setTitle("Manejo de trabajadores");
@@ -93,18 +86,18 @@ public class AgregarTrabajador extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 
-		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 890, 682);
-		panel.setBackground(UIManager.getColor("Button.disabledShadow"));
-		contentPanel.add(panel);
-		panel.setLayout(null);
+		JPanel panelPrincipal = new JPanel();
+		panelPrincipal.setBounds(0, 0, 890, 682);
+		panelPrincipal.setBackground(UIManager.getColor("Button.disabledShadow"));
+		contentPanel.add(panelPrincipal);
+		panelPrincipal.setLayout(null);
 
 		JPanel panelAgregarTrabajadores = new JPanel();
 		panelAgregarTrabajadores.setBounds(29, 87, 837, 296);
 		panelAgregarTrabajadores.setForeground(UIManager.getColor("Button.frame"));
 		panelAgregarTrabajadores.setBorder(new TitledBorder(new LineBorder(new Color(0, 88, 168)), "Agregar Trabajador", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panelAgregarTrabajadores.setBackground(UIManager.getColor("Button.light"));
-		panel.add(panelAgregarTrabajadores);
+		panelPrincipal.add(panelAgregarTrabajadores);
 		panelAgregarTrabajadores.setLayout(null);
 
 		ciT = new JTextField();
@@ -150,15 +143,15 @@ public class AgregarTrabajador extends JDialog {
 		lblSalarioT.setBounds(12, 139, 128, 16);
 		panelAgregarTrabajadores.add(lblSalarioT);
 
-		JLabel lblNewLabel_1_1_1_1_2 = new JLabel("Nivel Escolar:");
-		lblNewLabel_1_1_1_1_2.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblNewLabel_1_1_1_1_2.setBounds(12, 167, 128, 16);
-		panelAgregarTrabajadores.add(lblNewLabel_1_1_1_1_2);
+		JLabel lblNivelEsc = new JLabel("Nivel Escolar:");
+		lblNivelEsc.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNivelEsc.setBounds(12, 167, 128, 16);
+		panelAgregarTrabajadores.add(lblNivelEsc);
 
-		JLabel lblNewLabel_1_1_1_1_2_1 = new JLabel("Cargo:");
-		lblNewLabel_1_1_1_1_2_1.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblNewLabel_1_1_1_1_2_1.setBounds(12, 195, 128, 16);
-		panelAgregarTrabajadores.add(lblNewLabel_1_1_1_1_2_1);
+		JLabel lblCargo = new JLabel("Cargo:");
+		lblCargo.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblCargo.setBounds(12, 195, 128, 16);
+		panelAgregarTrabajadores.add(lblCargo);
 
 		nombreT = new JTextField();
 		nombreT.addKeyListener(new KeyAdapter() {
@@ -247,16 +240,17 @@ public class AgregarTrabajador extends JDialog {
 		panelAgregarTrabajadores.add(spinnerFecha);
 		spinnerFecha.setVisible(false);
 
-		JLabel lblNewLabel_1 = new JLabel("No. trabajador:");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblNewLabel_1.setBounds(12, 27, 128, 16);
-		panelAgregarTrabajadores.add(lblNewLabel_1);
+		JLabel lblNoTrabajador = new JLabel("No. trabajador:");
+		lblNoTrabajador.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNoTrabajador.setBounds(12, 27, 128, 16);
+		panelAgregarTrabajadores.add(lblNoTrabajador);
 
 		numTrabajador = new JTextField();
 		numTrabajador.setEditable(false);
 		numTrabajador.setBounds(247, 26, 38, 20);
 		panelAgregarTrabajadores.add(numTrabajador);
 		numTrabajador.setColumns(10);
+		contador = tienda.getCantTrabajadores();
 		iniciarDatos();
 
 		cargoT.addItemListener(new ItemListener() {
@@ -270,7 +264,6 @@ public class AgregarTrabajador extends JDialog {
 				}
 			}
 		});
-		iniciarDatos();
 
 		JButton btnBorrar = new JButton("Limpiar");
 		btnBorrar.addActionListener(new ActionListener() {
@@ -411,6 +404,40 @@ public class AgregarTrabajador extends JDialog {
 						} catch (NumberFormatException ex) {
 							JOptionPane.showMessageDialog(AgregarTrabajador.this, "El salario debe ser un número válido.");
 						}
+						float salario = Float.parseFloat(salarioB);
+						Trabajador trabajador;
+						if (cargo.equals("Gerente")) {
+							SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+							String fechaStr = sdf.format((Date) spinnerFecha.getValue());
+							java.sql.Date fecha = null;
+							try {
+								fecha = new java.sql.Date(sdf.parse(fechaStr).getTime());
+							} catch (ParseException ex) {
+								JOptionPane.showMessageDialog(null, "Error al convertir la fecha: " + ex.getMessage());
+								ex.printStackTrace();
+							}
+							trabajador = new Gerente(Integer.toString(noTrabajador), nombre, apellidos, ci, salario, nivelE, cargo, fecha);
+						} else {
+							trabajador = new Trabajador(Integer.toString(noTrabajador), nombre, apellidos, ci, salario, nivelE, cargo);
+						}
+						trab = trabajador;
+						trabaj.add(trab);
+
+						JOptionPane.showMessageDialog(AgregarTrabajador.this, "Trabajador agregado a la tabla de manera satisfactoria");
+
+						if (cargo.equals("Gerente")) {
+							/*LocalDate fechaActual = LocalDate;
+							DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+							String fechaFormateada = fechaActual.format(formato);*/
+							SimpleDateFormat formFecha = new SimpleDateFormat("dd/mm/yyyy");
+							String fecha = formFecha.format((Date) spinnerFecha.getValue());
+							tableModel.addRow(new Object[]{noTrabajador, nombre, apellidos, ci, salario, nivelE, cargo, fecha});
+						} else {
+							tableModel.addRow(new Object[]{noTrabajador, nombre, apellidos, ci, salario, nivelE, cargo, ""});
+						}
+						iniciarDatos();
+					} catch (NumberFormatException ex) {
+						JOptionPane.showMessageDialog(AgregarTrabajador.this, "El salario debe ser un número válido.");
 					}
 				}
 			}
@@ -424,7 +451,7 @@ public class AgregarTrabajador extends JDialog {
 		panelTrabajadoresAgregados.setBounds(29, 399, 837, 245);
 		panelTrabajadoresAgregados.setBorder(new TitledBorder(null, "Trabajadores Agregados", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelTrabajadoresAgregados.setBackground(UIManager.getColor("Button.disabledShadow"));
-		panel.add(panelTrabajadoresAgregados);
+		panelPrincipal.add(panelTrabajadoresAgregados);
 		panelTrabajadoresAgregados.setLayout(new BorderLayout(0, 0));
 
 		tableModel = new DefaultTableModel();
@@ -444,49 +471,59 @@ public class AgregarTrabajador extends JDialog {
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel.setBounds(12, 12, 76, 60);
 		lblNewLabel.setIcon(new ImageIcon(AgregarTrabajador.class.getResource("/gui/icons/logoPeque\u00F1o1.jpg")));
-		panel.add(lblNewLabel);
+		panelPrincipal.add(lblNewLabel);
 
 		btnEliminar = new JButton("Eliminar"); 
-		btnEliminar.setBounds(796, 649, 70, 22);
-		panel.add(btnEliminar);
+		btnEliminar.setBounds(797, 647, 70, 22);
+		panelPrincipal.add(btnEliminar);
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int pos = table.getSelectedRow();
-				if (pos != -1) {
-					trabaj.remove(pos);
-					tiendaC.actualizarTrabajador(trabaj);
-					((DefaultTableModel) table.getModel()).removeRow(pos);	
-					InicializacionDeDatos.crearTrabajadores(tiendaC);
-					InicializacionDeDatos.crearGerentes(tiendaC);
-					numTrabajador.removeAll();
-					numTrabajador.setText(String.valueOf(tienda.getTrabajadores().size()+1));
-
-				} else {
-					JOptionPane.showMessageDialog(AgregarTrabajador.this, "Antes de eliminar debe de seleccionar un trabajador de la tabla");
+				int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar el trabajador seleccionado?", "", 0, 3);
+				if(i==0) {		
+					int pos = table.getSelectedRow();
+					if (pos != -1) {
+						trabaj.remove(pos);		
+						while(((DefaultTableModel) table.getModel()).getRowCount() > 0)
+							((DefaultTableModel) table.getModel()).removeRow(0);
+						agregarTabla();
+						numTrabajador.setText(Integer.toString(--contador));
+					} else {
+						JOptionPane.showMessageDialog(AgregarTrabajador.this, "Antes de eliminar debe de seleccionar un trabajador de la tabla");
+					}
 				}
 			}
 		});
 
-		panel_1 = new JPanel();
-		panel_1.setBackground(Color.WHITE);
-		panel_1.setBounds(0, 683, 890, 33);
-		contentPanel.add(panel_1);
+		panelSecundario = new JPanel();
+		panelSecundario.setBackground(Color.WHITE);
+		panelSecundario.setBounds(0, 683, 890, 33);
+		contentPanel.add(panelSecundario);
+		panelSecundario.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		btnAtrs = new JButton("Atr\u00E1s");
 		btnAtrs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				boolean act = actualizarLista();
+				if(act) {
+					int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea salir? No se guardarán los cambios realizados", "", 0, 3);
+					if(i==0) {
+						setVisible(false);
+					}
+				}
+				else
+					setVisible(false);
 			}
 		});
-		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		panel_1.add(btnAtrs);
+
+		panelSecundario.add(btnAtrs);
 
 		btnGuardar = new JButton("Aceptar");
-		panel_1.add(btnGuardar);
+		panelSecundario.add(btnGuardar);
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(actualizarLista() == true) {
 					JOptionPane.showMessageDialog(AgregarTrabajador.this, "Cambios guardados satisfactoriamente");
+					setVisible(false);
 				}
 			}
 		});
@@ -508,8 +545,9 @@ public class AgregarTrabajador extends JDialog {
 		}
 		return act;
 	}
+
 	private void iniciarDatos() {
-		actualizarNoTrabajador();
+		numTrabajador.setText(Integer.toString(++contador));
 		nombreT.setText("");
 		apellidosT.setText("");
 		ciT.setText("");
@@ -522,9 +560,6 @@ public class AgregarTrabajador extends JDialog {
 	}
 
 
-	private void actualizarNoTrabajador() {
-		numTrabajador.setText(String.valueOf(tienda.getCantTrabajadores() + 1));
-	}
 	/***************Otra validacion CI********************/
 	public static boolean validarCarnet(String carnet) {
 		boolean e = false;
@@ -556,6 +591,18 @@ public class AgregarTrabajador extends JDialog {
 			}
 		}
 		return e;
+	}
+	private void agregarTabla() {
+		int count = 31;
+		for(Trabajador t: trabaj) {
+			if (t.getCargo().equals("Gerente")) {
+				SimpleDateFormat formFecha = new SimpleDateFormat("dd/mm/yyyy");
+				String fecha = formFecha.format((Date) spinnerFecha.getValue());
+				tableModel.addRow(new Object[]{count++, t.getNombre(), t.getApellidos(), t.getCI(), t.getSalarioBasico(), t.getNivelEscolar(), t.getCargo(), fecha});
+			} else {
+				tableModel.addRow(new Object[]{count++, t.getNombre(), t.getApellidos(), t.getCI(), t.getSalarioBasico(), t.getNivelEscolar(), t.getCargo(), ""});
+			}
+		}
 	}
 }
 

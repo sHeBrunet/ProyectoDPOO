@@ -1,7 +1,6 @@
 package logica;
 
 import java.util.ArrayList;
-import inicializaciones.InicializacionDeDatos;
 
 public class TiendaDeComputadoras {
 	private String nombre;
@@ -9,6 +8,7 @@ public class TiendaDeComputadoras {
 	private String direccion;
 	private String telefono;
 	private Gerente gerente;
+
 
 	private static TiendaDeComputadoras instancia;
 	private ArrayList<Trabajador> trabajadores;
@@ -38,6 +38,11 @@ public class TiendaDeComputadoras {
 	@SuppressWarnings("unchecked")
 	public ArrayList<Trabajador> getTrabajadores() {
 		return (ArrayList<Trabajador>) trabajadores.clone();
+	}
+
+	@SuppressWarnings("unchecked")
+	public ArrayList<ComponenteOrdenador> getComponentes(){
+		return (ArrayList<ComponenteOrdenador>) componentes.clone();
 	}
 
 	public int buscarTrabajador(String ci){
@@ -80,13 +85,41 @@ public class TiendaDeComputadoras {
 			agregado = false;
 		}
 		else{			
-			agregado = trabajadores.add(trabajador);
+			trabajadores.add(trabajador);
+			agregado = true;
 		}
 		return agregado;
 	}
+
+	public boolean agregarP(ArrayList<ComponenteOrdenador> piezas) {
+		int j = 0;
+		boolean act = false;
+		boolean stop = false;
+		for(int i = 0; i < componentes.size() && !piezas.isEmpty(); i++) {
+			while(j < piezas.size() && !stop) {
+				if(componentes.get(i).getNumSerie().equalsIgnoreCase(piezas.get(j).getNumSerie())) {
+					stop = true;
+					piezas.remove(j);
+				}
+				else
+					j++;
+			}
+			j = 0;
+			stop = false;
+		}
+		if(!piezas.isEmpty()) {
+			act = true;
+			for(ComponenteOrdenador c: piezas) {
+				componentes.add(c);
+			}
+		}
+		return act;
+	}
+
 	public int getUltimoNoTrabajador() {
 		return trabajadores.size();
 	}
+
 	public void eliminarTrabajador(int posicion, Trabajador trab){
 		if(posicion >= 0 && posicion < trabajadores.size()) {
 			for(Trabajador t: trabajadores)
@@ -96,6 +129,7 @@ public class TiendaDeComputadoras {
 		}
 
 	}
+
 	public void actualizarTrabajador(ArrayList<Trabajador> t) {
 		for(Trabajador trabajador: trabajadores) {
 			for(Trabajador tra: t) {
@@ -105,11 +139,66 @@ public class TiendaDeComputadoras {
 			}
 		}
 	}
+	
 	public void eliminarTrabajador1(int posicion){
 		if(posicion >= 0 && posicion < trabajadores.size()) {
 			trabajadores.remove(posicion);
 		}
+	}
+	public int eliminarTrabajadores(ArrayList <String> trabAElim){
+		int count = 0; int i = 0; int j = 0;
+		boolean stop = false;
+		while(i < trabajadores.size() && !trabAElim.isEmpty()) {
+			while(j < trabAElim.size() && !stop) {
+				if(trabajadores.get(i).getCI().equalsIgnoreCase(trabAElim.get(j))) {
+					trabajadores.remove(i);
+					stop = true;
+					count++;
+					trabAElim.remove(j);
+				} else 
+					j++;
+			}
+			if(!stop)
+				i++;
+			j = 0;
+			stop = false;
+		}
+		return count;
+	}
 
+
+	public int hallarGerentes(ArrayList <String> eliminados) {
+		int count = 0;
+		for(Trabajador t: trabajadores) {
+			if(t instanceof Gerente) {
+				for(int i = 0; i < eliminados.size(); i++) {
+					if(t.getCI().equals(eliminados.get(i)))
+						count++;
+				}
+			}
+		}
+		return getGerentes().size() - count;
+	}
+
+	public int eliminarPiezas(ArrayList <String> piezasAElim) {
+		int count = 0; int i = 0; int j = 0;
+		boolean stop = false;
+		while(i < componentes.size() && !piezasAElim.isEmpty()) {
+			while(j < piezasAElim.size() && !stop) {
+				if(componentes.get(i).getNumSerie().equalsIgnoreCase(piezasAElim.get(j))) {
+					componentes.remove(i);
+					stop = true;
+					count++;
+					piezasAElim.remove(j);
+				} else 
+					j++;
+			}
+			if(!stop)
+				i++;
+			j = 0;
+			stop = false;
+		}
+		return count;
 	}
 	public void actualizarNo(ComponenteOrdenador c, int num) {
 		for(ComponenteOrdenador cmp : componentes) {
@@ -169,12 +258,7 @@ public class TiendaDeComputadoras {
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
-	public ArrayList<Integer> obtenerNo() {
-		ArrayList<Integer> numeros = new ArrayList<Integer>();
-		for(Trabajador t: trabajadores) 
-			numeros.add(t.getNumero());
-		return numeros;
-	}
+
 	public int noTrabajadorAct() {
 		int j = 1;
 		int num = 0;
@@ -731,7 +815,7 @@ public class TiendaDeComputadoras {
 		}
 		return m;
 	}
-/************************************************RAM************************************************/
+	/************************************************RAM************************************************/
 	public ArrayList<String> modeloMemoriaRAM(String string, String marca, Double espacio, String tipoDeRAM) {
 		ArrayList<MemoriaRam> b = new ArrayList<>();
 		ArrayList<String> m = new ArrayList<String>();
@@ -745,15 +829,15 @@ public class TiendaDeComputadoras {
 		return m;
 	}
 
-private ArrayList<MemoriaRam> encontrarModeloMemoriaRAM(String nombre2, String marca, Double espacio,
-		String tipoDeRAM) {
+	private ArrayList<MemoriaRam> encontrarModeloMemoriaRAM(String nombre2, String marca, Double espacio,
+			String tipoDeRAM) {
 		ArrayList<MemoriaRam> f = new ArrayList<>();
 		if (componentes != null) {
 			for (ComponenteOrdenador c : componentes) {
 				if (c instanceof MemoriaRam) {
 					if (c.getMarca().equals(marca)) {
 						if(((MemoriaRam) c).getCantEspacio() == espacio) {
-						if (((MemoriaRam) c).getTipoDeMemoria().equals(tipoDeRAM)) {
+							if (((MemoriaRam) c).getTipoDeMemoria().equals(tipoDeRAM)) {
 								f.add((MemoriaRam) c);
 							}
 						}
@@ -766,17 +850,17 @@ private ArrayList<MemoriaRam> encontrarModeloMemoriaRAM(String nombre2, String m
 		return f;
 	}
 
-public MemoriaRam encontMemoriaRAM(String componenteNombre, String marca, Double capacidad, String tipodeRAM, String modelo) {
-	ArrayList<MemoriaRam> memoriaR = new ArrayList<>();
-	MemoriaRam m = null;
-	boolean parada = false;
-	 memoriaR = encontrarModeloMemoriaRAM(componenteNombre, marca, capacidad, tipodeRAM);
-	for(int i = 0; i < memoriaR.size() && !parada ; i++) {
-		if( memoriaR.get(i).getModelo().equals(modelo)) {
-			m =  memoriaR.get(i);
-			parada = true;
+	public MemoriaRam encontMemoriaRAM(String componenteNombre, String marca, Double capacidad, String tipodeRAM, String modelo) {
+		ArrayList<MemoriaRam> memoriaR = new ArrayList<>();
+		MemoriaRam m = null;
+		boolean parada = false;
+		memoriaR = encontrarModeloMemoriaRAM(componenteNombre, marca, capacidad, tipodeRAM);
+		for(int i = 0; i < memoriaR.size() && !parada ; i++) {
+			if( memoriaR.get(i).getModelo().equals(modelo)) {
+				m =  memoriaR.get(i);
+				parada = true;
+			}
 		}
+		return m;
 	}
-	return m;
-}
 }

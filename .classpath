@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="src" path="src"/>
+<<<<<<< HEAD
 	<classpathentry kind="lib" path="C:/Users/kbrun/OneDrive/Documents/bibliotecas Look and feel/JTattoo-1.6.11.jar"/>
 	<classpathentry kind="lib" path="C:/Users/kbrun/OneDrive/Documents/bibliotecas Look and feel/LiquidLnF.jar"/>
 	<classpathentry kind="lib" path="C:/Users/kbrun/OneDrive/Documents/bibliotecas Look and feel/Looks-2.0-rc.jar"/>
@@ -10,5 +10,15 @@
 	<classpathentry kind="lib" path="C:/Users/kbrun/OneDrive/Documents/bibliotecas Look and feel/TonicLF.jar"/>
 	<classpathentry kind="lib" path="C:/Users/kbrun/OneDrive/Documents/api-2024.06.08.jar"/>
 	<classpathentry kind="lib" path="api-2024.06.08.jar"/>
+=======
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="D:/!!!!!!!!!!!!CUJAE INFORMÁTICA ALAIN 2024/bibliotecas Look and feel/JTattoo-1.6.11.jar"/>
+	<classpathentry kind="lib" path="D:/!!!!!!!!!!!!CUJAE INFORMÁTICA ALAIN 2024/bibliotecas Look and feel/LiquidLnF.jar"/>
+	<classpathentry kind="lib" path="D:/!!!!!!!!!!!!CUJAE INFORMÁTICA ALAIN 2024/bibliotecas Look and feel/Looks-2.0-rc.jar"/>
+	<classpathentry kind="lib" path="D:/!!!!!!!!!!!!CUJAE INFORMÁTICA ALAIN 2024/bibliotecas Look and feel/NimrodLF.jar"/>
+	<classpathentry kind="lib" path="D:/!!!!!!!!!!!!CUJAE INFORMÁTICA ALAIN 2024/bibliotecas Look and feel/TinyLaF.jar"/>
+	<classpathentry kind="lib" path="D:/!!!!!!!!!!!!CUJAE INFORMÁTICA ALAIN 2024/bibliotecas Look and feel/TonicLF.jar"/>
+	<classpathentry kind="lib" path="D:/!!!!!!!!!!!!CUJAE INFORMÁTICA ALAIN 2024/1º/Eclipse Ok/api 29-08-2023/api.jar"/>
+>>>>>>> 7a31849f1ba290a1d9fd97b313d7c7ddd2234128
 	<classpathentry kind="output" path="bin"/>
 </classpath>

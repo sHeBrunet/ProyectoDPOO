@@ -1,12 +1,31 @@
 package interfaz;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
+import javax.swing.table.DefaultTableModel;
 
 import logica.Adaptador;
 import logica.Bocina;
@@ -23,6 +42,7 @@ import logica.TarjetaDeVideo;
 import logica.TarjetaMadre;
 import logica.Teclado;
 import logica.TiendaDeComputadoras;
+
 import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
@@ -57,6 +77,7 @@ import java.awt.event.MouseMotionAdapter;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SpinnerModel;
+
 
 public class VenderPieza extends JDialog {
 	private final JPanel contentPanel = new JPanel();
@@ -106,9 +127,11 @@ public class VenderPieza extends JDialog {
 		tiendaC = tienda;
 		modelo = new ArrayList<>();
 		cant = new ArrayList<Integer>();
-		inicializaciones.InicializacionDeDatos.llamarInicializaciones(tienda);
 
 		setBounds(100, 100, 912, 764);
+
+		setBounds(100, 100, 900, 746);
+
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -148,10 +171,13 @@ public class VenderPieza extends JDialog {
 
 			primeraVisualizacionAtributo();
 
-			JLabel Componenetelabel = new JLabel("Componentes:");
-			Componenetelabel.setFont(new Font("Tahoma", Font.BOLD, 15));
-			Componenetelabel.setBounds(12, 78, 162, 16);
-			FiltradodeProducto.add(Componenetelabel);
+
+
+			JLabel Componentelabel = new JLabel("Componentes:");
+			Componentelabel.setFont(new Font("Tahoma", Font.BOLD, 15));
+			Componentelabel.setBounds(12, 78, 141, 16);
+			FiltradodeProducto.add(Componentelabel);
+
 
 			comboBoxComponenetes = new JComboBox();
 			comboBoxComponenetes.addActionListener(new ActionListener() {
@@ -221,7 +247,7 @@ public class VenderPieza extends JDialog {
 			comboBoxModelo.setBounds(196, 393, 257, 20);
 			FiltradodeProducto.add(comboBoxModelo);
 			if (nombre == null) {
-				llenarComboBox(comboBoxComponenetes, inicializaciones.InicializacionDeDatos.nameComponenete());
+				llenarComboBox(comboBoxComponenetes, inicializaciones.InicializacionDeDatos.nameComponente());
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasTeclado());
 				Atributo1.setText("Retroiluminacion:");
 				componenetesVentaLibreNV();
@@ -230,7 +256,7 @@ public class VenderPieza extends JDialog {
 				Atributo2.setVisible(false);
 				txtatributo2.setVisible(false);
 			} else {
-				List<String> itemExp1 = inicializaciones.InicializacionDeDatos.nameComponenete();
+				List<String> itemExp1 = inicializaciones.InicializacionDeDatos.nameComponente();
 				itemExp1.remove(nombreDeComponente);
 				itemExp1.add(0, nombreDeComponente);
 				llenarComboBox(comboBoxComponenetes, (ArrayList<String>) itemExp1);
