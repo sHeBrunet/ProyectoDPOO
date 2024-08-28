@@ -120,18 +120,13 @@ public class VenderPieza extends JDialog {
 	@SuppressWarnings("unchecked")
 
 	public VenderPieza(Principal principal, TiendaDeComputadoras tienda, String nombreDeComponente) {
-		setResizable(false);
 		nombre = nombreDeComponente;
 		setTitle("Vender Piezas");
 		p = principal;
 		tiendaC = tienda;
 		modelo = new ArrayList<>();
 		cant = new ArrayList<Integer>();
-
-		setBounds(100, 100, 912, 764);
-
-		setBounds(100, 100, 900, 746);
-
+		setBounds(100, 100, 906, 760);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -333,7 +328,7 @@ public class VenderPieza extends JDialog {
 
 
 
-			btnNewButton.setBounds(27, 392, 100, 20);
+			btnNewButton.setBounds(27, 392, 126, 20);
 			FiltradodeProducto.add(btnNewButton);
 
 
@@ -565,7 +560,7 @@ public class VenderPieza extends JDialog {
 
 			totalFactura = new JTextField();
 			totalFactura.setFont(new Font("Tahoma", Font.BOLD, 15));
-			totalFactura.setBorder(new LineBorder(Color.BLACK, 2));
+			totalFactura.setBorder(new MatteBorder(0, 1, 0, 0, (Color) new Color(0, 0, 0)));
 			totalFactura.setEditable(false);
 			totalFactura.setEnabled(false);
 			totalFactura.setBounds(786, 664, 116, 38);
@@ -580,7 +575,7 @@ public class VenderPieza extends JDialog {
 		}
 		{
 			JPanel buttonPane = new JPanel();
-			buttonPane.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+			buttonPane.setBorder(new MatteBorder(2, 0, 0, 0, (Color) new Color(0, 0, 0)));
 			buttonPane.setBackground(Color.WHITE);
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
@@ -678,24 +673,23 @@ public class VenderPieza extends JDialog {
 		for (String item : items) {
 			comboBox.addItem(item);
 		}
-		System.out.println("llenarComboBox ejecutado correctamente con " + items.size() + " elementos.");
 	}
 
 	/*****************Funcion para elegir las marcas************************************/
 	@SuppressWarnings({ "unchecked", "deprecation" })
 	private void elegirMarca(Object seleccionado) {
 		if (comboBoxMarca != null && comboBoxAtributo1 != null) {
-			comboBoxAtributo1.setVisible(true); // Asegúrate de que el comboBox sea visible
+			comboBoxAtributo1.setVisible(true); 
 			String nombreC = seleccionado.toString();
-			ArrayList<String> Desicion = new ArrayList<>();
-			Desicion.add("Sí");
-			Desicion.add("No");
+			ArrayList<String> Decision = new ArrayList<>();
+			Decision.add("Sí");
+			Decision.add("No");
 			TarjetaMadre t;
 			switch (nombreC) {
 			case "Teclado":
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasTeclado());
 				Atributo1.setText("Retroiluminacion:");
-				llenarComboBox(comboBoxAtributo1, Desicion);
+				llenarComboBox(comboBoxAtributo1, Decision);
 				componenetesVentaLibreNV();
 				ensamblarCheckBox.setVisible(false);
 				spinnerAtributo2_1.setVisible(false);

@@ -68,13 +68,21 @@ public class TiendaDeComputadoras {
 		}
 		return act;
 	}
-	public boolean encontCI(String ci) {
+	public boolean encontCI(String ci, ArrayList<Trabajador> trabaj) {
 		boolean devolver = false;
 		boolean parada = false;
 		for(int i = 0; i < trabajadores.size() && !parada ; i++) {
 			if(trabajadores.get(i).getCI().equals(ci)) {
 				devolver = true; 
 				parada = true;
+			}
+		}
+		if(!parada) {
+			for(int j = 0; j < trabaj.size() && !parada; j++) {
+				if(trabaj.get(j).getCI().equals(ci)) {
+					devolver = true; 
+					parada = true;
+				}
 			}
 		}
 		return devolver;
@@ -259,20 +267,6 @@ public class TiendaDeComputadoras {
 		this.telefono = telefono;
 	}
 
-	public int noTrabajadorAct() {
-		int j = 1;
-		int num = 0;
-		ArrayList<Integer> numeros = new ArrayList<Integer>();
-		numeros = obtenerNo();
-		if(numeros.contains(j)) {
-			num = getCantTrabajadores();
-		}
-		else {
-			num = j;
-		}
-
-		return num;
-	}
 	public void agregarFactura(Factura factura) {
 		facturas.add(factura);
 	}
@@ -310,10 +304,6 @@ public class TiendaDeComputadoras {
 
 	public void setFacturas(ArrayList<Factura> facturas) {
 		this.facturas = facturas;
-	}
-
-	public ArrayList<ComponenteOrdenador> getComponentes() {
-		return componentes;
 	}
 
 	public void setComponentes(ArrayList<ComponenteOrdenador> componentes) {

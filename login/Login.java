@@ -72,7 +72,7 @@ public class Login extends JFrame {
 		passwordField.addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
-				if(c==KeyEvent.VK_ENTER)
+				if(c == KeyEvent.VK_ENTER)
 					btnIniciar.doClick();
 			}
 		});

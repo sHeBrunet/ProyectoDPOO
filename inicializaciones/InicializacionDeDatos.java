@@ -9,6 +9,7 @@ import logica.ComponenteOrdenador;
 import logica.DiscoDuro;
 import logica.Fuente;
 import logica.Gerente;
+import logica.ManejoDeSesion;
 import logica.MemoriaRam;
 import logica.Microprocesador;
 import logica.Monitor;
@@ -105,10 +106,8 @@ public class InicializacionDeDatos {
 		inicializarExtension(tienda);
 		inicializarTarjetasMadre(tienda);
 		inicializarMicroprocesador(tienda);
-
 	}
-
-
+	
 	//Datos para los productos
 
 

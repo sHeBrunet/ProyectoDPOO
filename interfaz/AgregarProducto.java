@@ -55,6 +55,8 @@ public class AgregarProducto extends JDialog {
 	private static String marca;
 	private static String modelo;
 	private static String noSerie;
+	private static Object marcaSeleccionada = null;
+	private static Object compSeleccionado = null;
 
 
 	public AgregarProducto(Principal principal, TiendaDeComputadoras tiendaC) {
@@ -142,9 +144,12 @@ public class AgregarProducto extends JDialog {
 
 		comboBoxMarca.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Object compSeleccionado = comboBoxComponente.getSelectedItem();
-				Object marcaSeleccionada = comboBoxMarca.getSelectedItem();
+				if(comboBoxMarca != null) {
+				compSeleccionado = comboBoxComponente.getSelectedItem();
 				elegirModelo(compSeleccionado, marcaSeleccionada);
+				}
+				else
+					System.out.println("estas maja");
 			}
 		});
 		comboBoxMarca.setBounds(247, 71, 560, 20);
@@ -152,7 +157,8 @@ public class AgregarProducto extends JDialog {
 
 		comboBoxComponente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Object compSeleccionado = comboBoxComponente.getSelectedItem();
+				compSeleccionado = comboBoxComponente.getSelectedItem();
+				comboBoxMarca.removeAllItems();
 				elegirMarca(compSeleccionado);
 			}
 		});
@@ -372,6 +378,8 @@ public class AgregarProducto extends JDialog {
 		} else {
 			System.out.println("Uno o más comboBox son null");
 		}
+		marcaSeleccionada = comboBoxMarca.getSelectedItem();
+		elegirModelo(compSeleccionado, marcaSeleccionada);
 	}
 
 	private void elegirModelo(Object compSeleccionado, Object marcaSeleccionada) {

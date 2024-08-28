@@ -1,6 +1,11 @@
-/gui/
+/.classpath
+/.project
+/.settings/
+/README.md
+/main/
+/src/
+/login/
+/logica/
 /inicializaciones/
 /interfaz/
-/logica/
-/login/
-/main/
+/gui/

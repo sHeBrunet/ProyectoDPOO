@@ -335,7 +335,7 @@ public class AgregarTrabajador extends JDialog {
 							if (anioNacimiento >= 1950) { 
 								if (mesNacimiento >= 1 || mesNacimiento <= 12) {
 									if (tiendaC.getTrabajadores().get(0).validarDia(anioNacimiento, mesNacimiento, diaNacimiento)) {
-										if(!tiendaC.encontCI(ci)) {
+										if(!tiendaC.encontCI(ci , trabaj)) {
 											ciIncorrecto = true;
 										}
 										else {
@@ -366,78 +366,43 @@ public class AgregarTrabajador extends JDialog {
 						try {
 							float salario = Float.parseFloat(salarioB);
 							if(salario > 0 ) {
-							Trabajador trabajador;
-							if (cargo.equals("Gerente")) {
-								SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
-								String fechaStr = sdf.format((Date) spinnerFecha.getValue());
-								java.sql.Date fecha = null;
-								try {
-									fecha = new java.sql.Date(sdf.parse(fechaStr).getTime());
-								} catch (ParseException ex) {
-									JOptionPane.showMessageDialog(null, "Error al convertir la fecha: " + ex.getMessage());
-									ex.printStackTrace();
+								Trabajador trabajador;
+								if (cargo.equals("Gerente")) {
+									SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+									String fechaStr = sdf.format((Date) spinnerFecha.getValue());
+									java.sql.Date fecha = null;
+									try {
+										fecha = new java.sql.Date(sdf.parse(fechaStr).getTime());
+									} catch (ParseException ex) {
+										JOptionPane.showMessageDialog(null, "Error al convertir la fecha: " + ex.getMessage());
+										ex.printStackTrace();
+									}
+									trabajador = new Gerente(Integer.toString(noTrabajador), nombre, apellidos, ci, salario, nivelE, cargo, fecha);
+								} else {
+									trabajador = new Trabajador(Integer.toString(noTrabajador), nombre, apellidos, ci, salario, nivelE, cargo);
 								}
-								trabajador = new Gerente(noTrabajador, nombre, apellidos, ci, salario, nivelE, cargo, fecha);
-							} else {
-								trabajador = new Trabajador(noTrabajador, nombre, apellidos, ci, salario, nivelE, cargo);
-							}
-							trab = trabajador;
-							trabaj.add(trab);
-							tienda.agregarTrabajador(trabajador); 
-							noT.add(noTrabajador);
+								trab = trabajador;
+								trabaj.add(trab);
 
-							JOptionPane.showMessageDialog(AgregarTrabajador.this, "Trabajador agregado a la tabla de manera satisfactoria");
+								JOptionPane.showMessageDialog(AgregarTrabajador.this, "Trabajador agregado a la tabla de manera satisfactoria");
 
-							if (cargo.equals("Gerente")) {
-								SimpleDateFormat formFecha = new SimpleDateFormat("dd/mm/yyyy");
-								String fecha = formFecha.format((Date) spinnerFecha.getValue());
-								tableModel.addRow(new Object[]{noTrabajador, nombre, apellidos, ci, salario, nivelE, cargo, fecha});
-							} else {
-								tableModel.addRow(new Object[]{noTrabajador, nombre, apellidos, ci, salario, nivelE, cargo, ""});
-							}
-							i++;
-							iniciarDatos();
+								if (cargo.equals("Gerente")) {
+									SimpleDateFormat formFecha = new SimpleDateFormat("dd/mm/yyyy");
+									String fecha = formFecha.format((Date) spinnerFecha.getValue());
+									tableModel.addRow(new Object[]{noTrabajador, nombre, apellidos, ci, salario, nivelE, cargo, fecha});
+								} else {
+									tableModel.addRow(new Object[]{noTrabajador, nombre, apellidos, ci, salario, nivelE, cargo, ""});
+								}
+
+								iniciarDatos();
 							}
 							else {
-							JOptionPane.showMessageDialog(AgregarTrabajador.this, "El salario básico debe ser mayor que cero");	
+								JOptionPane.showMessageDialog(AgregarTrabajador.this, "El salario básico debe ser mayor que cero");	
 							}
 						} catch (NumberFormatException ex) {
 							JOptionPane.showMessageDialog(AgregarTrabajador.this, "El salario debe ser un número válido.");
 						}
-						float salario = Float.parseFloat(salarioB);
-						Trabajador trabajador;
-						if (cargo.equals("Gerente")) {
-							SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-							String fechaStr = sdf.format((Date) spinnerFecha.getValue());
-							java.sql.Date fecha = null;
-							try {
-								fecha = new java.sql.Date(sdf.parse(fechaStr).getTime());
-							} catch (ParseException ex) {
-								JOptionPane.showMessageDialog(null, "Error al convertir la fecha: " + ex.getMessage());
-								ex.printStackTrace();
-							}
-							trabajador = new Gerente(Integer.toString(noTrabajador), nombre, apellidos, ci, salario, nivelE, cargo, fecha);
-						} else {
-							trabajador = new Trabajador(Integer.toString(noTrabajador), nombre, apellidos, ci, salario, nivelE, cargo);
-						}
-						trab = trabajador;
-						trabaj.add(trab);
-
-						JOptionPane.showMessageDialog(AgregarTrabajador.this, "Trabajador agregado a la tabla de manera satisfactoria");
-
-						if (cargo.equals("Gerente")) {
-							/*LocalDate fechaActual = LocalDate;
-							DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-							String fechaFormateada = fechaActual.format(formato);*/
-							SimpleDateFormat formFecha = new SimpleDateFormat("dd/mm/yyyy");
-							String fecha = formFecha.format((Date) spinnerFecha.getValue());
-							tableModel.addRow(new Object[]{noTrabajador, nombre, apellidos, ci, salario, nivelE, cargo, fecha});
-						} else {
-							tableModel.addRow(new Object[]{noTrabajador, nombre, apellidos, ci, salario, nivelE, cargo, ""});
-						}
-						iniciarDatos();
-					} catch (NumberFormatException ex) {
-						JOptionPane.showMessageDialog(AgregarTrabajador.this, "El salario debe ser un número válido.");
+	
 					}
 				}
 			}
@@ -593,7 +558,7 @@ public class AgregarTrabajador extends JDialog {
 		return e;
 	}
 	private void agregarTabla() {
-		int count = 31;
+		int count = tienda.getCantTrabajadores();
 		for(Trabajador t: trabaj) {
 			if (t.getCargo().equals("Gerente")) {
 				SimpleDateFormat formFecha = new SimpleDateFormat("dd/mm/yyyy");
