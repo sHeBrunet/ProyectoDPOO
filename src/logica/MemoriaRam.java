@@ -2,28 +2,28 @@ package logica;
 
 public class MemoriaRam extends ComponenteOrdenador {
 	private boolean espacio; // MB true, GB false 
-	private float cantEspacio;
+	private double cantEspacio;
 	private String tipoDeMemoria;
 
-	public MemoriaRam(int cantDisponible, String numSerie, String marca, String modelo, float precio,  boolean espacio, float cantEspacio, String tipoDeMemoria) {
+	public MemoriaRam(int cantDisponible, String numSerie, String marca, String modelo, float precio,  boolean espacio, double cantEspacio, String tipoDeMemoria) {
 		super(cantDisponible, numSerie, marca, modelo, precio);
 		setCantEspacio(cantEspacio);
 		setEspacio(espacio);
 		setTipoDeMemoria(tipoDeMemoria);
 	}
 
-	public float getCantEspacio() {
+	public double getCantEspacio() {
 		return cantEspacio;
 	}
-	public void setCantEspacio(float cantEspacio) {
+	public void setCantEspacio(double cantEspacio2) {
 		if(isEspacio() == true) {
-			if(cantEspacio >= 4096 && cantEspacio <= 131072) {
-				this.cantEspacio = cantEspacio;
+			if(cantEspacio2 >= 4096 && cantEspacio2 <= 131072) {
+				this.cantEspacio = cantEspacio2;
 			}
 		}
 		else if(isEspacio() == false) {
-			if(cantEspacio >= 4 && cantEspacio <= 128) {
-				this.cantEspacio = cantEspacio;
+			if(cantEspacio2 >= 4 && cantEspacio2 <= 128) {
+				this.cantEspacio = cantEspacio2;
 			}
 		}
 		else {
@@ -38,7 +38,7 @@ public class MemoriaRam extends ComponenteOrdenador {
 			this.tipoDeMemoria = tipoDeMemoria;
 		}
 		else {
-			throw new IllegalArgumentException("El tipo de memoria debe de ser de tipo (DDR, DDR-2, DDR-3)");
+			throw new IllegalArgumentException("El tipo de memoria debe de ser de tipo (DDR, DDR-2, DDR-3, DDR-4, DDR-5)");
 		}
 	}
 

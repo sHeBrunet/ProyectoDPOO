@@ -10,9 +10,14 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -36,15 +41,18 @@ import inicializaciones.InicializacionDeDatos;
 import logica.Gerente;
 import logica.TiendaDeComputadoras;
 import logica.Trabajador;
-
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import componentesVisuales.CampoCIValidado;
+import logica.utilidades.logica.GeneradorCICubano;
+import logica.utilidades.interfaz.ManejadorLookAndFeels;
 public class AgregarTrabajador extends JDialog {
-	
+
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPanel = new JPanel();
 	private JTextField numTrabajador;
 	private JTextField nombreT;
 	private JTextField apellidosT;
-	private JTextField CiT;
 	private JTextField salarioT;
 	private JComboBox<String> NivelE;
 	private JComboBox<String> cargoT;
@@ -54,7 +62,6 @@ public class AgregarTrabajador extends JDialog {
 	private DefaultTableModel tableModel;
 	private Principal p;
 	private TiendaDeComputadoras tienda;
-	private JButton btnCancelar;
 	private JButton btnGuardar;
 	private JLabel fechaOcupTextLabel;
 	private Trabajador trab;
@@ -64,20 +71,22 @@ public class AgregarTrabajador extends JDialog {
 	private int i = 1;
 	private ArrayList<Trabajador> trabaj;
 	private ArrayList<Integer> noT;
+	private JTextField ciT;
 
 	public AgregarTrabajador(Principal principal, TiendaDeComputadoras tiendaC) {
 		super(principal, true);
+		setResizable(false);
 
 		InicializacionDeDatos.crearTrabajadores(tiendaC);
 		InicializacionDeDatos.crearGerentes(tiendaC);
-		
+
 		trabaj = new ArrayList<Trabajador>();
 		noT = new ArrayList<Integer>();
 		p = principal;
 		tienda = tiendaC;
-		
+
 		setTitle("Manejo de trabajadores");
-		setBounds(100, 100, 900, 746);
+		setBounds(100, 100, 896, 746);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(Color.WHITE);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -97,6 +106,29 @@ public class AgregarTrabajador extends JDialog {
 		panelAgregarTrabajadores.setBackground(UIManager.getColor("Button.light"));
 		panel.add(panelAgregarTrabajadores);
 		panelAgregarTrabajadores.setLayout(null);
+
+		ciT = new JTextField();
+		ciT.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(ciT.getText().length() < 11) {
+					char t = e.getKeyChar();
+					if((t- '0' > 9 || t- '0' < 0) && t!= 8) {
+						JOptionPane.showMessageDialog(null, "Solo se pueden introducir numeros en este campo", "Datos erróneos", JOptionPane.ERROR_MESSAGE);
+						e.consume();
+					}
+				}
+				else {
+					e.consume();
+				}
+			}
+		});
+		ciT.setText("");
+		ciT.setFont(new Font("Arial", Font.PLAIN, 15));
+		ciT.setColumns(10);
+		ciT.setBounds(247, 110, 560, 20);
+		panelAgregarTrabajadores.add(ciT);
+
 
 		JLabel lblnombreT = new JLabel("Nombre:");
 		lblnombreT.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -129,6 +161,21 @@ public class AgregarTrabajador extends JDialog {
 		panelAgregarTrabajadores.add(lblNewLabel_1_1_1_1_2_1);
 
 		nombreT = new JTextField();
+		nombreT.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(nombreT.getText().length() < 20) {
+					char nombre =e.getKeyChar();
+					if(nombre- '0' <= 9 && nombre- '0' >= 0) {
+						e.consume();
+						JOptionPane.showMessageDialog(null, "Solo se pueden introducir letras en este campo","Datos erróneos", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+				else {
+					e.consume();
+				}
+			}
+		});
 		nombreT.setFont(new Font("Arial", Font.PLAIN, 15));
 		nombreT.setForeground(UIManager.getColor("Button.foreground"));
 		nombreT.setBounds(247, 54, 560, 20);
@@ -136,19 +183,43 @@ public class AgregarTrabajador extends JDialog {
 		nombreT.setColumns(10);
 
 		apellidosT = new JTextField();
+		apellidosT.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(apellidosT.getText().length() < 20) {
+					char nombre =e.getKeyChar();
+					if(nombre- '0' <= 9 && nombre- '0' >= 0) {
+						e.consume();
+						JOptionPane.showMessageDialog(null, "Solo se pueden introducir letras en este campo","Datos erróneos", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+				else {
+					e.consume();
+				}
+			}
+		});
 		apellidosT.setFont(new Font("Arial", Font.PLAIN, 15));
 		apellidosT.setColumns(10);
 		apellidosT.setBounds(247, 82, 560, 20);
 		panelAgregarTrabajadores.add(apellidosT);
 
-		CiT = new JTextField();
-		CiT.setFont(new Font("Arial", Font.PLAIN, 15));
-		CiT.setColumns(10);
-		CiT.setBounds(247, 110, 560, 20);
-		panelAgregarTrabajadores.add(CiT);
-
 		salarioT = new JTextField();
-		salarioT.setFont(new Font("Arial", Font.PLAIN, 15));
+		salarioT.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(salarioT.getText().length() < 15) {
+					char t = e.getKeyChar();
+					if((t- '0' > 9 || t- '0' < 0) && t!= 8) {
+						JOptionPane.showMessageDialog(null, "Solo se pueden introducir numeros en este campo", "Datos erróneos", JOptionPane.ERROR_MESSAGE);
+						e.consume();
+					}
+				}
+				else {
+					e.consume();
+				}
+			}
+		});
+		setFont(new Font("Arial", Font.PLAIN, 15));
 		salarioT.setColumns(10);
 		salarioT.setBounds(247, 138, 560, 20);
 		panelAgregarTrabajadores.add(salarioT);
@@ -214,9 +285,10 @@ public class AgregarTrabajador extends JDialog {
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean datoIncorrecto = false;
+				boolean ciIncorrecto = false;
 				String nombre = nombreT.getText();
 				String apellidos = apellidosT.getText();
-				String ci = CiT.getText(); 
+				String ci = ciT.getText(); 
 				String salarioB = salarioT.getText();
 				String cargo = (String) cargoT.getSelectedItem();
 				String nivelE = (String) NivelE.getSelectedItem();
@@ -246,7 +318,7 @@ public class AgregarTrabajador extends JDialog {
 					lblApellidosT.setForeground(Color.BLACK);
 				}
 
-				if (ci.trim().isEmpty() || !ci.matches("\\d+")) {
+				if (ci.trim().isEmpty()) {
 					lblCiT.setForeground(Color.RED);
 					datoIncorrecto = true;
 				} else {
@@ -259,44 +331,86 @@ public class AgregarTrabajador extends JDialog {
 				} else {
 					lblSalarioT.setForeground(Color.BLACK);
 				}
-
 				if (datoIncorrecto) {
 					JOptionPane.showMessageDialog(AgregarTrabajador.this, "No pueden estar vacíos los campos marcados en rojo.");
-				} else {
+				} else if(!ciIncorrecto){
 					try {
-						float salario = Float.parseFloat(salarioB);
-						Trabajador trabajador;
-						if (cargo.equals("Gerente")) {
-							SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-							String fechaStr = sdf.format((Date) spinnerFecha.getValue());
-							java.sql.Date fecha = null;
-							try {
-								fecha = new java.sql.Date(sdf.parse(fechaStr).getTime());
-							} catch (ParseException ex) {
-								JOptionPane.showMessageDialog(null, "Error al convertir la fecha: " + ex.getMessage());
-								ex.printStackTrace();
-							}
-							trabajador = new Gerente(noTrabajador, nombre, apellidos, ci, salario, nivelE, cargo, fecha);
-						} else {
-							trabajador = new Trabajador(noTrabajador, nombre, apellidos, ci, salario, nivelE, cargo);
-						}
-						trab = trabajador;
-						trabaj.add(trab);
-						noT.add(noTrabajador);
-						
-						JOptionPane.showMessageDialog(AgregarTrabajador.this, "Trabajador agregado a la tabla de manera satisfactoria");
+						if (ci.length() == 11) {
+							int anioNacimiento = Integer.parseInt(ci.substring(0, 2)) + 1950;
+							int mesNacimiento = Integer.parseInt(ci.substring(2, 4));
+							int diaNacimiento = Integer.parseInt(ci.substring(4, 6));
+							if (anioNacimiento >= 1950) { 
+								if (mesNacimiento >= 1 || mesNacimiento <= 12) {
+									if (tiendaC.getTrabajadores().get(0).validarDia(anioNacimiento, mesNacimiento, diaNacimiento)) {
+										if(!tiendaC.encontCI(ci)) {
+											ciIncorrecto = true;
+										}
+										else {
+											JOptionPane.showMessageDialog(AgregarTrabajador.this, "El carnet ya esta en el sistema");
+										}
+									}
+									else {
+										JOptionPane.showMessageDialog(AgregarTrabajador.this, "El día de nacimiento no es válido para el mes y año dados.");
+									}
+								}
+								else {
+									JOptionPane.showMessageDialog(AgregarTrabajador.this, "El mes de nacimiento debe estar entre 01 y 12.");
 
-						if (cargo.equals("Gerente")) {
-							SimpleDateFormat formFecha = new SimpleDateFormat("dd/mm/yyyy");
-							String fecha = formFecha.format((Date) spinnerFecha.getValue());
-							tableModel.addRow(new Object[]{noTrabajador, nombre, apellidos, ci, salario, nivelE, cargo, fecha});
-						} else {
-							tableModel.addRow(new Object[]{noTrabajador, nombre, apellidos, ci, salario, nivelE, cargo, ""});
+								}
+							}
+							else {
+								JOptionPane.showMessageDialog(AgregarTrabajador.this, "El año de nacimiento debe ser a partir de 1950.");
+							}
 						}
-						i++;
-						iniciarDatos();
-					} catch (NumberFormatException ex) {
-						JOptionPane.showMessageDialog(AgregarTrabajador.this, "El salario debe ser un número válido.");
+						else {
+							JOptionPane.showMessageDialog(AgregarTrabajador.this, "El carnet debe tener exactamente 11 dígitos numéricos.");
+						}
+
+					}catch(NumberFormatException ex) {
+						JOptionPane.showMessageDialog(AgregarTrabajador.this, "El carnet debe de ser un número válido");
+					}
+					if(ciIncorrecto) {
+						try {
+							float salario = Float.parseFloat(salarioB);
+							if(salario > 0 ) {
+							Trabajador trabajador;
+							if (cargo.equals("Gerente")) {
+								SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+								String fechaStr = sdf.format((Date) spinnerFecha.getValue());
+								java.sql.Date fecha = null;
+								try {
+									fecha = new java.sql.Date(sdf.parse(fechaStr).getTime());
+								} catch (ParseException ex) {
+									JOptionPane.showMessageDialog(null, "Error al convertir la fecha: " + ex.getMessage());
+									ex.printStackTrace();
+								}
+								trabajador = new Gerente(noTrabajador, nombre, apellidos, ci, salario, nivelE, cargo, fecha);
+							} else {
+								trabajador = new Trabajador(noTrabajador, nombre, apellidos, ci, salario, nivelE, cargo);
+							}
+							trab = trabajador;
+							trabaj.add(trab);
+							tienda.agregarTrabajador(trabajador); 
+							noT.add(noTrabajador);
+
+							JOptionPane.showMessageDialog(AgregarTrabajador.this, "Trabajador agregado a la tabla de manera satisfactoria");
+
+							if (cargo.equals("Gerente")) {
+								SimpleDateFormat formFecha = new SimpleDateFormat("dd/mm/yyyy");
+								String fecha = formFecha.format((Date) spinnerFecha.getValue());
+								tableModel.addRow(new Object[]{noTrabajador, nombre, apellidos, ci, salario, nivelE, cargo, fecha});
+							} else {
+								tableModel.addRow(new Object[]{noTrabajador, nombre, apellidos, ci, salario, nivelE, cargo, ""});
+							}
+							i++;
+							iniciarDatos();
+							}
+							else {
+							JOptionPane.showMessageDialog(AgregarTrabajador.this, "El salario básico debe ser mayor que cero");	
+							}
+						} catch (NumberFormatException ex) {
+							JOptionPane.showMessageDialog(AgregarTrabajador.this, "El salario debe ser un número válido.");
+						}
 					}
 				}
 			}
@@ -305,8 +419,9 @@ public class AgregarTrabajador extends JDialog {
 		btnAgregar.setBounds(656, 263, 70, 22);
 		panelAgregarTrabajadores.add(btnAgregar);
 
+
 		JPanel panelTrabajadoresAgregados = new JPanel();
-		panelTrabajadoresAgregados.setBounds(29, 399, 837, 237);
+		panelTrabajadoresAgregados.setBounds(29, 399, 837, 245);
 		panelTrabajadoresAgregados.setBorder(new TitledBorder(null, "Trabajadores Agregados", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelTrabajadoresAgregados.setBackground(UIManager.getColor("Button.disabledShadow"));
 		panel.add(panelTrabajadoresAgregados);
@@ -332,33 +447,30 @@ public class AgregarTrabajador extends JDialog {
 		panel.add(lblNewLabel);
 
 		btnEliminar = new JButton("Eliminar"); 
-		btnEliminar.setBounds(797, 647, 70, 22);
+		btnEliminar.setBounds(796, 649, 70, 22);
 		panel.add(btnEliminar);
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int pos = table.getSelectedRow();
 				if (pos != -1) {
-					//tienda.eliminarTrabajador1(pos);
 					trabaj.remove(pos);
-					/* if(actualizarNo() != 0) {
-						numTrabajador.setText(String.valueOf(actualizarNo()));
-					} */
-					((DefaultTableModel) table.getModel()).removeRow(pos);			
+					tiendaC.actualizarTrabajador(trabaj);
+					((DefaultTableModel) table.getModel()).removeRow(pos);	
+					InicializacionDeDatos.crearTrabajadores(tiendaC);
+					InicializacionDeDatos.crearGerentes(tiendaC);
+					numTrabajador.removeAll();
+					numTrabajador.setText(String.valueOf(tienda.getTrabajadores().size()+1));
+
 				} else {
 					JOptionPane.showMessageDialog(AgregarTrabajador.this, "Antes de eliminar debe de seleccionar un trabajador de la tabla");
 				}
 			}
-
-			/*private int actualizarNo() {
-			    return noTrabajador;
-			}*/
 		});
 
 		panel_1 = new JPanel();
 		panel_1.setBackground(Color.WHITE);
 		panel_1.setBounds(0, 683, 890, 33);
 		contentPanel.add(panel_1);
-		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		btnAtrs = new JButton("Atr\u00E1s");
 		btnAtrs.addActionListener(new ActionListener() {
@@ -366,18 +478,11 @@ public class AgregarTrabajador extends JDialog {
 				dispose();
 			}
 		});
+		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		panel_1.add(btnAtrs);
 
 		btnGuardar = new JButton("Aceptar");
 		panel_1.add(btnGuardar);
-
-		btnCancelar = new JButton("Cancelar");
-		panel_1.add(btnCancelar);
-		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(actualizarLista() == true) {
@@ -407,7 +512,7 @@ public class AgregarTrabajador extends JDialog {
 		actualizarNoTrabajador();
 		nombreT.setText("");
 		apellidosT.setText("");
-		CiT.setText("");
+		ciT.setText("");
 		salarioT.setText("");
 		NivelE.setSelectedIndex(0);
 		cargoT.setSelectedIndex(0);
@@ -418,15 +523,39 @@ public class AgregarTrabajador extends JDialog {
 
 
 	private void actualizarNoTrabajador() {
-		if( tienda.noTrabajadorAct() != tienda.getCantTrabajadores()) {
-			numTrabajador.setText(String.valueOf(tienda.noTrabajadorAct()));
-		}
-		else  {
-			numTrabajador.setText(String.valueOf(tienda.getUltimoNoTrabajador() + i));
-		}
+		numTrabajador.setText(String.valueOf(tienda.getCantTrabajadores() + 1));
 	}
+	/***************Otra validacion CI********************/
+	public static boolean validarCarnet(String carnet) {
+		boolean e = false;
 
-
-
-
+		String regex = "^(\\d{2})(\\d{2})(\\d{2})(\\d{5})$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(carnet);
+		String dia = matcher.group(1);
+		String mes = matcher.group(2);
+		String anno = matcher.group(3);
+		String resto = matcher.group(4);
+		int year = Integer.parseInt(anno);
+		year +=(year < 50) ? 2000: 1900;
+		while(!e) {
+			if(carnet.length() == 11) {
+				if(matcher.matches()) {	
+					if(year >= 1950) {
+						e = true;
+					}
+				}
+			}
+			String fechaStr =  String.format("%02d-%02d-%04d", Integer.parseInt(dia), Integer.parseInt(mes), year);
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+			try {
+				LocalDate fecha = LocalDate.parse(fechaStr, formatter);
+			}
+			catch(DateTimeException e1) {
+				e = true;
+			}
+		}
+		return e;
+	}
 }
+

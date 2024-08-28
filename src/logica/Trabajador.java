@@ -50,7 +50,7 @@ public class Trabajador {
 		return CI;
 	}
 	public void setCI(String cI) {
-		int anioNacimiento = Integer.parseInt(cI.substring(0, 2)) + 1950; // Asumimos que son años a partir de 1950
+		int anioNacimiento = Integer.parseInt(cI.substring(0, 2)) + 1950;
 		int mesNacimiento = Integer.parseInt(cI.substring(2, 4));
 		int diaNacimiento = Integer.parseInt(cI.substring(4, 6));
 
@@ -85,9 +85,9 @@ public class Trabajador {
 		}
 	}
 
-	private boolean validarDia(int anio, int mes, int dia) {
+	public boolean validarDia(int anio, int mes, int dia) {
 		// Días por mes
-		int diasPorMes;
+		int diasPorMes = 0;
 		switch (mes) {
 		case 1: case 3: case 5: case 7: case 8: case 10: case 12:
 			diasPorMes = 31;
@@ -105,9 +105,8 @@ public class Trabajador {
 			}
 			break;
 		default:
-			return false; // Mes inválido
+			break;
 		}
-
 		return dia >= 1 && dia <= diasPorMes; // Validar el rango del día
 	}
 

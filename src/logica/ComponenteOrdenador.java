@@ -33,11 +33,11 @@ public abstract class ComponenteOrdenador {
 	}
 
 	public void setNumSerie(String numSerie) {
-		if(numSerie.length() >= 8 && numSerie.length() <= 20) {
+		if(numSerie.length() >=  3&& numSerie.length() <= 20) {
 			this.numSerie = numSerie;
 		}
 		else {
-			throw new IllegalArgumentException("El numero de serie debe de tener entre 8 y 20 caracteres");
+			throw new IllegalArgumentException("El numero de serie debe de tener entre 3 y 20 caracteres");
 		}
 	}
 

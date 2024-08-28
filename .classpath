@@ -9,5 +9,6 @@
 	<classpathentry kind="lib" path="C:/Users/kbrun/OneDrive/Documents/bibliotecas Look and feel/TinyLaF.jar"/>
 	<classpathentry kind="lib" path="C:/Users/kbrun/OneDrive/Documents/bibliotecas Look and feel/TonicLF.jar"/>
 	<classpathentry kind="lib" path="C:/Users/kbrun/OneDrive/Documents/api-2024.06.08.jar"/>
+	<classpathentry kind="lib" path="api-2024.06.08.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -67,7 +67,7 @@ public class AgregarProducto extends JDialog {
 
 	public AgregarProducto(Principal principal, TiendaDeComputadoras tiendaC) {
 		super(principal, true);
-
+		setResizable(false);
 		InicializacionDeDatos.crearTrabajadores(tiendaC);
 		InicializacionDeDatos.crearGerentes(tiendaC);
 		

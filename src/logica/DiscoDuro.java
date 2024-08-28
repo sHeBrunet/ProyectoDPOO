@@ -2,19 +2,19 @@ package logica;
 
 public class DiscoDuro extends ComponenteOrdenador {
 	private boolean almacenamiento; // Si es de tipo GB true y  TB false
-	private float capacidad;
+	private double capacidad;
 	private String tipoDeConexion;
 
-	public DiscoDuro(int cantDisponible, String numSerie, String marca, String modelo, float precio, boolean almacenamiento, float capacidad, String tipoDeConexion) {
+	public DiscoDuro(int cantDisponible, String numSerie, String marca, String modelo, float precio, boolean almacenamiento, double capacidad, String tipoDeConexion) {
 		super(cantDisponible, numSerie, marca, modelo, precio);
 		setAlmacenamiento(almacenamiento);
 		setCapacidad(capacidad);
 		setTipoDeConexion(tipoDeConexion);
 	}
-	public float getCapacidad() {
+	public double getCapacidad() {
 		return capacidad;
 	}
-	public void setCapacidad(float capacidad) {
+	public void setCapacidad(double capacidad) {
 		if(isAlmacenamiento() == true) {
 			if(capacidad >= 500 && capacidad <= 20000) {
 		this.capacidad = capacidad;

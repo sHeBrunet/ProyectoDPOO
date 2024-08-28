@@ -61,6 +61,19 @@ public class InicializacionDeDatos {
 			e.printStackTrace();
 		}
 	}
+	public static void crearUsuarios(TiendaDeComputadoras tienda) {
+		crearTrabajadores(tienda);
+		for(int i = 0; i <tienda.getCantTrabajadores(); i++) {
+			ManejoDeSesion.getInstance().setUsername(tienda.getTrabajadores().get(i) + tienda.getTrabajadores().get(i).getCI());
+			ManejoDeSesion.getInstance().setPassword("1234");
+		}
+		
+		
+		
+		
+		
+		
+	}
 	//Llamada a todos los datos de los productos
 	public static void llamarInicializaciones(TiendaDeComputadoras tienda) {
 		inicializarMouses(tienda);
@@ -182,7 +195,7 @@ public class InicializacionDeDatos {
 		ArrayList<ComponenteOrdenador> c = new ArrayList<ComponenteOrdenador>();
 		c.addAll(fuentes);
 		tienda.agregarComponenteI(c);
-	}
+	} 
 	/*********************************TarjetasVideo*************************************************************/
 	public static void inicializarTarjetasVideo(TiendaDeComputadoras tienda) {
 		ArrayList<TarjetaDeVideo> tarjetasVideo = new ArrayList<>();
@@ -203,7 +216,7 @@ public class InicializacionDeDatos {
 	/*********************************MemoriasRAM*************************************************************/
 	public static void inicializarMemoriasRAM(TiendaDeComputadoras tienda) {
 		ArrayList<MemoriaRam> memoriasRAM = new ArrayList<>();
-		memoriasRAM.add(new MemoriaRam(20, "MR12345", "Crucial", "Ballistix Sport LT", 79.99f,  false,16, "DDR-4"));
+		memoriasRAM.add(new MemoriaRam(20, "MR12345", "Crucial", "Ballistix Sport LT", 79.99f,  false, 16, "DDR-4"));
 		memoriasRAM.add(new MemoriaRam(15, "MR12346", "Corsair", "Vengeance LPX", 89.99f, false, 16, "DDR-3"));
 		memoriasRAM.add(new MemoriaRam(18, "MR12347", "G.Skill", "Trident Z Neo", 99.99f,  false,32, "DDR-4"));
 		memoriasRAM.add(new MemoriaRam(22, "MR12348", "Kingston", "HyperX Fury", 69.99f, false, 8, "DDR-4"));
@@ -220,16 +233,16 @@ public class InicializacionDeDatos {
 	/*********************************DiscoDuro*************************************************************/
 	public static void inicializarDiscosDuros(TiendaDeComputadoras tienda) {
 		ArrayList<DiscoDuro> discosDuros = new ArrayList<>();
-		discosDuros.add(new DiscoDuro(10, "DD12345", "Toshiba", "Canvio Basics", 49.99f, true, 1000, "IDE"));
-		discosDuros.add(new DiscoDuro(8, "DD12346", "Samsung", "T5", 129.99f, true, 4000, "SATA"));
-		discosDuros.add(new DiscoDuro(12, "DD12347", "WD", "My Passport", 59.99f, true, 3000, "SATA-3"));
-		discosDuros.add(new DiscoDuro(9, "DD12348", "Seagate", "Backup Plus", 69.99f, true, 4000, "SATA-2"));
-		discosDuros.add(new DiscoDuro(11, "DD12349", "Toshiba", "Canvio Advance", 79.99f, true, 2000, "SATA"));
-		discosDuros.add(new DiscoDuro(10, "DD12350", "Samsung", "T7", 149.99f, true, 1000, "SATA-3"));
-		discosDuros.add(new DiscoDuro(8, "DD12351", "WD", "My Book", 89.99f, true, 8000, "IDE"));
-		discosDuros.add(new DiscoDuro(12, "DD12352", "Seagate", "Expansion", 99.99f, true, 5000, "SATA"));
-		discosDuros.add(new DiscoDuro(9, "DD12353", "Toshiba", "N300", 129.99f, true, 6000, "SATA"));
-		discosDuros.add(new DiscoDuro(11, "DD12354", "Samsung", "970 EVO Plus", 199.99f, true, 7000, "SATA-3"));
+		discosDuros.add(new DiscoDuro(10, "DD12345", "Toshiba", "Canvio Basics", 49.99f, false, 1, "IDE"));
+		discosDuros.add(new DiscoDuro(8, "DD12346", "Samsung", "T5", 129.99f, false, 4, "SATA"));
+		discosDuros.add(new DiscoDuro(12, "DD12347", "WD", "My Passport", 59.99f, false, 3, "SATA-3"));
+		discosDuros.add(new DiscoDuro(9, "DD12348", "Seagate", "Backup Plus", 69.99f, false, 4, "SATA-2"));
+		discosDuros.add(new DiscoDuro(11, "DD12349", "Toshiba", "Canvio Advance", 79.99f, false, 2, "SATA"));
+		discosDuros.add(new DiscoDuro(10, "DD12350", "Samsung", "T7", 149.99f, false, 1, "SATA-3"));
+		discosDuros.add(new DiscoDuro(8, "DD12351", "WD", "My Book", 89.99f, false, 8, "IDE"));
+		discosDuros.add(new DiscoDuro(12, "DD12352", "Seagate", "Expansion", 99.99f, false, 5, "SATA"));
+		discosDuros.add(new DiscoDuro(9, "DD12353", "Toshiba", "N300", 129.99f, false, 6, "SATA"));
+		discosDuros.add(new DiscoDuro(11, "DD12354", "Samsung", "970 EVO Plus", 199.99f, false, 7, "SATA-3"));
 		ArrayList<ComponenteOrdenador> c = new ArrayList<ComponenteOrdenador>();
 		c.addAll(discosDuros);
 		tienda.agregarComponenteI(c);
@@ -250,7 +263,7 @@ public class InicializacionDeDatos {
 	public static void inicializarTarjetasMadre(TiendaDeComputadoras tienda) {
 		ArrayList<TarjetaMadre> tarjetasMadre = new ArrayList<>();
 		TarjetaMadre tarjetaMadre1 = new TarjetaMadre(5, "TM12345", "ASUS", "Prime B660M-A", 129.99f, "LGA 1700");
-		tarjetaMadre1.agregarMemoriaRAMCompatible(new MemoriaRam(20, "MR12345", "Crucial", "Ballistix Sport LT", 79.99f,  false,16, "DDR-4"));
+		tarjetaMadre1.agregarMemoriaRAMCompatible(new MemoriaRam(20, "MR12345", "Crucial", "Ballistix Sport LT", 79.99f,  false, 16, "DDR-4"));
 		tarjetaMadre1.agregarDiscoDuroCompatible(new DiscoDuro(10, "DD12345", "Toshiba", "Canvio Basics", 49.99f, true, 1000, "IDE"));
 		tarjetaMadre1.setProcesadorCompatible(new Microprocesador(4, "MP12346", "Intel", "Core i5-12600K", 319.99f, "LGA 1700", 3.6f));
 		tarjetasMadre.add(tarjetaMadre1);
@@ -310,16 +323,16 @@ public class InicializacionDeDatos {
 	/*********************************Microprocesadores*************************************************************/
 	public static void inicializarMicroprocesador(TiendaDeComputadoras tienda) {
 		ArrayList<Microprocesador> microprocesadores = new ArrayList<>();
-		microprocesadores.add(new Microprocesador(5, "MP12345", "AMD", "Ryzen 5 5600X", 299.99f, "AM4", 3.7f));
-		microprocesadores.add(new Microprocesador(4, "MP12346", "Intel", "Core i5-12600K", 319.99f, "LGA 1700", 3.6f));
-		microprocesadores.add(new Microprocesador(6, "MP12347", "AMD", "Ryzen 7 5800X3D", 449.99f, "AM4", 3.8f));
-		microprocesadores.add(new Microprocesador(7, "MP12348", "Intel", "Core i7-13700K", 499.99f, "LGA 1700", 3.9f));
-		microprocesadores.add(new Microprocesador(5, "MP12349", "AMD", "Ryzen 9 5900X", 549.99f, "AM4", 3.7f));
-		microprocesadores.add(new Microprocesador(4, "MP12350", "Intel", "Core i9-13900K", 599.99f, "LGA 1700", 3.8f));
+		microprocesadores.add(new Microprocesador(5, "MP12345", "AMD", "Ryzen 5 5600X", 299.99f, "AM4", 3.5f));
+		microprocesadores.add(new Microprocesador(4, "MP12346", "Intel", "Core i5-12600K", 319.99f, "LGA 1700", 3.5f));
+		microprocesadores.add(new Microprocesador(6, "MP12347", "AMD", "Ryzen 7 5800X3D", 449.99f, "AM4", 3.5f));
+		microprocesadores.add(new Microprocesador(7, "MP12348", "Intel", "Core i7-13700K", 499.99f, "LGA 1700", 3.5f));
+		microprocesadores.add(new Microprocesador(5, "MP12349", "AMD", "Ryzen 9 5900X", 549.99f, "AM4", 3.5f));
+		microprocesadores.add(new Microprocesador(4, "MP12350", "Intel", "Core i9-13900K", 599.99f, "LGA 1700", 2.5f));
 		microprocesadores.add(new Microprocesador(6, "MP12351", "AMD", "Ryzen 9 7900X", 649.99f, "AM5", 4.0f));
-		microprocesadores.add(new Microprocesador(7, "MP12352", "Intel", "Core i3-12100F", 129.99f, "LGA 1700", 3.3f));
-		microprocesadores.add(new Microprocesador(5, "MP12353", "AMD", "Ryzen 5 5600G", 259.99f, "AM4", 3.9f));
-		microprocesadores.add(new Microprocesador(4, "MP12354", "Intel", "Core i5-12400", 199.99f, "LGA 1700", 2.5f));
+		microprocesadores.add(new Microprocesador(7, "MP12352", "Intel", "Core i3-12100F", 129.99f, "LGA 1700", 2f));
+		microprocesadores.add(new Microprocesador(5, "MP12353", "AMD", "Ryzen 5 5600G", 259.99f, "AM4", 4f));
+		microprocesadores.add(new Microprocesador(4, "MP12354", "Intel", "Core i5-12400", 199.99f, "LGA 1700", 2f));
 		ArrayList<ComponenteOrdenador> c = new ArrayList<ComponenteOrdenador>();
 		c.addAll(microprocesadores);
 		tienda.agregarComponenteI(c);
@@ -346,6 +359,14 @@ public class InicializacionDeDatos {
 		nivel.add("Técnico Medio");
 		nivel.add("Universitario");
 		return nivel;
+	}
+	public static ArrayList<String> conexionesDiscoDuro(){
+		ArrayList<String> conexiones= new ArrayList<String>();
+		conexiones.add("IDE");
+		conexiones.add("SATA");
+		conexiones.add("SATA-2");
+		conexiones.add("SATA-3");
+		return conexiones;
 	}
 	public static ArrayList<String> cargos(){
 		ArrayList<String> cargo = new ArrayList<String>();
@@ -403,8 +424,8 @@ public class InicializacionDeDatos {
 	public static void datosTienda(TiendaDeComputadoras tienda) {
 		tienda.setNombre("S.A.D PC Store");
 		tienda.setID("SAD");
-		tienda.setDireccion("Juan Delgado # 551 e/ O'Farril y Avenida Acosta");
-		tienda.setTelefono("76417449");
+		tienda.setDireccion("Calle 5 entre Orquidea y Binario");
+		tienda.setTelefono("+ 53 10011011");
 	}
 	public static ArrayList<String> nameComponenete() {
 		ArrayList<String> names= new ArrayList<String>();
@@ -499,7 +520,7 @@ public class InicializacionDeDatos {
 	public static ArrayList<String> marcasMemoriasRAM() {
 		ArrayList<String> marcasRAM = new ArrayList<String>();
 		marcasRAM.add("Crucial");
-		marcasRAM.add("Kingstone");
+		marcasRAM.add("Kingston");
 		marcasRAM.add("HyperX");
 		marcasRAM.add("G.Skill");
 		marcasRAM.add("Corsair");
@@ -537,19 +558,11 @@ public class InicializacionDeDatos {
 		materiales.add("Acero");
 		return materiales;
 	}
-	public static ArrayList<String> capacidadesDisco() {
-		ArrayList<String> capacidades = new ArrayList<String>();
-		capacidades.add("1000");
-		capacidades.add("2000");
-		capacidades.add("4000");
-		capacidades.add("5000");
-		capacidades.add("6000");
-		capacidades.add("7000");
-		capacidades.add("8000");
-		return capacidades;
-	}
+	
 	public static ArrayList<String> tiposDeMemoriaRAM(){
 		ArrayList<String> tipos = new ArrayList<String>();
+		tipos.add("DDR");
+		tipos.add("DDR-2");
 		tipos.add("DDR-3");
 		tipos.add("DDR-4");
 		tipos.add("DDR-5");

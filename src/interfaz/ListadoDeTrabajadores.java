@@ -92,9 +92,6 @@ public class ListadoDeTrabajadores extends JDialog {
 					Object t = tableTrabajadores.getValueAt(pos, 0);
 					tienda.eliminarTrabajador1(pos);
 					((DefaultTableModel) tableTrabajadores.getModel()).removeRow(pos);
-				} else if (pos1 != -1) {
-					tienda.eliminarTrabajador1(pos1);
-					((DefaultTableModel) tableGerentes.getModel()).removeRow(pos1);
 				} else {
 					JOptionPane.showMessageDialog(ListadoDeTrabajadores.this, "Antes de eliminar debe de seleccionar un trabajador de la tabla");
 				} 

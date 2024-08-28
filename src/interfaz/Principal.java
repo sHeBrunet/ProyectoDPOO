@@ -177,6 +177,7 @@ public class Principal extends JFrame {
 				try {
 					ListadoDeProductos dialog = new ListadoDeProductos(Principal.this, tiendaC);
 					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+					dialog.setLocationRelativeTo(null);
 					dialog.setVisible(true);
 				} catch (Exception e6) {
 					e6.printStackTrace();
@@ -185,6 +186,22 @@ public class Principal extends JFrame {
 		});
 		mntmNewMenuItem_15.setBackground(Color.WHITE);
 		MenuProductos.add(mntmNewMenuItem_15);
+		
+		JMenuItem facturas = new JMenuItem("Facturas");
+		facturas.setBackground(Color.WHITE);
+		facturas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					try {
+						Facturas dialog = new Facturas(Principal.this, tiendaC);
+						dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+						dialog.setLocationRelativeTo(null);
+						dialog.setVisible(true);
+					} catch (Exception e8) {
+						e8.printStackTrace();
+					}
+				}
+		});
+		MenuProductos.add(facturas);
 
 		JMenu mnNewMenu_2 = new JMenu("Reportes");
 		mnNewMenu_2.setBackground(Color.WHITE);

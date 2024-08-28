@@ -158,7 +158,7 @@ public class Informacion extends JDialog {
 		contentPanel.add(panelGerentes);
 		tableGerentes = new JTable(modelGerentes);
 		scrollPane = new JScrollPane(tableGerentes);
-		scrollPane.setBounds(209, 561, 590, 61);
+		scrollPane.setBounds(209, 561, 614, 61);
 		contentPanel.add(scrollPane);
 		
 		JLabel lblNewLabel_2 = new JLabel("New label");
@@ -172,6 +172,17 @@ public class Informacion extends JDialog {
 		txtpnSomosUnaEmpresa.setText("Bienvenido a S.A.D PC Store. Desde 2005, ofrecemos computadoras, componenetes y accesorios de marcas reconocidas. Nuestro equipo de expertos brinda asesoramiento personalizado y servicios para ensamblar computadoras. Vis\u00EDtanos para encontrar las soluci\u00F3n perfecta para tus necesidades tecnol\u00F3gicas. Gracias por elegirnos !");
 		txtpnSomosUnaEmpresa.setBounds(328, 95, 542, 187);
 		contentPanel.add(txtpnSomosUnaEmpresa);
+		
+		JLabel lblNewLabel_4 = new JLabel("New label");
+		lblNewLabel_4.setBorder(new LineBorder(UIManager.getColor("Button.frame"), 2));
+		lblNewLabel_4.setIcon(new ImageIcon(Informacion.class.getResource("/gui/icons/1724841196534.jpg")));
+		lblNewLabel_4.setBounds(652, 319, 171, 165);
+		contentPanel.add(lblNewLabel_4);
+		
+		JLabel lblNewLabel_5 = new JLabel("QR:");
+		lblNewLabel_5.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel_5.setBounds(611, 332, 29, 16);
+		contentPanel.add(lblNewLabel_5);
 		
 		inicializaciones.InicializacionDeDatos.crearGerentes(tienda);
 		inicializaciones.InicializacionDeDatos.datosTienda(tienda);
