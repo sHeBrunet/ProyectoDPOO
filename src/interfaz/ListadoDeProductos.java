@@ -53,7 +53,6 @@ public class ListadoDeProductos extends JDialog {
 	private static JTable tableAdaptadores;
 	private boolean cambios = false;
 	private static ArrayList <String> piezasAElim = new ArrayList <>();
-	private static boolean tablasLlenas = false;
 	private static int count;
 
 	public ListadoDeProductos(Principal principal, TiendaDeComputadoras t) {
@@ -207,7 +206,7 @@ public class ListadoDeProductos extends JDialog {
 						((DefaultTableModel) tableAdaptadores.getModel()).removeRow(posAd);
 						limpiarAdaptadores();
 						llenarTablaAdaptadores(modelAdaptadores);
-						} else if (posB != -1) {
+					} else if (posB != -1) {
 						String ID = (String) tableBocinas.getValueAt(posB, 5);
 						piezasAElim.add(ID);
 						((DefaultTableModel) tableBocinas.getModel()).removeRow(posB);
@@ -280,10 +279,7 @@ public class ListadoDeProductos extends JDialog {
 			}
 		});
 		panelBotones.add(btnBorrar);
-
-		if(!tablasLlenas) {
-			inicializar();
-		}
+		
 		piezasAElim.clear();
 		llenarTablaAdaptadores(modelAdaptadores);
 		llenarTablaBocinas(modelBocinas);
@@ -297,19 +293,10 @@ public class ListadoDeProductos extends JDialog {
 		llenarTablaRAM(modelRAM);
 		llenarTablaTarjetaVideo(modelTarjetas);
 		llenarTablaTeclados(modelTeclados);
-		
 	}
-	
-	/*private static void llenarPrueba(DefaultTableModel model) {
-		if(!piezasElim.isEmpty())
-		for(String p: piezasElim) {
-			model.addRow(new Object[] {p});
-		}
-	}*/
-	
 
 	private static void llenarTablaAdaptadores(DefaultTableModel model) {
-		count = 1;
+		count = 1;             
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
 			if(c instanceof Adaptador) {
 				if(!piezasAElim.isEmpty()) {
@@ -548,13 +535,6 @@ public class ListadoDeProductos extends JDialog {
 				}
 		}
 	}
-
-	private static void inicializar() {
-		inicializaciones.InicializacionDeDatos.llamarInicializaciones(tienda);
-		tablasLlenas = true;
-	}
-
-
 	private static void limpiarAdaptadores() {
 		while(((DefaultTableModel) tableAdaptadores.getModel()).getRowCount() > 0)
 			((DefaultTableModel) tableAdaptadores.getModel()).removeRow(0);
@@ -614,6 +594,5 @@ public class ListadoDeProductos extends JDialog {
 		while(((DefaultTableModel) tableTeclados.getModel()).getRowCount() > 0)
 			((DefaultTableModel) tableTeclados.getModel()).removeRow(0);
 	}
-
 }
 

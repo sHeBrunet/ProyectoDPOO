@@ -86,8 +86,7 @@ public class VenderPieza extends JDialog {
 		p = principal;
 		tiendaC = tienda;
 		modelo = new ArrayList<>();
-		inicializaciones.InicializacionDeDatos.llamarInicializaciones(tienda);
-
+		
 		setBounds(100, 100, 900, 746);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

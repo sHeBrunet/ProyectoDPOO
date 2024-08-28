@@ -23,6 +23,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
+import inicializaciones.InicializacionDeDatos;
 import logica.ManejoDeSesion;
 import logica.TiendaDeComputadoras;
 import login.Login;
@@ -67,7 +68,7 @@ public class Principal extends JFrame {
 		setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 746);
-
+		inicializarDatos();
 
 
 		JMenuBar menuBar = new JMenuBar();
@@ -132,18 +133,18 @@ public class Principal extends JFrame {
 		mntmNewMenuItem_4 = new JMenuItem("Vender Productos");
 		mntmNewMenuItem_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			    try {
-			        if (tiendaC != null) {
-			            VenderPieza dialog = new VenderPieza(Principal.this, tiendaC, null);
-			            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			            dialog.setLocationRelativeTo(null);
-			            dialog.setVisible(true);
-			        } else {
-			            System.out.println("Error: tiendaC es null");
-			        }
-			    } catch (Throwable e3) {
-			        e3.printStackTrace();
-			    }
+				try {
+					if (tiendaC != null) {
+						VenderPieza dialog = new VenderPieza(Principal.this, tiendaC, null);
+						dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+						dialog.setLocationRelativeTo(null);
+						dialog.setVisible(true);
+					} else {
+						System.out.println("Error: tiendaC es null");
+					}
+				} catch (Throwable e3) {
+					e3.printStackTrace();
+				}
 			}
 		});
 		mntmNewMenuItem_4.setBackground(Color.WHITE);
@@ -284,7 +285,7 @@ public class Principal extends JFrame {
 				} catch (Throwable e3) {
 					e3.printStackTrace();
 				}
-				
+
 
 			}
 		});
@@ -334,7 +335,7 @@ public class Principal extends JFrame {
 				} catch (Throwable e3) {
 					e3.printStackTrace();
 				}
-				
+
 			}
 		});
 		btnButtonmemoriasRAM.setBorder(null);
@@ -700,5 +701,11 @@ public class Principal extends JFrame {
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 23));
 		lblNewLabel.setBounds(10, 10, 293, 44);
 		panel.add(lblNewLabel);
+	}
+
+	private void inicializarDatos() {
+		InicializacionDeDatos.crearTrabajadores(tiendaC);
+		InicializacionDeDatos.crearGerentes(tiendaC);
+		inicializaciones.InicializacionDeDatos.llamarInicializaciones(tiendaC);
 	}
 }

@@ -392,7 +392,7 @@ public class AgregarTrabajador extends JDialog {
 		}
 		return act;
 	}
-	
+
 	private void iniciarDatos() {
 		numTrabajador.setText(Integer.toString(++contador));
 		nombreT.setText("");

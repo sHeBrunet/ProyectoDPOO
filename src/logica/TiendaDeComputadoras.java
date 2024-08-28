@@ -103,7 +103,7 @@ public class TiendaDeComputadoras {
 
 	}
 	public int eliminarTrabajadores(ArrayList <String> trabAElim){
-		int count = 0; int j = 0; int i = 0;
+		int count = 0; int i = 0; int j = 0;
 		boolean stop = false;
 		while(i < trabajadores.size() && !trabAElim.isEmpty()) {
 			while(j < trabAElim.size() && !stop) {
@@ -138,7 +138,7 @@ public class TiendaDeComputadoras {
 	}
 
 	public int eliminarPiezas(ArrayList <String> piezasAElim) {
-		int count = 0; int j = 0; int i = 0;
+		int count = 0; int i = 0; int j = 0;
 		boolean stop = false;
 		while(i < componentes.size() && !piezasAElim.isEmpty()) {
 			while(j < piezasAElim.size() && !stop) {

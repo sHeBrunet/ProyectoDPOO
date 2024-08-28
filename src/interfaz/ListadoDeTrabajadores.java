@@ -34,7 +34,6 @@ public class ListadoDeTrabajadores extends JDialog {
 	private JButton btnAceptar;
 	private boolean cambios = false;
 	private static ArrayList <String> trabAElim = new ArrayList<>();
-	private static boolean tablasLlenas = false;
 	private static int count;
 
 	public ListadoDeTrabajadores(Principal principal, TiendaDeComputadoras t) {
@@ -132,9 +131,7 @@ public class ListadoDeTrabajadores extends JDialog {
 			}
 		});
 		panelBotones.add(btnBorrar);
-
-		if(!tablasLlenas) 
-			inicializar();
+		
 		llenarTablaGerentes(modelGerentes);
 		llenarTablaTrabajadores(modelTrabajadores);
 	}
@@ -188,12 +185,5 @@ public class ListadoDeTrabajadores extends JDialog {
 			while(((DefaultTableModel) tableGerentes.getModel()).getRowCount() > 0)
 				((DefaultTableModel) tableGerentes.getModel()).removeRow(0);
 		}
-
-		private static void inicializar() {
-			inicializaciones.InicializacionDeDatos.crearGerentes(tienda);
-			inicializaciones.InicializacionDeDatos.crearTrabajadores(tienda);
-			tablasLlenas = true;
-		}
-
 
 	}
