@@ -585,6 +585,7 @@ public class VenderPieza extends JDialog {
 					public void actionPerformed(ActionEvent e) {
 						if(actualizarLista() == true) {
 							JOptionPane.showMessageDialog(VenderPieza.this, "Cambios guardados satisfactoriamente");
+							setVisible(false);
 						}
 					}
 

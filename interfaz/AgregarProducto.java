@@ -135,39 +135,38 @@ public class AgregarProducto extends JDialog {
 		txtPrecio.setBounds(247, 124, 560, 20);
 		panelAgregarPiezas.add(txtPrecio);
 
-		comboBoxComponente = new JComboBox<>();
-		llenarComboBox(comboBoxComponente, InicializacionDeDatos.nameComponente());
-		comboBoxMarca = new JComboBox<>();
-		llenarComboBox(comboBoxMarca, InicializacionDeDatos.marcasTeclado());
-		comboBoxModelo = new JComboBox<>();
-		llenarComboBox(comboBoxModelo, InicializacionDeDatos.tecladosHyperX());
-
-		comboBoxMarca.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(comboBoxMarca != null) {
-				compSeleccionado = comboBoxComponente.getSelectedItem();
-				elegirModelo(compSeleccionado, marcaSeleccionada);
-				}
-				else
-					System.out.println("estas maja");
-			}
-		});
-		comboBoxMarca.setBounds(247, 71, 560, 20);
-		panelAgregarPiezas.add(comboBoxMarca);
-
+		comboBoxModelo = new JComboBox();
+		comboBoxModelo.setBounds(247, 98, 560, 20);
+		panelAgregarPiezas.add(comboBoxModelo);
+		
+		comboBoxComponente = new JComboBox();
 		comboBoxComponente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				compSeleccionado = comboBoxComponente.getSelectedItem();
 				comboBoxMarca.removeAllItems();
 				elegirMarca(compSeleccionado);
+				elegirModelo(compSeleccionado, comboBoxMarca.getSelectedItem());
 			}
 		});
 		comboBoxComponente.setBounds(247, 44, 560, 20);
 		panelAgregarPiezas.add(comboBoxComponente);
+		
+		comboBoxMarca = new JComboBox();
+		comboBoxMarca.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(compSeleccionado != null) {
+				elegirModelo(compSeleccionado, comboBoxMarca.getSelectedItem());
+				}
 
-		comboBoxModelo.setBounds(247, 98, 560, 20);
-		panelAgregarPiezas.add(comboBoxModelo);
+			}
+		});
+		comboBoxMarca.setBounds(247, 71, 560, 20);
+		panelAgregarPiezas.add(comboBoxMarca);
 
+		llenarComboBox(comboBoxComponente, inicializaciones.InicializacionDeDatos.nameComponente());
+		llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasTeclado());
+		llenarComboBox(comboBoxModelo, inicializaciones.InicializacionDeDatos.tecladosCorsair());
+		
 		JButton btnBorrar = new JButton("Limpiar");
 		btnBorrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -376,14 +375,14 @@ public class AgregarProducto extends JDialog {
 				break;
 			}
 		} else {
-			System.out.println("Uno o más comboBox son null");
-		}
-		marcaSeleccionada = comboBoxMarca.getSelectedItem();
-		elegirModelo(compSeleccionado, marcaSeleccionada);
+		System.out.println("Uno o más comboBox son null");
+	}
+
+elegirModelo(compSeleccionado, comboBoxMarca.getSelectedItem());
 	}
 
 	private void elegirModelo(Object compSeleccionado, Object marcaSeleccionada) {
-		if (comboBoxMarca != null && comboBoxModelo != null) {
+		if (marcaSeleccionada != null && compSeleccionado!= null) {
 			String comp = compSeleccionado.toString();
 			String marca = marcaSeleccionada.toString();
 			comboBoxModelo.removeAllItems();
