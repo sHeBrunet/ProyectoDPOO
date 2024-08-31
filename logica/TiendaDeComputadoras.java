@@ -99,26 +99,39 @@ public class TiendaDeComputadoras {
 		return agregado;
 	}
 
-	public boolean agregarP(ArrayList<ComponenteOrdenador> piezas) {
+	public boolean agregarP(ArrayList<ComponenteOrdenador> piezasAgregadas) {
 		int j = 0;
 		boolean act = false;
 		boolean stop = false;
-		for(int i = 0; i < componentes.size() && !piezas.isEmpty(); i++) {
-			while(j < piezas.size() && !stop) {
-				if(componentes.get(i).getNumSerie().equalsIgnoreCase(piezas.get(j).getNumSerie())) {
-					stop = true;
-					piezas.remove(j);
-				}
-				else
-					j++;
-			}
-			j = 0;
-			stop = false;
-		}
-		if(!piezas.isEmpty()) {
+		if(!piezasAgregadas.isEmpty()) {
 			act = true;
-			for(ComponenteOrdenador c: piezas) {
-				componentes.add(c);
+			for(int i = 0; i < componentes.size() && !piezasAgregadas.isEmpty(); i++) {
+				while(j < piezasAgregadas.size() && !stop) {
+					if(componentes.get(i).getMarca().equalsIgnoreCase(piezasAgregadas.get(j).getMarca())) {
+						if(componentes.get(i).getModelo().equalsIgnoreCase(piezasAgregadas.get(j).getModelo())) {
+							if(componentes.get(i).getNumSerie().equalsIgnoreCase(piezasAgregadas.get(j).getNumSerie())) {
+								stop = true;
+								int cantidadActual = componentes.get(i).getCantDisponible();
+								int cantidadAgregada = piezasAgregadas.get(j).getCantDisponible();
+								componentes.get(i).setCantDisponible(cantidadActual + cantidadAgregada);
+								piezasAgregadas.remove(j);
+							}
+							else 
+								j++;
+						}
+						else 
+							j++;
+					}
+					else 
+						j++;
+				}
+				j = 0;
+				stop = false;
+			}
+			if(!piezasAgregadas.isEmpty()) {
+				for(ComponenteOrdenador p : piezasAgregadas) {
+					componentes.add(p);
+				}
 			}
 		}
 		return act;
@@ -147,7 +160,7 @@ public class TiendaDeComputadoras {
 			}
 		}
 	}
-	
+
 	public void eliminarTrabajador1(int posicion){
 		if(posicion >= 0 && posicion < trabajadores.size()) {
 			trabajadores.remove(posicion);

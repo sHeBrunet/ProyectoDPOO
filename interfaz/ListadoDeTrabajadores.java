@@ -50,13 +50,27 @@ public class ListadoDeTrabajadores extends JDialog {
 
 		JPanel panelGerentes = new JPanel(new BorderLayout());
 		String[] columnNamesGerentes = {"No.", "Nombre", "Apellidos", "CI", "Salario", "Educación", "Cargo", "Fecha de Ingreso"};
-		DefaultTableModel modelGerentes = new DefaultTableModel(columnNamesGerentes, 0);
+		DefaultTableModel modelGerentes = new DefaultTableModel(columnNamesGerentes, 0) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 		tableGerentes = new JTable(modelGerentes);
 		panelGerentes.add(new JScrollPane(tableGerentes), BorderLayout.CENTER);
 
 		JPanel panelTrabajadores = new JPanel(new BorderLayout());
 		String[] columnNamesTrabajadores = {"No.", "Nombre", "Apellidos", "CI", "Salario", "Educación", "Cargo"};
-		DefaultTableModel modelTrabajadores = new DefaultTableModel(columnNamesTrabajadores, 0);
+		DefaultTableModel modelTrabajadores = new DefaultTableModel(columnNamesTrabajadores, 0) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 		tableTrabajadores = new JTable(modelTrabajadores);
 		panelTrabajadores.add(new JScrollPane(tableTrabajadores), BorderLayout.CENTER);
 

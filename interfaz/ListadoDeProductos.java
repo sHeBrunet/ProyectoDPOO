@@ -51,6 +51,7 @@ public class ListadoDeProductos extends JDialog {
 	private static JTable tableTarjetas;
 	private static JTable tableTeclados;
 	private static JTable tableAdaptadores;
+	private static JTable tableTotalPiezas;
 	private boolean cambios = false;
 	private static ArrayList <String> piezasAElim = new ArrayList <>();
 	private static int count;
@@ -78,54 +79,150 @@ public class ListadoDeProductos extends JDialog {
 		JPanel panelRAM = new JPanel(new BorderLayout());
 		JPanel panelTarjetas = new JPanel(new BorderLayout());
 		JPanel panelTeclados = new JPanel(new BorderLayout());
+		JPanel panelTotalPiezas = new JPanel(new BorderLayout());
 
-		DefaultTableModel modelChasis = new DefaultTableModel(columnNames, 0);
+		DefaultTableModel modelChasis = new DefaultTableModel(columnNames, 0) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 		tableChasis = new JTable(modelChasis);
 		panelChasis.add(new JScrollPane(tableChasis), BorderLayout.CENTER);
 
-		DefaultTableModel modelBocinas = new DefaultTableModel(columnNames, 0);
+		DefaultTableModel modelBocinas = new DefaultTableModel(columnNames, 0) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 		tableBocinas = new JTable(modelBocinas);
 		panelBocinas.add(new JScrollPane(tableBocinas), BorderLayout.CENTER);
 
-		DefaultTableModel modelDiscos = new DefaultTableModel(columnNames, 0);
+		DefaultTableModel modelDiscos = new DefaultTableModel(columnNames, 0) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 		tableDiscos = new JTable(modelDiscos);
 		panelDiscos.add(new JScrollPane(tableDiscos), BorderLayout.CENTER);
 
-		DefaultTableModel modelFuentes = new DefaultTableModel(columnNames, 0);
+		DefaultTableModel modelFuentes = new DefaultTableModel(columnNames, 0) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 		tableFuentes = new JTable(modelFuentes);
 		panelFuentes.add(new JScrollPane(tableFuentes), BorderLayout.CENTER);
 
-		DefaultTableModel modelMicros = new DefaultTableModel(columnNames, 0);
+		DefaultTableModel modelMicros = new DefaultTableModel(columnNames, 0) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 		tableMicros = new JTable(modelMicros);
 		panelMicros.add(new JScrollPane(tableMicros), BorderLayout.CENTER);
 
-		DefaultTableModel modelMonitores = new DefaultTableModel(columnNames, 0);
+		DefaultTableModel modelMonitores = new DefaultTableModel(columnNames, 0) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 		tableMonitores = new JTable(modelMonitores);
 		panelMonitores.add(new JScrollPane(tableMonitores), BorderLayout.CENTER);
 
-		DefaultTableModel modelMotherboards = new DefaultTableModel(columnNames, 0);
+		DefaultTableModel modelMotherboards = new DefaultTableModel(columnNames, 0) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 		tableMotherboards = new JTable(modelMotherboards);
 		panelMotherboards.add(new JScrollPane(tableMotherboards), BorderLayout.CENTER);
 
-		DefaultTableModel modelMouse = new DefaultTableModel(columnNames, 0);
+		DefaultTableModel modelMouse = new DefaultTableModel(columnNames, 0) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 		tableMouses = new JTable(modelMouse);
 		panelMouse.add(new JScrollPane(tableMouses), BorderLayout.CENTER);
 
-		DefaultTableModel modelRAM = new DefaultTableModel(columnNames, 0);
+		DefaultTableModel modelRAM = new DefaultTableModel(columnNames, 0) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 		tableRAM = new JTable(modelRAM);
 		panelRAM.add(new JScrollPane(tableRAM), BorderLayout.CENTER);
 
-		DefaultTableModel modelTarjetas = new DefaultTableModel(columnNames, 0);
+		DefaultTableModel modelTarjetas = new DefaultTableModel(columnNames, 0) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 		tableTarjetas = new JTable(modelTarjetas);
 		panelTarjetas.add(new JScrollPane(tableTarjetas), BorderLayout.CENTER);
 
-		DefaultTableModel modelTeclados = new DefaultTableModel(columnNames, 0);
+		DefaultTableModel modelTeclados = new DefaultTableModel(columnNames, 0) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 		tableTeclados = new JTable(modelTeclados);
 		panelTeclados.add(new JScrollPane(tableTeclados), BorderLayout.CENTER);
 
-		DefaultTableModel modelAdaptadores = new DefaultTableModel(columnNames, 0);
+		DefaultTableModel modelAdaptadores = new DefaultTableModel(columnNames, 0) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 		tableAdaptadores = new JTable(modelAdaptadores);
 		panelAdaptadores.add(new JScrollPane(tableAdaptadores), BorderLayout.CENTER);
+
+		DefaultTableModel modelTotalPiezas = new DefaultTableModel(columnNames, 0) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		tableTotalPiezas = new JTable(modelTotalPiezas);
+		panelTotalPiezas.add(new JScrollPane(tableTotalPiezas), BorderLayout.CENTER);
 
 		tabbedPane.addTab("Adaptadores", panelAdaptadores);
 		tabbedPane.addTab("Bocinas", panelBocinas);
@@ -139,6 +236,7 @@ public class ListadoDeProductos extends JDialog {
 		tabbedPane.addTab("RAM", panelRAM);
 		tabbedPane.addTab("Tarjetas de Video", panelTarjetas);
 		tabbedPane.addTab("Teclados", panelTeclados);
+		tabbedPane.addTab("General", panelTotalPiezas);
 
 		JPanel panelBotones = new JPanel();
 		btnAtras = new JButton("Atrás");
@@ -199,79 +297,121 @@ public class ListadoDeProductos extends JDialog {
 					int posR = tableRAM.getSelectedRow();
 					int posTV = tableTarjetas.getSelectedRow();
 					int posT = tableTeclados.getSelectedRow();
-
+					int posPT = tableTotalPiezas.getSelectedRow();
 					if (posAd != -1) {
 						String ID = (String) tableAdaptadores.getValueAt(posAd, 5);
 						piezasAElim.add(ID);
 						((DefaultTableModel) tableAdaptadores.getModel()).removeRow(posAd);
 						limpiarAdaptadores();
+						limpiarTotalPiezas();
 						llenarTablaAdaptadores(modelAdaptadores);
+						llenarTablaTotalPiezas(modelTotalPiezas);
 					} else if (posB != -1) {
 						String ID = (String) tableBocinas.getValueAt(posB, 5);
 						piezasAElim.add(ID);
 						((DefaultTableModel) tableBocinas.getModel()).removeRow(posB);
 						limpiarBocinas();
+						limpiarTotalPiezas();
 						llenarTablaBocinas(modelBocinas);
+						llenarTablaTotalPiezas(modelTotalPiezas);
 					} else if (posC != -1) {
 						String ID = (String) tableChasis.getValueAt(posC, 5);
 						piezasAElim.add(ID);
 						((DefaultTableModel) tableChasis.getModel()).removeRow(posC);
 						limpiarChasis();
+						limpiarTotalPiezas();
 						llenarTablaChasis(modelChasis);
+						llenarTablaTotalPiezas(modelTotalPiezas);
 					} else if (posD != -1) {
 						String ID = (String) tableDiscos.getValueAt(posD, 5);
 						piezasAElim.add(ID);
 						((DefaultTableModel) tableDiscos.getModel()).removeRow(posD);
 						limpiarDiscos();
+						limpiarTotalPiezas();
 						llenarTablaDiscos(modelDiscos);
+						llenarTablaTotalPiezas(modelTotalPiezas);
 					} else if (posF != -1) {
 						String ID = (String) tableFuentes.getValueAt(posF, 5);
 						piezasAElim.add(ID);
 						((DefaultTableModel) tableFuentes.getModel()).removeRow(posF);
 						limpiarFuentes();
+						limpiarTotalPiezas();
 						llenarTablaFuentes(modelFuentes);
+						llenarTablaTotalPiezas(modelTotalPiezas);
 					} else if (posMic != -1) {
 						String ID = (String) tableMicros.getValueAt(posMic, 5);
 						piezasAElim.add(ID);
 						((DefaultTableModel) tableMicros.getModel()).removeRow(posMic);
 						limpiarMicros();
+						limpiarTotalPiezas();
 						llenarTablaMicros(modelMicros);
+						llenarTablaTotalPiezas(modelTotalPiezas);
 					} else if (posMon != -1) {
 						String ID = (String) tableMonitores.getValueAt(posMon, 5);
 						piezasAElim.add(ID);
 						((DefaultTableModel) tableMonitores.getModel()).removeRow(posMon);
 						limpiarMonitores();
+						limpiarTotalPiezas();
 						llenarTablaMonitores(modelMonitores);
+						llenarTablaTotalPiezas(modelTotalPiezas);
 					} else if (posMoth != -1) {
 						String ID = (String) tableMotherboards.getValueAt(posMoth, 5);
 						piezasAElim.add(ID);
 						((DefaultTableModel) tableMotherboards.getModel()).removeRow(posMoth);
 						limpiarMotherboards();
+						limpiarTotalPiezas();
 						llenarTablaMotherboards(modelMotherboards);
+						llenarTablaTotalPiezas(modelTotalPiezas);
 					} else if (posMous != -1) {
 						String ID = (String) tableMouses.getValueAt(posMous, 5);
 						piezasAElim.add(ID);
 						((DefaultTableModel) tableMouses.getModel()).removeRow(posMous);
 						limpiarMouses();
+						limpiarTotalPiezas();
 						llenarTablaMouses(modelMouse);
+						llenarTablaTotalPiezas(modelTotalPiezas);
 					} else if (posR != -1) {
 						String ID = (String) tableRAM.getValueAt(posR, 5);
 						piezasAElim.add(ID);
 						((DefaultTableModel) tableRAM.getModel()).removeRow(posR);
 						limpiarRAM();
+						limpiarTotalPiezas();
 						llenarTablaRAM(modelRAM);
+						llenarTablaTotalPiezas(modelTotalPiezas);
 					} else if (posTV != -1) {
 						String ID = (String) tableTarjetas.getValueAt(posTV, 5);
 						piezasAElim.add(ID);
 						((DefaultTableModel) tableTarjetas.getModel()).removeRow(posTV);
 						limpiarTarjetas();
+						limpiarTotalPiezas();
 						llenarTablaTarjetaVideo(modelTarjetas);
+						llenarTablaTotalPiezas(modelTotalPiezas);
 					} else if (posT != -1) {
 						String ID = (String) tableTeclados.getValueAt(posT, 5);
 						piezasAElim.add(ID);
 						((DefaultTableModel) tableTeclados.getModel()).removeRow(posT);		
 						limpiarTeclados();
+						limpiarTotalPiezas();
 						llenarTablaTeclados(modelTeclados);
+						llenarTablaTotalPiezas(modelTotalPiezas);
+					} else if (posPT != -1) {
+						String ID = (String) tableTotalPiezas.getValueAt(posPT, 5);
+						piezasAElim.add(ID);
+						((DefaultTableModel) tableTotalPiezas.getModel()).removeRow(posPT);		
+						limpiarTodo();
+						llenarTablaAdaptadores(modelAdaptadores);
+						llenarTablaBocinas(modelBocinas);
+						llenarTablaChasis(modelChasis);
+						llenarTablaDiscos(modelDiscos);
+						llenarTablaFuentes(modelFuentes);
+						llenarTablaMicros(modelMicros);
+						llenarTablaMonitores(modelMonitores);
+						llenarTablaMotherboards(modelMotherboards);
+						llenarTablaMouses(modelMouse);
+						llenarTablaRAM(modelRAM);
+						llenarTablaTarjetaVideo(modelTarjetas);
+						llenarTablaTeclados(modelTeclados);
+						llenarTablaTotalPiezas(modelTotalPiezas);
 					} else {
 						JOptionPane.showMessageDialog(ListadoDeProductos.this, "Antes de eliminar debe de seleccionar un componente de la tabla");
 					}
@@ -279,8 +419,8 @@ public class ListadoDeProductos extends JDialog {
 			}
 		});
 		panelBotones.add(btnBorrar);
-		
-		piezasAElim.clear();
+
+		piezasAElim.clear();				
 		llenarTablaAdaptadores(modelAdaptadores);
 		llenarTablaBocinas(modelBocinas);
 		llenarTablaChasis(modelChasis);
@@ -293,12 +433,13 @@ public class ListadoDeProductos extends JDialog {
 		llenarTablaRAM(modelRAM);
 		llenarTablaTarjetaVideo(modelTarjetas);
 		llenarTablaTeclados(modelTeclados);
+		llenarTablaTotalPiezas(modelTotalPiezas);
 	}
 
 	private static void llenarTablaAdaptadores(DefaultTableModel model) {
 		count = 1;             
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
-			if(c instanceof Adaptador) {
+			if(c.getNumSerie().startsWith("A")) 
 				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
 					for(int i = 0; i < piezasAElim.size(); i++) {
@@ -312,14 +453,13 @@ public class ListadoDeProductos extends JDialog {
 				else {
 					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
 				}
-			}
 		}
 	}
 
 	private static void llenarTablaBocinas(DefaultTableModel model) {
 		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
-			if(c instanceof Bocina) 
+			if(c.getNumSerie().startsWith("B")) 
 				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
 					for(int i = 0; i < piezasAElim.size(); i++) {
@@ -339,7 +479,7 @@ public class ListadoDeProductos extends JDialog {
 	private static void llenarTablaChasis(DefaultTableModel model) {
 		count= 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
-			if (c instanceof Chasis)
+			if(c.getNumSerie().startsWith("C"))
 				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
 					for(int i = 0; i < piezasAElim.size(); i++) {
@@ -359,7 +499,7 @@ public class ListadoDeProductos extends JDialog {
 	private static void llenarTablaDiscos(DefaultTableModel model) {
 		count= 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
-			if(c instanceof DiscoDuro) 
+			if(c.getNumSerie().startsWith("DD"))
 				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
 					for(int i = 0; i < piezasAElim.size(); i++) {
@@ -379,7 +519,7 @@ public class ListadoDeProductos extends JDialog {
 	private static void llenarTablaFuentes(DefaultTableModel model) {
 		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
-			if(c instanceof Fuente) 
+			if(c.getNumSerie().startsWith("F"))
 				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
 					for(int i = 0; i < piezasAElim.size(); i++) {
@@ -399,7 +539,7 @@ public class ListadoDeProductos extends JDialog {
 	private static void llenarTablaMicros(DefaultTableModel model) {
 		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
-			if(c instanceof Microprocesador) 
+			if(c.getNumSerie().startsWith("MP"))
 				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
 					for(int i = 0; i < piezasAElim.size(); i++) {
@@ -419,7 +559,7 @@ public class ListadoDeProductos extends JDialog {
 	private static void llenarTablaMonitores(DefaultTableModel model) {
 		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
-			if(c instanceof Monitor) 
+			if(c.getNumSerie().startsWith("MN"))
 				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
 					for(int i = 0; i < piezasAElim.size(); i++) {
@@ -439,7 +579,7 @@ public class ListadoDeProductos extends JDialog {
 	private static void llenarTablaMotherboards(DefaultTableModel model) {
 		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
-			if(c instanceof TarjetaMadre) 
+			if(c.getNumSerie().startsWith("TM"))
 				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
 					for(int i = 0; i < piezasAElim.size(); i++) {
@@ -459,7 +599,7 @@ public class ListadoDeProductos extends JDialog {
 	private static void llenarTablaMouses(DefaultTableModel model) {
 		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
-			if(c instanceof Mouse) 
+			if(c.getNumSerie().startsWith("R"))
 				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
 					for(int i = 0; i < piezasAElim.size(); i++) {
@@ -479,7 +619,7 @@ public class ListadoDeProductos extends JDialog {
 	private static void llenarTablaRAM(DefaultTableModel model) {
 		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
-			if(c instanceof MemoriaRam) 
+			if(c.getNumSerie().startsWith("MR"))
 				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
 					for(int i = 0; i < piezasAElim.size(); i++) {
@@ -499,7 +639,7 @@ public class ListadoDeProductos extends JDialog {
 	private static void llenarTablaTarjetaVideo(DefaultTableModel model) {
 		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
-			if(c instanceof TarjetaDeVideo) 
+			if(c.getNumSerie().startsWith("TV"))
 				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
 					for(int i = 0; i < piezasAElim.size(); i++) {
@@ -519,7 +659,7 @@ public class ListadoDeProductos extends JDialog {
 	private static void llenarTablaTeclados(DefaultTableModel model) {
 		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
-			if(c instanceof Teclado) 
+			if(c.getNumSerie().startsWith("TE"))
 				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
 					for(int i = 0; i < piezasAElim.size(); i++) {
@@ -535,6 +675,26 @@ public class ListadoDeProductos extends JDialog {
 				}
 		}
 	}
+
+	private static void llenarTablaTotalPiezas(DefaultTableModel model) {
+		count = 1;
+		for (ComponenteOrdenador c : tienda.getComponentes()) {
+			if(!piezasAElim.isEmpty()) {
+				boolean encontrado = false;
+				for(int i = 0; i < piezasAElim.size(); i++) {
+					if(c.getNumSerie().equals(piezasAElim.get(i))) {
+						encontrado = true;
+					}
+				}
+				if(!encontrado)
+					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+			}
+			else {
+				model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+			}
+		}
+	}
+
 	private static void limpiarAdaptadores() {
 		while(((DefaultTableModel) tableAdaptadores.getModel()).getRowCount() > 0)
 			((DefaultTableModel) tableAdaptadores.getModel()).removeRow(0);
@@ -593,6 +753,27 @@ public class ListadoDeProductos extends JDialog {
 	private static void limpiarTeclados() {
 		while(((DefaultTableModel) tableTeclados.getModel()).getRowCount() > 0)
 			((DefaultTableModel) tableTeclados.getModel()).removeRow(0);
+	}
+
+	private static void limpiarTotalPiezas() {
+		while(((DefaultTableModel) tableTotalPiezas.getModel()).getRowCount() > 0)
+			((DefaultTableModel) tableTotalPiezas.getModel()).removeRow(0);
+	}
+
+	private static void limpiarTodo() {
+		limpiarAdaptadores();
+		limpiarBocinas();
+		limpiarChasis();
+		limpiarDiscos();
+		limpiarFuentes();
+		limpiarMicros();
+		limpiarMonitores();
+		limpiarMotherboards();
+		limpiarMouses();
+		limpiarRAM();
+		limpiarTarjetas();
+		limpiarTeclados();
+		limpiarTotalPiezas();
 	}
 }
 

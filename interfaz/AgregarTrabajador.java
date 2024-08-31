@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.DateTimeException;
@@ -41,11 +43,6 @@ import inicializaciones.InicializacionDeDatos;
 import logica.Gerente;
 import logica.TiendaDeComputadoras;
 import logica.Trabajador;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import componentesVisuales.CampoCIValidado;
-import logica.utilidades.logica.GeneradorCICubano;
-import logica.utilidades.interfaz.ManejadorLookAndFeels;
 public class AgregarTrabajador extends JDialog {
 
 	private static final long serialVersionUID = 1L;
@@ -216,18 +213,7 @@ public class AgregarTrabajador extends JDialog {
 		salarioT.setColumns(10);
 		salarioT.setBounds(247, 138, 560, 20);
 		panelAgregarTrabajadores.add(salarioT);
-
-		NivelE =  new JComboBox<>();
-		NivelE.setBounds(247, 166, 560, 20);
-		panelAgregarTrabajadores.add(NivelE);
-
-		cargoT = new JComboBox<>();
-		cargoT.setBounds(247, 194, 560, 20);
-		panelAgregarTrabajadores.add(cargoT);
-
-		llenarComboBox(NivelE, InicializacionDeDatos.nivelesEscolar());
-		llenarComboBox(cargoT, InicializacionDeDatos.cargos());
-
+		
 		fechaOcupTextLabel = new JLabel("Fecha Ocupación del cargo:");
 		fechaOcupTextLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
 		fechaOcupTextLabel.setBounds(12, 223, 200, 16);
@@ -239,6 +225,36 @@ public class AgregarTrabajador extends JDialog {
 		spinnerFecha.setBounds(246, 221, 98, 22);
 		panelAgregarTrabajadores.add(spinnerFecha);
 		spinnerFecha.setVisible(false);
+
+		NivelE =  new JComboBox<>();
+		/*NivelE.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Object nivelEscolar = NivelE.getSelectedItem();
+				elegirPuestoTrabajo(nivelEscolar);
+			}
+		});*/
+		NivelE.setBounds(247, 166, 560, 20);
+		panelAgregarTrabajadores.add(NivelE);
+
+		cargoT = new JComboBox<>();
+		cargoT.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(cargoT != null) {
+					if (cargoT.getSelectedItem().equals("Gerente")) {
+						fechaOcupTextLabel.setVisible(true);
+						spinnerFecha.setVisible(true);
+					} else {
+						spinnerFecha.setVisible(false);
+						fechaOcupTextLabel.setVisible(false);
+					}
+				}
+			}
+		});
+		cargoT.setBounds(247, 194, 560, 20);
+		panelAgregarTrabajadores.add(cargoT);
+
+		llenarComboBox(NivelE, InicializacionDeDatos.nivelesEscolar());
+		llenarComboBox(cargoT, InicializacionDeDatos.cargos());
 
 		JLabel lblNoTrabajador = new JLabel("No. trabajador:");
 		lblNoTrabajador.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -252,18 +268,6 @@ public class AgregarTrabajador extends JDialog {
 		numTrabajador.setColumns(10);
 		contador = tienda.getCantTrabajadores();
 		iniciarDatos();
-
-		cargoT.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				if (cargoT.getSelectedItem().equals("Gerente")) {
-					fechaOcupTextLabel.setVisible(true);
-					spinnerFecha.setVisible(true);
-				} else {
-					spinnerFecha.setVisible(false);
-					fechaOcupTextLabel.setVisible(false);
-				}
-			}
-		});
 
 		JButton btnBorrar = new JButton("Limpiar");
 		btnBorrar.addActionListener(new ActionListener() {
@@ -402,7 +406,6 @@ public class AgregarTrabajador extends JDialog {
 						} catch (NumberFormatException ex) {
 							JOptionPane.showMessageDialog(AgregarTrabajador.this, "El salario debe ser un número válido.");
 						}
-	
 					}
 				}
 			}
@@ -419,7 +422,13 @@ public class AgregarTrabajador extends JDialog {
 		panelPrincipal.add(panelTrabajadoresAgregados);
 		panelTrabajadoresAgregados.setLayout(new BorderLayout(0, 0));
 
-		tableModel = new DefaultTableModel();
+		tableModel = new DefaultTableModel() {
+			private static final long serialVersionUID = 1L;
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 		tableModel.addColumn("No.");
 		tableModel.addColumn("Nombre");
 		tableModel.addColumn("Apellidos");
@@ -495,6 +504,7 @@ public class AgregarTrabajador extends JDialog {
 	}
 
 	public void llenarComboBox(JComboBox<String> comboBox, ArrayList<String> items) {
+		comboBox.removeAllItems();
 		for (String item : items) {
 			comboBox.addItem(item);
 		}
@@ -557,6 +567,7 @@ public class AgregarTrabajador extends JDialog {
 		}
 		return e;
 	}
+
 	private void agregarTabla() {
 		int count = tienda.getCantTrabajadores();
 		for(Trabajador t: trabaj) {
@@ -569,5 +580,47 @@ public class AgregarTrabajador extends JDialog {
 			}
 		}
 	}
+
+	/*private void elegirPuestoTrabajo(Object nivelEscolar) {
+		String nivelEsc = nivelEscolar.toString();
+		if(NivelE != null) {		
+			switch(nivelEsc) {
+			case "Secundaria": 
+				cargoT.removeAllItems();
+				for(int i = 0; i < InicializacionDeDatos.cargos().size(); i++) {
+					String items = InicializacionDeDatos.cargos().get(i);
+					if(items.equalsIgnoreCase("Auxiliar de Limpieza") || items.equalsIgnoreCase("Asistente"))
+						cargoT.addItem(items);
+				}
+				break;
+			case "Preuniversitario":
+				cargoT.removeAllItems();
+				for(int i = 0; i < InicializacionDeDatos.cargos().size(); i++) {
+					String items = InicializacionDeDatos.cargos().get(i);
+					if(items.equalsIgnoreCase("Auxiliar de Limpieza") || items.equalsIgnoreCase("Asistente")
+							|| items.equalsIgnoreCase("Cajero") || items.equalsIgnoreCase("Técnico"))
+						cargoT.addItem(items);
+				}
+				break;
+			case "Técnico Medio":
+				cargoT.removeAllItems();
+				for(int i = 0; i < InicializacionDeDatos.cargos().size(); i++) {
+					String items = InicializacionDeDatos.cargos().get(i);
+					if(items.equalsIgnoreCase("Auxiliar de Limpieza") || items.equalsIgnoreCase("Asistente")
+							|| items.equalsIgnoreCase("Cajero") || items.equalsIgnoreCase("Técnico") ||
+							items.equalsIgnoreCase("Económico"))
+						cargoT.addItem(items);
+				}
+				break;
+			case "Universitario":
+				cargoT.removeAllItems();
+				for(int i = 0; i < InicializacionDeDatos.cargos().size(); i++) {
+					String items = InicializacionDeDatos.cargos().get(i);
+					cargoT.addItem(items);
+				}
+				break;
+			}
+		}
+	}*/
 }
 

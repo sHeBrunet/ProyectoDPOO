@@ -84,12 +84,6 @@ public class InicializacionDeDatos {
 			ManejoDeSesion.getInstance().setUsername(tienda.getTrabajadores().get(i) + tienda.getTrabajadores().get(i).getCI());
 			ManejoDeSesion.getInstance().setPassword("1234");
 		}
-		
-		
-		
-		
-		
-		
 	}
 
 	//Llamada a todos los datos de los productos
@@ -113,16 +107,16 @@ public class InicializacionDeDatos {
 
 	public static void inicializarMouses(TiendaDeComputadoras tienda) {
 		ArrayList<Mouse> mouses = new ArrayList<>();
-		mouses.add(new Mouse(10, "M12345", "HyperX", "Pulsefire Core", 29.99f, "Inalámbrica"));
-		mouses.add(new Mouse(15, "M12346", "Logitech", "G203 LIGHTSYNC", 39.99f, "Inalámbrica"));
-		mouses.add(new Mouse(12, "M12347", "SteelSeries", "Rival 3", 49.99f, "Cable"));
-		mouses.add(new Mouse(8, "M12348", "Corsair", "Harpoon RGB Wireless", 34.78f, "Inalámbrica"));
-		mouses.add(new Mouse(20, "M12349", "Razer", "Viper Mini", 69.99f, "Inalámbrica"));
-		mouses.add(new Mouse(11, "M12350", "HyperX", "Pulsefire Surge", 34.99f, "Inalámbrica"));
-		mouses.add(new Mouse(16, "M12351", "Logitech", "G305 LIGHTSPEED", 44.99f, "Cable"));
-		mouses.add(new Mouse(13, "M12352", "SteelSeries", "Rival 3 Wireless", 54.99f,"Inalámbrica"));
-		mouses.add(new Mouse(9, "M12353", "Corsair", "Katar Pro XT", 64.99f, "Inalámbrica"));
-		mouses.add(new Mouse(21, "M12354", "Razer", "Viper Ultimate", 74.99f, "Inalámbrica"));
+		mouses.add(new Mouse(10, "R12345", "HyperX", "Pulsefire Core", 29.99f, "Inalámbrica"));
+		mouses.add(new Mouse(15, "R12346", "Logitech", "G203 LIGHTSYNC", 39.99f, "Inalámbrica"));
+		mouses.add(new Mouse(12, "R12347", "SteelSeries", "Rival 3", 49.99f, "Cable"));
+		mouses.add(new Mouse(8, "R12348", "Corsair", "Harpoon RGB Wireless", 34.78f, "Inalámbrica"));
+		mouses.add(new Mouse(20, "R12349", "Razer", "Viper Mini", 69.99f, "Inalámbrica"));
+		mouses.add(new Mouse(11, "R12350", "HyperX", "Pulsefire Surge", 34.99f, "Inalámbrica"));
+		mouses.add(new Mouse(16, "R12351", "Logitech", "G305 LIGHTSPEED", 44.99f, "Cable"));
+		mouses.add(new Mouse(13, "R12352", "SteelSeries", "Rival 3 Wireless", 54.99f,"Inalámbrica"));
+		mouses.add(new Mouse(9, "R12353", "Corsair", "Katar Pro XT", 64.99f, "Inalámbrica"));
+		mouses.add(new Mouse(21, "R12354", "Razer", "Viper Ultimate", 74.99f, "Inalámbrica"));
 		ArrayList<ComponenteOrdenador> c = new ArrayList<ComponenteOrdenador>();
 		c.addAll(mouses);
 		tienda.agregarComponenteI(c);
@@ -164,16 +158,16 @@ public class InicializacionDeDatos {
 	/**********************************Teclados***************************************************************/
 	public static void inicializarTeclados(TiendaDeComputadoras tienda) {
 		ArrayList<Teclado> teclados = new ArrayList<>();
-		teclados.add(new Teclado(12, "T12345", "HyperX", "Alloy Origins Core", 89.99f, true));
-		teclados.add(new Teclado(9, "T12346", "Logitech", "G213 Prodigy", 49.99f, true));
-		teclados.add(new Teclado(10, "T12347", "Razer", "BlackWidow V3", 129.99f, false));
-		teclados.add(new Teclado(8, "T12348", "Corsair", "K95 RGB Platinum", 199.99f, true));
-		teclados.add(new Teclado(7, "T12349", "SteelSeries", "Apex Pro", 179.99f, true));
-		teclados.add(new Teclado(11, "T12350", "HyperX", "Alloy FPS Pro", 99.99f, false));
-		teclados.add(new Teclado(10, "T12351", "Logitech", "G915 TKL", 229.99f, true));
-		teclados.add(new Teclado(9, "T12352", "Razer", "Huntsman Mini", 119.99f, true));
-		teclados.add(new Teclado(8, "T12353", "Corsair", "K70 RGB MK.2", 159.99f, true));
-		teclados.add(new Teclado(7, "T12354", "SteelSeries", "Apex 7", 149.99f, true));
+		teclados.add(new Teclado(12, "TE12345", "HyperX", "Alloy Origins Core", 89.99f, true));
+		teclados.add(new Teclado(9, "TE12346", "Logitech", "G213 Prodigy", 49.99f, true));
+		teclados.add(new Teclado(10, "TE12347", "Razer", "BlackWidow V3", 129.99f, false));
+		teclados.add(new Teclado(8, "TE12348", "Corsair", "K95 RGB Platinum", 199.99f, true));
+		teclados.add(new Teclado(7, "TE12349", "SteelSeries", "Apex Pro", 179.99f, true));
+		teclados.add(new Teclado(11, "TE12350", "HyperX", "Alloy FPS Pro", 99.99f, false));
+		teclados.add(new Teclado(10, "TE12351", "Logitech", "G915 TKL", 229.99f, true));
+		teclados.add(new Teclado(9, "TE12352", "Razer", "Huntsman Mini", 119.99f, true));
+		teclados.add(new Teclado(8, "TE12353", "Corsair", "K70 RGB MK.2", 159.99f, true));
+		teclados.add(new Teclado(7, "TE12354", "SteelSeries", "Apex 7", 149.99f, true));
 		ArrayList<ComponenteOrdenador> c = new ArrayList<ComponenteOrdenador>();
 		c.addAll(teclados);
 		tienda.agregarComponenteI(c);
@@ -267,10 +261,10 @@ public class InicializacionDeDatos {
 	public static void inicializarExtension(TiendaDeComputadoras tienda) {
 		ArrayList<Adaptador> adaptadores = new ArrayList<>();
 		adaptadores.add(new Adaptador(10, "A45", "Amazon", "Canvio Basics", 49.99f));
-		adaptadores.add(new Adaptador(10, "U12345", "Mercado Libre", "Canvio Basics 2B", 49.99f));
+		adaptadores.add(new Adaptador(10, "A12345", "Mercado Libre", "Canvio Basics 2B", 49.99f));
 		adaptadores.add(new Adaptador(10, "A2345", "ViTech", "Canvio Basics 5A", 49.99f));
 		adaptadores.add(new Adaptador(10, "App2345", "Apple", "Canvio Basics", 49.99f));
-		adaptadores.add(new Adaptador(10, "Be12345", "V5.1", "Canvio Basics 8C", 49.99f));
+		adaptadores.add(new Adaptador(10, "Ae12345", "V5.1", "Canvio Basics 8C", 49.99f));
 
 		ArrayList<ComponenteOrdenador> c = new ArrayList<ComponenteOrdenador>();
 		c.addAll(adaptadores);
@@ -447,11 +441,11 @@ public class InicializacionDeDatos {
 	public static ArrayList<String> nameComponente() {
 		ArrayList<String> names= new ArrayList<String>();
 		names.add("Teclado");
-		names.add("Ratón");
+		names.add("Bocina");
 		names.add("Monitor");
 		names.add("Chasis");
 		names.add("Fuente");
-		names.add("Bocina");
+		names.add("Ratón");
 		names.add("Tarjeta de Video");
 		names.add("Tarjeta Madre");
 		names.add("Memoria RAM");
