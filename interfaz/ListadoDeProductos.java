@@ -15,20 +15,10 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import logica.Adaptador;
-import logica.Bocina;
-import logica.Chasis;
 import logica.ComponenteOrdenador;
-import logica.DiscoDuro;
-import logica.Fuente;
-import logica.MemoriaRam;
-import logica.Microprocesador;
-import logica.Monitor;
-import logica.Mouse;
-import logica.TarjetaDeVideo;
-import logica.TarjetaMadre;
-import logica.Teclado;
 import logica.TiendaDeComputadoras;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class ListadoDeProductos extends JDialog {
 
@@ -80,6 +70,15 @@ public class ListadoDeProductos extends JDialog {
 		JPanel panelTarjetas = new JPanel(new BorderLayout());
 		JPanel panelTeclados = new JPanel(new BorderLayout());
 		JPanel panelTotalPiezas = new JPanel(new BorderLayout());
+		
+		DefaultTableModel modelTotalPiezas = new DefaultTableModel(columnNames, 0) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 
 		DefaultTableModel modelChasis = new DefaultTableModel(columnNames, 0) {
 			private static final long serialVersionUID = 1L;
@@ -90,6 +89,29 @@ public class ListadoDeProductos extends JDialog {
 			}
 		};
 		tableChasis = new JTable(modelChasis);
+		tableChasis.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+					int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea borrar la pieza seleccionada?", "", 0, 3);
+					if(i==0) {		
+						int pos = tableChasis.getSelectedRow();
+						if (pos != -1) {
+							cambios = true;
+							String ID = (String) tableChasis.getValueAt(pos, 5);
+							piezasAElim.add(ID);
+							((DefaultTableModel) tableChasis.getModel()).removeRow(pos);
+							limpiarChasis();
+							limpiarTotalPiezas();
+							llenarTablaChasis(modelChasis);
+							llenarTablaTotalPiezas(modelTotalPiezas);
+						} else {
+							JOptionPane.showMessageDialog(ListadoDeProductos.this, "Antes de eliminar debe de seleccionar un componente de la tabla");
+						}
+					}
+				}
+			}
+		});
 		panelChasis.add(new JScrollPane(tableChasis), BorderLayout.CENTER);
 
 		DefaultTableModel modelBocinas = new DefaultTableModel(columnNames, 0) {
@@ -101,6 +123,29 @@ public class ListadoDeProductos extends JDialog {
 			}
 		};
 		tableBocinas = new JTable(modelBocinas);
+		tableBocinas.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+					int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea borrar la pieza seleccionada?", "", 0, 3);
+					if(i==0) {		
+						int pos = tableBocinas.getSelectedRow();
+						if (pos != -1) {
+							cambios = true;
+							String ID = (String) tableBocinas.getValueAt(pos, 5);
+							piezasAElim.add(ID);
+							((DefaultTableModel) tableBocinas.getModel()).removeRow(pos);
+							limpiarBocinas();
+							limpiarTotalPiezas();
+							llenarTablaBocinas(modelBocinas);
+							llenarTablaTotalPiezas(modelTotalPiezas);
+						} else {
+							JOptionPane.showMessageDialog(ListadoDeProductos.this, "Antes de eliminar debe de seleccionar un componente de la tabla");
+						}
+					}
+				}
+			}
+		});
 		panelBocinas.add(new JScrollPane(tableBocinas), BorderLayout.CENTER);
 
 		DefaultTableModel modelDiscos = new DefaultTableModel(columnNames, 0) {
@@ -112,6 +157,29 @@ public class ListadoDeProductos extends JDialog {
 			}
 		};
 		tableDiscos = new JTable(modelDiscos);
+		tableDiscos.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+					int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea borrar la pieza seleccionada?", "", 0, 3);
+					if(i==0) {		
+						int pos = tableDiscos.getSelectedRow();
+						if (pos != -1) {
+							cambios = true;
+							String ID = (String) tableDiscos.getValueAt(pos, 5);
+							piezasAElim.add(ID);
+							((DefaultTableModel) tableDiscos.getModel()).removeRow(pos);
+							limpiarDiscos();
+							limpiarTotalPiezas();
+							llenarTablaDiscos(modelDiscos);
+							llenarTablaTotalPiezas(modelTotalPiezas);
+						} else {
+							JOptionPane.showMessageDialog(ListadoDeProductos.this, "Antes de eliminar debe de seleccionar un componente de la tabla");
+						}
+					}
+				}
+			}
+		});
 		panelDiscos.add(new JScrollPane(tableDiscos), BorderLayout.CENTER);
 
 		DefaultTableModel modelFuentes = new DefaultTableModel(columnNames, 0) {
@@ -123,6 +191,29 @@ public class ListadoDeProductos extends JDialog {
 			}
 		};
 		tableFuentes = new JTable(modelFuentes);
+		tableFuentes.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+					int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea borrar la pieza seleccionada?", "", 0, 3);
+					if(i==0) {		
+						int pos = tableFuentes.getSelectedRow();
+						if (pos != -1) {
+							cambios = true;
+							String ID = (String) tableFuentes.getValueAt(pos, 5);
+							piezasAElim.add(ID);
+							((DefaultTableModel) tableFuentes.getModel()).removeRow(pos);
+							limpiarFuentes();
+							limpiarTotalPiezas();
+							llenarTablaFuentes(modelFuentes);
+							llenarTablaTotalPiezas(modelTotalPiezas);
+						} else {
+							JOptionPane.showMessageDialog(ListadoDeProductos.this, "Antes de eliminar debe de seleccionar un componente de la tabla");
+						}
+					}
+				}
+			}
+		});
 		panelFuentes.add(new JScrollPane(tableFuentes), BorderLayout.CENTER);
 
 		DefaultTableModel modelMicros = new DefaultTableModel(columnNames, 0) {
@@ -134,6 +225,29 @@ public class ListadoDeProductos extends JDialog {
 			}
 		};
 		tableMicros = new JTable(modelMicros);
+		tableMicros.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+					int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea borrar la pieza seleccionada?", "", 0, 3);
+					if(i==0) {		
+						int pos = tableMicros.getSelectedRow();
+						if (pos != -1) {
+							cambios = true;
+							String ID = (String) tableMicros.getValueAt(pos, 5);
+							piezasAElim.add(ID);
+							((DefaultTableModel) tableMicros.getModel()).removeRow(pos);
+							limpiarMicros();
+							limpiarTotalPiezas();
+							llenarTablaMicros(modelMicros);
+							llenarTablaTotalPiezas(modelTotalPiezas);
+						} else {
+							JOptionPane.showMessageDialog(ListadoDeProductos.this, "Antes de eliminar debe de seleccionar un componente de la tabla");
+						}
+					}
+				}
+			}
+		});
 		panelMicros.add(new JScrollPane(tableMicros), BorderLayout.CENTER);
 
 		DefaultTableModel modelMonitores = new DefaultTableModel(columnNames, 0) {
@@ -145,6 +259,29 @@ public class ListadoDeProductos extends JDialog {
 			}
 		};
 		tableMonitores = new JTable(modelMonitores);
+		tableMonitores.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+					int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea borrar la pieza seleccionada?", "", 0, 3);
+					if(i==0) {		
+						int pos = tableMonitores.getSelectedRow();
+						if (pos != -1) {
+							cambios = true;
+							String ID = (String) tableMonitores.getValueAt(pos, 5);
+							piezasAElim.add(ID);
+							((DefaultTableModel) tableMonitores.getModel()).removeRow(pos);
+							limpiarMonitores();
+							limpiarTotalPiezas();
+							llenarTablaMonitores(modelMonitores);
+							llenarTablaTotalPiezas(modelTotalPiezas);
+						} else {
+							JOptionPane.showMessageDialog(ListadoDeProductos.this, "Antes de eliminar debe de seleccionar un componente de la tabla");
+						}
+					}
+				}
+			}
+		});
 		panelMonitores.add(new JScrollPane(tableMonitores), BorderLayout.CENTER);
 
 		DefaultTableModel modelMotherboards = new DefaultTableModel(columnNames, 0) {
@@ -156,6 +293,29 @@ public class ListadoDeProductos extends JDialog {
 			}
 		};
 		tableMotherboards = new JTable(modelMotherboards);
+		tableMotherboards.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+					int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea borrar la pieza seleccionada?", "", 0, 3);
+					if(i==0) {		
+						int pos = tableMotherboards.getSelectedRow();
+						if (pos != -1) {
+							cambios = true;
+							String ID = (String) tableMotherboards.getValueAt(pos, 5);
+							piezasAElim.add(ID);
+							((DefaultTableModel) tableMotherboards.getModel()).removeRow(pos);
+							limpiarMotherboards();
+							limpiarTotalPiezas();
+							llenarTablaMotherboards(modelMotherboards);
+							llenarTablaTotalPiezas(modelTotalPiezas);
+						} else {
+							JOptionPane.showMessageDialog(ListadoDeProductos.this, "Antes de eliminar debe de seleccionar un componente de la tabla");
+						}
+					}
+				}
+			}
+		});
 		panelMotherboards.add(new JScrollPane(tableMotherboards), BorderLayout.CENTER);
 
 		DefaultTableModel modelMouse = new DefaultTableModel(columnNames, 0) {
@@ -167,6 +327,29 @@ public class ListadoDeProductos extends JDialog {
 			}
 		};
 		tableMouses = new JTable(modelMouse);
+		tableMouses.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+					int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea borrar la pieza seleccionada?", "", 0, 3);
+					if(i==0) {		
+						int pos = tableMouses.getSelectedRow();
+						if (pos != -1) {
+							cambios = true;
+							String ID = (String) tableMouses.getValueAt(pos, 5);
+							piezasAElim.add(ID);
+							((DefaultTableModel) tableMouses.getModel()).removeRow(pos);
+							limpiarMouses();
+							limpiarTotalPiezas();
+							llenarTablaMouses(modelMouse);
+							llenarTablaTotalPiezas(modelTotalPiezas);
+						} else {
+							JOptionPane.showMessageDialog(ListadoDeProductos.this, "Antes de eliminar debe de seleccionar un componente de la tabla");
+						}
+					}
+				}
+			}
+		});
 		panelMouse.add(new JScrollPane(tableMouses), BorderLayout.CENTER);
 
 		DefaultTableModel modelRAM = new DefaultTableModel(columnNames, 0) {
@@ -178,6 +361,29 @@ public class ListadoDeProductos extends JDialog {
 			}
 		};
 		tableRAM = new JTable(modelRAM);
+		tableRAM.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+					int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea borrar la pieza seleccionada?", "", 0, 3);
+					if(i==0) {		
+						int pos = tableRAM.getSelectedRow();
+						if (pos != -1) {
+							cambios = true;
+							String ID = (String) tableRAM.getValueAt(pos, 5);
+							piezasAElim.add(ID);
+							((DefaultTableModel) tableRAM.getModel()).removeRow(pos);
+							limpiarRAM();
+							limpiarTotalPiezas();
+							llenarTablaRAM(modelRAM);
+							llenarTablaTotalPiezas(modelTotalPiezas);
+						} else {
+							JOptionPane.showMessageDialog(ListadoDeProductos.this, "Antes de eliminar debe de seleccionar un componente de la tabla");
+						}
+					}
+				}
+			}
+		});
 		panelRAM.add(new JScrollPane(tableRAM), BorderLayout.CENTER);
 
 		DefaultTableModel modelTarjetas = new DefaultTableModel(columnNames, 0) {
@@ -189,6 +395,29 @@ public class ListadoDeProductos extends JDialog {
 			}
 		};
 		tableTarjetas = new JTable(modelTarjetas);
+		tableTarjetas.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+					int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea borrar la pieza seleccionada?", "", 0, 3);
+					if(i==0) {		
+						int pos = tableTarjetas.getSelectedRow();
+						if (pos != -1) {
+							cambios = true;
+							String ID = (String) tableTarjetas.getValueAt(pos, 5);
+							piezasAElim.add(ID);
+							((DefaultTableModel) tableTarjetas.getModel()).removeRow(pos);
+							limpiarTarjetas();
+							limpiarTotalPiezas();
+							llenarTablaTarjetaVideo(modelTarjetas);
+							llenarTablaTotalPiezas(modelTotalPiezas);
+						} else {
+							JOptionPane.showMessageDialog(ListadoDeProductos.this, "Antes de eliminar debe de seleccionar un componente de la tabla");
+						}
+					}
+				}
+			}
+		});
 		panelTarjetas.add(new JScrollPane(tableTarjetas), BorderLayout.CENTER);
 
 		DefaultTableModel modelTeclados = new DefaultTableModel(columnNames, 0) {
@@ -200,6 +429,29 @@ public class ListadoDeProductos extends JDialog {
 			}
 		};
 		tableTeclados = new JTable(modelTeclados);
+		tableTeclados.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+					int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea borrar la pieza seleccionada?", "", 0, 3);
+					if(i==0) {		
+						int pos = tableTeclados.getSelectedRow();
+						if (pos != -1) {
+							cambios = true;
+							String ID = (String) tableTeclados.getValueAt(pos, 5);
+							piezasAElim.add(ID);
+							((DefaultTableModel) tableTeclados.getModel()).removeRow(pos);
+							limpiarTeclados();
+							limpiarTotalPiezas();
+							llenarTablaTeclados(modelTeclados);
+							llenarTablaTotalPiezas(modelTotalPiezas);
+						} else {
+							JOptionPane.showMessageDialog(ListadoDeProductos.this, "Antes de eliminar debe de seleccionar un componente de la tabla");
+						}
+					}
+				}
+			}
+		});
 		panelTeclados.add(new JScrollPane(tableTeclados), BorderLayout.CENTER);
 
 		DefaultTableModel modelAdaptadores = new DefaultTableModel(columnNames, 0) {
@@ -211,17 +463,65 @@ public class ListadoDeProductos extends JDialog {
 			}
 		};
 		tableAdaptadores = new JTable(modelAdaptadores);
-		panelAdaptadores.add(new JScrollPane(tableAdaptadores), BorderLayout.CENTER);
-
-		DefaultTableModel modelTotalPiezas = new DefaultTableModel(columnNames, 0) {
-			private static final long serialVersionUID = 1L;
-
+		tableAdaptadores.addKeyListener(new KeyAdapter() {
 			@Override
-			public boolean isCellEditable(int row, int column) {
-				return false;
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+					int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea borrar la pieza seleccionada?", "", 0, 3);
+					if(i==0) {		
+						int pos = tableAdaptadores.getSelectedRow();
+						if (pos != -1) {
+							cambios = true;
+							String ID = (String) tableAdaptadores.getValueAt(pos, 5);
+							piezasAElim.add(ID);
+							((DefaultTableModel) tableAdaptadores.getModel()).removeRow(pos);
+							limpiarAdaptadores();
+							limpiarTotalPiezas();
+							llenarTablaAdaptadores(modelAdaptadores);
+							llenarTablaTotalPiezas(modelTotalPiezas);
+						} else {
+							JOptionPane.showMessageDialog(ListadoDeProductos.this, "Antes de eliminar debe de seleccionar un componente de la tabla");
+						}
+					}
+				}
 			}
-		};
+		});
+		panelAdaptadores.add(new JScrollPane(tableAdaptadores), BorderLayout.CENTER);
+	
 		tableTotalPiezas = new JTable(modelTotalPiezas);
+		tableTotalPiezas.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+					int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea borrar la pieza seleccionada?", "", 0, 3);
+					if(i==0) {		
+						int pos = tableTotalPiezas.getSelectedRow();
+						if (pos != -1) {
+							cambios = true;
+							String ID = (String) tableTotalPiezas.getValueAt(pos, 5);
+							piezasAElim.add(ID);
+							((DefaultTableModel) tableTotalPiezas.getModel()).removeRow(pos);		
+							limpiarTodo();
+							llenarTablaAdaptadores(modelAdaptadores);
+							llenarTablaBocinas(modelBocinas);
+							llenarTablaChasis(modelChasis);
+							llenarTablaDiscos(modelDiscos);
+							llenarTablaFuentes(modelFuentes);
+							llenarTablaMicros(modelMicros);
+							llenarTablaMonitores(modelMonitores);
+							llenarTablaMotherboards(modelMotherboards);
+							llenarTablaMouses(modelMouse);
+							llenarTablaRAM(modelRAM);
+							llenarTablaTarjetaVideo(modelTarjetas);
+							llenarTablaTeclados(modelTeclados);
+							llenarTablaTotalPiezas(modelTotalPiezas);
+						} else {
+							JOptionPane.showMessageDialog(ListadoDeProductos.this, "Antes de eliminar debe de seleccionar un componente de la tabla");
+						}
+					}
+				}
+			}
+		});
 		panelTotalPiezas.add(new JScrollPane(tableTotalPiezas), BorderLayout.CENTER);
 
 		tabbedPane.addTab("Adaptadores", panelAdaptadores);

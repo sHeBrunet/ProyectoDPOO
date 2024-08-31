@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -59,6 +61,29 @@ public class ListadoDeTrabajadores extends JDialog {
 			}
 		};
 		tableGerentes = new JTable(modelGerentes);
+		tableGerentes.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+					int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea borrar la pieza seleccionada?", "", 0, 3);
+					if(i==0) {		
+						int pos = tableGerentes.getSelectedRow();
+						if (pos != -1) {
+							if(tienda.hallarGerentes(trabAElim) > 1) {
+								cambios = true;
+								String ID = (String) tableGerentes.getValueAt(pos, 3);
+								trabAElim.add(ID);
+								((DefaultTableModel) tableGerentes.getModel()).removeRow(pos);
+								limpiarGerentes();
+								llenarTablaGerentes(modelGerentes);
+							}
+							else
+								JOptionPane.showMessageDialog(ListadoDeTrabajadores.this, "Error: Al menos debe haber un gerente en la empresa");
+						}
+					}
+				}
+			}
+		});
 		panelGerentes.add(new JScrollPane(tableGerentes), BorderLayout.CENTER);
 
 		JPanel panelTrabajadores = new JPanel(new BorderLayout());
@@ -72,6 +97,27 @@ public class ListadoDeTrabajadores extends JDialog {
 			}
 		};
 		tableTrabajadores = new JTable(modelTrabajadores);
+		tableTrabajadores.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+					int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea borrar la pieza seleccionada?", "", 0, 3);
+					if(i==0) {		
+						int pos = tableTrabajadores.getSelectedRow();
+						if (pos != -1) {
+							cambios = true;
+							String ID = (String) tableTrabajadores.getValueAt(pos, 3);
+							trabAElim.add(ID);
+							((DefaultTableModel) tableTrabajadores.getModel()).removeRow(pos);
+							limpiarTrabajadores();
+							llenarTablaTrabajadores(modelTrabajadores);
+						} else {
+							JOptionPane.showMessageDialog(ListadoDeTrabajadores.this, "Antes de eliminar debe de seleccionar un componente de la tabla");
+						}
+					}
+				}
+			}
+		});
 		panelTrabajadores.add(new JScrollPane(tableTrabajadores), BorderLayout.CENTER);
 
 		tabbedPane.addTab("Trabajadores", panelTrabajadores);

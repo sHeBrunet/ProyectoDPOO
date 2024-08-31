@@ -336,12 +336,29 @@ public class AgregarProducto extends JDialog {
 		tableModel.addColumn("No. Serie");
 
 		table = new JTable(tableModel);
+		table.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(java.awt.event.KeyEvent evt) {
+				 if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
+					 int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar la pieza seleccionada?", "", 0, 3);
+						if(i==0) {		
+							int pos = table.getSelectedRow();
+							if (pos != -1) {
+								piezasAgreg.remove(pos);
+								((DefaultTableModel) table.getModel()).removeRow(pos);
+							} else {
+								JOptionPane.showMessageDialog(AgregarProducto.this, "Antes de eliminar debe de seleccionar una pieza de la tabla");
+							}
+						}
+				 }
+			}
+		});
 		JScrollPane scrollPane = new JScrollPane(table);
 		panelPiezasAgregadas.add(scrollPane, BorderLayout.CENTER);
 
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel.setBounds(12, 12, 76, 60);
-		lblNewLabel.setIcon(new ImageIcon(AgregarTrabajador.class.getResource("/gui/icons/logoPeque\u00F1o1.jpg")));
+		lblNewLabel.setIcon(new ImageIcon(AgregarProducto.class.getResource("/gui/icons/logoPeque\u00F1o1.jpg")));
 		panelPrincipal.add(lblNewLabel);
 
 		btnEliminar = new JButton("Eliminar");
@@ -756,10 +773,6 @@ public class AgregarProducto extends JDialog {
 		txtPrecio.setBounds(247, 240, 70, 20);	
 		txtNoSerieMovible.setBounds(269, 185, 48, 20);
 		lblAtributo2.setVisible(true);
-	}
-
-	public boolean isCellEditable(int row, int column) {
-		return false;
 	}
 }
 

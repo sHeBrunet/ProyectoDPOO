@@ -67,7 +67,7 @@ public class AgregarTrabajador extends JDialog {
 	private int contador = 0;
 	private ArrayList<Trabajador> trabaj;
 	private JTextField ciT;
-
+	private Object nivelEscolar = null;
 
 	public AgregarTrabajador(Principal principal, TiendaDeComputadoras tiendaC) {
 		super(principal, true);
@@ -213,7 +213,7 @@ public class AgregarTrabajador extends JDialog {
 		salarioT.setColumns(10);
 		salarioT.setBounds(247, 138, 560, 20);
 		panelAgregarTrabajadores.add(salarioT);
-		
+
 		fechaOcupTextLabel = new JLabel("Fecha Ocupación del cargo:");
 		fechaOcupTextLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
 		fechaOcupTextLabel.setBounds(12, 223, 200, 16);
@@ -227,17 +227,19 @@ public class AgregarTrabajador extends JDialog {
 		spinnerFecha.setVisible(false);
 
 		NivelE =  new JComboBox<>();
-		/*NivelE.addActionListener(new ActionListener() {
+		llenarComboBox(NivelE, InicializacionDeDatos.nivelesEscolar());
+		NivelE.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Object nivelEscolar = NivelE.getSelectedItem();
-				elegirPuestoTrabajo(nivelEscolar);
+				nivelEscolar = NivelE.getSelectedItem();
+				//elegirPuestoTrabajo(nivelEscolar);
 			}
-		});*/
+		});
 		NivelE.setBounds(247, 166, 560, 20);
 		panelAgregarTrabajadores.add(NivelE);
 
 		cargoT = new JComboBox<>();
-		cargoT.addActionListener(new ActionListener() {
+		llenarComboBox(cargoT, InicializacionDeDatos.cargos());
+		/*cargoT.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(cargoT != null) {
 					if (cargoT.getSelectedItem().equals("Gerente")) {
@@ -249,12 +251,9 @@ public class AgregarTrabajador extends JDialog {
 					}
 				}
 			}
-		});
+		});*/
 		cargoT.setBounds(247, 194, 560, 20);
 		panelAgregarTrabajadores.add(cargoT);
-
-		llenarComboBox(NivelE, InicializacionDeDatos.nivelesEscolar());
-		llenarComboBox(cargoT, InicializacionDeDatos.cargos());
 
 		JLabel lblNoTrabajador = new JLabel("No. trabajador:");
 		lblNoTrabajador.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -397,7 +396,6 @@ public class AgregarTrabajador extends JDialog {
 								} else {
 									tableModel.addRow(new Object[]{noTrabajador, nombre, apellidos, ci, salario, nivelE, cargo, ""});
 								}
-
 								iniciarDatos();
 							}
 							else {
@@ -439,6 +437,26 @@ public class AgregarTrabajador extends JDialog {
 		tableModel.addColumn("Fecha de Ingreso");
 
 		table = new JTable(tableModel);
+		table.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(java.awt.event.KeyEvent evt) {
+				 if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
+					 int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar el trabajador seleccionado?", "", 0, 3);
+						if(i==0) {		
+							int pos = table.getSelectedRow();
+							if (pos != -1) {
+								trabaj.remove(pos);		
+								while(((DefaultTableModel) table.getModel()).getRowCount() > 0)
+									((DefaultTableModel) table.getModel()).removeRow(0);
+								agregarTabla();
+								numTrabajador.setText(Integer.toString(--contador));
+							} else {
+								JOptionPane.showMessageDialog(AgregarTrabajador.this, "Antes de eliminar debe de seleccionar un trabajador de la tabla");
+							}
+						}
+				 }
+			}
+		});
 		JScrollPane scrollPane = new JScrollPane(table);
 		panelTrabajadoresAgregados.add(scrollPane, BorderLayout.CENTER);
 
@@ -574,19 +592,19 @@ public class AgregarTrabajador extends JDialog {
 			if (t.getCargo().equals("Gerente")) {
 				SimpleDateFormat formFecha = new SimpleDateFormat("dd/mm/yyyy");
 				String fecha = formFecha.format((Date) spinnerFecha.getValue());
-				tableModel.addRow(new Object[]{count++, t.getNombre(), t.getApellidos(), t.getCI(), t.getSalarioBasico(), t.getNivelEscolar(), t.getCargo(), fecha});
+				tableModel.addRow(new Object[]{++count, t.getNombre(), t.getApellidos(), t.getCI(), t.getSalarioBasico(), t.getNivelEscolar(), t.getCargo(), fecha});
 			} else {
-				tableModel.addRow(new Object[]{count++, t.getNombre(), t.getApellidos(), t.getCI(), t.getSalarioBasico(), t.getNivelEscolar(), t.getCargo(), ""});
+				tableModel.addRow(new Object[]{++count, t.getNombre(), t.getApellidos(), t.getCI(), t.getSalarioBasico(), t.getNivelEscolar(), t.getCargo(), ""});
 			}
 		}
 	}
 
 	/*private void elegirPuestoTrabajo(Object nivelEscolar) {
 		String nivelEsc = nivelEscolar.toString();
-		if(NivelE != null) {		
+		if(cargoT != null) {	
+			cargoT.removeAllItems();
 			switch(nivelEsc) {
 			case "Secundaria": 
-				cargoT.removeAllItems();
 				for(int i = 0; i < InicializacionDeDatos.cargos().size(); i++) {
 					String items = InicializacionDeDatos.cargos().get(i);
 					if(items.equalsIgnoreCase("Auxiliar de Limpieza") || items.equalsIgnoreCase("Asistente"))
@@ -594,7 +612,6 @@ public class AgregarTrabajador extends JDialog {
 				}
 				break;
 			case "Preuniversitario":
-				cargoT.removeAllItems();
 				for(int i = 0; i < InicializacionDeDatos.cargos().size(); i++) {
 					String items = InicializacionDeDatos.cargos().get(i);
 					if(items.equalsIgnoreCase("Auxiliar de Limpieza") || items.equalsIgnoreCase("Asistente")
@@ -603,7 +620,6 @@ public class AgregarTrabajador extends JDialog {
 				}
 				break;
 			case "Técnico Medio":
-				cargoT.removeAllItems();
 				for(int i = 0; i < InicializacionDeDatos.cargos().size(); i++) {
 					String items = InicializacionDeDatos.cargos().get(i);
 					if(items.equalsIgnoreCase("Auxiliar de Limpieza") || items.equalsIgnoreCase("Asistente")
@@ -613,13 +629,19 @@ public class AgregarTrabajador extends JDialog {
 				}
 				break;
 			case "Universitario":
-				cargoT.removeAllItems();
 				for(int i = 0; i < InicializacionDeDatos.cargos().size(); i++) {
 					String items = InicializacionDeDatos.cargos().get(i);
 					cargoT.addItem(items);
 				}
 				break;
-			}
+			}			
+		}
+		if (cargoT.getSelectedItem().equals("Gerente")) {
+			fechaOcupTextLabel.setVisible(true);
+			spinnerFecha.setVisible(true);
+		} else {
+			spinnerFecha.setVisible(false);
+			fechaOcupTextLabel.setVisible(false);
 		}
 	}*/
 }
