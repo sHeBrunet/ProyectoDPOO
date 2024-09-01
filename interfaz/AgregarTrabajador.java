@@ -6,8 +6,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.ParseException;
@@ -38,6 +36,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import inicializaciones.InicializacionDeDatos;
 import logica.Gerente;
@@ -231,17 +231,21 @@ public class AgregarTrabajador extends JDialog {
 		NivelE.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				nivelEscolar = NivelE.getSelectedItem();
-				//elegirPuestoTrabajo(nivelEscolar);
+				elegirPuestoTrabajo(nivelEscolar);
 			}
 		});
 		NivelE.setBounds(247, 166, 560, 20);
 		panelAgregarTrabajadores.add(NivelE);
 
 		cargoT = new JComboBox<>();
-		llenarComboBox(cargoT, InicializacionDeDatos.cargos());
-		/*cargoT.addActionListener(new ActionListener() {
+		for(int i = 0; i < InicializacionDeDatos.cargos().size(); i++) {
+			String items = InicializacionDeDatos.cargos().get(i);
+			if(items.equalsIgnoreCase("Auxiliar de Limpieza") || items.equalsIgnoreCase("Asistente"))
+				cargoT.addItem(items);
+		}
+		cargoT.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(cargoT != null) {
+				/*if(cargoT != null) {
 					if (cargoT.getSelectedItem().equals("Gerente")) {
 						fechaOcupTextLabel.setVisible(true);
 						spinnerFecha.setVisible(true);
@@ -249,9 +253,9 @@ public class AgregarTrabajador extends JDialog {
 						spinnerFecha.setVisible(false);
 						fechaOcupTextLabel.setVisible(false);
 					}
-				}
+				}*/
 			}
-		});*/
+		});
 		cargoT.setBounds(247, 194, 560, 20);
 		panelAgregarTrabajadores.add(cargoT);
 
@@ -457,6 +461,9 @@ public class AgregarTrabajador extends JDialog {
 				 }
 			}
 		});
+		TableRowSorter<TableModel> ordenador = new TableRowSorter<TableModel>(tableModel);
+		table.setRowSorter(ordenador);
+		table.getTableHeader().setReorderingAllowed(false);
 		JScrollPane scrollPane = new JScrollPane(table);
 		panelTrabajadoresAgregados.add(scrollPane, BorderLayout.CENTER);
 
@@ -599,10 +606,10 @@ public class AgregarTrabajador extends JDialog {
 		}
 	}
 
-	/*private void elegirPuestoTrabajo(Object nivelEscolar) {
+	private void elegirPuestoTrabajo(Object nivelEscolar) {
 		String nivelEsc = nivelEscolar.toString();
+		cargoT.removeAllItems();
 		if(cargoT != null) {	
-			cargoT.removeAllItems();
 			switch(nivelEsc) {
 			case "Secundaria": 
 				for(int i = 0; i < InicializacionDeDatos.cargos().size(); i++) {
@@ -636,13 +643,6 @@ public class AgregarTrabajador extends JDialog {
 				break;
 			}			
 		}
-		if (cargoT.getSelectedItem().equals("Gerente")) {
-			fechaOcupTextLabel.setVisible(true);
-			spinnerFecha.setVisible(true);
-		} else {
-			spinnerFecha.setVisible(false);
-			fechaOcupTextLabel.setVisible(false);
-		}
-	}*/
+	}
 }
 

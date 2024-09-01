@@ -353,6 +353,7 @@ public class AgregarProducto extends JDialog {
 				 }
 			}
 		});
+		table.getTableHeader().setReorderingAllowed(false);
 		JScrollPane scrollPane = new JScrollPane(table);
 		panelPiezasAgregadas.add(scrollPane, BorderLayout.CENTER);
 

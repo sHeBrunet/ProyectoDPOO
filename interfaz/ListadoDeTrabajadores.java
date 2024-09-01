@@ -17,7 +17,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import logica.Gerente;
 import logica.TiendaDeComputadoras;
@@ -84,6 +87,9 @@ public class ListadoDeTrabajadores extends JDialog {
 				}
 			}
 		});
+		TableRowSorter<TableModel> ordenadorGerentes = new TableRowSorter<TableModel>(modelGerentes);
+		tableGerentes.setRowSorter(ordenadorGerentes);
+		tableGerentes.getTableHeader().setReorderingAllowed(false);
 		panelGerentes.add(new JScrollPane(tableGerentes), BorderLayout.CENTER);
 
 		JPanel panelTrabajadores = new JPanel(new BorderLayout());
@@ -117,7 +123,10 @@ public class ListadoDeTrabajadores extends JDialog {
 					}
 				}
 			}
-		});
+		});		
+		TableRowSorter<TableModel> ordenadorTrab = new TableRowSorter<TableModel>(modelTrabajadores);
+		tableTrabajadores.setRowSorter(ordenadorTrab);
+		tableTrabajadores.getTableHeader().setReorderingAllowed(false);
 		panelTrabajadores.add(new JScrollPane(tableTrabajadores), BorderLayout.CENTER);
 
 		tabbedPane.addTab("Trabajadores", panelTrabajadores);
@@ -192,7 +201,7 @@ public class ListadoDeTrabajadores extends JDialog {
 			}
 		});
 		panelBotones.add(btnBorrar);
-		
+
 		llenarTablaGerentes(modelGerentes);
 		llenarTablaTrabajadores(modelTrabajadores);
 	}
@@ -237,14 +246,14 @@ public class ListadoDeTrabajadores extends JDialog {
 		}
 	}
 
-		private static void limpiarTrabajadores() {
-			while(((DefaultTableModel) tableTrabajadores.getModel()).getRowCount() > 0)
-				((DefaultTableModel) tableTrabajadores.getModel()).removeRow(0);
-		}
-
-		private static void limpiarGerentes() {
-			while(((DefaultTableModel) tableGerentes.getModel()).getRowCount() > 0)
-				((DefaultTableModel) tableGerentes.getModel()).removeRow(0);
-		}
-
+	private static void limpiarTrabajadores() {
+		while(((DefaultTableModel) tableTrabajadores.getModel()).getRowCount() > 0)
+			((DefaultTableModel) tableTrabajadores.getModel()).removeRow(0);
 	}
+
+	private static void limpiarGerentes() {
+		while(((DefaultTableModel) tableGerentes.getModel()).getRowCount() > 0)
+			((DefaultTableModel) tableGerentes.getModel()).removeRow(0);
+	}
+
+}

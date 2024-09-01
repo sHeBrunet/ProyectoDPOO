@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -17,8 +19,6 @@ import javax.swing.table.DefaultTableModel;
 
 import logica.ComponenteOrdenador;
 import logica.TiendaDeComputadoras;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class ListadoDeProductos extends JDialog {
 
@@ -70,7 +70,7 @@ public class ListadoDeProductos extends JDialog {
 		JPanel panelTarjetas = new JPanel(new BorderLayout());
 		JPanel panelTeclados = new JPanel(new BorderLayout());
 		JPanel panelTotalPiezas = new JPanel(new BorderLayout());
-		
+
 		DefaultTableModel modelTotalPiezas = new DefaultTableModel(columnNames, 0) {
 			private static final long serialVersionUID = 1L;
 
@@ -112,6 +112,7 @@ public class ListadoDeProductos extends JDialog {
 				}
 			}
 		});
+		tableChasis.getTableHeader().setReorderingAllowed(false);
 		panelChasis.add(new JScrollPane(tableChasis), BorderLayout.CENTER);
 
 		DefaultTableModel modelBocinas = new DefaultTableModel(columnNames, 0) {
@@ -146,6 +147,7 @@ public class ListadoDeProductos extends JDialog {
 				}
 			}
 		});
+		tableBocinas.getTableHeader().setReorderingAllowed(false);
 		panelBocinas.add(new JScrollPane(tableBocinas), BorderLayout.CENTER);
 
 		DefaultTableModel modelDiscos = new DefaultTableModel(columnNames, 0) {
@@ -180,6 +182,7 @@ public class ListadoDeProductos extends JDialog {
 				}
 			}
 		});
+		tableDiscos.getTableHeader().setReorderingAllowed(false);
 		panelDiscos.add(new JScrollPane(tableDiscos), BorderLayout.CENTER);
 
 		DefaultTableModel modelFuentes = new DefaultTableModel(columnNames, 0) {
@@ -214,6 +217,7 @@ public class ListadoDeProductos extends JDialog {
 				}
 			}
 		});
+		tableFuentes.getTableHeader().setReorderingAllowed(false);
 		panelFuentes.add(new JScrollPane(tableFuentes), BorderLayout.CENTER);
 
 		DefaultTableModel modelMicros = new DefaultTableModel(columnNames, 0) {
@@ -248,6 +252,7 @@ public class ListadoDeProductos extends JDialog {
 				}
 			}
 		});
+		tableMicros.getTableHeader().setReorderingAllowed(false);
 		panelMicros.add(new JScrollPane(tableMicros), BorderLayout.CENTER);
 
 		DefaultTableModel modelMonitores = new DefaultTableModel(columnNames, 0) {
@@ -282,6 +287,7 @@ public class ListadoDeProductos extends JDialog {
 				}
 			}
 		});
+		tableMonitores.getTableHeader().setReorderingAllowed(false);
 		panelMonitores.add(new JScrollPane(tableMonitores), BorderLayout.CENTER);
 
 		DefaultTableModel modelMotherboards = new DefaultTableModel(columnNames, 0) {
@@ -316,6 +322,7 @@ public class ListadoDeProductos extends JDialog {
 				}
 			}
 		});
+		tableMotherboards.getTableHeader().setReorderingAllowed(false);
 		panelMotherboards.add(new JScrollPane(tableMotherboards), BorderLayout.CENTER);
 
 		DefaultTableModel modelMouse = new DefaultTableModel(columnNames, 0) {
@@ -350,6 +357,7 @@ public class ListadoDeProductos extends JDialog {
 				}
 			}
 		});
+		tableMouses.getTableHeader().setReorderingAllowed(false);
 		panelMouse.add(new JScrollPane(tableMouses), BorderLayout.CENTER);
 
 		DefaultTableModel modelRAM = new DefaultTableModel(columnNames, 0) {
@@ -384,6 +392,7 @@ public class ListadoDeProductos extends JDialog {
 				}
 			}
 		});
+		tableRAM.getTableHeader().setReorderingAllowed(false);
 		panelRAM.add(new JScrollPane(tableRAM), BorderLayout.CENTER);
 
 		DefaultTableModel modelTarjetas = new DefaultTableModel(columnNames, 0) {
@@ -418,6 +427,7 @@ public class ListadoDeProductos extends JDialog {
 				}
 			}
 		});
+		tableTarjetas.getTableHeader().setReorderingAllowed(false);
 		panelTarjetas.add(new JScrollPane(tableTarjetas), BorderLayout.CENTER);
 
 		DefaultTableModel modelTeclados = new DefaultTableModel(columnNames, 0) {
@@ -452,6 +462,7 @@ public class ListadoDeProductos extends JDialog {
 				}
 			}
 		});
+		tableTeclados.getTableHeader().setReorderingAllowed(false);
 		panelTeclados.add(new JScrollPane(tableTeclados), BorderLayout.CENTER);
 
 		DefaultTableModel modelAdaptadores = new DefaultTableModel(columnNames, 0) {
@@ -486,8 +497,9 @@ public class ListadoDeProductos extends JDialog {
 				}
 			}
 		});
+		tableAdaptadores.getTableHeader().setReorderingAllowed(false);
 		panelAdaptadores.add(new JScrollPane(tableAdaptadores), BorderLayout.CENTER);
-	
+
 		tableTotalPiezas = new JTable(modelTotalPiezas);
 		tableTotalPiezas.addKeyListener(new KeyAdapter() {
 			@Override
@@ -522,6 +534,7 @@ public class ListadoDeProductos extends JDialog {
 				}
 			}
 		});
+		tableTotalPiezas.getTableHeader().setReorderingAllowed(false);
 		panelTotalPiezas.add(new JScrollPane(tableTotalPiezas), BorderLayout.CENTER);
 
 		tabbedPane.addTab("Adaptadores", panelAdaptadores);
@@ -739,7 +752,7 @@ public class ListadoDeProductos extends JDialog {
 	private static void llenarTablaAdaptadores(DefaultTableModel model) {
 		count = 1;             
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
-			if(c.getNumSerie().startsWith("A")) 
+			if(c.getNumSerie().startsWith("A") && c.getCantDisponible() > 0) 
 				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
 					for(int i = 0; i < piezasAElim.size(); i++) {
@@ -759,7 +772,7 @@ public class ListadoDeProductos extends JDialog {
 	private static void llenarTablaBocinas(DefaultTableModel model) {
 		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
-			if(c.getNumSerie().startsWith("B")) 
+			if(c.getNumSerie().startsWith("B") && c.getCantDisponible() > 0) 
 				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
 					for(int i = 0; i < piezasAElim.size(); i++) {
@@ -779,7 +792,7 @@ public class ListadoDeProductos extends JDialog {
 	private static void llenarTablaChasis(DefaultTableModel model) {
 		count= 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
-			if(c.getNumSerie().startsWith("C"))
+			if(c.getNumSerie().startsWith("C") && c.getCantDisponible() > 0)
 				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
 					for(int i = 0; i < piezasAElim.size(); i++) {
@@ -799,7 +812,7 @@ public class ListadoDeProductos extends JDialog {
 	private static void llenarTablaDiscos(DefaultTableModel model) {
 		count= 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
-			if(c.getNumSerie().startsWith("DD"))
+			if(c.getNumSerie().startsWith("DD") && c.getCantDisponible() > 0)
 				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
 					for(int i = 0; i < piezasAElim.size(); i++) {
@@ -819,7 +832,7 @@ public class ListadoDeProductos extends JDialog {
 	private static void llenarTablaFuentes(DefaultTableModel model) {
 		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
-			if(c.getNumSerie().startsWith("F"))
+			if(c.getNumSerie().startsWith("F") && c.getCantDisponible() > 0)
 				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
 					for(int i = 0; i < piezasAElim.size(); i++) {
@@ -839,7 +852,7 @@ public class ListadoDeProductos extends JDialog {
 	private static void llenarTablaMicros(DefaultTableModel model) {
 		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
-			if(c.getNumSerie().startsWith("MP"))
+			if(c.getNumSerie().startsWith("MP") && c.getCantDisponible() > 0)
 				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
 					for(int i = 0; i < piezasAElim.size(); i++) {
@@ -859,7 +872,7 @@ public class ListadoDeProductos extends JDialog {
 	private static void llenarTablaMonitores(DefaultTableModel model) {
 		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
-			if(c.getNumSerie().startsWith("MN"))
+			if(c.getNumSerie().startsWith("MN") && c.getCantDisponible() > 0)
 				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
 					for(int i = 0; i < piezasAElim.size(); i++) {
@@ -879,7 +892,7 @@ public class ListadoDeProductos extends JDialog {
 	private static void llenarTablaMotherboards(DefaultTableModel model) {
 		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
-			if(c.getNumSerie().startsWith("TM"))
+			if(c.getNumSerie().startsWith("TM") && c.getCantDisponible() > 0)
 				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
 					for(int i = 0; i < piezasAElim.size(); i++) {
@@ -899,7 +912,7 @@ public class ListadoDeProductos extends JDialog {
 	private static void llenarTablaMouses(DefaultTableModel model) {
 		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
-			if(c.getNumSerie().startsWith("R"))
+			if(c.getNumSerie().startsWith("R") && c.getCantDisponible() > 0)
 				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
 					for(int i = 0; i < piezasAElim.size(); i++) {
@@ -919,7 +932,7 @@ public class ListadoDeProductos extends JDialog {
 	private static void llenarTablaRAM(DefaultTableModel model) {
 		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
-			if(c.getNumSerie().startsWith("MR"))
+			if(c.getNumSerie().startsWith("MR") && c.getCantDisponible() > 0)
 				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
 					for(int i = 0; i < piezasAElim.size(); i++) {
@@ -939,7 +952,7 @@ public class ListadoDeProductos extends JDialog {
 	private static void llenarTablaTarjetaVideo(DefaultTableModel model) {
 		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
-			if(c.getNumSerie().startsWith("TV"))
+			if(c.getNumSerie().startsWith("TV") && c.getCantDisponible() > 0)
 				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
 					for(int i = 0; i < piezasAElim.size(); i++) {
@@ -959,7 +972,7 @@ public class ListadoDeProductos extends JDialog {
 	private static void llenarTablaTeclados(DefaultTableModel model) {
 		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
-			if(c.getNumSerie().startsWith("TE"))
+			if(c.getNumSerie().startsWith("TE") && c.getCantDisponible() > 0)
 				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
 					for(int i = 0; i < piezasAElim.size(); i++) {
@@ -979,18 +992,20 @@ public class ListadoDeProductos extends JDialog {
 	private static void llenarTablaTotalPiezas(DefaultTableModel model) {
 		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
-			if(!piezasAElim.isEmpty()) {
-				boolean encontrado = false;
-				for(int i = 0; i < piezasAElim.size(); i++) {
-					if(c.getNumSerie().equals(piezasAElim.get(i))) {
-						encontrado = true;
+			if(c.getCantDisponible() > 0) {
+				if(!piezasAElim.isEmpty()) {
+					boolean encontrado = false;
+					for(int i = 0; i < piezasAElim.size(); i++) {
+						if(c.getNumSerie().equals(piezasAElim.get(i))) {
+							encontrado = true;
+						}
 					}
+					if(!encontrado)
+						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
 				}
-				if(!encontrado)
+				else {
 					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
-			}
-			else {
-				model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+				}
 			}
 		}
 	}
