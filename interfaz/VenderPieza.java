@@ -56,8 +56,8 @@ public class VenderPieza extends JDialog {
 	private JComboBox comboBoxModelo;
 	private String nombre;
 	private String seleccionado;
-	private JTextField Atributo1;
-	private JTextField Atributo2;
+	private JLabel Atributo1;
+	private JLabel Atributo2;
 	private JComboBox<String> comboBoxAtributo1;
 	private ArrayList<String> modelo; 
 	private String selec;
@@ -104,34 +104,26 @@ public class VenderPieza extends JDialog {
 			extraida  =new ArrayList<Integer>();
 			componentes = new ArrayList<>();
 			tablaC = new ArrayList<ComponenteOrdenador>();
-			ArrayList<String> itemExp = new ArrayList<String>();
 			JPanel FiltradodeProducto = new JPanel();
 			FiltradodeProducto.setBackground(Color.WHITE);
 			FiltradodeProducto.setBorder(new MatteBorder(2, 2, 0, 0, (Color) new Color(0, 0, 0)));
 			FiltradodeProducto.setBounds(0, 0, 466, 437);
 			contentPanel.add(FiltradodeProducto);
 			FiltradodeProducto.setLayout(null);
-			SpinnerNumberModel modelo = new SpinnerNumberModel(0,0,100,1);
 
-
-			Atributo1 = new JTextField();
-			Atributo1.setEditable(false);
+			Atributo1 = new JLabel();
 			Atributo1.setText("Atributo1");
 			Atributo1.setFont(new Font("Tahoma", Font.BOLD, 15));
 			Atributo1.setBorder(null);
 			Atributo1.setBounds(12, 130, 162, 20);
 			FiltradodeProducto.add(Atributo1);
-			Atributo1.setColumns(10);
 
-			Atributo2 = new JTextField();
-			Atributo2.setEditable(false);
+			Atributo2 = new JLabel();
 			Atributo2.setBorder(null);
 			Atributo2.setFont(new Font("Tahoma", Font.BOLD, 15));
 			Atributo2.setText("Atributo2");
-			Atributo2.setColumns(10);
 			Atributo2.setBounds(12, 157, 162, 20);
 			FiltradodeProducto.add(Atributo2);
-
 			primeraVisualizacionAtributo();
 
 
@@ -199,7 +191,15 @@ public class VenderPieza extends JDialog {
 			txtatributo2.setFont(new Font("Tahoma", Font.BOLD, 15));
 			txtatributo2.setColumns(10);
 
-			comboBoxModelo = new JComboBox();
+			comboBoxAtributo1 = new JComboBox<String>();
+			comboBoxAtributo1.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
+			comboBoxAtributo1.setBounds(177, 130, 276, 20);
+			FiltradodeProducto.add(comboBoxAtributo1);
+
+			comboBoxModelo = new JComboBox<String>();
 			comboBoxModelo.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					limpiarDatos();
@@ -211,18 +211,18 @@ public class VenderPieza extends JDialog {
 			FiltradodeProducto.add(comboBoxModelo);
 			if (nombre == null) {
 				llenarComboBox(comboBoxComponenetes, inicializaciones.InicializacionDeDatos.nameComponente());
-				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasTeclado());
-				Atributo1.setText("Retroiluminacion:");
+				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasAdaptadores());
 				componenetesVentaLibreNV();
 				spinnerAtributo2_1.setVisible(false);
 				ensamblarCheckBox.setVisible(false);
 				Atributo2.setVisible(false);
 				txtatributo2.setVisible(false);
+				comboBoxAtributo1.setVisible(false);
 			} else {
-				List<String> itemExp1 = inicializaciones.InicializacionDeDatos.nameComponente();
+				ArrayList<String> itemExp1 = inicializaciones.InicializacionDeDatos.nameComponente();
 				itemExp1.remove(nombreDeComponente);
 				itemExp1.add(0, nombreDeComponente);
-				llenarComboBox(comboBoxComponenetes, (ArrayList<String>) itemExp1);
+				llenarComboBox(comboBoxComponenetes, itemExp1);
 				componenetesVentaLibreNV();
 			}
 
@@ -231,17 +231,6 @@ public class VenderPieza extends JDialog {
 			lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
 			lblNewLabel.setBounds(12, 12, 332, 51);
 			FiltradodeProducto.add(lblNewLabel);
-
-			comboBoxAtributo1 = new JComboBox();
-			comboBoxAtributo1.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-				}
-			});
-			comboBoxAtributo1.setBounds(177, 130, 276, 20);
-
-
-
-			FiltradodeProducto.add(comboBoxAtributo1);
 
 			JButton btnNewButton = new JButton("Buscar");
 			btnNewButton.setBorder(UIManager.getBorder("Button.border"));
@@ -331,11 +320,6 @@ public class VenderPieza extends JDialog {
 
 			primeraVisualizacionComponenetes();
 
-		}
-		{
-			SpinnerNumberModel modelo = new SpinnerNumberModel(0,0,100,1);
-		}
-		{
 			JPanel panel = new JPanel();
 			panel.setBounds(0, 0, 902, 702);
 			panel.setBackground(UIManager.getColor("Button.disabledShadow"));
@@ -648,6 +632,7 @@ public class VenderPieza extends JDialog {
 	@SuppressWarnings({ "unchecked", "deprecation" })
 	private void elegirMarca(Object seleccionado) {
 		if (comboBoxMarca != null && comboBoxAtributo1 != null) {
+			Atributo1.setVisible(true);
 			comboBoxAtributo1.setVisible(true); 
 			String nombreC = seleccionado.toString();
 			ArrayList<String> Decision = new ArrayList<>();
@@ -704,7 +689,7 @@ public class VenderPieza extends JDialog {
 				txtatributo2.setVisible(true);
 				break;
 			case "Adaptador":
-				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasExtension());
+				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasAdaptadores());
 				Atributo1.setVisible(false);
 				comboBoxAtributo1.setVisible(false);
 				componenetesVentaLibreNV();
@@ -735,7 +720,7 @@ public class VenderPieza extends JDialog {
 				break;
 			case "Ratón":
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasRaton());
-				Atributo1.setText("No. de Botones:");
+				Atributo1.setText("Conectividad:");
 				llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.conectividad());
 				componenetesVentaLibreNV();
 				comboBoxModelo.removeAllItems();

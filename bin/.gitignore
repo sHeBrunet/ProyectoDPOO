@@ -1,3 +1,10 @@
-/interfaz/
+/.classpath
+/.project
+/.settings/
+/README.md
+/gui/
 /inicializaciones/
+/interfaz/
 /logica/
+/login/
+/main/

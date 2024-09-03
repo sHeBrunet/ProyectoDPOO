@@ -67,7 +67,6 @@ public class AgregarTrabajador extends JDialog {
 	private int contador = 0;
 	private ArrayList<Trabajador> trabaj;
 	private JTextField ciT;
-	private Object nivelEscolar = null;
 
 	public AgregarTrabajador(Principal principal, TiendaDeComputadoras tiendaC) {
 		super(principal, true);
@@ -230,7 +229,7 @@ public class AgregarTrabajador extends JDialog {
 		llenarComboBox(NivelE, InicializacionDeDatos.nivelesEscolar());
 		NivelE.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				nivelEscolar = NivelE.getSelectedItem();
+				int nivelEscolar = NivelE.getSelectedIndex();
 				elegirPuestoTrabajo(nivelEscolar);
 			}
 		});
@@ -245,15 +244,15 @@ public class AgregarTrabajador extends JDialog {
 		}
 		cargoT.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				/*if(cargoT != null) {
-					if (cargoT.getSelectedItem().equals("Gerente")) {
+				if(cargoT != null) {
+					if (cargoT.getSelectedIndex() == 6) {
 						fechaOcupTextLabel.setVisible(true);
 						spinnerFecha.setVisible(true);
 					} else {
 						spinnerFecha.setVisible(false);
 						fechaOcupTextLabel.setVisible(false);
 					}
-				}*/
+				}
 			}
 		});
 		cargoT.setBounds(247, 194, 560, 20);
@@ -606,19 +605,18 @@ public class AgregarTrabajador extends JDialog {
 		}
 	}
 
-	private void elegirPuestoTrabajo(Object nivelEscolar) {
-		String nivelEsc = nivelEscolar.toString();
+	private void elegirPuestoTrabajo(int nivelEscolar) {
 		cargoT.removeAllItems();
 		if(cargoT != null) {	
-			switch(nivelEsc) {
-			case "Secundaria": 
+			switch(nivelEscolar) {
+			case 0: 
 				for(int i = 0; i < InicializacionDeDatos.cargos().size(); i++) {
 					String items = InicializacionDeDatos.cargos().get(i);
 					if(items.equalsIgnoreCase("Auxiliar de Limpieza") || items.equalsIgnoreCase("Asistente"))
 						cargoT.addItem(items);
 				}
 				break;
-			case "Preuniversitario":
+			case 1:
 				for(int i = 0; i < InicializacionDeDatos.cargos().size(); i++) {
 					String items = InicializacionDeDatos.cargos().get(i);
 					if(items.equalsIgnoreCase("Auxiliar de Limpieza") || items.equalsIgnoreCase("Asistente")
@@ -626,7 +624,7 @@ public class AgregarTrabajador extends JDialog {
 						cargoT.addItem(items);
 				}
 				break;
-			case "Técnico Medio":
+			case 2:
 				for(int i = 0; i < InicializacionDeDatos.cargos().size(); i++) {
 					String items = InicializacionDeDatos.cargos().get(i);
 					if(items.equalsIgnoreCase("Auxiliar de Limpieza") || items.equalsIgnoreCase("Asistente")
@@ -635,7 +633,7 @@ public class AgregarTrabajador extends JDialog {
 						cargoT.addItem(items);
 				}
 				break;
-			case "Universitario":
+			case 3:
 				for(int i = 0; i < InicializacionDeDatos.cargos().size(); i++) {
 					String items = InicializacionDeDatos.cargos().get(i);
 					cargoT.addItem(items);

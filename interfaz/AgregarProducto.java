@@ -188,7 +188,7 @@ public class AgregarProducto extends JDialog {
 		lblAtributo2.setFont(new Font("Tahoma", Font.BOLD, 15));
 		panelAgregarPiezas.add(lblAtributo2);
 		lblAtributo2.setBounds(327, 155, 37, 19);
-		
+
 		Atributo2 = new JLabel();
 		Atributo2.setVisible(false);
 		Atributo2.setBorder(null);
@@ -243,8 +243,7 @@ public class AgregarProducto extends JDialog {
 		panelAgregarPiezas.add(spinnerAtributo2);
 
 		llenarComboBox(comboBoxComponente, inicializaciones.InicializacionDeDatos.nameComponente());
-		llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasTeclado());
-		llenarComboBox(comboBoxModelo, inicializaciones.InicializacionDeDatos.tecladosHyperX());
+		llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasAdaptadores());
 		txtPrecio.setText(Float.toString(obtenerPrecioComp(comboBoxMarca.getSelectedItem(), comboBoxModelo.getSelectedItem())));
 
 		JButton btnBorrar = new JButton("Limpiar");
@@ -312,7 +311,7 @@ public class AgregarProducto extends JDialog {
 
 		btnAgregar.setBounds(656, 263, 70, 22);
 		panelAgregarPiezas.add(btnAgregar);
-		
+
 		JPanel panelPiezasAgregadas = new JPanel();
 		panelPiezasAgregadas.setBounds(29, 399, 837, 237);
 		panelPiezasAgregadas.setBorder(new TitledBorder(null, "Piezas agregadas", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -339,18 +338,18 @@ public class AgregarProducto extends JDialog {
 		table.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(java.awt.event.KeyEvent evt) {
-				 if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
-					 int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar la pieza seleccionada?", "", 0, 3);
-						if(i==0) {		
-							int pos = table.getSelectedRow();
-							if (pos != -1) {
-								piezasAgreg.remove(pos);
-								((DefaultTableModel) table.getModel()).removeRow(pos);
-							} else {
-								JOptionPane.showMessageDialog(AgregarProducto.this, "Antes de eliminar debe de seleccionar una pieza de la tabla");
-							}
+				if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
+					int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar la pieza seleccionada?", "", 0, 3);
+					if(i==0) {		
+						int pos = table.getSelectedRow();
+						if (pos != -1) {
+							piezasAgreg.remove(pos);
+							((DefaultTableModel) table.getModel()).removeRow(pos);
+						} else {
+							JOptionPane.showMessageDialog(AgregarProducto.this, "Antes de eliminar debe de seleccionar una pieza de la tabla");
 						}
-				 }
+					}
+				}
 			}
 		});
 		table.getTableHeader().setReorderingAllowed(false);
@@ -486,10 +485,11 @@ public class AgregarProducto extends JDialog {
 				lblNoSerie.setBounds(12, 125, 128, 16);
 				lblCantidad.setBounds(12, 152, 128, 16);
 				lblPrecio.setBounds(12, 179, 128, 16);
+				lblAtributo2.setVisible(false);
 				txtNoSerieFijo.setBounds(247, 124, 24, 20);
 				spinner.setBounds(247, 151, 70, 22);
 				txtPrecio.setBounds(247, 178, 70, 20);
-				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasExtension());
+				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasAdaptadores());
 				txtNoSerieFijo.setText("A");
 				txtNoSerieMovible.setBounds(267, 124, 50, 20);
 				break;
@@ -525,12 +525,12 @@ public class AgregarProducto extends JDialog {
 				spinnerAtributo2.setModel(new SpinnerNumberModel(1, null, 8, 1) {
 					private static final long serialVersionUID = 1L;
 					@Override
-			        public Object getNextValue() {                
-			            Object nextValue = super.getValue();
-			            int x = Integer.valueOf(nextValue.toString())*2;
-			            return x;
-			        }
-			    });
+					public Object getNextValue() {                
+						Object nextValue = super.getValue();
+						int x = Integer.valueOf(nextValue.toString())*2;
+						return x;
+					}
+				});
 				break;
 			case "Chasis":	
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasChasis());
@@ -618,21 +618,21 @@ public class AgregarProducto extends JDialog {
 				}
 				break;
 			case "Adaptador": 
-				if(marca.equalsIgnoreCase("Amazon") || (marca.equalsIgnoreCase("Apple"))) {
-					comboBoxModelo.removeAll();
-					comboBoxModelo.addItem("Canvio Basics");
+				comboBoxModelo.removeAllItems();
+				if(marca.equalsIgnoreCase("Anker")) {
+					comboBoxModelo.addItem("Hub 7en1 Thunderbolt 3");
 				}
-				else if(marca.equalsIgnoreCase("ViTech")) {
-					comboBoxModelo.removeAll();
-					comboBoxModelo.addItem("Canvio Basics 5A");
+				else if(marca.equalsIgnoreCase("Amazon Basics")) {					
+					comboBoxModelo.addItem("USB-C a USB-A");
 				}
-				else if(marca.equalsIgnoreCase("Mercado Libre")) {
-					comboBoxModelo.removeAll();
-					comboBoxModelo.addItem("Canvio Basics 2B");
+				else if(marca.equalsIgnoreCase("Apple")) {
+					comboBoxModelo.addItem("USB-C a Ethernet");
+				}
+				else if(marca.equalsIgnoreCase("Belkin")) {
+					comboBoxModelo.addItem("USB-C a HDMI");
 				}
 				else {
-					comboBoxModelo.removeAll();
-					comboBoxModelo.addItem("Canvio Basics 8C");
+					comboBoxModelo.addItem("HDMI a VGA");
 				}
 				break; 
 			case "Bocina":
