@@ -6,6 +6,8 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -19,6 +21,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
@@ -27,13 +30,10 @@ import inicializaciones.InicializacionDeDatos;
 import logica.ManejoDeSesion;
 import logica.TiendaDeComputadoras;
 import login.Login;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 @SuppressWarnings("serial")
 
 public class Principal extends JFrame {
 	private TiendaDeComputadoras tiendaC;
-	private ManejoDeSesion manejo;
 
 	private JPanel contentPane;
 	private JButton btnButtonTarjetaMadre;
@@ -71,7 +71,6 @@ public class Principal extends JFrame {
 	 * @param user 
 	 */
 	public Principal(TiendaDeComputadoras tienda, ManejoDeSesion manejoDeSesion) {
-		manejo = manejoDeSesion;
 		tiendaC = tienda;
 		setTitle("S.A.D PC Store");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Principal.class.getResource("/gui/icons/logoPeque\u00F1o1.jpg")));
@@ -89,8 +88,27 @@ public class Principal extends JFrame {
 		JMenu MenuInicio = new JMenu("Inicio");
 		MenuInicio.setBackground(Color.WHITE);
 		menuBar.add(MenuInicio);
-
+		
+		Informacion = new JMenuItem("Informaci\u00F3n");
+		Informacion.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		Informacion.setBackground(Color.WHITE);
+		Informacion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Informacion dialog = new Informacion(Principal.this, tiendaC);
+					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+					dialog.setLocationRelativeTo(null);
+					dialog.setVisible(true);
+				} catch (Exception e4) {
+					e4.printStackTrace();
+				}
+			}
+		});
+		Informacion.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, InputEvent.CTRL_MASK));
+		MenuInicio.add(Informacion);
+		
 		CerrarSesion = new JMenuItem("Cerrar Sesi\u00F3n");
+		CerrarSesion.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		CerrarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -110,38 +128,62 @@ public class Principal extends JFrame {
 			}
 		});
 		CerrarSesion.setBackground(Color.WHITE);
+		CerrarSesion.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
 		MenuInicio.add(CerrarSesion);
 
 		CerrarPrograma = new JMenuItem("Cerrar Programa");
+		CerrarPrograma.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		CerrarPrograma.setBackground(Color.WHITE);
 		CerrarPrograma.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
 		});
+		CerrarPrograma.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, InputEvent.ALT_MASK));
 		MenuInicio.add(CerrarPrograma);
-
-		Informacion = new JMenuItem("Informaci\u00F3n");
-		Informacion.setBackground(Color.WHITE);
-		Informacion.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					Informacion dialog = new Informacion(Principal.this, tiendaC);
-					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-					dialog.setLocationRelativeTo(null);
-					dialog.setVisible(true);
-				} catch (Exception e4) {
-					e4.printStackTrace();
-				}
-			}
-		});
-		MenuInicio.add(Informacion);
 
 		JMenu MenuProductos = new JMenu("Productos");
 		MenuProductos.setBackground(Color.WHITE);
 		menuBar.add(MenuProductos);
+		
+		ListaDeProductos = new JMenuItem("Listado de Productos");
+		ListaDeProductos.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		ListaDeProductos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					ListadoDeProductos dialog = new ListadoDeProductos(Principal.this, tiendaC);
+					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+					dialog.setLocationRelativeTo(null);
+					dialog.setVisible(true);
+				} catch (Exception e6) {
+					e6.printStackTrace();
+				}
+			}
+		});
+		ListaDeProductos.setBackground(Color.WHITE);
+		ListaDeProductos.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_MASK));
+		MenuProductos.add(ListaDeProductos);
+		
+		AgregarProductos = new JMenuItem("Agregar Productos ");
+		AgregarProductos.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		AgregarProductos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					AgregarProducto dialog = new AgregarProducto(Principal.this, tiendaC);
+					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+					dialog.setLocationRelativeTo(null);
+					dialog.setVisible(true);
+				} catch (Exception e5) {
+					e5.printStackTrace();
+				}
+			}
+		});
+		AgregarProductos.setBackground(Color.WHITE);
+		AgregarProductos.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_MASK));
+		MenuProductos.add(AgregarProductos);
 
 		VenderProductos = new JMenuItem("Vender Productos");
+		VenderProductos.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		VenderProductos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -159,41 +201,11 @@ public class Principal extends JFrame {
 			}
 		});
 		VenderProductos.setBackground(Color.WHITE);
+		VenderProductos.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_MASK));
 		MenuProductos.add(VenderProductos);
-
-		AgregarProductos = new JMenuItem("Agregar Productos ");
-		AgregarProductos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					AgregarProducto dialog = new AgregarProducto(Principal.this, tiendaC);
-					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-					dialog.setLocationRelativeTo(null);
-					dialog.setVisible(true);
-				} catch (Exception e5) {
-					e5.printStackTrace();
-				}
-			}
-		});
-		AgregarProductos.setBackground(Color.WHITE);
-		MenuProductos.add(AgregarProductos);
-
-		ListaDeProductos = new JMenuItem("Listado de Productos");
-		ListaDeProductos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					ListadoDeProductos dialog = new ListadoDeProductos(Principal.this, tiendaC);
-					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-					dialog.setLocationRelativeTo(null);
-					dialog.setVisible(true);
-				} catch (Exception e6) {
-					e6.printStackTrace();
-				}
-			}
-		});
-		ListaDeProductos.setBackground(Color.WHITE);
-		MenuProductos.add(ListaDeProductos);
-		
+	
 		Facturas = new JMenuItem("Facturas");
+		Facturas.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		Facturas.setBackground(Color.WHITE);
 		Facturas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -207,6 +219,7 @@ public class Principal extends JFrame {
 					}
 				}
 		});
+		Facturas.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, InputEvent.CTRL_MASK));
 		MenuProductos.add(Facturas);
 
 		JMenu MenuReportes = new JMenu("Reportes");
@@ -229,7 +242,8 @@ public class Principal extends JFrame {
 		MenuTrabajadores.setBackground(Color.WHITE);
 		menuBar.add(MenuTrabajadores);
 
-		ListaDeTrabajadores = new JMenuItem("Listado");
+		ListaDeTrabajadores = new JMenuItem("Listado de Trabajadores");
+		ListaDeTrabajadores.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		ListaDeTrabajadores.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String user = ManejoDeSesion.getInstance().getUsername();
@@ -249,9 +263,11 @@ public class Principal extends JFrame {
 			}
 		});
 		ListaDeTrabajadores.setBackground(Color.WHITE);
+		ListaDeTrabajadores.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.ALT_MASK));
 		MenuTrabajadores.add(ListaDeTrabajadores);
 
 		AgregarTrabajador = new JMenuItem("Agregar Trabajador");
+		AgregarTrabajador.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		AgregarTrabajador.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String user = ManejoDeSesion.getInstance().getUsername();
@@ -270,8 +286,10 @@ public class Principal extends JFrame {
 				}
 			}
 		});
+		AgregarTrabajador.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.ALT_MASK));
 		AgregarTrabajador.setBackground(Color.WHITE);
 		MenuTrabajadores.add(AgregarTrabajador);
+		
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
