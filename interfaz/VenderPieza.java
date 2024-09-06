@@ -85,6 +85,9 @@ public class VenderPieza extends JDialog {
 	JPanel panelEnsamblado;
 	private JTextField totalFactura;
 	private Factura f;
+	private JSpinner spinner;
+	private JButton btnBuscar;
+	private JButton okButton_1;
 	@SuppressWarnings("unchecked")
 
 	public VenderPieza(Principal principal, TiendaDeComputadoras tienda, String nombreDeComponente) {
@@ -135,6 +138,7 @@ public class VenderPieza extends JDialog {
 
 
 			comboBoxComponenetes = new JComboBox();
+			comboBoxComponenetes.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(176, 224, 230)));
 			comboBoxComponenetes.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					Object seleccionado = comboBoxComponenetes.getSelectedItem();
@@ -146,6 +150,7 @@ public class VenderPieza extends JDialog {
 			FiltradodeProducto.add(comboBoxComponenetes);
 
 			comboBoxMarca = new JComboBox();
+			comboBoxMarca.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(176, 224, 230)));
 			comboBoxMarca.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {	
 
@@ -176,6 +181,7 @@ public class VenderPieza extends JDialog {
 			FiltradodeProducto.add(ensamblarCheckBox);
 
 			spinnerAtributo2_1 = new JSpinner(new SpinnerNumberModel(1,1,64,0.5));
+			spinnerAtributo2_1.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(176, 224, 230)));
 			spinnerAtributo2_1.setBounds(176, 157, 221, 20);
 			FiltradodeProducto.add(spinnerAtributo2_1);
 			SpinnerNumberModel modelo1 = new SpinnerNumberModel(1,1,64,0.5);
@@ -192,6 +198,7 @@ public class VenderPieza extends JDialog {
 			txtatributo2.setColumns(10);
 
 			comboBoxAtributo1 = new JComboBox<String>();
+			comboBoxAtributo1.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(176, 224, 230)));
 			comboBoxAtributo1.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 				}
@@ -200,6 +207,7 @@ public class VenderPieza extends JDialog {
 			FiltradodeProducto.add(comboBoxAtributo1);
 
 			comboBoxModelo = new JComboBox<String>();
+			comboBoxModelo.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(176, 224, 230)));
 			comboBoxModelo.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					limpiarDatos();
@@ -227,17 +235,19 @@ public class VenderPieza extends JDialog {
 			}
 
 
-			JLabel lblNewLabel = new JLabel("Buscar Componente");
-			lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
-			lblNewLabel.setBounds(12, 12, 332, 51);
-			FiltradodeProducto.add(lblNewLabel);
+			JLabel lblTitulo = new JLabel("Buscar Componente");
+			lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 20));
+			lblTitulo.setBounds(12, 12, 332, 51);
+			FiltradodeProducto.add(lblTitulo);
 
-			JButton btnNewButton = new JButton("Buscar");
-			btnNewButton.setBorder(UIManager.getBorder("Button.border"));
-			btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 15));
-			btnNewButton.setBackground(Color.WHITE);
-			btnNewButton.setIcon(new ImageIcon(VenderPieza.class.getResource("/gui/icons/lupa.png")));
-			btnNewButton.addActionListener(new ActionListener() {
+			btnBuscar = new JButton("Buscar");
+			btnBuscar.setFocusable(false);
+			btnBuscar.setContentAreaFilled(false);
+			btnBuscar.setBorder(new MatteBorder(1, 0, 1, 1, (Color) new Color(176, 224, 230)));
+			btnBuscar.setFont(new Font("Tahoma", Font.BOLD, 15));
+			btnBuscar.setBackground(Color.WHITE);
+			btnBuscar.setIcon(null);
+			btnBuscar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					String desicion = (String) comboBoxComponenetes.getSelectedItem();
 					switch (desicion) {
@@ -248,7 +258,6 @@ public class VenderPieza extends JDialog {
 						actualizarModeloTarjetaVideo((String) comboBoxMarca.getSelectedItem(), (String) comboBoxAtributo1.getSelectedItem());
 						break;
 					case "Tarjeta Madre":
-
 						break;
 					case "Microprocesador":
 						actualizarModeloMicroprocesador((String) comboBoxMarca.getSelectedItem(), (String) comboBoxAtributo1.getSelectedItem(), (Double) spinnerAtributo2_1.getValue());
@@ -276,17 +285,14 @@ public class VenderPieza extends JDialog {
 					case "Fuente":
 						actualizarModeloFuente((String) comboBoxMarca.getSelectedItem(), (String) comboBoxAtributo1.getSelectedItem());
 						break;
-					default:
-						llenarComboBox(comboBoxMarca, new ArrayList<>());
-						break;
 					}
 				}
 			});
 
 
 
-			btnNewButton.setBounds(27, 392, 126, 20);
-			FiltradodeProducto.add(btnNewButton);
+			btnBuscar.setBounds(72, 393, 81, 20);
+			FiltradodeProducto.add(btnBuscar);
 
 
 			panelEnsamblado = new JPanel();
@@ -316,6 +322,18 @@ public class VenderPieza extends JDialog {
 			lblProcesoDeEnsamblado.setFont(new Font("Tahoma", Font.BOLD, 20));
 			lblProcesoDeEnsamblado.setBounds(12, 0, 410, 30);
 			panelEnsamblado.add(lblProcesoDeEnsamblado);
+
+			JLabel lblLupa = new JLabel("New label");
+			lblLupa.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					btnBuscar.doClick();
+				}
+			});
+			lblLupa.setBorder(new MatteBorder(1, 1, 1, 0, (Color) new Color(176, 224, 230)));
+			lblLupa.setIcon(new ImageIcon(VenderPieza.class.getResource("/gui/icons/lupa.png")));
+			lblLupa.setBounds(57, 393, 25, 20);
+			FiltradodeProducto.add(lblLupa);
 
 
 			primeraVisualizacionComponenetes();
@@ -351,8 +369,12 @@ public class VenderPieza extends JDialog {
 			panel.add(panel_1);
 			panel_1.setLayout(null);
 
-			JButton okButton = new JButton("Borrar");
-			okButton.addActionListener(new ActionListener() {
+			okButton_1 = new JButton("");
+			okButton_1.setIcon(new ImageIcon(VenderPieza.class.getResource("/gui/icons/basura.png")));
+			okButton_1.setContentAreaFilled(false);
+			okButton_1.setBorder(null);
+			okButton_1.setFocusable(false);
+			okButton_1.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					int pos = table.getSelectedRow();
 					ComponenteOrdenador c = null;
@@ -369,9 +391,9 @@ public class VenderPieza extends JDialog {
 
 				}
 			});
-			okButton.setActionCommand("OK");
-			okButton.setBounds(803, 12, 76, 22);
-			panel_1.add(okButton);
+			okButton_1.setActionCommand("OK");
+			okButton_1.setBounds(822, 6, 44, 30);
+			panel_1.add(okButton_1);
 			JPanel ProductoEncontrado = new JPanel();
 			ProductoEncontrado.setBounds(468, 0, 434, 437);
 			panel.add(ProductoEncontrado);
@@ -385,24 +407,28 @@ public class VenderPieza extends JDialog {
 			ProductoEncontrado.add(lblComponenteEncontrado);
 
 			nombretext = new JTextField();
+			nombretext.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(176, 224, 230)));
 			nombretext.setEditable(false);
 			nombretext.setBounds(175, 75, 220, 20);
 			ProductoEncontrado.add(nombretext);
 			nombretext.setColumns(10);
 
 			modelotext = new JTextField();
+			modelotext.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(176, 224, 230)));
 			modelotext.setEditable(false);
 			modelotext.setColumns(10);
 			modelotext.setBounds(175, 136, 220, 20);
 			ProductoEncontrado.add(modelotext);
 
 			notext = new JTextField();
+			notext.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(176, 224, 230)));
 			notext.setEditable(false);
 			notext.setColumns(10);
 			notext.setBounds(175, 168, 220, 20);
 			ProductoEncontrado.add(notext);
 
 			preciotext = new JTextField();
+			preciotext.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(176, 224, 230)));
 			preciotext.setEditable(false);
 			preciotext.setColumns(10);
 			preciotext.setBounds(175, 200, 220, 20);
@@ -434,13 +460,15 @@ public class VenderPieza extends JDialog {
 			ProductoEncontrado.add(lblCantidadExistente);
 
 			cantidadtxt = new JTextField();
+			cantidadtxt.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(176, 224, 230)));
 			cantidadtxt.setEditable(false);
 			cantidadtxt.setColumns(10);
 			cantidadtxt.setBounds(175, 232, 220, 20);
 			ProductoEncontrado.add(cantidadtxt);
 
-			JSpinner spinner = new JSpinner(new SpinnerNumberModel(0,0,100,1));
-			spinner.setBounds(133, 396, 63, 22);
+			spinner = new JSpinner(new SpinnerNumberModel(0,0,100,1));
+			spinner.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(176, 224, 230)));
+			spinner.setBounds(119, 397, 63, 22);
 			ProductoEncontrado.add(spinner);
 			SpinnerNumberModel modelo = new SpinnerNumberModel(0,0,10,1);
 			spinner.setModel(modelo);
@@ -453,50 +481,57 @@ public class VenderPieza extends JDialog {
 
 			JLabel lblCantidadExistente_1_1 = new JLabel("A\u00F1adir al carrito");
 			lblCantidadExistente_1_1.setFont(new Font("Tahoma", Font.BOLD, 15));
-			lblCantidadExistente_1_1.setBounds(235, 398, 141, 16);
+			lblCantidadExistente_1_1.setBounds(235, 398, 129, 16);
 			ProductoEncontrado.add(lblCantidadExistente_1_1);
 
 			JButton btnCarrito = new JButton("");
+			btnCarrito.setContentAreaFilled(false);
+			btnCarrito.setBorder(null);
+			btnCarrito.setFocusable(false);
 			btnCarrito.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					try {
 					int num = 0;
 					String numero = cantidadtxt.getText();
 					int cantidadPieza = Integer.parseInt(numero);
 					int sp = (int) spinner.getValue();
-					if(nombretext.getText().isEmpty() || spinner.getValue().equals(num)){
-						JOptionPane.showMessageDialog(VenderPieza.this, "Error. Debe de agregar algún producto al carrito");  
-					}	
-					else if(cantidadPieza < sp) {
-						JOptionPane.showMessageDialog(VenderPieza.this, "Error. La cantidad deseada no esta disponible");  
-					}
-					else {
-						ComponenteOrdenador c = null;
-						String numSerie = notext.getText();
-						float precio = Float.parseFloat(preciotext.getText());
-						cantidad = (int) spinner.getValue();
-						float result = precio * cantidad;
-						String coste = String.valueOf(result);
-						c = tienda.buscarComponente(numSerie);
-						tableModel.addRow(new Object[]{nombretext.getText(), MarcaEncontText.getText(), modelotext.getText(), spinner.getValue(), coste});
-						componentes.add(c);
-						extraida.add(c.getCantDisponible());
-						tiendaC.actualizarCantidadComponente(c, cantidad);
-						cantidadtxt.setText(String.valueOf(c.getCantDisponible()));
-						cant.add(cantidad);
-						Object totalF = 0;
-						float t = 0;
-						for(int i = 0; i < tableModel.getRowCount(); i++) {
-							totalF = tableModel.getValueAt(i, 4);
-							t += Float.valueOf((String) totalF);
+						if(nombretext.getText().isEmpty() || spinner.getValue().equals(num)){
+							JOptionPane.showMessageDialog(VenderPieza.this, "Error. Debe de agregar algún producto al carrito");  
+						}	
+						else if(cantidadPieza < sp) {
+							JOptionPane.showMessageDialog(VenderPieza.this, "Error. La cantidad deseada no esta disponible");  
 						}
-						totalFactura.setText(String.valueOf(t));
+						else {
+							ComponenteOrdenador c = null;
+							String numSerie = notext.getText();
+							float precio = Float.parseFloat(preciotext.getText());
+							cantidad = (int) spinner.getValue();
+							float result = precio * cantidad;
+							String coste = String.valueOf(result);
+							c = tiendaC.buscarComponente(numSerie);
+							tableModel.addRow(new Object[]{nombretext.getText(), MarcaEncontText.getText(), modelotext.getText(), spinner.getValue(), coste});
+							componentes.add(c);
+							extraida.add(c.getCantDisponible());
+							tiendaC.actualizarCantidadComponente(c, cantidad);
+							cantidadtxt.setText(String.valueOf(c.getCantDisponible()));
+							cant.add(cantidad);
+							Object totalF = 0;
+							float t = 0;
+							for(int i = 0; i < tableModel.getRowCount(); i++) {
+								totalF = tableModel.getValueAt(i, 4);
+								t += Float.valueOf((String) totalF);
+							}
+							totalFactura.setText(String.valueOf(t));
+						}
+					} catch (NumberFormatException e1) {
+						JOptionPane.showMessageDialog(VenderPieza.this, "Antes de añadir al carrito debe buscar una pieza");
 					}
 				}
 			});
 
 			btnCarrito.setBackground(Color.WHITE);
 			btnCarrito.setIcon(new ImageIcon(VenderPieza.class.getResource("/gui/icons/carrito.png")));
-			btnCarrito.setBounds(364, 390, 42, 36);
+			btnCarrito.setBounds(359, 390, 31, 36);
 			ProductoEncontrado.add(btnCarrito);
 
 			JLabel lblMarca_1 = new JLabel("Marca:");
@@ -505,6 +540,7 @@ public class VenderPieza extends JDialog {
 			ProductoEncontrado.add(lblMarca_1);
 
 			MarcaEncontText = new JTextField();
+			MarcaEncontText.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(176, 224, 230)));
 			MarcaEncontText.setEditable(false);
 			MarcaEncontText.setColumns(10);
 			MarcaEncontText.setBounds(175, 107, 220, 20);
@@ -533,6 +569,7 @@ public class VenderPieza extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("Aceptar");
+				okButton.setFocusable(false);
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						if(actualizarLista() == true) {
@@ -542,19 +579,20 @@ public class VenderPieza extends JDialog {
 					}
 
 				});
+				{
+					JButton cancelButton = new JButton("Atr\u00E1s");
+					cancelButton.setFocusable(false);
+					cancelButton.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							dispose();
+						}
+					});
+					cancelButton.setActionCommand("Cancel");
+					buttonPane.add(cancelButton);
+				}
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
-			}
-			{
-				JButton cancelButton = new JButton("Atr\u00E1s");
-				cancelButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						dispose();
-					}
-				});
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
 			}
 		}
 	}
@@ -769,9 +807,6 @@ public class VenderPieza extends JDialog {
 				ensamblarCheckBox.setVisible(false);
 				spinnerAtributo2_1.setVisible(false);
 				txtatributo2.setVisible(false);
-				break;
-			default:
-				llenarComboBox(comboBoxMarca, new ArrayList<>());
 				break;
 			}
 		} else {

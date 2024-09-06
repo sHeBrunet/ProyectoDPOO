@@ -27,6 +27,8 @@ import inicializaciones.InicializacionDeDatos;
 import logica.ManejoDeSesion;
 import logica.TiendaDeComputadoras;
 import login.Login;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 @SuppressWarnings("serial")
 
 public class Principal extends JFrame {
@@ -46,9 +48,18 @@ public class Principal extends JFrame {
 	private JButton btnButtonBocina;
 	private JButton btnButtonChasis;
 	private JButton btnButtonOtro;
-	private JMenuItem mntmNewMenuItem_2;
-	private JMenuItem mntmNewMenuItem_4;
 	private String nombredeComponente;
+	private JMenuItem CerrarSesion;
+	private JMenuItem CerrarPrograma;
+	private JMenuItem Informacion;
+	private JMenuItem VenderProductos;
+	private JMenuItem AgregarProductos;
+	private JMenuItem ListaDeProductos;
+	private JMenuItem Facturas;
+	private JMenuItem DineroR;
+	private JMenuItem PagoTrab;
+	private JMenuItem ListaDeTrabajadores;
+	private JMenuItem AgregarTrabajador;
 	/**
 	 * Launch the application.
 	 */
@@ -75,12 +86,12 @@ public class Principal extends JFrame {
 		menuBar.setBackground(Color.WHITE);
 		setJMenuBar(menuBar);
 
-		JMenu mnNewMenu = new JMenu("Inicio");
-		mnNewMenu.setBackground(Color.WHITE);
-		menuBar.add(mnNewMenu);
+		JMenu MenuInicio = new JMenu("Inicio");
+		MenuInicio.setBackground(Color.WHITE);
+		menuBar.add(MenuInicio);
 
-		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Cerrar Sesi\u00F3n");
-		mntmNewMenuItem_3.addActionListener(new ActionListener() {
+		CerrarSesion = new JMenuItem("Cerrar Sesi\u00F3n");
+		CerrarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					ManejoDeSesion manejo = ManejoDeSesion.getInstance();
@@ -98,24 +109,24 @@ public class Principal extends JFrame {
 				}
 			}
 		});
-		mntmNewMenuItem_3.setBackground(Color.WHITE);
-		mnNewMenu.add(mntmNewMenuItem_3);
+		CerrarSesion.setBackground(Color.WHITE);
+		MenuInicio.add(CerrarSesion);
 
-		JMenuItem mntmNewMenuItem_5 = new JMenuItem("Cerrar Programa");
-		mntmNewMenuItem_5.setBackground(Color.WHITE);
-		mntmNewMenuItem_5.addActionListener(new ActionListener() {
+		CerrarPrograma = new JMenuItem("Cerrar Programa");
+		CerrarPrograma.setBackground(Color.WHITE);
+		CerrarPrograma.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
 		});
-		mnNewMenu.add(mntmNewMenuItem_5);
+		MenuInicio.add(CerrarPrograma);
 
-		JMenuItem mntmNewMenuItem_6 = new JMenuItem("Informaci\u00F3n");
-		mntmNewMenuItem_6.setBackground(Color.WHITE);
-		mntmNewMenuItem_6.addActionListener(new ActionListener() {
+		Informacion = new JMenuItem("Informaci\u00F3n");
+		Informacion.setBackground(Color.WHITE);
+		Informacion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Informacion dialog = new Informacion(Principal.this, tienda);
+					Informacion dialog = new Informacion(Principal.this, tiendaC);
 					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					dialog.setLocationRelativeTo(null);
 					dialog.setVisible(true);
@@ -124,14 +135,14 @@ public class Principal extends JFrame {
 				}
 			}
 		});
-		mnNewMenu.add(mntmNewMenuItem_6);
+		MenuInicio.add(Informacion);
 
 		JMenu MenuProductos = new JMenu("Productos");
 		MenuProductos.setBackground(Color.WHITE);
 		menuBar.add(MenuProductos);
 
-		mntmNewMenuItem_4 = new JMenuItem("Vender Productos");
-		mntmNewMenuItem_4.addActionListener(new ActionListener() {
+		VenderProductos = new JMenuItem("Vender Productos");
+		VenderProductos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					if (tiendaC != null) {
@@ -147,11 +158,11 @@ public class Principal extends JFrame {
 				}
 			}
 		});
-		mntmNewMenuItem_4.setBackground(Color.WHITE);
-		MenuProductos.add(mntmNewMenuItem_4);
+		VenderProductos.setBackground(Color.WHITE);
+		MenuProductos.add(VenderProductos);
 
-		JMenuItem mntmNewMenuItem_14 = new JMenuItem("Agregar Productos ");
-		mntmNewMenuItem_14.addActionListener(new ActionListener() {
+		AgregarProductos = new JMenuItem("Agregar Productos ");
+		AgregarProductos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					AgregarProducto dialog = new AgregarProducto(Principal.this, tiendaC);
@@ -163,11 +174,11 @@ public class Principal extends JFrame {
 				}
 			}
 		});
-		mntmNewMenuItem_14.setBackground(Color.WHITE);
-		MenuProductos.add(mntmNewMenuItem_14);
+		AgregarProductos.setBackground(Color.WHITE);
+		MenuProductos.add(AgregarProductos);
 
-		JMenuItem mntmNewMenuItem_15 = new JMenuItem("Listado de Productos");
-		mntmNewMenuItem_15.addActionListener(new ActionListener() {
+		ListaDeProductos = new JMenuItem("Listado de Productos");
+		ListaDeProductos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					ListadoDeProductos dialog = new ListadoDeProductos(Principal.this, tiendaC);
@@ -179,12 +190,12 @@ public class Principal extends JFrame {
 				}
 			}
 		});
-		mntmNewMenuItem_15.setBackground(Color.WHITE);
-		MenuProductos.add(mntmNewMenuItem_15);
+		ListaDeProductos.setBackground(Color.WHITE);
+		MenuProductos.add(ListaDeProductos);
 		
-		JMenuItem facturas = new JMenuItem("Facturas");
-		facturas.setBackground(Color.WHITE);
-		facturas.addActionListener(new ActionListener() {
+		Facturas = new JMenuItem("Facturas");
+		Facturas.setBackground(Color.WHITE);
+		Facturas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 					try {
 						Facturas dialog = new Facturas(Principal.this, tiendaC);
@@ -196,30 +207,30 @@ public class Principal extends JFrame {
 					}
 				}
 		});
-		MenuProductos.add(facturas);
+		MenuProductos.add(Facturas);
 
-		JMenu mnNewMenu_2 = new JMenu("Reportes");
-		mnNewMenu_2.setBackground(Color.WHITE);
-		menuBar.add(mnNewMenu_2);
+		JMenu MenuReportes = new JMenu("Reportes");
+		MenuReportes.setBackground(Color.WHITE);
+		menuBar.add(MenuReportes);
 
-		JMenuItem mntmNewMenuItem = new JMenuItem("Dinero Recaudado");
-		mntmNewMenuItem.setBackground(Color.WHITE);
-		mnNewMenu_2.add(mntmNewMenuItem);
+		DineroR = new JMenuItem("Dinero Recaudado");
+		DineroR.setBackground(Color.WHITE);
+		MenuReportes.add(DineroR);
 
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Pago de los Trabajadores");
-		mntmNewMenuItem_1.addActionListener(new ActionListener() {
+		PagoTrab = new JMenuItem("Pago de los Trabajadores");
+		PagoTrab.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {	
 			}
 		});
-		mntmNewMenuItem_1.setBackground(Color.WHITE);
-		mnNewMenu_2.add(mntmNewMenuItem_1);
+		PagoTrab.setBackground(Color.WHITE);
+		MenuReportes.add(PagoTrab);
 
-		JMenu mnNewMenu_3 = new JMenu("Trabajadores");
-		mnNewMenu_3.setBackground(Color.WHITE);
-		menuBar.add(mnNewMenu_3);
+		JMenu MenuTrabajadores = new JMenu("Trabajadores");
+		MenuTrabajadores.setBackground(Color.WHITE);
+		menuBar.add(MenuTrabajadores);
 
-		mntmNewMenuItem_2 = new JMenuItem("Listado");
-		mntmNewMenuItem_2.addActionListener(new ActionListener() {
+		ListaDeTrabajadores = new JMenuItem("Listado");
+		ListaDeTrabajadores.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String user = ManejoDeSesion.getInstance().getUsername();
 				if (user.equals("gerente2024")) {
@@ -237,11 +248,11 @@ public class Principal extends JFrame {
 				}
 			}
 		});
-		mntmNewMenuItem_2.setBackground(Color.WHITE);
-		mnNewMenu_3.add(mntmNewMenuItem_2);
+		ListaDeTrabajadores.setBackground(Color.WHITE);
+		MenuTrabajadores.add(ListaDeTrabajadores);
 
-		JMenuItem mntmNewMenuItem_16 = new JMenuItem("A\u00F1adir Trabajador");
-		mntmNewMenuItem_16.addActionListener(new ActionListener() {
+		AgregarTrabajador = new JMenuItem("Agregar Trabajador");
+		AgregarTrabajador.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String user = ManejoDeSesion.getInstance().getUsername();
 				if (user.equals("gerente2024")) {
@@ -259,14 +270,14 @@ public class Principal extends JFrame {
 				}
 			}
 		});
-		mntmNewMenuItem_16.setBackground(Color.WHITE);
-		mnNewMenu_3.add(mntmNewMenuItem_16);
+		AgregarTrabajador.setBackground(Color.WHITE);
+		MenuTrabajadores.add(AgregarTrabajador);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
+		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
 		panel.setBounds(0, 0, 892, 696);

@@ -10,14 +10,14 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.DateTimeException;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -59,7 +59,6 @@ public class AgregarTrabajador extends JDialog {
 	private DefaultTableModel tableModel;
 	private TiendaDeComputadoras tienda;
 	private JButton btnGuardar;
-	private JLabel fechaOcupTextLabel;
 	private Trabajador trab;
 	private JPanel panelSecundario;
 	private JButton btnAtrs;
@@ -67,6 +66,15 @@ public class AgregarTrabajador extends JDialog {
 	private int contador = 0;
 	private ArrayList<Trabajador> trabaj;
 	private JTextField ciT;
+	private JLabel lblnombreT;
+	private JLabel lblApellidosT;
+	private JLabel lblNoTrabajador;
+	private JLabel lblCiT;
+	private JLabel lblSalarioT;
+	private JLabel lblNivelEsc;
+	private JLabel lblCargo;
+	final LocalDate fechaHoy = LocalDate.now();
+    final DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 	public AgregarTrabajador(Principal principal, TiendaDeComputadoras tiendaC) {
 		super(principal, true);
@@ -95,7 +103,8 @@ public class AgregarTrabajador extends JDialog {
 		panelAgregarTrabajadores.setBackground(UIManager.getColor("Button.light"));
 		panelPrincipal.add(panelAgregarTrabajadores);
 		panelAgregarTrabajadores.setLayout(null);
-
+		
+		
 		ciT = new JTextField();
 		ciT.addKeyListener(new KeyAdapter() {
 			@Override
@@ -119,41 +128,41 @@ public class AgregarTrabajador extends JDialog {
 		panelAgregarTrabajadores.add(ciT);
 
 
-		JLabel lblnombreT = new JLabel("Nombre:");
+		lblnombreT = new JLabel("Nombre:");
 		lblnombreT.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblnombreT.setBounds(12, 55, 128, 16);
 		panelAgregarTrabajadores.add(lblnombreT);
 
-		JLabel lblApellidosT = new JLabel("Apellidos:");
+		lblApellidosT = new JLabel("Apellidos:");
 		lblApellidosT.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblApellidosT.setBounds(12, 83, 128, 16);
 		panelAgregarTrabajadores.add(lblApellidosT);
 
-		JLabel lblCiT = new JLabel("CI:");
+		lblCiT = new JLabel("CI:");
 		lblCiT.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblCiT.setBounds(12, 111, 128, 16);
 		panelAgregarTrabajadores.add(lblCiT);
 
-		JLabel lblSalarioT = new JLabel("Salario Básico:");
+		lblSalarioT = new JLabel("Salario Básico:");
 		lblSalarioT.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblSalarioT.setBounds(12, 139, 128, 16);
 		panelAgregarTrabajadores.add(lblSalarioT);
 
-		JLabel lblNivelEsc = new JLabel("Nivel Escolar:");
+		lblNivelEsc = new JLabel("Nivel Escolar:");
 		lblNivelEsc.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblNivelEsc.setBounds(12, 167, 128, 16);
 		panelAgregarTrabajadores.add(lblNivelEsc);
 
-		JLabel lblCargo = new JLabel("Cargo:");
+		lblCargo = new JLabel("Cargo:");
 		lblCargo.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblCargo.setBounds(12, 195, 128, 16);
+		lblCargo.setBounds(12, 195, 128, 19);
 		panelAgregarTrabajadores.add(lblCargo);
 
 		nombreT = new JTextField();
 		nombreT.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if(nombreT.getText().length() < 20) {
+				if(nombreT.getText().length() < 25) {
 					char nombre =e.getKeyChar();
 					if(nombre- '0' <= 9 && nombre- '0' >= 0) {
 						e.consume();
@@ -161,6 +170,7 @@ public class AgregarTrabajador extends JDialog {
 					}
 				}
 				else {
+					JOptionPane.showMessageDialog(null, "El nombre no puede exceder de 25 letras", "Datos erróneos", JOptionPane.ERROR_MESSAGE);
 					e.consume();
 				}
 			}
@@ -175,7 +185,7 @@ public class AgregarTrabajador extends JDialog {
 		apellidosT.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if(apellidosT.getText().length() < 20) {
+				if(apellidosT.getText().length() < 25) {
 					char nombre =e.getKeyChar();
 					if(nombre- '0' <= 9 && nombre- '0' >= 0) {
 						e.consume();
@@ -183,6 +193,7 @@ public class AgregarTrabajador extends JDialog {
 					}
 				}
 				else {
+					JOptionPane.showMessageDialog(null, "El apellido no puede exceder de 25 letras", "Datos erróneos", JOptionPane.ERROR_MESSAGE);
 					e.consume();
 				}
 			}
@@ -196,7 +207,7 @@ public class AgregarTrabajador extends JDialog {
 		salarioT.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if(salarioT.getText().length() < 15) {
+				if(salarioT.getText().length() < 6) {
 					char t = e.getKeyChar();
 					if((t- '0' > 9 || t- '0' < 0) && t!= 8) {
 						JOptionPane.showMessageDialog(null, "Solo se pueden introducir numeros en este campo", "Datos erróneos", JOptionPane.ERROR_MESSAGE);
@@ -204,6 +215,7 @@ public class AgregarTrabajador extends JDialog {
 					}
 				}
 				else {
+					JOptionPane.showMessageDialog(null, "El salario no puede exceder de 6 dígitos", "Datos erróneos", JOptionPane.ERROR_MESSAGE);
 					e.consume();
 				}
 			}
@@ -212,18 +224,6 @@ public class AgregarTrabajador extends JDialog {
 		salarioT.setColumns(10);
 		salarioT.setBounds(247, 138, 560, 20);
 		panelAgregarTrabajadores.add(salarioT);
-
-		fechaOcupTextLabel = new JLabel("Fecha Ocupación del cargo:");
-		fechaOcupTextLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
-		fechaOcupTextLabel.setBounds(12, 223, 200, 16);
-		panelAgregarTrabajadores.add(fechaOcupTextLabel).setVisible(false);
-
-		spinnerFecha = new JSpinner(new SpinnerDateModel(new Date(), null, new Date(), Calendar.DAY_OF_YEAR));
-		JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(spinnerFecha, "dd/MM/yyyy");
-		spinnerFecha.setEditor(dateEditor);
-		spinnerFecha.setBounds(246, 221, 98, 22);
-		panelAgregarTrabajadores.add(spinnerFecha);
-		spinnerFecha.setVisible(false);
 
 		NivelE =  new JComboBox<>();
 		llenarComboBox(NivelE, InicializacionDeDatos.nivelesEscolar());
@@ -242,23 +242,10 @@ public class AgregarTrabajador extends JDialog {
 			if(items.equalsIgnoreCase("Auxiliar de Limpieza") || items.equalsIgnoreCase("Asistente"))
 				cargoT.addItem(items);
 		}
-		cargoT.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(cargoT != null) {
-					if (cargoT.getSelectedIndex() == 6) {
-						fechaOcupTextLabel.setVisible(true);
-						spinnerFecha.setVisible(true);
-					} else {
-						spinnerFecha.setVisible(false);
-						fechaOcupTextLabel.setVisible(false);
-					}
-				}
-			}
-		});
 		cargoT.setBounds(247, 194, 560, 20);
 		panelAgregarTrabajadores.add(cargoT);
 
-		JLabel lblNoTrabajador = new JLabel("No. trabajador:");
+		lblNoTrabajador = new JLabel("No. trabajador:");
 		lblNoTrabajador.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblNoTrabajador.setBounds(12, 27, 128, 16);
 		panelAgregarTrabajadores.add(lblNoTrabajador);
@@ -340,8 +327,8 @@ public class AgregarTrabajador extends JDialog {
 							int diaNacimiento = Integer.parseInt(ci.substring(4, 6));
 							if (anioNacimiento >= 1950) { 
 								if (mesNacimiento >= 1 || mesNacimiento <= 12) {
-									if (tiendaC.getTrabajadores().get(0).validarDia(anioNacimiento, mesNacimiento, diaNacimiento)) {
-										if(!tiendaC.encontCI(ci , trabaj)) {
+									if (tienda.getTrabajadores().get(0).validarDia(anioNacimiento, mesNacimiento, diaNacimiento)) {
+										if(!tienda.encontCI(ci , trabaj)) {
 											ciIncorrecto = true;
 										}
 										else {
@@ -374,16 +361,16 @@ public class AgregarTrabajador extends JDialog {
 							if(salario > 0 ) {
 								Trabajador trabajador;
 								if (cargo.equals("Gerente")) {
-									SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+									/*SimpleDateFormat sdf = new SimpleDateFormat("yyyy/mm/dd");
 									String fechaStr = sdf.format((Date) spinnerFecha.getValue());
-									java.sql.Date fecha = null;
+									LocalDate fecha = null;
 									try {
 										fecha = new java.sql.Date(sdf.parse(fechaStr).getTime());
 									} catch (ParseException ex) {
 										JOptionPane.showMessageDialog(null, "Error al convertir la fecha: " + ex.getMessage());
 										ex.printStackTrace();
-									}
-									trabajador = new Gerente(Integer.toString(noTrabajador), nombre, apellidos, ci, salario, nivelE, cargo, fecha);
+									}*/
+									trabajador = new Gerente(Integer.toString(noTrabajador), nombre, apellidos, ci, salario, nivelE, cargo, fechaHoy);
 								} else {
 									trabajador = new Trabajador(Integer.toString(noTrabajador), nombre, apellidos, ci, salario, nivelE, cargo);
 								}
@@ -393,9 +380,7 @@ public class AgregarTrabajador extends JDialog {
 								JOptionPane.showMessageDialog(AgregarTrabajador.this, "Trabajador agregado a la tabla de manera satisfactoria");
 
 								if (cargo.equals("Gerente")) {
-									SimpleDateFormat formFecha = new SimpleDateFormat("dd/mm/yyyy");
-									String fecha = formFecha.format((Date) spinnerFecha.getValue());
-									tableModel.addRow(new Object[]{noTrabajador, nombre, apellidos, ci, salario, nivelE, cargo, fecha});
+									tableModel.addRow(new Object[]{noTrabajador,  nombre, apellidos, ci, salario, nivelE, cargo, fechaHoy.format(formato)});
 								} else {
 									tableModel.addRow(new Object[]{noTrabajador, nombre, apellidos, ci, salario, nivelE, cargo, ""});
 								}
@@ -443,21 +428,21 @@ public class AgregarTrabajador extends JDialog {
 		table.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(java.awt.event.KeyEvent evt) {
-				 if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
-					 int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar el trabajador seleccionado?", "", 0, 3);
-						if(i==0) {		
-							int pos = table.getSelectedRow();
-							if (pos != -1) {
-								trabaj.remove(pos);		
-								while(((DefaultTableModel) table.getModel()).getRowCount() > 0)
-									((DefaultTableModel) table.getModel()).removeRow(0);
-								agregarTabla();
-								numTrabajador.setText(Integer.toString(--contador));
-							} else {
-								JOptionPane.showMessageDialog(AgregarTrabajador.this, "Antes de eliminar debe de seleccionar un trabajador de la tabla");
-							}
+				if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
+					int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar el trabajador seleccionado?", "", 0, 3);
+					if(i==0) {		
+						int pos = table.getSelectedRow();
+						if (pos != -1) {
+							trabaj.remove(pos);		
+							while(((DefaultTableModel) table.getModel()).getRowCount() > 0)
+								((DefaultTableModel) table.getModel()).removeRow(0);
+							agregarTabla();
+							numTrabajador.setText(Integer.toString(--contador));
+						} else {
+							JOptionPane.showMessageDialog(AgregarTrabajador.this, "Antes de eliminar debe de seleccionar un trabajador de la tabla");
 						}
-				 }
+					}
+				}
 			}
 		});
 		TableRowSorter<TableModel> ordenador = new TableRowSorter<TableModel>(tableModel);
@@ -471,9 +456,8 @@ public class AgregarTrabajador extends JDialog {
 		lblNewLabel.setIcon(new ImageIcon(AgregarTrabajador.class.getResource("/gui/icons/logoPeque\u00F1o1.jpg")));
 		panelPrincipal.add(lblNewLabel);
 
-		btnEliminar = new JButton("Eliminar"); 
-		btnEliminar.setBounds(797, 647, 70, 22);
-		panelPrincipal.add(btnEliminar);
+		btnEliminar = new JButton("");
+		btnEliminar.setIcon(new ImageIcon(AgregarTrabajador.class.getResource("/gui/icons/basura.png")));
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar el trabajador seleccionado?", "", 0, 3);
@@ -491,6 +475,12 @@ public class AgregarTrabajador extends JDialog {
 				}
 			}
 		});
+		btnEliminar.setContentAreaFilled(false);
+		btnEliminar.setBorder(null);
+		btnEliminar.setFocusable(false);
+		btnEliminar.setActionCommand("OK");
+		btnEliminar.setBounds(812, 643, 41, 35);	
+		panelPrincipal.add(btnEliminar);
 
 		panelSecundario = new JPanel();
 		panelSecundario.setBackground(Color.WHITE);
@@ -555,12 +545,11 @@ public class AgregarTrabajador extends JDialog {
 		cargoT.setSelectedIndex(0);
 		spinnerFecha.setValue(new Date());
 		spinnerFecha.setVisible(false);
-		fechaOcupTextLabel.setVisible(false);
 	}
 
 
 	/***************Otra validacion CI********************/
-	public static boolean validarCarnet(String carnet) {
+	/*public static boolean validarCarnet(String carnet) {
 		boolean e = false;
 
 		String regex = "^(\\d{2})(\\d{2})(\\d{2})(\\d{5})$";
@@ -590,15 +579,15 @@ public class AgregarTrabajador extends JDialog {
 			}
 		}
 		return e;
-	}
+	}*/
 
 	private void agregarTabla() {
 		int count = tienda.getCantTrabajadores();
 		for(Trabajador t: trabaj) {
 			if (t.getCargo().equals("Gerente")) {
-				SimpleDateFormat formFecha = new SimpleDateFormat("dd/mm/yyyy");
-				String fecha = formFecha.format((Date) spinnerFecha.getValue());
-				tableModel.addRow(new Object[]{++count, t.getNombre(), t.getApellidos(), t.getCI(), t.getSalarioBasico(), t.getNivelEscolar(), t.getCargo(), fecha});
+				LocalDateTime fechaHoy = LocalDateTime.now();
+			    DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+				tableModel.addRow(new Object[]{++count, t.getNombre(), t.getApellidos(), t.getCI(), t.getSalarioBasico(), t.getNivelEscolar(), t.getCargo(), fechaHoy.format(formato)});
 			} else {
 				tableModel.addRow(new Object[]{++count, t.getNombre(), t.getApellidos(), t.getCI(), t.getSalarioBasico(), t.getNivelEscolar(), t.getCargo(), ""});
 			}

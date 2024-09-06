@@ -60,7 +60,6 @@ public class AgregarProducto extends JDialog {
 	private static String modelo;
 	private static String noSerie;
 	private static Object compSeleccionado = null;
-	private static Object modeloSeleccionado = null;
 	private static JLabel lblNoSerie;
 	private static JLabel lblCantidad;
 	private static JLabel lblPrecio;
@@ -84,7 +83,7 @@ public class AgregarProducto extends JDialog {
 		contentPanel.setLayout(null);
 
 		JPanel panelPrincipal = new JPanel();
-		panelPrincipal.setBounds(0, 0, 890, 682);
+		panelPrincipal.setBounds(0, 0, 890, 672);
 		panelPrincipal.setBackground(UIManager.getColor("Button.disabledShadow"));
 		contentPanel.add(panelPrincipal);
 		panelPrincipal.setLayout(null);
@@ -210,7 +209,7 @@ public class AgregarProducto extends JDialog {
 				comboBoxMarca.removeAllItems();
 				elegirMarca(compSeleccionado);
 				elegirModelo(compSeleccionado, comboBoxMarca.getSelectedItem());
-				txtPrecio.setText(Float.toString(obtenerPrecioComp(comboBoxMarca.getSelectedItem(), comboBoxModelo.getSelectedItem())));
+				txtPrecio.setText(Float.toString(precio));
 			}
 		});
 		comboBoxComponente.setBounds(247, 44, 560, 20);
@@ -222,6 +221,7 @@ public class AgregarProducto extends JDialog {
 			public void actionPerformed(ActionEvent arg0) {
 				if(compSeleccionado != null) {
 					elegirModelo(compSeleccionado, comboBoxMarca.getSelectedItem());
+					txtPrecio.setText(Float.toString(precio));
 				}
 
 			}
@@ -244,7 +244,8 @@ public class AgregarProducto extends JDialog {
 
 		llenarComboBox(comboBoxComponente, inicializaciones.InicializacionDeDatos.nameComponente());
 		llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasAdaptadores());
-		txtPrecio.setText(Float.toString(obtenerPrecioComp(comboBoxMarca.getSelectedItem(), comboBoxModelo.getSelectedItem())));
+		precio = 12;
+		txtPrecio.setText(Float.toString(precio));
 
 		JButton btnBorrar = new JButton("Limpiar");
 		btnBorrar.addActionListener(new ActionListener() {
@@ -263,7 +264,6 @@ public class AgregarProducto extends JDialog {
 				boolean IDRepetido = false;
 				noSerie = txtNoSerieFijo.getText() + txtNoSerieMovible.getText();
 				cantidad = (int) spinner.getValue();
-				precio = Float.parseFloat(txtPrecio.getText());
 				pieza = (String) comboBoxComponente.getSelectedItem();
 				marca = (String) comboBoxMarca.getSelectedItem();
 				modelo = (String) comboBoxModelo.getSelectedItem();
@@ -361,9 +361,8 @@ public class AgregarProducto extends JDialog {
 		lblNewLabel.setIcon(new ImageIcon(AgregarProducto.class.getResource("/gui/icons/logoPeque\u00F1o1.jpg")));
 		panelPrincipal.add(lblNewLabel);
 
-		btnEliminar = new JButton("Eliminar");
-		btnEliminar.setBounds(797, 647, 70, 22);
-		panelPrincipal.add(btnEliminar);
+		btnEliminar = new JButton("");
+		btnEliminar.setIcon(new ImageIcon(AgregarProducto.class.getResource("/gui/icons/basura.png")));
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar la pieza seleccionada?", "", 0, 3);
@@ -378,10 +377,16 @@ public class AgregarProducto extends JDialog {
 				}
 			}
 		});
+		btnEliminar.setContentAreaFilled(false);
+		btnEliminar.setBorder(null);
+		btnEliminar.setFocusable(false);
+		btnEliminar.setActionCommand("OK");
+		btnEliminar.setBounds(813, 636, 41, 35);	
+		panelPrincipal.add(btnEliminar);
 
 		panelSecundario = new JPanel();
 		panelSecundario.setBackground(Color.WHITE);
-		panelSecundario.setBounds(0, 683, 890, 33);
+		panelSecundario.setBounds(0, 676, 890, 40);
 		contentPanel.add(panelSecundario);
 		panelSecundario.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
@@ -441,13 +446,14 @@ public class AgregarProducto extends JDialog {
 	}
 
 	private void elegirMarca(Object compSeleccionado) {
-		if (comboBoxMarca != null) {
+		if (comboBoxMarca != null) {	
 			String comp = compSeleccionado.toString();
 			ArrayList <String> decision = new ArrayList<>();
 			decision.add("Sí");
 			decision.add("No");
 			switch (comp) {
 			case "Teclado":
+				precio = 25;
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasTeclado());
 				organizarLabelsUnAtrib();
 				txtNoSerieFijo.setText("TE");	
@@ -455,6 +461,7 @@ public class AgregarProducto extends JDialog {
 				llenarComboBox(comboBoxAtributo1, decision);
 				break;
 			case "Tarjeta de Video":	
+				precio = 100;
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasTarjetaVideos());
 				txtNoSerieFijo.setText("TT");
 				organizarLabelsUnAtrib();
@@ -462,6 +469,7 @@ public class AgregarProducto extends JDialog {
 				llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.refrigeracion());
 				break;
 			case "Tarjeta Madre":
+				precio = 150;
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasTarjetaMadre());
 				txtNoSerieFijo.setText("TM");
 				organizarLabelsUnAtrib();
@@ -469,6 +477,7 @@ public class AgregarProducto extends JDialog {
 				llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.conectores());
 				break;
 			case "Microprocesador":
+				precio = 75;
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasMicroProcesadores());
 				txtNoSerieFijo.setText("MP");
 				organizarLabelsDosAtrib();
@@ -478,6 +487,7 @@ public class AgregarProducto extends JDialog {
 				spinnerAtributo2.setModel(new SpinnerNumberModel(1, 1, 100, .5));
 				break;
 			case "Adaptador":
+				precio = 12;
 				Atributo1.setVisible(false);
 				Atributo2.setVisible(false);
 				comboBoxAtributo1.setVisible(false);
@@ -493,7 +503,8 @@ public class AgregarProducto extends JDialog {
 				txtNoSerieFijo.setText("A");
 				txtNoSerieMovible.setBounds(267, 124, 50, 20);
 				break;
-			case "Bocina":		
+			case "Bocina":	
+				precio = 25;
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasBocinas());
 				txtNoSerieFijo.setText("B");
 				organizarLabelsUnAtrib();	
@@ -501,6 +512,7 @@ public class AgregarProducto extends JDialog {
 				llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.conectividad());
 				break;
 			case "Monitor":
+				precio = 55;
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasPantalla());
 				txtNoSerieFijo.setText("MN");
 				organizarLabelsUnAtrib();
@@ -508,6 +520,7 @@ public class AgregarProducto extends JDialog {
 				llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.resolucionVideo());
 				break;
 			case "Ratón":
+				precio = 25;
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasRaton());
 				txtNoSerieFijo.setText("R");
 				organizarLabelsUnAtrib();
@@ -515,6 +528,7 @@ public class AgregarProducto extends JDialog {
 				llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.conectividad());
 				break;
 			case "Memoria RAM":
+				precio = 45;
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasMemoriasRAM());
 				txtNoSerieFijo.setText("MR");
 				organizarLabelsDosAtrib();
@@ -532,7 +546,8 @@ public class AgregarProducto extends JDialog {
 					}
 				});
 				break;
-			case "Chasis":	
+			case "Chasis":
+				precio = 100;
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasChasis());
 				txtNoSerieFijo.setText("C");
 				organizarLabelsUnAtrib();
@@ -540,6 +555,7 @@ public class AgregarProducto extends JDialog {
 				llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.materialesChasis());
 				break;		
 			case "Disco Duro":
+				precio = 40;
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasDiscoD());
 				txtNoSerieFijo.setText("DD");
 				organizarLabelsDosAtrib();
@@ -547,9 +563,9 @@ public class AgregarProducto extends JDialog {
 				Atributo2.setText("Capacidad");
 				lblAtributo2.setText("Tb");
 				llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.conexionesDiscoDuro());
-				spinnerAtributo2.setModel(new SpinnerNumberModel(1, 16, 100, 1));
 				break;
 			case "Fuente":	
+				precio = 45;
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasFuente());
 				txtNoSerieFijo.setText("F");
 				organizarLabelsUnAtrib();
@@ -557,15 +573,12 @@ public class AgregarProducto extends JDialog {
 				llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.eficiencia());
 				break;
 			default:
-				llenarComboBox(comboBoxMarca, new ArrayList<>());
-				break;
 			}
 		}
 		elegirModelo(compSeleccionado, comboBoxMarca.getSelectedItem());
 	}
 
 	private void elegirModelo(Object compSeleccionado, Object marcaSeleccionada) {
-		String model = null;
 		if (marcaSeleccionada != null && compSeleccionado!= null) {
 			String comp = compSeleccionado.toString();
 			String marca = marcaSeleccionada.toString();
@@ -719,17 +732,11 @@ public class AgregarProducto extends JDialog {
 				else
 					llenarComboBox(comboBoxModelo, inicializaciones.InicializacionDeDatos.fuentesThermaltake());
 				break;
-			default:
-				llenarComboBox(comboBoxModelo, new ArrayList<>());
-				break;
 			}
-			modeloSeleccionado = comboBoxModelo.getSelectedItem();
-			model = modeloSeleccionado.toString();
-			txtPrecio.setText(Float.toString(obtenerPrecioComp(marca, model)));
 		}
 	}
 
-	private float obtenerPrecioComp(Object marcaSeleccionada, Object modeloSeleccionado) {
+	/*private float obtenerPrecioComp(Object marcaSeleccionada, Object modeloSeleccionado) {
 		String marca = marcaSeleccionada.toString();
 		String modelo = modeloSeleccionado.toString();
 		float precio = 0;
@@ -744,7 +751,7 @@ public class AgregarProducto extends JDialog {
 			}	
 		}
 		return precio;
-	}
+	}*/
 
 	private void organizarLabelsUnAtrib() {
 		Atributo1.setVisible(true);	

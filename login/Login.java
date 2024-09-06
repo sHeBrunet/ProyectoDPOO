@@ -50,6 +50,7 @@ public class Login extends JFrame {
 	private JButton btnHacerVisible;
 	private JTextField textField;
 	private BotonAnimacion btnIniciar;
+	private JTextFieldModificado userField;
 
 	public Login() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/gui/icons/logoPeque\u00F1o1.jpg")));
@@ -113,7 +114,7 @@ public class Login extends JFrame {
 		passwordField.setForeground(Color.GRAY);
 		panelGeneral.add(passwordField);
 
-		JTextFieldModificado userField = new JTextFieldModificado();
+		userField = new JTextFieldModificado();
 		userField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {

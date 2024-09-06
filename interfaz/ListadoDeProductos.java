@@ -71,7 +71,7 @@ public class ListadoDeProductos extends JDialog {
 		JPanel panelTeclados = new JPanel(new BorderLayout());
 		JPanel panelTotalPiezas = new JPanel(new BorderLayout());
 
-		DefaultTableModel modelTotalPiezas = new DefaultTableModel(columnNames, 0) {
+		final DefaultTableModel modelTotalPiezas = new DefaultTableModel(columnNames, 0) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -80,7 +80,7 @@ public class ListadoDeProductos extends JDialog {
 			}
 		};
 
-		DefaultTableModel modelChasis = new DefaultTableModel(columnNames, 0) {
+		final DefaultTableModel modelChasis = new DefaultTableModel(columnNames, 0) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -115,7 +115,7 @@ public class ListadoDeProductos extends JDialog {
 		tableChasis.getTableHeader().setReorderingAllowed(false);
 		panelChasis.add(new JScrollPane(tableChasis), BorderLayout.CENTER);
 
-		DefaultTableModel modelBocinas = new DefaultTableModel(columnNames, 0) {
+		final DefaultTableModel modelBocinas = new DefaultTableModel(columnNames, 0) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -150,7 +150,7 @@ public class ListadoDeProductos extends JDialog {
 		tableBocinas.getTableHeader().setReorderingAllowed(false);
 		panelBocinas.add(new JScrollPane(tableBocinas), BorderLayout.CENTER);
 
-		DefaultTableModel modelDiscos = new DefaultTableModel(columnNames, 0) {
+		final DefaultTableModel modelDiscos = new DefaultTableModel(columnNames, 0) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -185,7 +185,7 @@ public class ListadoDeProductos extends JDialog {
 		tableDiscos.getTableHeader().setReorderingAllowed(false);
 		panelDiscos.add(new JScrollPane(tableDiscos), BorderLayout.CENTER);
 
-		DefaultTableModel modelFuentes = new DefaultTableModel(columnNames, 0) {
+		final DefaultTableModel modelFuentes = new DefaultTableModel(columnNames, 0) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -220,7 +220,7 @@ public class ListadoDeProductos extends JDialog {
 		tableFuentes.getTableHeader().setReorderingAllowed(false);
 		panelFuentes.add(new JScrollPane(tableFuentes), BorderLayout.CENTER);
 
-		DefaultTableModel modelMicros = new DefaultTableModel(columnNames, 0) {
+		final DefaultTableModel modelMicros = new DefaultTableModel(columnNames, 0) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -255,7 +255,7 @@ public class ListadoDeProductos extends JDialog {
 		tableMicros.getTableHeader().setReorderingAllowed(false);
 		panelMicros.add(new JScrollPane(tableMicros), BorderLayout.CENTER);
 
-		DefaultTableModel modelMonitores = new DefaultTableModel(columnNames, 0) {
+		final DefaultTableModel modelMonitores = new DefaultTableModel(columnNames, 0) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -290,7 +290,7 @@ public class ListadoDeProductos extends JDialog {
 		tableMonitores.getTableHeader().setReorderingAllowed(false);
 		panelMonitores.add(new JScrollPane(tableMonitores), BorderLayout.CENTER);
 
-		DefaultTableModel modelMotherboards = new DefaultTableModel(columnNames, 0) {
+		final DefaultTableModel modelMotherboards = new DefaultTableModel(columnNames, 0) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -325,7 +325,7 @@ public class ListadoDeProductos extends JDialog {
 		tableMotherboards.getTableHeader().setReorderingAllowed(false);
 		panelMotherboards.add(new JScrollPane(tableMotherboards), BorderLayout.CENTER);
 
-		DefaultTableModel modelMouse = new DefaultTableModel(columnNames, 0) {
+		final DefaultTableModel modelMouse = new DefaultTableModel(columnNames, 0) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -360,7 +360,7 @@ public class ListadoDeProductos extends JDialog {
 		tableMouses.getTableHeader().setReorderingAllowed(false);
 		panelMouse.add(new JScrollPane(tableMouses), BorderLayout.CENTER);
 
-		DefaultTableModel modelRAM = new DefaultTableModel(columnNames, 0) {
+		final DefaultTableModel modelRAM = new DefaultTableModel(columnNames, 0) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -395,7 +395,7 @@ public class ListadoDeProductos extends JDialog {
 		tableRAM.getTableHeader().setReorderingAllowed(false);
 		panelRAM.add(new JScrollPane(tableRAM), BorderLayout.CENTER);
 
-		DefaultTableModel modelTarjetas = new DefaultTableModel(columnNames, 0) {
+		final DefaultTableModel modelTarjetas = new DefaultTableModel(columnNames, 0) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -430,7 +430,7 @@ public class ListadoDeProductos extends JDialog {
 		tableTarjetas.getTableHeader().setReorderingAllowed(false);
 		panelTarjetas.add(new JScrollPane(tableTarjetas), BorderLayout.CENTER);
 
-		DefaultTableModel modelTeclados = new DefaultTableModel(columnNames, 0) {
+		final DefaultTableModel modelTeclados = new DefaultTableModel(columnNames, 0) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -465,7 +465,7 @@ public class ListadoDeProductos extends JDialog {
 		tableTeclados.getTableHeader().setReorderingAllowed(false);
 		panelTeclados.add(new JScrollPane(tableTeclados), BorderLayout.CENTER);
 
-		DefaultTableModel modelAdaptadores = new DefaultTableModel(columnNames, 0) {
+		final DefaultTableModel modelAdaptadores = new DefaultTableModel(columnNames, 0) {
 			private static final long serialVersionUID = 1L;
 
 			@Override

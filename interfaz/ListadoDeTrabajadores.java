@@ -7,8 +7,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -17,7 +17,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
-import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -55,7 +54,7 @@ public class ListadoDeTrabajadores extends JDialog {
 
 		JPanel panelGerentes = new JPanel(new BorderLayout());
 		String[] columnNamesGerentes = {"No.", "Nombre", "Apellidos", "CI", "Salario", "Educación", "Cargo", "Fecha de Ingreso"};
-		DefaultTableModel modelGerentes = new DefaultTableModel(columnNamesGerentes, 0) {
+		final DefaultTableModel modelGerentes = new DefaultTableModel(columnNamesGerentes, 0) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -94,7 +93,7 @@ public class ListadoDeTrabajadores extends JDialog {
 
 		JPanel panelTrabajadores = new JPanel(new BorderLayout());
 		String[] columnNamesTrabajadores = {"No.", "Nombre", "Apellidos", "CI", "Salario", "Educación", "Cargo"};
-		DefaultTableModel modelTrabajadores = new DefaultTableModel(columnNamesTrabajadores, 0) {
+		final DefaultTableModel modelTrabajadores = new DefaultTableModel(columnNamesTrabajadores, 0) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -147,7 +146,6 @@ public class ListadoDeTrabajadores extends JDialog {
 					setVisible(false);
 			}
 		});
-
 		panelBotones.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		panelBotones.add(btnAtras);
 
@@ -168,39 +166,39 @@ public class ListadoDeTrabajadores extends JDialog {
 			}
 		});
 		panelBotones.add(btnAceptar);
-
-		btnBorrar = new JButton("Borrar");
-		btnBorrar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea borrar al trabajador seleccionado?", "", 0, 3);
-				if(i==0) {	
-					cambios = true;
-					int pos = tableTrabajadores.getSelectedRow();
-					int pos1 = tableGerentes.getSelectedRow();
-					if (pos != -1) {
-						String ID = (String) tableTrabajadores.getValueAt(pos, 3);
-						trabAElim.add(ID);
-						((DefaultTableModel) tableTrabajadores.getModel()).removeRow(pos);
-						limpiarTrabajadores();
-						llenarTablaTrabajadores(modelTrabajadores);
-					} else if (pos1 != -1) {
-						if(tienda.hallarGerentes(trabAElim) > 1) {
-							String ID = (String) tableGerentes.getValueAt(pos1, 3);
-							trabAElim.add(ID);
-							((DefaultTableModel) tableGerentes.getModel()).removeRow(pos1);
-							limpiarGerentes();
-							llenarTablaGerentes(modelGerentes);
+		
+				btnBorrar = new JButton("Borrar");
+				panelBotones.add(btnBorrar);
+				btnBorrar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea borrar al trabajador seleccionado?", "", 0, 3);
+						if(i==0) {	
+							cambios = true;
+							int pos = tableTrabajadores.getSelectedRow();
+							int pos1 = tableGerentes.getSelectedRow();
+							if (pos != -1) {
+								String ID = (String) tableTrabajadores.getValueAt(pos, 3);
+								trabAElim.add(ID);
+								((DefaultTableModel) tableTrabajadores.getModel()).removeRow(pos);
+								limpiarTrabajadores();
+								llenarTablaTrabajadores(modelTrabajadores);
+							} else if (pos1 != -1) {
+								if(tienda.hallarGerentes(trabAElim) > 1) {
+									String ID = (String) tableGerentes.getValueAt(pos1, 3);
+									trabAElim.add(ID);
+									((DefaultTableModel) tableGerentes.getModel()).removeRow(pos1);
+									limpiarGerentes();
+									llenarTablaGerentes(modelGerentes);
+								}
+								else
+									JOptionPane.showMessageDialog(ListadoDeTrabajadores.this, "Error: Al menos debe haber un gerente en la empresa");
+							} else {
+								JOptionPane.showMessageDialog(ListadoDeTrabajadores.this, "Antes de eliminar debe de seleccionar un trabajador de la tabla");
+							}
 						}
-						else
-							JOptionPane.showMessageDialog(ListadoDeTrabajadores.this, "Error: Al menos debe haber un gerente en la empresa");
-					} else {
-						JOptionPane.showMessageDialog(ListadoDeTrabajadores.this, "Antes de eliminar debe de seleccionar un trabajador de la tabla");
-					}
-				}
 
-			}
-		});
-		panelBotones.add(btnBorrar);
+					}
+				});
 
 		llenarTablaGerentes(modelGerentes);
 		llenarTablaTrabajadores(modelTrabajadores);
@@ -229,8 +227,6 @@ public class ListadoDeTrabajadores extends JDialog {
 		count = 1;
 		for (Trabajador t : tienda.getGerentes()) {
 			Gerente g = (Gerente) t;
-			SimpleDateFormat formFecha = new SimpleDateFormat("dd/mm/yyyy");
-			String fecha = formFecha.format((Date) g.getFechaOcupCargo());
 			if(!trabAElim.isEmpty()) {
 				boolean encontrado = false;
 				for(int i = 0; i < trabAElim.size(); i++) {
@@ -239,10 +235,10 @@ public class ListadoDeTrabajadores extends JDialog {
 					}
 				}
 				if(!encontrado)
-					model.addRow(new Object[]{count++, g.getNombre(), g.getApellidos(), g.getCI(), g.getSalarioBasico(), g.getNivelEscolar(), g.getCargo(), fecha});
+					model.addRow(new Object[]{count++, g.getNombre(), g.getApellidos(), g.getCI(), g.getSalarioBasico(), g.getNivelEscolar(), g.getCargo(), g.getFechaOcupCargo()});
 			}
 			else
-				model.addRow(new Object[]{count++, g.getNombre(), g.getApellidos(), g.getCI(), g.getSalarioBasico(), g.getNivelEscolar(), g.getCargo(), fecha});
+				model.addRow(new Object[]{count++, g.getNombre(), g.getApellidos(), g.getCI(), g.getSalarioBasico(), g.getNivelEscolar(), g.getCargo(), g.getFechaOcupCargo()});
 		}
 	}
 

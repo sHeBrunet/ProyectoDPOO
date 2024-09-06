@@ -1,36 +1,32 @@
 package interfaz;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.MatteBorder;
+import javax.swing.table.DefaultTableModel;
 
 import logica.Gerente;
 import logica.TiendaDeComputadoras;
 import logica.Trabajador;
-
-import javax.swing.UIManager;
-import java.awt.Color;
-import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.ImageIcon;
-import javax.swing.JTextField;
-import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.awt.event.ActionEvent;
-import inicializaciones.*;
-import javax.swing.JTable;
-import javax.swing.border.MatteBorder;
-import javax.swing.JTextPane;
-import java.awt.Insets;
 public class Informacion extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
@@ -58,7 +54,7 @@ public class Informacion extends JDialog {
 		setLocationRelativeTo(null);
 		setBounds(100, 100, 900, 746);
 		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBackground(UIManager.getColor("CheckBox.disabledShadow"));
+		contentPanel.setBackground(Color.WHITE);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
@@ -161,10 +157,10 @@ public class Informacion extends JDialog {
 		scrollPane.setBounds(209, 561, 614, 61);
 		contentPanel.add(scrollPane);
 		
-		JLabel lblNewLabel_2 = new JLabel("New label");
-		lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\kbrun\\Downloads\\Background.png"));
-		lblNewLabel_2.setBounds(108, 85, 206, 197);
-		contentPanel.add(lblNewLabel_2);
+		JLabel lblLogo = new JLabel("");
+		lblLogo.setIcon(new ImageIcon("C:\\Users\\kbrun\\Downloads\\Background.png"));
+		lblLogo.setBounds(108, 85, 206, 197);
+		contentPanel.add(lblLogo);
 		
 		JTextPane txtpnSomosUnaEmpresa = new JTextPane();
 		txtpnSomosUnaEmpresa.setEditable(false);
@@ -184,9 +180,7 @@ public class Informacion extends JDialog {
 		lblNewLabel_5.setBounds(611, 332, 29, 16);
 		contentPanel.add(lblNewLabel_5);
 		
-		inicializaciones.InicializacionDeDatos.crearGerentes(tienda);
 		inicializaciones.InicializacionDeDatos.datosTienda(tienda);
-		inicializaciones.InicializacionDeDatos.crearTrabajadores(tienda);
 		llenarTablaGerentes(tienda, modelGerentes);
 		iniciarDatos();
 
@@ -208,17 +202,14 @@ public class Informacion extends JDialog {
 			}
 		}
 	}
+	
 	public void llenarTablaGerentes(TiendaDeComputadoras tienda, DefaultTableModel model) {
 		for (Trabajador t : tienda.getGerentes()) {
 			Gerente g = (Gerente) t;
-			SimpleDateFormat formFecha = new SimpleDateFormat("dd/mm/yyyy");
-			String fecha = formFecha.format((Date) g.getFechaOcupCargo());
 			String Nom = g.getNombre();
 			String apellidos = g.getApellidos();
-			model.addRow(new Object[]{Nom, apellidos, fecha});
+			model.addRow(new Object[]{Nom, apellidos, g.getFechaOcupCargo()});
 		}
-
-
 	}
 	
 	public void iniciarDatos() {

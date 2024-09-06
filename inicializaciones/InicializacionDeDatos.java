@@ -1,5 +1,6 @@
 package inicializaciones;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import logica.Adaptador;
@@ -65,10 +66,8 @@ public class InicializacionDeDatos {
 			if (tienda == null) {
 				throw new IllegalArgumentException("La instancia de TiendaDeComputadoras no puede ser null");
 			}
-			@SuppressWarnings("deprecation")
-			Date fecha1 = new Date(2023, 7, 10);
-			@SuppressWarnings("deprecation")
-			Date fecha2 = new Date(2022, 6, 10);
+			LocalDate fecha1 = LocalDate.of(2021, 10, 19);
+			LocalDate fecha2 = LocalDate.of(2023, 6, 17);
 			Trabajador t = new Gerente("JP92", "Juan", "Pérez Carrodegua", "92040678014", 5000, "Universitario", "Gerente", fecha1);
 			Trabajador t1 = new Gerente("VM97", "Verónica", "Martínez González", "97090125954", 5000, "Universitario", "Gerente", fecha2);
 			tienda.agregarTrabajador((Trabajador)t);
