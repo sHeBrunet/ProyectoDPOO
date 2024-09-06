@@ -8,16 +8,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -27,10 +21,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.SpinnerDateModel;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
@@ -53,7 +45,6 @@ public class AgregarTrabajador extends JDialog {
 	private JTextField salarioT;
 	private JComboBox<String> NivelE;
 	private JComboBox<String> cargoT;
-	private JSpinner spinnerFecha;
 	private JButton btnEliminar;
 	private JTable table;
 	private DefaultTableModel tableModel;
@@ -74,7 +65,7 @@ public class AgregarTrabajador extends JDialog {
 	private JLabel lblNivelEsc;
 	private JLabel lblCargo;
 	final LocalDate fechaHoy = LocalDate.now();
-    final DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	final DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 	public AgregarTrabajador(Principal principal, TiendaDeComputadoras tiendaC) {
 		super(principal, true);
@@ -103,8 +94,8 @@ public class AgregarTrabajador extends JDialog {
 		panelAgregarTrabajadores.setBackground(UIManager.getColor("Button.light"));
 		panelPrincipal.add(panelAgregarTrabajadores);
 		panelAgregarTrabajadores.setLayout(null);
-		
-		
+
+
 		ciT = new JTextField();
 		ciT.addKeyListener(new KeyAdapter() {
 			@Override
@@ -322,10 +313,10 @@ public class AgregarTrabajador extends JDialog {
 				} else if(!ciIncorrecto){
 					try {
 						if (ci.length() == 11) {
-							int anioNacimiento = Integer.parseInt(ci.substring(0, 2)) + 1950;
+							int anioNacimiento = Integer.parseInt(ci.substring(0, 2));
 							int mesNacimiento = Integer.parseInt(ci.substring(2, 4));
 							int diaNacimiento = Integer.parseInt(ci.substring(4, 6));
-							if (anioNacimiento >= 1950) { 
+							if (tienda.getTrabajadores().get(0).validarAnio(ci.substring(0, 2).toCharArray())) {
 								if (mesNacimiento >= 1 || mesNacimiento <= 12) {
 									if (tienda.getTrabajadores().get(0).validarDia(anioNacimiento, mesNacimiento, diaNacimiento)) {
 										if(!tienda.encontCI(ci , trabaj)) {
@@ -345,7 +336,7 @@ public class AgregarTrabajador extends JDialog {
 								}
 							}
 							else {
-								JOptionPane.showMessageDialog(AgregarTrabajador.this, "El año de nacimiento debe ser a partir de 1950.");
+								JOptionPane.showMessageDialog(AgregarTrabajador.this, "Solo se admiten trabajadores nacidos entre 1960 y 2005.");
 							}
 						}
 						else {
@@ -361,15 +352,6 @@ public class AgregarTrabajador extends JDialog {
 							if(salario > 0 ) {
 								Trabajador trabajador;
 								if (cargo.equals("Gerente")) {
-									/*SimpleDateFormat sdf = new SimpleDateFormat("yyyy/mm/dd");
-									String fechaStr = sdf.format((Date) spinnerFecha.getValue());
-									LocalDate fecha = null;
-									try {
-										fecha = new java.sql.Date(sdf.parse(fechaStr).getTime());
-									} catch (ParseException ex) {
-										JOptionPane.showMessageDialog(null, "Error al convertir la fecha: " + ex.getMessage());
-										ex.printStackTrace();
-									}*/
 									trabajador = new Gerente(Integer.toString(noTrabajador), nombre, apellidos, ci, salario, nivelE, cargo, fechaHoy);
 								} else {
 									trabajador = new Trabajador(Integer.toString(noTrabajador), nombre, apellidos, ci, salario, nivelE, cargo);
@@ -543,8 +525,6 @@ public class AgregarTrabajador extends JDialog {
 		salarioT.setText("");
 		NivelE.setSelectedIndex(0);
 		cargoT.setSelectedIndex(0);
-		spinnerFecha.setValue(new Date());
-		spinnerFecha.setVisible(false);
 	}
 
 
@@ -586,7 +566,7 @@ public class AgregarTrabajador extends JDialog {
 		for(Trabajador t: trabaj) {
 			if (t.getCargo().equals("Gerente")) {
 				LocalDateTime fechaHoy = LocalDateTime.now();
-			    DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+				DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 				tableModel.addRow(new Object[]{++count, t.getNombre(), t.getApellidos(), t.getCI(), t.getSalarioBasico(), t.getNivelEscolar(), t.getCargo(), fechaHoy.format(formato)});
 			} else {
 				tableModel.addRow(new Object[]{++count, t.getNombre(), t.getApellidos(), t.getCI(), t.getSalarioBasico(), t.getNivelEscolar(), t.getCargo(), ""});

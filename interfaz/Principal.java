@@ -60,16 +60,7 @@ public class Principal extends JFrame {
 	private JMenuItem PagoTrab;
 	private JMenuItem ListaDeTrabajadores;
 	private JMenuItem AgregarTrabajador;
-	/**
-	 * Launch the application.
-	 */
 
-	/**
-	 * Create the frame.
-	 * @param manejoDeSesion 
-	 * @param password1 
-	 * @param user 
-	 */
 	public Principal(TiendaDeComputadoras tienda, ManejoDeSesion manejoDeSesion) {
 		tiendaC = tienda;
 		setTitle("S.A.D PC Store");

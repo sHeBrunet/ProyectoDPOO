@@ -122,13 +122,13 @@ public class InicializacionDeDatos {
 		bocinas.add(new Bocina(20, "B12345", "Logitech", "Z333", 49.99f, "Inalámbrica"));
 		bocinas.add(new Bocina(15, "B12346", "JBL", "Clip 4", 59.99f, "Inalámbrica"));
 		bocinas.add(new Bocina(18, "B12347", "Sony", "SRS-XB12", 39.99f, "Inalámbrica"));
-		bocinas.add(new Bocina(22, "B12348", "HR Open", "SoundLink Micro", 99.99f, "Cable"));
-		bocinas.add(new Bocina(25, "B12349", "1Hora", "Wonderboom 2", 79.99f, "Inalámbrica"));
+		bocinas.add(new Bocina(22, "B12348", "Sennheiser", "Momentum 3 Wireless", 99.99f, "Cable"));
+		bocinas.add(new Bocina(25, "B12349", "Bose", "SoundLink Mini II", 79.99f, "Inalámbrica"));
 		bocinas.add(new Bocina(20, "B12350", "Logitech", "Z407", 89.99f, "Cable"));
 		bocinas.add(new Bocina(15, "B12351", "JBL", "Flip 5", 119.99f, "Inalámbrica"));
 		bocinas.add(new Bocina(18, "B12352", "Sony", "SRS-XB23", 99.99f, "Inalámbrica"));
-		bocinas.add(new Bocina(22, "B12353", "1Hora", "SoundLink Revolve", 199.99f, "Inalámbrica"));
-		bocinas.add(new Bocina(25, "B12354", "HR Open", "Boom 3", 149.99f, "Cable"));
+		bocinas.add(new Bocina(22, "B12353", "Bose", "SoundLink Revolve+", 199.99f, "Inalámbrica"));
+		bocinas.add(new Bocina(25, "B12354", "Sennheiser", "Momentum True Wireless 3", 149.99f, "Cable"));
 		ArrayList<ComponenteOrdenador> c = new ArrayList<ComponenteOrdenador>();
 		c.addAll(bocinas);
 		tienda.agregarComponenteI(c);
@@ -488,8 +488,8 @@ public class InicializacionDeDatos {
 	
 	public static ArrayList<String> marcasBocinas() {
 		ArrayList<String> marcasB = new ArrayList<String>();
-		marcasB.add("HR Open");
-		marcasB.add("1Hora");
+		marcasB.add("Bose");
+		marcasB.add("Sennheiser");
 		marcasB.add("Logitech");
 		marcasB.add("JBL");
 		marcasB.add("Sony");

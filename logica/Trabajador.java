@@ -1,4 +1,5 @@
 package logica;
+import java.sql.Array;
 import java.util.ArrayList;
 
 import inicializaciones.InicializacionDeDatos;
@@ -49,13 +50,13 @@ public class Trabajador {
 		return CI;
 	}
 	public void setCI(String cI) {
-		int anioNacimiento = Integer.parseInt(cI.substring(0, 2)) + 1950;
+		int anioNacimiento = Integer.parseInt(cI.substring(0, 2));
 		int mesNacimiento = Integer.parseInt(cI.substring(2, 4));
 		int diaNacimiento = Integer.parseInt(cI.substring(4, 6));
 
 		if(!cI.equals(null)) {
 			if (cI.length() == 11) {
-				if (anioNacimiento > 1950) {
+				if (validarAnio(cI.substring(0, 2).toCharArray())) {
 					if (mesNacimiento >= 1 || mesNacimiento <= 12) {
 						if (validarDia(anioNacimiento, mesNacimiento, diaNacimiento)) {
 							this.CI = cI;
@@ -69,9 +70,8 @@ public class Trabajador {
 						throw new IllegalArgumentException("El mes de nacimiento debe estar entre 01 y 12.");
 					}
 				}
-
 				else{
-					throw new IllegalArgumentException("El año de nacimiento debe ser a partir de 1950.");
+					throw new IllegalArgumentException("Solo se admiten trabajadores nacidos entre 1960 y 2005.");
 				}
 			}
 			else {
@@ -107,6 +107,17 @@ public class Trabajador {
 			break;
 		}
 		return dia >= 1 && dia <= diasPorMes; // Validar el rango del día
+	}
+	
+	public boolean validarAnio(char anio[]) {
+		boolean valido = true;
+		if(anio[0] > '0' && anio[0] <= '5') {
+			valido = false;
+		}
+		if(anio[0] == '0' && anio[1] >= '6') {
+			valido = false;
+		}		
+		return valido;
 	}
 
 	public String getNumero() {
