@@ -113,8 +113,7 @@ public class Trabajador {
 		boolean valido = true;
 		if(anio[0] > '0' && anio[0] <= '5') {
 			valido = false;
-		}
-		if(anio[0] == '0' && anio[1] >= '6') {
+		} else if(anio[0] == '0' && anio[1] >= '6') {
 			valido = false;
 		}		
 		return valido;

@@ -99,7 +99,7 @@ public class TiendaDeComputadoras {
 		return agregado;
 	}
 
-	public boolean agregarP(ArrayList<ComponenteOrdenador> piezasAgregadas) {
+	public boolean agregarProducto(ArrayList<ComponenteOrdenador> piezasAgregadas) {
 		int j = 0;
 		boolean act = false;
 		boolean stop = false;
@@ -136,6 +136,36 @@ public class TiendaDeComputadoras {
 		}
 		return act;
 	}
+
+	/*public boolean agregarP(ComponenteOrdenador c, ArrayList<ComponenteOrdenador> piezasAgregadas) {
+		boolean act = false;
+		boolean stop = false;
+		int j = 1;
+		if(!piezasAgregadas.isEmpty()) {
+			for(int i = 0; i < piezasAgregadas.size() && !stop; i++) {
+				while(j < piezasAgregadas.size() && !stop) {
+					if(piezasAgregadas.get(i).getMarca().equalsIgnoreCase(c.getMarca())) {
+						if(piezasAgregadas.get(i).getModelo().equalsIgnoreCase(c.getModelo())) {
+							if(piezasAgregadas.get(i).getNumSerie().equalsIgnoreCase(c.getNumSerie())) {
+								act = true;
+								stop = true;
+								int cantidadActual = piezasAgregadas.get(i).getCantDisponible();
+								piezasAgregadas.get(i).setCantDisponible(cantidadActual + c.getCantDisponible());
+							}
+							else
+								j++;
+						}
+						else
+							j++;
+					}
+					else
+						j++;
+				}
+				j = 1;
+			}
+		}
+		return act;
+	}*/
 
 	public int getUltimoNoTrabajador() {
 		return trabajadores.size();

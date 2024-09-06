@@ -37,37 +37,39 @@ public class AgregarProducto extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 	private TiendaDeComputadoras tienda;
+	private ComponenteOrdenador componente;
+	private ArrayList<ComponenteOrdenador> piezasAgreg;
 	private JPanel contentPanel = new JPanel();
+	private JPanel panelSecundario;
 	private JTextField txtNoSerieFijo;
 	private JTextField txtPrecio;
 	private JTextFieldModificado txtNoSerieMovible;
 	private JSpinner spinner;
+	private JSpinner spinnerAtributo2;
 	private JComboBox<String> comboBoxMarca;
 	private JComboBox<String> comboBoxComponente;
 	private JComboBox<String> comboBoxModelo;
+	private JComboBox<String> comboBoxAtributo1;
 	private JButton btnEliminar;
-	private JTable table;
-	private DefaultTableModel tableModel;
 	private JButton btnGuardar;
-	private ComponenteOrdenador componente;
-	private JPanel panelSecundario;
-	private JButton btnAtrs;
-	private ArrayList<ComponenteOrdenador> piezasAgreg;
+	private JButton btnAgregar;
+	private JButton btnAtras;
+	private JTable table;
+	private DefaultTableModel tableModel;	
 	private static int cantidad;
 	private static float precio;
 	private static String pieza;
 	private static String marca;
 	private static String modelo;
-	private static String noSerie;
-	private static Object compSeleccionado = null;
+	private static String noSerie;	
 	private static JLabel lblNoSerie;
 	private static JLabel lblCantidad;
 	private static JLabel lblPrecio;
 	private static JLabel Atributo1;
 	private static JLabel Atributo2;
-	private JComboBox<String> comboBoxAtributo1;
-	private JSpinner spinnerAtributo2;
-	private JLabel lblAtributo2;
+	private static JLabel lblAtributo2;
+	private static Object compSeleccionado = null;
+
 
 	public AgregarProducto(Principal principal, TiendaDeComputadoras tiendaC) {
 		super(principal, true);
@@ -139,7 +141,9 @@ public class AgregarProducto extends JDialog {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				char t = e.getKeyChar();
-				if ((t < '0' || t > '9') && (t < 'A' || t > 'Z') && (t < 'a' || t > 'z') && t != 8) {
+				if(t==KeyEvent.VK_ENTER)
+					btnAgregar.doClick();
+				else if ((t < '0' || t > '9') && (t < 'A' || t > 'Z') && (t < 'a' || t > 'z') && t != 8) {
 					JOptionPane.showMessageDialog(null, "En este campo no se pueden introducir caracteres especiales", "Datos erróneos", JOptionPane.ERROR_MESSAGE);
 					e.consume();
 				}
@@ -197,11 +201,27 @@ public class AgregarProducto extends JDialog {
 		panelAgregarPiezas.add(Atributo2);
 
 		comboBoxModelo = new JComboBox<String>();	
+		comboBoxModelo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if(c==KeyEvent.VK_ENTER)
+					btnAgregar.doClick();
+			}
+		});
 		comboBoxModelo.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		comboBoxModelo.setBounds(247, 98, 560, 20);
 		panelAgregarPiezas.add(comboBoxModelo);
 
 		comboBoxComponente = new JComboBox<String>();
+		comboBoxComponente.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if(c==KeyEvent.VK_ENTER)
+					btnAgregar.doClick();
+			}
+		});
 		comboBoxComponente.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		comboBoxComponente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -216,6 +236,14 @@ public class AgregarProducto extends JDialog {
 		panelAgregarPiezas.add(comboBoxComponente);
 
 		comboBoxMarca = new JComboBox<String>();
+		comboBoxMarca.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if(c==KeyEvent.VK_ENTER)
+					btnAgregar.doClick();
+			}
+		});
 		comboBoxMarca.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		comboBoxMarca.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -223,13 +251,20 @@ public class AgregarProducto extends JDialog {
 					elegirModelo(compSeleccionado, comboBoxMarca.getSelectedItem());
 					txtPrecio.setText(Float.toString(precio));
 				}
-
 			}
 		});
 		comboBoxMarca.setBounds(247, 71, 560, 20);
 		panelAgregarPiezas.add(comboBoxMarca);
 
 		comboBoxAtributo1 = new JComboBox<String>();
+		comboBoxAtributo1.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if(c==KeyEvent.VK_ENTER)
+					btnAgregar.doClick();
+			}
+		});
 		comboBoxAtributo1.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		comboBoxAtributo1.setBounds(247, 128, 560, 20);
 		panelAgregarPiezas.add(comboBoxAtributo1);
@@ -256,12 +291,13 @@ public class AgregarProducto extends JDialog {
 		btnBorrar.setBounds(737, 263, 70, 22);
 		panelAgregarPiezas.add(btnBorrar);
 
-		JButton btnAgregar = new JButton("Agregar");
+		btnAgregar = new JButton("Agregar");
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean datoIncorrecto = false;
 				boolean cantidadCero = false;
 				boolean IDRepetido = false;
+				boolean IDRepetido2 = false;
 				noSerie = txtNoSerieFijo.getText() + txtNoSerieMovible.getText();
 				cantidad = (int) spinner.getValue();
 				pieza = (String) comboBoxComponente.getSelectedItem();
@@ -282,6 +318,15 @@ public class AgregarProducto extends JDialog {
 							IDRepetido = true;
 						}
 					}
+					if(!IDRepetido) {
+
+						for(int i = 0; i < piezasAgreg.size() && !stop; i++) {
+							if(piezasAgreg.get(i).getNumSerie().equalsIgnoreCase(noSerie)){
+								stop = true;
+								IDRepetido2 = true;
+							}
+						}
+					}
 				}
 				if (cantidad == 0) 
 					cantidadCero = true;
@@ -296,7 +341,10 @@ public class AgregarProducto extends JDialog {
 					JOptionPane.showMessageDialog(AgregarProducto.this, "La cantidad de piezas a agregar no puede ser 0");
 				}
 				else if (IDRepetido) {
-					JOptionPane.showMessageDialog(AgregarProducto.this, "Ya existe una pieza distinta en el almacen con ese No de Serie.");
+					JOptionPane.showMessageDialog(AgregarProducto.this, "Ya existe una pieza distinta en el almacén con ese No de Serie.");
+				}
+				else if (IDRepetido2) {
+					JOptionPane.showMessageDialog(AgregarProducto.this, "Ya existe una pieza con ese No de Serie en la bandeja de entrada al almacén");
 				}
 				else {
 					ComponenteOrdenador comp = new ComponenteOrdenador(cantidad, noSerie, marca, modelo, precio);
@@ -304,7 +352,7 @@ public class AgregarProducto extends JDialog {
 					piezasAgreg.add(componente);
 					JOptionPane.showMessageDialog(AgregarProducto.this, "Pieza agregada a la tabla de manera satisfactoria");
 					tableModel.addRow(new Object[]{pieza, marca, modelo, precio, cantidad, noSerie});
-				}
+				}		
 				limpiarDatos();
 			}
 		});
@@ -390,8 +438,8 @@ public class AgregarProducto extends JDialog {
 		contentPanel.add(panelSecundario);
 		panelSecundario.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
-		btnAtrs = new JButton("Atr\u00E1s");
-		btnAtrs.addActionListener(new ActionListener() {
+		btnAtras = new JButton("Atr\u00E1s");
+		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(actualizarLista() == true) {
 					int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea salir? Los cambios realizados no serán guardados", "", 0, 3);
@@ -402,7 +450,7 @@ public class AgregarProducto extends JDialog {
 					dispose();
 			}
 		});
-		panelSecundario.add(btnAtrs);
+		panelSecundario.add(btnAtras);
 
 		btnGuardar = new JButton("Aceptar");
 		panelSecundario.add(btnGuardar);
@@ -430,7 +478,7 @@ public class AgregarProducto extends JDialog {
 	private boolean actualizarLista() {
 		boolean act = false;
 		if(!piezasAgreg.isEmpty()) {
-			tienda.agregarP(piezasAgreg);
+			tienda.agregarProducto(piezasAgreg);
 			act = true;
 		}
 		else {
