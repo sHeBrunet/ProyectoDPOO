@@ -17,7 +17,19 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import logica.Adaptador;
+import logica.Bocina;
+import logica.Chasis;
 import logica.ComponenteOrdenador;
+import logica.DiscoDuro;
+import logica.Fuente;
+import logica.MemoriaRam;
+import logica.Microprocesador;
+import logica.Monitor;
+import logica.Mouse;
+import logica.TarjetaDeVideo;
+import logica.TarjetaMadre;
+import logica.Teclado;
 import logica.TiendaDeComputadoras;
 
 public class ListadoDeProductos extends JDialog {
@@ -752,7 +764,7 @@ public class ListadoDeProductos extends JDialog {
 	private static void llenarTablaAdaptadores(DefaultTableModel model) {
 		count = 1;             
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
-			if(c.getNumSerie().startsWith("A") && c.getCantDisponible() > 0) 
+			if(c instanceof Adaptador && c.getCantDisponible() > 0)
 				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
 					for(int i = 0; i < piezasAElim.size(); i++) {
@@ -772,7 +784,7 @@ public class ListadoDeProductos extends JDialog {
 	private static void llenarTablaBocinas(DefaultTableModel model) {
 		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
-			if(c.getNumSerie().startsWith("B") && c.getCantDisponible() > 0) 
+			if(c instanceof Bocina && c.getCantDisponible() > 0) 
 				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
 					for(int i = 0; i < piezasAElim.size(); i++) {
@@ -792,7 +804,7 @@ public class ListadoDeProductos extends JDialog {
 	private static void llenarTablaChasis(DefaultTableModel model) {
 		count= 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
-			if(c.getNumSerie().startsWith("C") && c.getCantDisponible() > 0)
+			if(c instanceof Chasis && c.getCantDisponible() > 0)
 				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
 					for(int i = 0; i < piezasAElim.size(); i++) {
@@ -812,7 +824,7 @@ public class ListadoDeProductos extends JDialog {
 	private static void llenarTablaDiscos(DefaultTableModel model) {
 		count= 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
-			if(c.getNumSerie().startsWith("DD") && c.getCantDisponible() > 0)
+			if(c instanceof DiscoDuro && c.getCantDisponible() > 0)
 				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
 					for(int i = 0; i < piezasAElim.size(); i++) {
@@ -832,8 +844,8 @@ public class ListadoDeProductos extends JDialog {
 	private static void llenarTablaFuentes(DefaultTableModel model) {
 		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
-			if(c.getNumSerie().startsWith("F") && c.getCantDisponible() > 0)
-				if(!piezasAElim.isEmpty()) {
+			if(c instanceof Fuente && c.getCantDisponible() > 0)
+				if(!piezasAElim.isEmpty()) {	
 					boolean encontrado = false;
 					for(int i = 0; i < piezasAElim.size(); i++) {
 						if(c.getNumSerie().equals(piezasAElim.get(i))) {
@@ -852,7 +864,7 @@ public class ListadoDeProductos extends JDialog {
 	private static void llenarTablaMicros(DefaultTableModel model) {
 		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
-			if(c.getNumSerie().startsWith("MP") && c.getCantDisponible() > 0)
+			if(c instanceof Microprocesador && c.getCantDisponible() > 0)
 				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
 					for(int i = 0; i < piezasAElim.size(); i++) {
@@ -872,7 +884,7 @@ public class ListadoDeProductos extends JDialog {
 	private static void llenarTablaMonitores(DefaultTableModel model) {
 		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
-			if(c.getNumSerie().startsWith("MN") && c.getCantDisponible() > 0)
+			if(c instanceof Monitor && c.getCantDisponible() > 0)
 				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
 					for(int i = 0; i < piezasAElim.size(); i++) {
@@ -892,7 +904,7 @@ public class ListadoDeProductos extends JDialog {
 	private static void llenarTablaMotherboards(DefaultTableModel model) {
 		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
-			if(c.getNumSerie().startsWith("TM") && c.getCantDisponible() > 0)
+			if(c instanceof TarjetaMadre && c.getCantDisponible() > 0)
 				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
 					for(int i = 0; i < piezasAElim.size(); i++) {
@@ -912,7 +924,7 @@ public class ListadoDeProductos extends JDialog {
 	private static void llenarTablaMouses(DefaultTableModel model) {
 		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
-			if(c.getNumSerie().startsWith("R") && c.getCantDisponible() > 0)
+			if(c instanceof Mouse && c.getCantDisponible() > 0)
 				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
 					for(int i = 0; i < piezasAElim.size(); i++) {
@@ -932,7 +944,7 @@ public class ListadoDeProductos extends JDialog {
 	private static void llenarTablaRAM(DefaultTableModel model) {
 		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
-			if(c.getNumSerie().startsWith("MR") && c.getCantDisponible() > 0)
+			if(c instanceof MemoriaRam && c.getCantDisponible() > 0)
 				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
 					for(int i = 0; i < piezasAElim.size(); i++) {
@@ -952,7 +964,7 @@ public class ListadoDeProductos extends JDialog {
 	private static void llenarTablaTarjetaVideo(DefaultTableModel model) {
 		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
-			if(c.getNumSerie().startsWith("TV") && c.getCantDisponible() > 0)
+			if(c instanceof TarjetaDeVideo && c.getCantDisponible() > 0)
 				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
 					for(int i = 0; i < piezasAElim.size(); i++) {
@@ -972,7 +984,7 @@ public class ListadoDeProductos extends JDialog {
 	private static void llenarTablaTeclados(DefaultTableModel model) {
 		count = 1;
 		for (ComponenteOrdenador c : tienda.getComponentes()) {
-			if(c.getNumSerie().startsWith("TE") && c.getCantDisponible() > 0)
+			if(c instanceof Teclado && c.getCantDisponible() > 0)
 				if(!piezasAElim.isEmpty()) {
 					boolean encontrado = false;
 					for(int i = 0; i < piezasAElim.size(); i++) {

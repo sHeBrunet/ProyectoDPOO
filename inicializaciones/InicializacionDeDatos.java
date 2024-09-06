@@ -790,7 +790,7 @@ public class InicializacionDeDatos {
 
 	public static ArrayList<String> fuentesEVGA() {
 		ArrayList<String> fuentesEVGA = new ArrayList<String>();
-		fuentesEVGA.add("SuperNOVA 550 G3 (550W)");
+		fuentesEVGA.add("SuperNOVA 550 G3");
 		fuentesEVGA.add("SuperNOVA 650 G3 (650W)");
 		fuentesEVGA.add("SuperNOVA 750 G3 (750W)");
 		fuentesEVGA.add("SuperNOVA 1000 G3 (1000W)");

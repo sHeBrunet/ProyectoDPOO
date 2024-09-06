@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -31,7 +30,19 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import componentesVisuales.JTextFieldModificado;
+import logica.Adaptador;
+import logica.Bocina;
+import logica.Chasis;
 import logica.ComponenteOrdenador;
+import logica.DiscoDuro;
+import logica.Fuente;
+import logica.MemoriaRam;
+import logica.Microprocesador;
+import logica.Monitor;
+import logica.Mouse;
+import logica.TarjetaDeVideo;
+import logica.TarjetaMadre;
+import logica.Teclado;
 import logica.TiendaDeComputadoras;
 
 public class AgregarProducto extends JDialog {
@@ -63,6 +74,7 @@ public class AgregarProducto extends JDialog {
 	private static String marca;
 	private static String modelo;
 	private static String noSerie;	
+	private static String primAtrib;
 	private static JLabel lblNoSerie;
 	private static JLabel lblCantidad;
 	private static JLabel lblPrecio;
@@ -76,7 +88,7 @@ public class AgregarProducto extends JDialog {
 		super(principal, true);
 		piezasAgreg = new ArrayList<ComponenteOrdenador>();
 		tienda = tiendaC;
-		
+
 		setTitle("Manejo de productos");
 		setBounds(100, 100, 900, 746);
 		getContentPane().setLayout(new BorderLayout());
@@ -333,6 +345,7 @@ public class AgregarProducto extends JDialog {
 				pieza = (String) comboBoxComponente.getSelectedItem();
 				marca = (String) comboBoxMarca.getSelectedItem();
 				modelo = (String) comboBoxModelo.getSelectedItem();
+				primAtrib = (String) comboBoxAtributo1.getSelectedItem();
 
 				if (txtNoSerieMovible.getText().length() == 0) {
 					lblNoSerie.setForeground(Color.RED);
@@ -377,7 +390,46 @@ public class AgregarProducto extends JDialog {
 					JOptionPane.showMessageDialog(AgregarProducto.this, "La cantidad de piezas a agregar no puede ser 0");
 				}
 				else {
-					ComponenteOrdenador comp = new ComponenteOrdenador(cantidad, noSerie, marca, modelo, precio);
+					ComponenteOrdenador comp = null;
+					if(noSerie.startsWith("A")) {
+						comp = new Adaptador(cantidad, noSerie, marca, modelo, precio);
+					}
+					else if(noSerie.startsWith("B")) {
+						comp = new Bocina(cantidad, noSerie, marca, modelo, precio, primAtrib);
+					}
+					else if(noSerie.startsWith("C")) {
+						comp = new Chasis(cantidad, noSerie, marca, modelo, precio, primAtrib);
+					}
+					else if(noSerie.startsWith("DD")) {
+						comp = new DiscoDuro(cantidad, noSerie, marca, modelo, precio, false, (double) spinnerAtributo2.getValue(), primAtrib);
+					}
+					else if(noSerie.startsWith("F")) {
+						comp = new Fuente(cantidad, noSerie, marca, modelo, precio, primAtrib);
+					}
+					else if(noSerie.startsWith("MP")) {
+						comp = new Microprocesador(cantidad, noSerie, marca, modelo, precio, primAtrib, (double) spinnerAtributo2.getValue());
+					}
+					else if(noSerie.startsWith("MN")) {
+						comp = new Monitor(cantidad, noSerie, marca, modelo, precio, primAtrib);
+					}
+					else if(noSerie.startsWith("MR")) {
+						comp = new MemoriaRam(cantidad, noSerie, marca, modelo, precio, false, (double) spinnerAtributo2.getValue(), primAtrib);
+					}
+					else if(noSerie.startsWith("R")) {
+						comp = new Mouse(cantidad, noSerie, marca, modelo, precio, primAtrib);
+					}
+					else if(noSerie.startsWith("TM")) {
+						comp = new TarjetaMadre(cantidad, noSerie, marca, modelo, precio, primAtrib);
+					}
+					else if(noSerie.startsWith("TV")) {
+						comp = new TarjetaDeVideo(cantidad, noSerie, marca, modelo, precio, primAtrib);
+					}
+					else {
+						if(primAtrib == "Sí")
+							comp = new Teclado(cantidad, noSerie, marca, modelo, precio, true);
+						else
+							comp = new Teclado(cantidad, noSerie, marca, modelo, precio, false);
+					}
 					componente = comp;
 					piezasAgreg.add(componente);
 					JOptionPane.showMessageDialog(AgregarProducto.this, "Pieza agregada a la tabla de manera satisfactoria");
@@ -802,7 +854,7 @@ public class AgregarProducto extends JDialog {
 			}
 		}
 	}
-	
+
 	private float obtenerPrecioComp(int compSelecc, int marcaSelecc, int modeloSelecc, int atrib1Selecc) {
 		float precio = 0;
 		switch(compSelecc) {
@@ -885,7 +937,7 @@ public class AgregarProducto extends JDialog {
 		}		
 		return precio;
 	}
-	
+
 	private float obtenerPrecioMarca(float precio, int marcaSelecc) {
 		switch(marcaSelecc) {
 		case 0:
@@ -906,7 +958,7 @@ public class AgregarProducto extends JDialog {
 		}
 		return precio;
 	}
-	
+
 	private float obtenerPrecioModelo(float precio, int modeloSelecc) {
 		switch(modeloSelecc) {
 		case 0:
@@ -927,7 +979,7 @@ public class AgregarProducto extends JDialog {
 		}
 		return precio;
 	}
-	
+
 	private float obtenerPrecioAtributo(float precio, int atribSelecc) {
 		switch(atribSelecc) {
 		case 0:
@@ -957,8 +1009,8 @@ public class AgregarProducto extends JDialog {
 		}
 		return precio;
 	}
-	
-	/*private float obtenerPrecioAtributo2(float precio, int atribSelecc) {
+
+	private float obtenerPrecioAtributo2(float precio, int atribSelecc) {
 		switch(atribSelecc) {
 		case 0:
 			precio += 2;
@@ -975,9 +1027,18 @@ public class AgregarProducto extends JDialog {
 		case 4:
 			precio += 10;
 			break;
+		case 5:
+			precio += 12;
+			break;
+		case 6: 
+			precio += 14;
+			break;
+		case 7:
+			precio += 16;
+			break;
 		}
 		return precio;
-	}*/
+	}
 
 	private void organizarLabelsUnAtrib() {
 		Atributo1.setVisible(true);	
