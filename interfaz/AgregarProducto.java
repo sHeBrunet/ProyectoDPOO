@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -75,7 +76,7 @@ public class AgregarProducto extends JDialog {
 		super(principal, true);
 		piezasAgreg = new ArrayList<ComponenteOrdenador>();
 		tienda = tiendaC;
-
+		
 		setTitle("Manejo de productos");
 		setBounds(100, 100, 900, 746);
 		getContentPane().setLayout(new BorderLayout());
@@ -201,6 +202,16 @@ public class AgregarProducto extends JDialog {
 		panelAgregarPiezas.add(Atributo2);
 
 		comboBoxModelo = new JComboBox<String>();	
+		comboBoxModelo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int compSelecc = comboBoxComponente.getSelectedIndex();
+				int marcaSelecc = comboBoxMarca.getSelectedIndex();
+				int modeloSelecc = comboBoxModelo.getSelectedIndex();
+				int atrib1Selecc = comboBoxAtributo1.getSelectedIndex();
+				precio = obtenerPrecioComp(compSelecc, marcaSelecc, modeloSelecc, atrib1Selecc);
+				txtPrecio.setText(Float.toString(precio));
+			}
+		});
 		comboBoxModelo.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -249,6 +260,11 @@ public class AgregarProducto extends JDialog {
 			public void actionPerformed(ActionEvent arg0) {
 				if(compSeleccionado != null) {
 					elegirModelo(compSeleccionado, comboBoxMarca.getSelectedItem());
+					int compSelecc = comboBoxComponente.getSelectedIndex();
+					int marcaSelecc = comboBoxMarca.getSelectedIndex();
+					int modeloSelecc = comboBoxModelo.getSelectedIndex();
+					int atrib1Selecc = comboBoxAtributo1.getSelectedIndex();
+					precio = obtenerPrecioComp(compSelecc, marcaSelecc, modeloSelecc, atrib1Selecc);
 					txtPrecio.setText(Float.toString(precio));
 				}
 			}
@@ -257,6 +273,16 @@ public class AgregarProducto extends JDialog {
 		panelAgregarPiezas.add(comboBoxMarca);
 
 		comboBoxAtributo1 = new JComboBox<String>();
+		comboBoxAtributo1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int compSelecc = comboBoxComponente.getSelectedIndex();
+				int marcaSelecc = comboBoxMarca.getSelectedIndex();
+				int modeloSelecc = comboBoxModelo.getSelectedIndex();
+				int atrib1Selecc = comboBoxAtributo1.getSelectedIndex();
+				precio = obtenerPrecioComp(compSelecc, marcaSelecc, modeloSelecc, atrib1Selecc);
+				txtPrecio.setText(Float.toString(precio));
+			}
+		});
 		comboBoxAtributo1.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -279,7 +305,11 @@ public class AgregarProducto extends JDialog {
 
 		llenarComboBox(comboBoxComponente, inicializaciones.InicializacionDeDatos.nameComponente());
 		llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasAdaptadores());
-		precio = 12;
+		int compSelecc = comboBoxComponente.getSelectedIndex();
+		int marcaSelecc = comboBoxMarca.getSelectedIndex();
+		int modeloSelecc = comboBoxModelo.getSelectedIndex();
+		int atrib1Selecc = comboBoxAtributo1.getSelectedIndex();
+		precio = obtenerPrecioComp(compSelecc, marcaSelecc, modeloSelecc, atrib1Selecc);
 		txtPrecio.setText(Float.toString(precio));
 
 		JButton btnBorrar = new JButton("Limpiar");
@@ -337,14 +367,14 @@ public class AgregarProducto extends JDialog {
 				else if (datoIncorrecto) {
 					JOptionPane.showMessageDialog(AgregarProducto.this, "No pueden estar vacíos los campos marcados en rojo.");
 				}
-				else if (cantidadCero) {
-					JOptionPane.showMessageDialog(AgregarProducto.this, "La cantidad de piezas a agregar no puede ser 0");
-				}
 				else if (IDRepetido) {
 					JOptionPane.showMessageDialog(AgregarProducto.this, "Ya existe una pieza distinta en el almacén con ese No de Serie.");
 				}
 				else if (IDRepetido2) {
 					JOptionPane.showMessageDialog(AgregarProducto.this, "Ya existe una pieza con ese No de Serie en la bandeja de entrada al almacén");
+				}
+				else if (cantidadCero) {
+					JOptionPane.showMessageDialog(AgregarProducto.this, "La cantidad de piezas a agregar no puede ser 0");
 				}
 				else {
 					ComponenteOrdenador comp = new ComponenteOrdenador(cantidad, noSerie, marca, modelo, precio);
@@ -497,11 +527,10 @@ public class AgregarProducto extends JDialog {
 		if (comboBoxMarca != null) {	
 			String comp = compSeleccionado.toString();
 			ArrayList <String> decision = new ArrayList<>();
-			decision.add("Sí");
 			decision.add("No");
+			decision.add("Sí");
 			switch (comp) {
 			case "Teclado":
-				precio = 25;
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasTeclado());
 				organizarLabelsUnAtrib();
 				txtNoSerieFijo.setText("TE");	
@@ -509,7 +538,6 @@ public class AgregarProducto extends JDialog {
 				llenarComboBox(comboBoxAtributo1, decision);
 				break;
 			case "Tarjeta de Video":	
-				precio = 100;
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasTarjetaVideos());
 				txtNoSerieFijo.setText("TT");
 				organizarLabelsUnAtrib();
@@ -525,7 +553,6 @@ public class AgregarProducto extends JDialog {
 				llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.conectores());
 				break;
 			case "Microprocesador":
-				precio = 75;
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasMicroProcesadores());
 				txtNoSerieFijo.setText("MP");
 				organizarLabelsDosAtrib();
@@ -535,7 +562,6 @@ public class AgregarProducto extends JDialog {
 				spinnerAtributo2.setModel(new SpinnerNumberModel(1, 1, 100, .5));
 				break;
 			case "Adaptador":
-				precio = 12;
 				Atributo1.setVisible(false);
 				Atributo2.setVisible(false);
 				comboBoxAtributo1.setVisible(false);
@@ -552,7 +578,6 @@ public class AgregarProducto extends JDialog {
 				txtNoSerieMovible.setBounds(267, 124, 50, 20);
 				break;
 			case "Bocina":	
-				precio = 25;
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasBocinas());
 				txtNoSerieFijo.setText("B");
 				organizarLabelsUnAtrib();	
@@ -560,7 +585,6 @@ public class AgregarProducto extends JDialog {
 				llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.conectividad());
 				break;
 			case "Monitor":
-				precio = 55;
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasPantalla());
 				txtNoSerieFijo.setText("MN");
 				organizarLabelsUnAtrib();
@@ -568,7 +592,6 @@ public class AgregarProducto extends JDialog {
 				llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.resolucionVideo());
 				break;
 			case "Ratón":
-				precio = 25;
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasRaton());
 				txtNoSerieFijo.setText("R");
 				organizarLabelsUnAtrib();
@@ -576,7 +599,6 @@ public class AgregarProducto extends JDialog {
 				llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.conectividad());
 				break;
 			case "Memoria RAM":
-				precio = 45;
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasMemoriasRAM());
 				txtNoSerieFijo.setText("MR");
 				organizarLabelsDosAtrib();
@@ -595,7 +617,6 @@ public class AgregarProducto extends JDialog {
 				});
 				break;
 			case "Chasis":
-				precio = 100;
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasChasis());
 				txtNoSerieFijo.setText("C");
 				organizarLabelsUnAtrib();
@@ -603,7 +624,6 @@ public class AgregarProducto extends JDialog {
 				llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.materialesChasis());
 				break;		
 			case "Disco Duro":
-				precio = 40;
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasDiscoD());
 				txtNoSerieFijo.setText("DD");
 				organizarLabelsDosAtrib();
@@ -613,7 +633,6 @@ public class AgregarProducto extends JDialog {
 				llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.conexionesDiscoDuro());
 				break;
 			case "Fuente":	
-				precio = 45;
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasFuente());
 				txtNoSerieFijo.setText("F");
 				organizarLabelsUnAtrib();
@@ -783,20 +802,179 @@ public class AgregarProducto extends JDialog {
 			}
 		}
 	}
-
-	/*private float obtenerPrecioComp(Object marcaSeleccionada, Object modeloSeleccionado) {
-		String marca = marcaSeleccionada.toString();
-		String modelo = modeloSeleccionado.toString();
+	
+	private float obtenerPrecioComp(int compSelecc, int marcaSelecc, int modeloSelecc, int atrib1Selecc) {
 		float precio = 0;
-		boolean stop = false;
-		if(marca != "" && modelo != "") {
-			for(int i = 0; i < tienda.getComponentes().size() && !stop; i++) {
-				ComponenteOrdenador c = tienda.getComponentes().get(i);
-				if(c.getMarca().equalsIgnoreCase(marca) && c.getModelo().equalsIgnoreCase(modelo)) {
-					precio = c.getPrecio();
-					stop = true;
-				}
-			}	
+		switch(compSelecc) {
+		case 0:
+			precio = 5.99f;
+			precio = obtenerPrecioMarca(precio, marcaSelecc);
+			precio = obtenerPrecioModelo(precio, modeloSelecc);	
+			break;
+		case 1:
+			precio = 14.99f;
+			precio = obtenerPrecioMarca(precio, marcaSelecc);
+			precio = obtenerPrecioModelo(precio, modeloSelecc);	
+			precio = obtenerPrecioAtributo(precio, atrib1Selecc);
+			break;
+		case 2:
+			precio = 40.99f;
+			precio = obtenerPrecioMarca(precio, marcaSelecc);
+			precio = obtenerPrecioModelo(precio, modeloSelecc);	
+			precio = obtenerPrecioAtributo(precio, atrib1Selecc);
+			break;
+		case 3:
+			precio = 20.99f;
+			precio = obtenerPrecioMarca(precio, marcaSelecc);
+			precio = obtenerPrecioModelo(precio, modeloSelecc);	
+			precio = obtenerPrecioAtributo(precio, atrib1Selecc);
+			//precio = obtenerPrecioAtributo2(precio, atrib2Selecc);
+			break;
+		case 4:
+			precio = 25.99f;
+			precio = obtenerPrecioMarca(precio, marcaSelecc);
+			precio = obtenerPrecioModelo(precio, modeloSelecc);	
+			precio = obtenerPrecioAtributo(precio, atrib1Selecc);
+			break;
+		case 5:
+			precio = 35.99f;
+			precio = obtenerPrecioMarca(precio, marcaSelecc);
+			precio = obtenerPrecioModelo(precio, modeloSelecc);	
+			precio = obtenerPrecioAtributo(precio, atrib1Selecc);
+			//precio = obtenerPrecioAtributo2(precio, atrib2Selecc);
+			break;
+		case 6:
+			precio = 15.99f;
+			precio = obtenerPrecioMarca(precio, marcaSelecc);
+			precio = obtenerPrecioModelo(precio, modeloSelecc);	
+			precio = obtenerPrecioAtributo(precio, atrib1Selecc);
+			//precio = obtenerPrecioAtributo2(precio, atrib2Selecc);
+			break;
+		case 7:
+			precio = 20.99f;
+			precio = obtenerPrecioMarca(precio, marcaSelecc);
+			precio = obtenerPrecioModelo(precio, modeloSelecc);	
+			precio = obtenerPrecioAtributo(precio, atrib1Selecc);
+			break;
+		case 8:
+			precio = 10.99f;
+			precio = obtenerPrecioMarca(precio, marcaSelecc);
+			precio = obtenerPrecioModelo(precio, modeloSelecc);	
+			precio = obtenerPrecioAtributo(precio, atrib1Selecc);
+			break;
+		case 9:
+			precio = 115.99f;
+			precio = obtenerPrecioMarca(precio, marcaSelecc);
+			precio = obtenerPrecioModelo(precio, modeloSelecc);	
+			precio = obtenerPrecioAtributo(precio, atrib1Selecc);
+			break;
+		case 10:
+			precio = 55.99f;
+			precio = obtenerPrecioMarca(precio, marcaSelecc);
+			precio = obtenerPrecioModelo(precio, modeloSelecc);	
+			precio = obtenerPrecioAtributo(precio, atrib1Selecc);
+			break;
+		case 11:
+			precio = 15.99f;
+			precio = obtenerPrecioMarca(precio, marcaSelecc);
+			precio = obtenerPrecioModelo(precio, modeloSelecc);	
+			if(atrib1Selecc == 1) {
+				precio += 15;
+			}
+			break;
+		}		
+		return precio;
+	}
+	
+	private float obtenerPrecioMarca(float precio, int marcaSelecc) {
+		switch(marcaSelecc) {
+		case 0:
+			precio += 4;
+			break;
+		case 1:
+			precio += 8;
+			break;
+		case 2: 
+			precio += 12;
+			break;
+		case 3:
+			precio += 16;
+			break;
+		case 4:
+			precio += 20;
+			break;
+		}
+		return precio;
+	}
+	
+	private float obtenerPrecioModelo(float precio, int modeloSelecc) {
+		switch(modeloSelecc) {
+		case 0:
+			precio += 3;
+			break;
+		case 1:
+			precio += 6;
+			break;
+		case 2: 
+			precio += 9;
+			break;
+		case 3:
+			precio += 12;
+			break;
+		case 4:
+			precio += 15;
+			break;
+		}
+		return precio;
+	}
+	
+	private float obtenerPrecioAtributo(float precio, int atribSelecc) {
+		switch(atribSelecc) {
+		case 0:
+			precio += 10;
+			break;
+		case 1:
+			precio += 15;
+			break;
+		case 2: 
+			precio += 20;
+			break;
+		case 3:
+			precio += 25;
+			break;
+		case 4:
+			precio += 30;
+			break;
+		case 5:
+			precio += 35;
+			break;
+		case 6:
+			precio += 40;
+			break;
+		case 7:
+			precio += 45;
+			break;
+		}
+		return precio;
+	}
+	
+	/*private float obtenerPrecioAtributo2(float precio, int atribSelecc) {
+		switch(atribSelecc) {
+		case 0:
+			precio += 2;
+			break;
+		case 1:
+			precio += 4;
+			break;
+		case 2: 
+			precio += 6;
+			break;
+		case 3:
+			precio += 8;
+			break;
+		case 4:
+			precio += 10;
+			break;
 		}
 		return precio;
 	}*/
