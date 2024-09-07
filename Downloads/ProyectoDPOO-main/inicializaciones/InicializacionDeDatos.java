@@ -59,7 +59,7 @@ public class InicializacionDeDatos {
 		tienda.agregarTrabajador(new Trabajador("ID01", "Isabel", "Díaz Ruz", "01011569014", 2000, "Preuniversitario", "Diseñador"));
 
 	}
-	
+
 	//Datos Gerentes
 	public static void crearGerentes(TiendaDeComputadoras tienda) {
 		try {
@@ -76,7 +76,7 @@ public class InicializacionDeDatos {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void crearUsuarios(TiendaDeComputadoras tienda) {
 		crearTrabajadores(tienda);
 		for(int i = 0; i <tienda.getCantTrabajadores(); i++) {
@@ -100,7 +100,7 @@ public class InicializacionDeDatos {
 		inicializarTarjetasVideo(tienda);
 		inicializarTeclados(tienda);	
 	}
-	
+
 	//Datos para los productos
 	/*********************************Adaptadores*************************************************************/
 	public static void inicializarAdaptadores(TiendaDeComputadoras tienda) {
@@ -130,16 +130,16 @@ public class InicializacionDeDatos {
 		return c;
 	}
 	public static ArrayList<String> velocidadaMicro(){// En GHz
-			ArrayList<String> c = new ArrayList<String>();
-			c.add("2");
-			c.add("3");
-			c.add("4");
-			c.add("5");
-			c.add("6");
-			c.add("7");
-			c.add("8");
-			return c;
-		}	
+		ArrayList<String> c = new ArrayList<String>();
+		c.add("2");
+		c.add("3");
+		c.add("4");
+		c.add("5");
+		c.add("6");
+		c.add("7");
+		c.add("8");
+		return c;
+	}	
 	public static ArrayList<String> espacioRAM(){// En GB
 		ArrayList<String> c = new ArrayList<String>();
 		c.add("4");
@@ -149,7 +149,7 @@ public class InicializacionDeDatos {
 		c.add("64");
 		return c;
 	}	
-	
+
 	/**********************************Bocina***************************************************************/
 	public static void inicializarBocinas(TiendaDeComputadoras tienda) {
 		ArrayList<Bocina> bocinas = new ArrayList<>();
@@ -167,7 +167,7 @@ public class InicializacionDeDatos {
 		c.addAll(bocinas);
 		tienda.agregarComponenteI(c);
 	}
-	
+
 	/**********************************Chasis***************************************************************/
 	public static void inicializarChasis(TiendaDeComputadoras tienda) {
 		ArrayList<Chasis> chasis = new ArrayList<>();
@@ -185,7 +185,7 @@ public class InicializacionDeDatos {
 		c.addAll(chasis);
 		tienda.agregarComponenteI(c);
 	}
-	
+
 	/*********************************DiscoDuro*************************************************************/
 	public static void inicializarDiscosDuros(TiendaDeComputadoras tienda) {
 		ArrayList<DiscoDuro> discosDuros = new ArrayList<>();
@@ -203,7 +203,7 @@ public class InicializacionDeDatos {
 		c.addAll(discosDuros);
 		tienda.agregarComponenteI(c);
 	}
-	
+
 	/**********************************Fuentes***************************************************************/
 	public static void inicializarFuentes(TiendaDeComputadoras tienda) {
 		ArrayList<Fuente> fuentes = new ArrayList<>();
@@ -221,7 +221,7 @@ public class InicializacionDeDatos {
 		c.addAll(fuentes);
 		tienda.agregarComponenteI(c);
 	} 
-	
+
 	/*********************************Microprocesadores*************************************************************/
 	public static void inicializarMicroprocesador(TiendaDeComputadoras tienda) {
 		ArrayList<Microprocesador> microprocesadores = new ArrayList<>();
@@ -239,7 +239,7 @@ public class InicializacionDeDatos {
 		c.addAll(microprocesadores);
 		tienda.agregarComponenteI(c);
 	}
-	
+
 	/*********************************MemoriasRAM*************************************************************/
 	public static void inicializarMemoriasRAM(TiendaDeComputadoras tienda) {
 		ArrayList<MemoriaRam> memoriasRAM = new ArrayList<>();
@@ -257,7 +257,7 @@ public class InicializacionDeDatos {
 		c.addAll(memoriasRAM);
 		tienda.agregarComponenteI(c);
 	}
-	
+
 	/**********************************Monitores***************************************************************/
 	public static void inicializarMonitores(TiendaDeComputadoras tienda) {
 		ArrayList<Monitor> monitores = new ArrayList<>();
@@ -275,7 +275,7 @@ public class InicializacionDeDatos {
 		c.addAll(monitores);
 		tienda.agregarComponenteI(c);
 	}
-	
+
 	/**********************************Mouses***************************************************************/
 	public static void inicializarMouses(TiendaDeComputadoras tienda) {
 		ArrayList<Mouse> mouses = new ArrayList<>();
@@ -355,7 +355,7 @@ public class InicializacionDeDatos {
 		c.addAll(tarjetasMadre);
 		tienda.agregarComponenteI(c);
 	}
-	
+
 	/*********************************TarjetasVideo*************************************************************/
 	public static void inicializarTarjetasVideo(TiendaDeComputadoras tienda) {
 		ArrayList<TarjetaDeVideo> tarjetasVideo = new ArrayList<>();
@@ -373,7 +373,7 @@ public class InicializacionDeDatos {
 		c.addAll(tarjetasVideo);
 		tienda.agregarComponenteI(c);
 	}
-	
+
 	/**********************************Teclados***************************************************************/
 	public static void inicializarTeclados(TiendaDeComputadoras tienda) {
 		ArrayList<Teclado> teclados = new ArrayList<>();
@@ -391,7 +391,7 @@ public class InicializacionDeDatos {
 		c.addAll(teclados);
 		tienda.agregarComponenteI(c);
 	}
-	
+
 	/**************************************PARA LOS COMBOBOX**************************************************************/
 	public static ArrayList<String> resolucionVideo(){
 		ArrayList<String> resoluciones = new ArrayList<String>();
@@ -474,14 +474,14 @@ public class InicializacionDeDatos {
 		refrigeraciones.add("Mixto");
 		return refrigeraciones;
 	}
-	
+
 	public static void datosTienda(TiendaDeComputadoras tienda) {
 		tienda.setNombre("S.A.D PC Store");
 		tienda.setID("SAD");
 		tienda.setDireccion("Calle 5 entre Orquidea y Binario");
 		tienda.setTelefono("+ 53 10011011");
 	}
-	
+
 	public static ArrayList<String> nameComponente() {
 		ArrayList<String> names= new ArrayList<String>();
 		names.add("Adaptador");
@@ -509,7 +509,7 @@ public class InicializacionDeDatos {
 		extension.add("ViTech");
 		return extension;
 	}
-	
+
 	public static ArrayList<String> marcasPantalla() {
 		ArrayList<String> marcasP = new ArrayList<String>();
 		marcasP.add("Acer");
@@ -519,7 +519,7 @@ public class InicializacionDeDatos {
 		marcasP.add("Samsung");
 		return marcasP;
 	}
-	
+
 	public static ArrayList<String> marcasBocinas() {
 		ArrayList<String> marcasB = new ArrayList<String>();
 		marcasB.add("Bose");
@@ -615,7 +615,7 @@ public class InicializacionDeDatos {
 		materiales.add("Acero");
 		return materiales;
 	}
-	
+
 	public static ArrayList<String> tiposDeMemoriaRAM(){
 		ArrayList<String> tipos = new ArrayList<String>();
 		tipos.add("DDR");
