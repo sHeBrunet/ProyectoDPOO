@@ -57,7 +57,7 @@ public class Login extends JFrame {
 		setUndecorated(true);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-		setBounds(100, 100, 485, 548);
+		setBounds(100, 100, 485, 550);
 		panelGeneral = new JPanel();
 		panelGeneral.setBackground(Color.WHITE);
 		panelGeneral.setBorder(new EmptyBorder(5, 5, 5, 5));

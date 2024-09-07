@@ -74,6 +74,9 @@ import javax.swing.ImageIcon;
 import javax.swing.border.BevelBorder;
 import javax.swing.UIManager;
 import java.awt.event.MouseMotionAdapter;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SpinnerModel;
@@ -139,6 +142,7 @@ public class VenderPieza extends JDialog {
 	private JComboBox<String> comboBoxCMicro;
 	private JSpinner spinner;
 	private JButton okButton_1;
+	private JButton btnCarrito;
 	@SuppressWarnings("unchecked")
 
 	public VenderPieza(Principal principal, TiendaDeComputadoras tienda, String nombreDeComponente) {
@@ -585,9 +589,13 @@ public class VenderPieza extends JDialog {
 			lblCantidadExistente_1_1.setBounds(234, 437, 141, 16);
 			ProductoEncontrado.add(lblCantidadExistente_1_1);
 
-			JButton btnCarrito = new JButton("");
+			btnCarrito = new JButton("");
 			btnCarrito.setContentAreaFilled(false);
 			btnCarrito.setBorder(null);
+			btnCarrito.setBackground(Color.WHITE);
+			btnCarrito.setIcon(new ImageIcon(VenderPieza.class.getResource("/gui/icons/carritovaciom.jpg")));
+			btnCarrito.setBounds(361, 423, 42, 34);
+			ProductoEncontrado.add(btnCarrito);
 			btnCarrito.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if(!nombretext.getText().equals("")) {
@@ -602,6 +610,7 @@ public class VenderPieza extends JDialog {
 							JOptionPane.showMessageDialog(VenderPieza.this, "Error. La cantidad deseada no esta disponible");  
 						}
 						else {
+							btnCarrito.setIcon(new ImageIcon(VenderPieza.class.getResource("/gui/icons/photo_5062105677371124742_m.jpg")));
 							ComponenteOrdenador c = null;
 							String numSerie = notext.getText();
 							float precio = Float.parseFloat(preciotext.getText());
@@ -624,10 +633,7 @@ public class VenderPieza extends JDialog {
 				}
 			});
 
-			btnCarrito.setBackground(Color.WHITE);
-			btnCarrito.setIcon(new ImageIcon(VenderPieza.class.getResource("/gui/icons/carrito.png")));
-			btnCarrito.setBounds(367, 423, 42, 34);
-			ProductoEncontrado.add(btnCarrito);
+
 
 			JLabel lblMarca_1 = new JLabel("Marca:");
 			lblMarca_1.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -706,7 +712,8 @@ public class VenderPieza extends JDialog {
 		boolean act = false;
 		obtenerObjeto();
 		if (!componentes.isEmpty() ) {
-			f = new Factura();
+			LocalDate fechaFactura = LocalDate.now();
+			f = new Factura(fechaFactura);
 			f.setCantidadXPieza(cant);
 			f.setCom(componentes);
 			tiendaC.agregarFactura(f);

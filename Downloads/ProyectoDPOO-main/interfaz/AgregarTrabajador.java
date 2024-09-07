@@ -66,6 +66,7 @@ public class AgregarTrabajador extends JDialog {
 	private JLabel lblCargo;
 	final LocalDate fechaHoy = LocalDate.now();
 	final DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	private JLabel lblNewLabel_1;
 
 	public AgregarTrabajador(Principal principal, TiendaDeComputadoras tiendaC) {
 		super(principal, true);
@@ -433,11 +434,6 @@ public class AgregarTrabajador extends JDialog {
 		JScrollPane scrollPane = new JScrollPane(table);
 		panelTrabajadoresAgregados.add(scrollPane, BorderLayout.CENTER);
 
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setBounds(12, 12, 76, 60);
-		lblNewLabel.setIcon(new ImageIcon(AgregarTrabajador.class.getResource("/gui/icons/logoPeque\u00F1o1.jpg")));
-		panelPrincipal.add(lblNewLabel);
-
 		btnEliminar = new JButton("");
 		btnEliminar.setIcon(new ImageIcon(AgregarTrabajador.class.getResource("/gui/icons/basura.png")));
 		btnEliminar.addActionListener(new ActionListener() {
@@ -463,6 +459,11 @@ public class AgregarTrabajador extends JDialog {
 		btnEliminar.setActionCommand("OK");
 		btnEliminar.setBounds(812, 643, 41, 35);	
 		panelPrincipal.add(btnEliminar);
+		
+		lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setIcon(new ImageIcon(AgregarTrabajador.class.getResource("/gui/icons/user-persona-icon-design-free-vector.jpg")));
+		lblNewLabel_1.setBounds(753, 12, 100, 73);
+		panelPrincipal.add(lblNewLabel_1);
 
 		panelSecundario = new JPanel();
 		panelSecundario.setBackground(Color.WHITE);
