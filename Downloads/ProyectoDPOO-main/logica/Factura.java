@@ -2,18 +2,48 @@ package logica;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
+
 
 public class Factura {
 	private ArrayList<ComponenteOrdenador> com;
-	private ArrayList<Integer> cantidadXPieza;
+	private ArrayList <Integer> cantidadXPieza;
 	private LocalDate fecha;
+	private ArrayList <Boolean> ensamblado;
+	private float precioEnsamblado;
 
 	public Factura(LocalDate fecha) {
 		com = new ArrayList<>();
 		cantidadXPieza = new ArrayList<>();
+		ensamblado = new ArrayList<Boolean>();
 		setFecha(fecha);
+		setPrecioEnsamblado(precioEnsamblado);
 	}
+
+
+	public float getPrecioEnsamblado() {
+		return precioEnsamblado;
+	}
+
+
+	public void setPrecioEnsamblado(float precioEnsamblado) {
+	if(precioEnsamblado >= 0) {
+		this.precioEnsamblado = precioEnsamblado;
+	}
+	else {
+		throw new IllegalArgumentException("Error. El precio del ensamblado debe de ser mayor que cero si se realiza el ensamblado");
+	}
+	}
+
+
+	public ArrayList<Boolean> getEnsamblado() {
+		return ensamblado;
+	}
+
+
+	public void setEnsamblado(ArrayList<Boolean> ensamblado) {
+		this.ensamblado = ensamblado;
+	}
+
 
 	public LocalDate getFecha() {
 		return fecha;

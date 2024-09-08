@@ -439,7 +439,7 @@ public class AgregarTrabajador extends JDialog {
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar el trabajador seleccionado?", "", 0, 3);
-				if(i==0) {		
+				if(i == 0) {		
 					int pos = table.getSelectedRow();
 					if (pos != -1) {
 						trabaj.remove(pos);		
@@ -477,7 +477,7 @@ public class AgregarTrabajador extends JDialog {
 				boolean act = actualizarLista();
 				if(act) {
 					int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea salir? No se guardarán los cambios realizados", "", 0, 3);
-					if(i==0) {
+					if(i == 0) {
 						setVisible(false);
 					}
 				}

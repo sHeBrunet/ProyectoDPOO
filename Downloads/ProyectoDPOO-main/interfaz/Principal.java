@@ -73,6 +73,7 @@ public class Principal extends JFrame {
 
 
 		JMenuBar menuBar = new JMenuBar();
+		menuBar.setFont(new Font("Tahoma", Font.BOLD, 15));
 		menuBar.setBackground(Color.WHITE);
 		setJMenuBar(menuBar);
 
@@ -179,7 +180,7 @@ public class Principal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					if (tiendaC != null) {
-						VenderPieza dialog = new VenderPieza(Principal.this, tiendaC, null);
+						VenderPieza dialog = new VenderPieza(Principal.this, tiendaC, "Adaptador");
 						dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 						dialog.setLocationRelativeTo(null);
 						dialog.setVisible(true);
@@ -288,8 +289,9 @@ public class Principal extends JFrame {
 		panelGeneral.setLayout(null);
 		
 		JPanel panelPrincipal = new JPanel();
+		panelPrincipal.setBorder(null);
 		panelPrincipal.setBackground(Color.WHITE);
-		panelPrincipal.setBounds(0, 0, 892, 696);
+		panelPrincipal.setBounds(0, 0, 894, 696);
 		panelGeneral.add(panelPrincipal);
 		panelPrincipal.setLayout(null);
 

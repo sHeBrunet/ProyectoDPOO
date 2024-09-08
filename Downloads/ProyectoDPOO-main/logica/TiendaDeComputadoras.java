@@ -423,6 +423,14 @@ public class TiendaDeComputadoras {
 		}
 
 	}
+	public void actualizarCantidadComponenteAgregar(ComponenteOrdenador c, int cantidad) {
+		for(ComponenteOrdenador cmp : componentes) {
+			if(cmp.equals(c)) {
+				cmp.setCantDisponible(cmp.getCantDisponible() + cantidad);
+			}
+		}
+
+	}
 	public ComponenteOrdenador buscarComponente(String numSerie) {
 		ComponenteOrdenador comp = null;
 		for(ComponenteOrdenador c : componentes) {

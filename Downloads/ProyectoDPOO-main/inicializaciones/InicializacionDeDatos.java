@@ -299,7 +299,9 @@ public class InicializacionDeDatos {
 		ArrayList<TarjetaMadre> tarjetasMadre = new ArrayList<>();
 		TarjetaMadre tarjetaMadre1 = new TarjetaMadre(5, "TM12345", "ASUS", "Prime B660M-A", 129.99f, "LGA 1700");
 		tarjetaMadre1.agregarMemoriaRAMCompatible(new MemoriaRam(20, "MR12345", "Crucial", "Ballistix Sport LT", 79.99f,  false, 16, "DDR-4"));
+		tarjetaMadre1.agregarMemoriaRAMCompatible(new MemoriaRam(18, "MR12347", "G.Skill", "Trident Z Neo", 99.99f,  false,32, "DDR-4"));
 		tarjetaMadre1.agregarDiscoDuroCompatible(new DiscoDuro(10, "DD12345", "Toshiba", "Canvio Basics", 49.99f, true, 1000, "IDE"));
+		tarjetaMadre1.agregarDiscoDuroCompatible(new DiscoDuro(2, "DD12346", "WD", "My Passport", 500.10f, true, 3000, "IDE"));
 		tarjetaMadre1.setProcesadorCompatible(new Microprocesador(4, "MP12346", "Intel", "Core i5-12600K", 319.99f, "LGA 1700", 3.6f));
 		tarjetasMadre.add(tarjetaMadre1);
 

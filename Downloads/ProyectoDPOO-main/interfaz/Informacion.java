@@ -1,13 +1,12 @@
 package interfaz;
 
 import java.awt.BorderLayout;
+
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -29,6 +28,10 @@ import logica.TiendaDeComputadoras;
 import logica.Trabajador;
 public class Informacion extends JDialog {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private TiendaDeComputadoras tienda;
 	Principal p = null;
@@ -36,7 +39,9 @@ public class Informacion extends JDialog {
 	private JTextField telefonoTiennda;
 	private JTextField IDTienda;
 	private JTextField nombreTienda;
+	@SuppressWarnings("unused")
 	private JTable table;
+	@SuppressWarnings("unused")
 	private DefaultTableModel tableModel;
 	private JScrollPane scrollPane;
 	private JTable tableGerentes;

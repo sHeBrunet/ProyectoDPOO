@@ -263,7 +263,7 @@ public class AgregarProducto extends JDialog {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
-				if(c==KeyEvent.VK_ENTER)
+				if(c == KeyEvent.VK_ENTER)
 					btnAgregar.doClick();
 			}
 		});
@@ -496,7 +496,7 @@ public class AgregarProducto extends JDialog {
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar la pieza seleccionada?", "", 0, 3);
-				if(i==0) {		
+				if(i == 0) {		
 					int pos = table.getSelectedRow();
 					if (pos != -1) {
 						piezasAgreg.remove(pos);

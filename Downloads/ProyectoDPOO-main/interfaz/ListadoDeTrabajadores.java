@@ -25,6 +25,7 @@ import logica.Gerente;
 import logica.TiendaDeComputadoras;
 import logica.Trabajador;
 import javax.swing.JLabel;
+import java.awt.Color;
 @SuppressWarnings("unused")
 public class ListadoDeTrabajadores extends JDialog {
 
@@ -40,9 +41,12 @@ public class ListadoDeTrabajadores extends JDialog {
 	private boolean cambios = false;
 	private static ArrayList <String> trabAElim = new ArrayList<>();
 	private static int count;
+	private JScrollPane scrollPane;
+	private JScrollPane scrollPane_1;
 
 	public ListadoDeTrabajadores(Principal principal, TiendaDeComputadoras t) {
 		super(principal, true);
+		getContentPane().setBackground(new Color(255, 255, 255));
 		p = principal; 
 		tienda = t;
 		setTitle("Gerentes y Trabajadores");
@@ -52,8 +56,10 @@ public class ListadoDeTrabajadores extends JDialog {
 		setLocationRelativeTo(null);
 
 		JTabbedPane tabbedPane = new JTabbedPane();
+		tabbedPane.setBackground(new Color(255, 255, 255));
 
 		JPanel panelGerentes = new JPanel(new BorderLayout());
+		panelGerentes.setBackground(new Color(255, 255, 255));
 		String[] columnNamesGerentes = {"No.", "Nombre", "Apellidos", "CI", "Salario", "Educación", "Cargo", "Fecha de Ingreso"};
 		final DefaultTableModel modelGerentes = new DefaultTableModel(columnNamesGerentes, 0) {
 			private static final long serialVersionUID = 1L;
@@ -69,7 +75,7 @@ public class ListadoDeTrabajadores extends JDialog {
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_DELETE) {
 					int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea borrar la pieza seleccionada?", "", 0, 3);
-					if(i==0) {		
+					if(i == 0) {		
 						int pos = tableGerentes.getSelectedRow();
 						if (pos != -1) {
 							if(tienda.hallarGerentes(trabAElim) > 1) {
@@ -90,9 +96,12 @@ public class ListadoDeTrabajadores extends JDialog {
 		TableRowSorter<TableModel> ordenadorGerentes = new TableRowSorter<TableModel>(modelGerentes);
 		tableGerentes.setRowSorter(ordenadorGerentes);
 		tableGerentes.getTableHeader().setReorderingAllowed(false);
-		panelGerentes.add(new JScrollPane(tableGerentes), BorderLayout.CENTER);
+		scrollPane_1 = new JScrollPane(tableGerentes);
+		scrollPane_1.setBackground(new Color(255, 255, 255));
+		panelGerentes.add(scrollPane_1, BorderLayout.CENTER);
 
 		JPanel panelTrabajadores = new JPanel(new BorderLayout());
+		panelTrabajadores.setBackground(new Color(255, 255, 255));
 		String[] columnNamesTrabajadores = {"No.", "Nombre", "Apellidos", "CI", "Salario", "Educación", "Cargo"};
 		final DefaultTableModel modelTrabajadores = new DefaultTableModel(columnNamesTrabajadores, 0) {
 			private static final long serialVersionUID = 1L;
@@ -103,6 +112,7 @@ public class ListadoDeTrabajadores extends JDialog {
 			}
 		};
 		tableTrabajadores = new JTable(modelTrabajadores);
+		tableTrabajadores.setBackground(new Color(255, 255, 255));
 		tableTrabajadores.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -127,12 +137,15 @@ public class ListadoDeTrabajadores extends JDialog {
 		TableRowSorter<TableModel> ordenadorTrab = new TableRowSorter<TableModel>(modelTrabajadores);
 		tableTrabajadores.setRowSorter(ordenadorTrab);
 		tableTrabajadores.getTableHeader().setReorderingAllowed(false);
-		panelTrabajadores.add(new JScrollPane(tableTrabajadores), BorderLayout.CENTER);
+		scrollPane = new JScrollPane(tableTrabajadores);
+		scrollPane.setBackground(new Color(255, 255, 255));
+		panelTrabajadores.add(scrollPane, BorderLayout.CENTER);
 
 		tabbedPane.addTab("Trabajadores", panelTrabajadores);
 		tabbedPane.addTab("Gerentes", panelGerentes);
 
 		JPanel panelBotones = new JPanel();
+		panelBotones.setBackground(new Color(255, 255, 255));
 		btnAtras = new JButton("Atrás");
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
