@@ -754,7 +754,7 @@ public class VenderPieza extends JDialog {
 			case "Tarjeta de Video":
 				Atributo1.setVisible(true);
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasTarjetaVideos());
-				Atributo1.setText("Refrigeracion:");
+				Atributo1.setText("Refrigeración:");
 				llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.refrigeracion());
 				componenetesVentaLibreNV();
 				comboBoxModelo.removeAllItems();
@@ -1392,7 +1392,7 @@ public class VenderPieza extends JDialog {
 
 	public void obtenerObjeto() {
 		for(int j = 0; j < tableModel.getRowCount(); j++) {
-			cant.add((Integer) tableModel.getValueAt(j, 3));
+			cant.add((Integer) tableModel.getValueAt(j, 4));
 		}
 	}
 	private void limpiarDatos() {
@@ -1405,11 +1405,11 @@ public class VenderPieza extends JDialog {
 
 	}
 	private void actualizarTotal() {
-		Object totalF = 0;
+		float totalF = 0;
 		float t = 0;
 		for(int i = 0; i < tableModel.getRowCount(); i++) {
-			totalF = tableModel.getValueAt(i, 4);
-			t += Float.valueOf((String) totalF);
+			totalF = Float.valueOf((String) tableModel.getValueAt(i, 5));
+			t += Float.valueOf(totalF);
 		}
 		totalFactura.setText(String.valueOf(t));
 	}
