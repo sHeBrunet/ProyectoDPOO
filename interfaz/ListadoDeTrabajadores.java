@@ -24,6 +24,7 @@ import javax.swing.table.TableRowSorter;
 import logica.Gerente;
 import logica.TiendaDeComputadoras;
 import logica.Trabajador;
+import javax.swing.JLabel;
 @SuppressWarnings("unused")
 public class ListadoDeTrabajadores extends JDialog {
 

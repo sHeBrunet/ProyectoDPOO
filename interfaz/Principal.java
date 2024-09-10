@@ -295,7 +295,7 @@ public class Principal extends JFrame {
 
 		JPanel Fila1 = new JPanel();
 		Fila1.setBackground(Color.WHITE);
-		Fila1.setBounds(10, 64, 866, 149);
+		Fila1.setBounds(20, 64, 846, 149);
 		panelPrincipal.add(Fila1);
 		Fila1.setLayout(new GridLayout(0, 4, 0, 0));
 
@@ -357,7 +357,7 @@ public class Principal extends JFrame {
 				}
 			}
 		});
-		btnButtonMicroprocesador.setIcon(new ImageIcon(Principal.class.getResource("/gui/images/Micro/micro1.jpg")));
+		btnButtonMicroprocesador.setIcon(new ImageIcon(Principal.class.getResource("/gui/images/Micro/OIP.jpg")));
 		Fila1.add(btnButtonMicroprocesador);
 
 		btnButtonmemoriasRAM = new JButton("New button");
@@ -421,7 +421,7 @@ public class Principal extends JFrame {
 
 		JPanel Fila2 = new JPanel();
 		Fila2.setBackground(Color.WHITE);
-		Fila2.setBounds(10, 266, 866, 149);
+		Fila2.setBounds(20, 266, 846, 149);
 		panelPrincipal.add(Fila2);
 		Fila2.setLayout(new GridLayout(0, 4, 0, 0));
 
@@ -479,7 +479,7 @@ public class Principal extends JFrame {
 				btnButtonFuente.setBorder(null);
 			}
 		});
-		btnButtonFuente.setIcon(new ImageIcon(Principal.class.getResource("/gui/images/Fuentes/fuente4.jpg")));
+		btnButtonFuente.setIcon(new ImageIcon(Principal.class.getResource("/gui/images/Fuentes/R.jpg")));
 		Fila2.add(btnButtonFuente);
 
 		btnButtonMonitores = new JButton("New button");
@@ -540,7 +540,7 @@ public class Principal extends JFrame {
 
 		JPanel Fila3 = new JPanel();
 		Fila3.setBackground(Color.WHITE);
-		Fila3.setBounds(10, 468, 866, 149);
+		Fila3.setBounds(20, 468, 846, 149);
 		panelPrincipal.add(Fila3);
 		Fila3.setLayout(new GridLayout(0, 4, 0, 0));
 
@@ -653,12 +653,12 @@ public class Principal extends JFrame {
 				btnButtonOtro.setBorder(null);
 			}
 		});
-		btnButtonOtro.setIcon(new ImageIcon(Principal.class.getResource("/gui/images/Otros/otros5.jpg")));
+		btnButtonOtro.setIcon(new ImageIcon(Principal.class.getResource("/gui/images/Otros/otros3.jpg")));
 		Fila3.add(btnButtonOtro);
 
 		JPanel FilaLabels1 = new JPanel();
 		FilaLabels1.setBackground(Color.WHITE);
-		FilaLabels1.setBounds(10, 223, 866, 33);
+		FilaLabels1.setBounds(20, 223, 846, 33);
 		panelPrincipal.add(FilaLabels1);
 		FilaLabels1.setLayout(new GridLayout(0, 4, 0, 0));
 
@@ -684,7 +684,7 @@ public class Principal extends JFrame {
 
 		JPanel FilaLabels2 = new JPanel();
 		FilaLabels2.setBackground(Color.WHITE);
-		FilaLabels2.setBounds(10, 425, 866, 33);
+		FilaLabels2.setBounds(20, 425, 846, 33);
 		panelPrincipal.add(FilaLabels2);
 		FilaLabels2.setLayout(new GridLayout(0, 4, 0, 0));
 
@@ -710,7 +710,7 @@ public class Principal extends JFrame {
 
 		JPanel FilaLabels3 = new JPanel();
 		FilaLabels3.setBackground(Color.WHITE);
-		FilaLabels3.setBounds(10, 627, 866, 33);
+		FilaLabels3.setBounds(20, 627, 846, 33);
 		panelPrincipal.add(FilaLabels3);
 		FilaLabels3.setLayout(new GridLayout(0, 4, 0, 0));
 

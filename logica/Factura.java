@@ -1,25 +1,27 @@
 package logica;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class Factura {
 	private ArrayList<ComponenteOrdenador> com;
 	private ArrayList<Integer> cantidadXPieza;
-	// Date fecha;
+	private LocalDate fecha;
 
-	public Factura() {
+	public Factura(LocalDate fecha) {
 		com = new ArrayList<>();
 		cantidadXPieza = new ArrayList<>();
+		setFecha(fecha);
 	}
 
-	/*public Date getFecha() {
+	public LocalDate getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Date fecha) {
+	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
-	}*/
+	}
 
 	public ArrayList<ComponenteOrdenador> getCom() {
 		return com;

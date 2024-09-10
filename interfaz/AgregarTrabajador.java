@@ -66,6 +66,7 @@ public class AgregarTrabajador extends JDialog {
 	private JLabel lblCargo;
 	final LocalDate fechaHoy = LocalDate.now();
 	final DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	private JLabel lblNewLabel_1;
 
 	public AgregarTrabajador(Principal principal, TiendaDeComputadoras tiendaC) {
 		super(principal, true);
@@ -433,11 +434,6 @@ public class AgregarTrabajador extends JDialog {
 		JScrollPane scrollPane = new JScrollPane(table);
 		panelTrabajadoresAgregados.add(scrollPane, BorderLayout.CENTER);
 
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setBounds(12, 12, 76, 60);
-		lblNewLabel.setIcon(new ImageIcon(AgregarTrabajador.class.getResource("/gui/icons/logoPeque\u00F1o1.jpg")));
-		panelPrincipal.add(lblNewLabel);
-
 		btnEliminar = new JButton("");
 		btnEliminar.setIcon(new ImageIcon(AgregarTrabajador.class.getResource("/gui/icons/basura.png")));
 		btnEliminar.addActionListener(new ActionListener() {
@@ -463,6 +459,11 @@ public class AgregarTrabajador extends JDialog {
 		btnEliminar.setActionCommand("OK");
 		btnEliminar.setBounds(812, 643, 41, 35);	
 		panelPrincipal.add(btnEliminar);
+		
+		lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setIcon(new ImageIcon(AgregarTrabajador.class.getResource("/gui/icons/user-persona-icon-design-free-vector.jpg")));
+		lblNewLabel_1.setBounds(753, 12, 100, 73);
+		panelPrincipal.add(lblNewLabel_1);
 
 		panelSecundario = new JPanel();
 		panelSecundario.setBackground(Color.WHITE);
@@ -527,39 +528,6 @@ public class AgregarTrabajador extends JDialog {
 		cargoT.setSelectedIndex(0);
 	}
 
-
-	/***************Otra validacion CI********************/
-	/*public static boolean validarCarnet(String carnet) {
-		boolean e = false;
-
-		String regex = "^(\\d{2})(\\d{2})(\\d{2})(\\d{5})$";
-		Pattern pattern = Pattern.compile(regex);
-		Matcher matcher = pattern.matcher(carnet);
-		String dia = matcher.group(1);
-		String mes = matcher.group(2);
-		String anno = matcher.group(3);
-		String resto = matcher.group(4);
-		int year = Integer.parseInt(anno);
-		year +=(year < 50) ? 2000: 1900;
-		while(!e) {
-			if(carnet.length() == 11) {
-				if(matcher.matches()) {	
-					if(year >= 1950) {
-						e = true;
-					}
-				}
-			}
-			String fechaStr =  String.format("%02d-%02d-%04d", Integer.parseInt(dia), Integer.parseInt(mes), year);
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-			try {
-				LocalDate fecha = LocalDate.parse(fechaStr, formatter);
-			}
-			catch(DateTimeException e1) {
-				e = true;
-			}
-		}
-		return e;
-	}*/
 
 	private void agregarTabla() {
 		int count = tienda.getCantTrabajadores();

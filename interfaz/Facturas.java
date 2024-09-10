@@ -46,7 +46,7 @@ public class Facturas extends JDialog {
 		contentPanel.add(scrollPane);
 
 		JPanel panel = new JPanel(new BorderLayout());
-		String[] columnNames = {"Nombre", "Marca", "Modelo", "Cantidad", "Costo Total"};
+		String[] columnNames = {"Fecha","Nombre", "Marca", "Modelo", "Cantidad", "Costo Total"};
 		model = new DefaultTableModel(columnNames, 0);
 		table = new JTable(model);
 		table.setSurrendersFocusOnKeystroke(true);
@@ -90,7 +90,6 @@ public class Facturas extends JDialog {
 	}
 
 	private void actualizarTabla() {
-		// Limpiar el modelo antes de agregar nuevas filas
 		model.setRowCount(0);
 
 		for (Factura f : tienda.getFacturas()) {
@@ -99,6 +98,7 @@ public class Facturas extends JDialog {
 				Factura fac = f;
 				System.out.println("Componente: " + fac.getCom().get(i));
 				model.addRow(new Object[]{
+						fac.getFecha(),
 						fac.getCom().get(i).getClass().getSimpleName(),
 						fac.getCom().get(i).getMarca(),
 						fac.getCom().get(i).getModelo(),
@@ -107,8 +107,6 @@ public class Facturas extends JDialog {
 				});
 			}
 		}
-
-		// Notificar al modelo que los datos han cambiado
 		model.fireTableDataChanged();
 		table.revalidate();
 		table.repaint();
