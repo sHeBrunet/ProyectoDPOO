@@ -2,6 +2,8 @@ package logica;
 
 import java.util.ArrayList;
 
+
+
 public class TiendaDeComputadoras {
 	private String nombre;
 	private String ID;
@@ -251,6 +253,28 @@ public class TiendaDeComputadoras {
 		}
 		return count;
 	}
+	public boolean eliminarCantPiezas(Factura f) {
+		boolean eliminado = false;
+		if(f != null) {
+			for(int k = 0; k < componentes.size(); k++) {
+				for(int i = 0; i < f.getCom().size(); i++) {
+					if(componentes.get(k).equals(f.getCom().get(i))) {
+						for(int j = 0; j < 1; j++) {
+							if(componentes.get(k).getCantDisponible() - f.getCantidadXPieza().get(j) < 0) {
+								componentes.get(k).setCantDisponible(0);
+								eliminado = true;
+							}
+							else {
+								componentes.get(k).setCantDisponible(componentes.get(k).getCantDisponible() - f.getCantidadXPieza().get(j));
+								eliminado = true;
+							}
+						}
+					}
+				}
+			}
+		}
+		return eliminado;
+	}
 	public void actualizarNo(ComponenteOrdenador c, int num) {
 		for(ComponenteOrdenador cmp : componentes) {
 			if(cmp.equals(c)) {
@@ -313,6 +337,24 @@ public class TiendaDeComputadoras {
 	public void agregarFactura(Factura factura) {
 		facturas.add(factura);
 	}
+	public boolean buscarIDE(String IDE) {
+		boolean encontrada = false;
+		for(Trabajador t : trabajadores) {
+			if(t.getNumero().equals(IDE)) {
+				encontrada = true;
+			}
+		}
+		return encontrada;
+	}
+
+	public String generadorDeIDTrabajador(String nombre, String apellidos, String CI) {
+		String ID = null;
+		String name = nombre.substring(0);
+		String ape = apellidos.substring(0);
+		String cI = CI.substring(0);
+		return ID = name.concat(ape) + name.concat(cI);
+	}
+
 	public float calcularMontoTotalfacturas() {
 		float total = 0;
 		for(int i = 0; i < facturas.size(); i++) {
@@ -381,6 +423,14 @@ public class TiendaDeComputadoras {
 		}
 
 	}
+	public void actualizarCantidadComponenteAgregar(ComponenteOrdenador c, int cantidad) {
+		for(ComponenteOrdenador cmp : componentes) {
+			if(cmp.equals(c)) {
+				cmp.setCantDisponible(cmp.getCantDisponible() + cantidad);
+			}
+		}
+
+	}
 	public ComponenteOrdenador buscarComponente(String numSerie) {
 		ComponenteOrdenador comp = null;
 		for(ComponenteOrdenador c : componentes) {
@@ -393,8 +443,6 @@ public class TiendaDeComputadoras {
 	public ArrayList<Teclado> encontrarModeloTeclado(String componenteNombre, String marca, String retroiluminacion) {
 		ArrayList<Teclado> teclado = new ArrayList<>();
 		boolean r = false;
-		System.out.println("Entro en la funcion");
-
 		if (retroiluminacion.equals("Sí")) {
 			r = true;
 		}
@@ -753,13 +801,13 @@ public class TiendaDeComputadoras {
 	}
 
 	/********************************************Microprocesador**************************************/
-	public ArrayList<String> modeloMicroprocesador(String nombre, String marca, String tipoDeConexion, Double combo3) {
+	public ArrayList<String> modeloMicroprocesador(String nombre, String marca, String tipoDeConexion, String combo3) {
 		ArrayList<Microprocesador> b = new ArrayList<>();
 		ArrayList<String> m = new ArrayList<String>();
 		b = encontrarModeloMicroprocesador(nombre, marca, tipoDeConexion, combo3);
 		for(int i = 0; i < b.size(); i++) {
 			if(!m.contains(b.get(i).getModelo())) {
-				m.add(b.get(i).getModelo());
+				m.add(b.get(i).getModelo()); 	
 			}
 
 		}
@@ -767,14 +815,15 @@ public class TiendaDeComputadoras {
 	}
 
 	private ArrayList<Microprocesador> encontrarModeloMicroprocesador(String nombre, String marca,
-			String tipoDeConexion, Double velocidadProcesamiento) {
+			String tipoDeConexion, String velocidad) {
+		double velocidad1 = Double.parseDouble(velocidad);
 		ArrayList<Microprocesador> f = new ArrayList<>();
 		if (componentes != null) {
 			for (ComponenteOrdenador c : componentes) {
 				if (c instanceof Microprocesador) {
 					if (c.getMarca().equals(marca)) {
 						if (((Microprocesador) c).getTipoDeConexion().equals(tipoDeConexion)) {
-							if(((Microprocesador) c).getVelocidadDeProcesamiento() == velocidadProcesamiento) {
+							if(((Microprocesador) c).getVelocidadDeProcesamiento() == velocidad1) {
 								f.add((Microprocesador) c);
 							}
 						}
@@ -787,7 +836,7 @@ public class TiendaDeComputadoras {
 		return f;
 	}
 
-	public Microprocesador encontMicro(String componenteNombre, String marca, String tipoDeConexion, Double velocidad, String modelo) {
+	public Microprocesador encontMicro(String componenteNombre, String marca, String tipoDeConexion, String velocidad, String modelo) {
 		ArrayList<Microprocesador> micro = new ArrayList<>();
 		Microprocesador m = null;
 		boolean parada = false;
@@ -801,7 +850,7 @@ public class TiendaDeComputadoras {
 		return m;
 	}
 	/********************************************Disco Duro**************************************/
-	public ArrayList<String> modeloDiscoDuro(String nombre, String marca, Double capacidad, String conexion) {
+	public ArrayList<String> modeloDiscoDuro(String nombre, String marca, String capacidad, String conexion) {
 		ArrayList<DiscoDuro> b = new ArrayList<>();
 		ArrayList<String> m = new ArrayList<String>();
 		b = encontrarModeloDiscoDuro(nombre, marca, capacidad, conexion);
@@ -815,14 +864,15 @@ public class TiendaDeComputadoras {
 	}
 
 	private ArrayList<DiscoDuro> encontrarModeloDiscoDuro(String nombre, String marca,
-			Double capacidad, String conexion) {
+			String capacidad, String conexion) {
+		float capacidad1 = Integer.parseInt(capacidad);
 		ArrayList<DiscoDuro> f = new ArrayList<>();
 		if (componentes != null) {
 			for (ComponenteOrdenador c : componentes) {
 				if (c instanceof DiscoDuro) {
 					if (c.getMarca().equals(marca)) {
 						if (((DiscoDuro) c).getTipoDeConexion().equals(conexion)) {
-							if(((DiscoDuro) c).getCapacidad() == capacidad) {
+							if(((DiscoDuro) c).getCapacidad() == capacidad1) {
 								f.add((DiscoDuro) c);
 							}
 						}
@@ -835,7 +885,7 @@ public class TiendaDeComputadoras {
 		return f;
 	}
 
-	public DiscoDuro encontDiscoDuro(String componenteNombre, String marca, Double capacidad, String conexion, String modelo) {
+	public DiscoDuro encontDiscoDuro(String componenteNombre, String marca, String capacidad, String conexion, String modelo) {
 		ArrayList<DiscoDuro> discoD = new ArrayList<>();
 		DiscoDuro m = null;
 		boolean parada = false;
@@ -849,10 +899,26 @@ public class TiendaDeComputadoras {
 		return m;
 	}
 	/************************************************RAM************************************************/
-	public ArrayList<String> modeloMemoriaRAM(String string, String marca, Double espacio, String tipoDeRAM) {
+
+	public MemoriaRam encontMemoriaRAM(String componenteNombre, String marca, String capacidad, String memoriaTipo,
+			String modelo) {
+
+		ArrayList<MemoriaRam> memoriaRAM = new ArrayList<>();
+		MemoriaRam m = null;
+		boolean parada = false;
+		memoriaRAM = encontrarModeloMemoriaRam(componenteNombre, marca, capacidad, memoriaTipo);
+		for(int i = 0; i <memoriaRAM.size() && !parada ; i++) {
+			if(memoriaRAM.get(i).getModelo().equals(modelo)) {
+				m = memoriaRAM.get(i);
+				parada = true;
+			}
+		}
+		return m;
+	}
+	public ArrayList<String> modeloMemoriaRam(String nombre, String marca, String capacidad, String memoriaTipo) {
 		ArrayList<MemoriaRam> b = new ArrayList<>();
 		ArrayList<String> m = new ArrayList<String>();
-		b = encontrarModeloMemoriaRAM(nombre, marca, espacio, tipoDeRAM);
+		b = encontrarModeloMemoriaRam(nombre, marca, capacidad, memoriaTipo);
 		for(int i = 0; i < b.size(); i++) {
 			if(!m.contains(b.get(i).getModelo())) {
 				m.add(b.get(i).getModelo());
@@ -862,15 +928,16 @@ public class TiendaDeComputadoras {
 		return m;
 	}
 
-	private ArrayList<MemoriaRam> encontrarModeloMemoriaRAM(String nombre2, String marca, Double espacio,
-			String tipoDeRAM) {
+	private  ArrayList<MemoriaRam> encontrarModeloMemoriaRam(String nombre, String marca,
+			String capacidad, String memoriaTipo) {
+		float capacidad1 = Integer.parseInt(capacidad);
 		ArrayList<MemoriaRam> f = new ArrayList<>();
 		if (componentes != null) {
 			for (ComponenteOrdenador c : componentes) {
 				if (c instanceof MemoriaRam) {
 					if (c.getMarca().equals(marca)) {
-						if(((MemoriaRam) c).getCantEspacio() == espacio) {
-							if (((MemoriaRam) c).getTipoDeMemoria().equals(tipoDeRAM)) {
+						if (((MemoriaRam) c).getTipoDeMemoria().equals(memoriaTipo)) {
+							if(((MemoriaRam) c).getCantEspacio() == capacidad1) {
 								f.add((MemoriaRam) c);
 							}
 						}
@@ -883,17 +950,33 @@ public class TiendaDeComputadoras {
 		return f;
 	}
 
-	public MemoriaRam encontMemoriaRAM(String componenteNombre, String marca, Double capacidad, String tipodeRAM, String modelo) {
-		ArrayList<MemoriaRam> memoriaR = new ArrayList<>();
-		MemoriaRam m = null;
-		boolean parada = false;
-		memoriaR = encontrarModeloMemoriaRAM(componenteNombre, marca, capacidad, tipodeRAM);
-		for(int i = 0; i < memoriaR.size() && !parada ; i++) {
-			if( memoriaR.get(i).getModelo().equals(modelo)) {
-				m =  memoriaR.get(i);
-				parada = true;
+
+	/************************************************Tarjeta Madre************************************************/
+	public ArrayList<TarjetaMadre> modeloTarjetaMadre(String string, String marca, String conector) {
+		ArrayList<TarjetaMadre> f = new ArrayList<>();
+		if (componentes != null) {
+			for (ComponenteOrdenador c : componentes) {
+				if (c instanceof TarjetaMadre) {
+					if (c.getMarca().equals(marca)) {
+						if (((TarjetaMadre) c).getTipoDeConector().equals(conector)) {
+								f.add((TarjetaMadre) c);
+							}
+						}
+					}
+				}
+			}
+		return f;
+		}
+
+	public TarjetaMadre encontComponente(String marca, String conector, String componente, String modelo) {
+		ArrayList<TarjetaMadre> f = new ArrayList<>();
+		TarjetaMadre TM = null;
+		f = modeloTarjetaMadre("Tarjeta Madre", marca, conector);
+		for(int i = 0; i< f.size(); i++) {
+			if(f.get(i).getModelo().equals(modelo)) {
+				TM = (TarjetaMadre) f.get(i);
 			}
 		}
-		return m;
+		return TM;
 	}
 }

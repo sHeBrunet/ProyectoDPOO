@@ -1,19 +1,13 @@
 package interfaz;
 
 import javax.swing.*;
+
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import logica.Factura;
 import logica.TiendaDeComputadoras;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,7 +22,9 @@ public class Facturas extends JDialog {
 	private JTable table;
 	private DefaultTableModel model;
 	private JTextField textTotalRecaudado;
-
+	private JTextField ensambladoT;
+	private float t = 0;
+	
 	public Facturas(Principal principal, TiendaDeComputadoras tiendaC) {
 		super(principal, true);
 		setResizable(false);
@@ -45,8 +41,9 @@ public class Facturas extends JDialog {
 		scrollPane.setBounds(0, 0, 894, 643);
 		contentPanel.add(scrollPane);
 
+		@SuppressWarnings("unused")
 		JPanel panel = new JPanel(new BorderLayout());
-		String[] columnNames = {"Nombre", "Marca", "Modelo", "Cantidad", "Costo Total"};
+		String[] columnNames = {"Fecha","Ensamblado","Nombre", "Marca", "Modelo", "Cantidad", "Costo Total"};
 		model = new DefaultTableModel(columnNames, 0);
 		table = new JTable(model);
 		table.setSurrendersFocusOnKeystroke(true);
@@ -72,10 +69,25 @@ public class Facturas extends JDialog {
 		panel_1.add(textTotalRecaudado);
 		textTotalRecaudado.setColumns(10);
 		textTotalRecaudado.setText(String.valueOf(tienda.calcularTotalFactura()));
+
+		JLabel lblTotalPorEnsamblado = new JLabel("Total Por Ensamblado:");
+		lblTotalPorEnsamblado.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblTotalPorEnsamblado.setBounds(12, 13, 211, 16);
+		panel_1.add(lblTotalPorEnsamblado);
+
+		ensambladoT = new JTextField();
+		ensambladoT.setText("0.0");
+		ensambladoT.setFont(new Font("Tahoma", Font.BOLD, 15));
+		ensambladoT.setEnabled(false);
+		ensambladoT.setEditable(false);
+		ensambladoT.setColumns(10);
+		ensambladoT.setBounds(190, 11, 104, 19);
+		panel_1.add(ensambladoT);
 		setSize(900, 746);
 
 		actualizarTabla();
-
+		actualizarEnsamblado();
+		
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		getContentPane().add(buttonPane, BorderLayout.SOUTH);
@@ -90,15 +102,17 @@ public class Facturas extends JDialog {
 	}
 
 	private void actualizarTabla() {
-		// Limpiar el modelo antes de agregar nuevas filas
 		model.setRowCount(0);
 
 		for (Factura f : tienda.getFacturas()) {
+			t += f.getPrecioEnsamblado();
 			System.out.println("Factura: " + f);
 			for (int i = 0; i < f.getCom().size(); i++) {
 				Factura fac = f;
 				System.out.println("Componente: " + fac.getCom().get(i));
 				model.addRow(new Object[]{
+						fac.getFecha(),
+						fac.getEnsamblado().get(i),
 						fac.getCom().get(i).getClass().getSimpleName(),
 						fac.getCom().get(i).getMarca(),
 						fac.getCom().get(i).getModelo(),
@@ -106,12 +120,15 @@ public class Facturas extends JDialog {
 						fac.calcularMontoXPieza(fac.getCom().get(i))
 				});
 			}
+
 		}
 
-		// Notificar al modelo que los datos han cambiado
 		model.fireTableDataChanged();
 		table.revalidate();
 		table.repaint();
+	}
+	public void actualizarEnsamblado() {
+		ensambladoT.setText(String.valueOf(t));
 	}
 
 }

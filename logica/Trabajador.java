@@ -1,5 +1,4 @@
 package logica;
-import java.sql.Array;
 import java.util.ArrayList;
 
 import inicializaciones.InicializacionDeDatos;

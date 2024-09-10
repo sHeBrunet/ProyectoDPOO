@@ -31,6 +31,7 @@ import logica.TarjetaDeVideo;
 import logica.TarjetaMadre;
 import logica.Teclado;
 import logica.TiendaDeComputadoras;
+import java.awt.Color;
 
 public class ListadoDeProductos extends JDialog {
 
@@ -60,6 +61,8 @@ public class ListadoDeProductos extends JDialog {
 
 	public ListadoDeProductos(Principal principal, TiendaDeComputadoras t) {
 		super(principal, true);
+		setBackground(new Color(255, 255, 255));
+		getContentPane().setBackground(new Color(255, 255, 255));
 		tienda = t;
 		setTitle("Listado de Productos");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -68,20 +71,34 @@ public class ListadoDeProductos extends JDialog {
 		setLocationRelativeTo(null);
 
 		JTabbedPane tabbedPane = new JTabbedPane();
+		tabbedPane.setBackground(new Color(255, 255, 255));
 
 		JPanel panelChasis = new JPanel(new BorderLayout());
+		panelChasis.setBackground(new Color(255, 255, 255));
 		JPanel panelBocinas = new JPanel(new BorderLayout());
+		panelBocinas.setBackground(new Color(255, 255, 255));
 		JPanel panelDiscos = new JPanel(new BorderLayout());
+		panelDiscos.setBackground(new Color(255, 255, 255));
 		JPanel panelFuentes = new JPanel(new BorderLayout());
+		panelFuentes.setBackground(new Color(255, 255, 255));
 		JPanel panelMicros = new JPanel(new BorderLayout());
+		panelMicros.setBackground(new Color(255, 255, 255));
 		JPanel panelMonitores = new JPanel(new BorderLayout());
+		panelMonitores.setBackground(new Color(255, 255, 255));
 		JPanel panelMotherboards = new JPanel(new BorderLayout());
+		panelMotherboards.setBackground(new Color(255, 255, 255));
 		JPanel panelMouse = new JPanel(new BorderLayout());
+		panelMouse.setBackground(new Color(255, 255, 255));
 		JPanel panelAdaptadores = new JPanel(new BorderLayout());
+		panelAdaptadores.setBackground(new Color(255, 255, 255));
 		JPanel panelRAM = new JPanel(new BorderLayout());
+		panelRAM.setBackground(new Color(255, 255, 255));
 		JPanel panelTarjetas = new JPanel(new BorderLayout());
+		panelTarjetas.setBackground(new Color(255, 255, 255));
 		JPanel panelTeclados = new JPanel(new BorderLayout());
+		panelTeclados.setBackground(new Color(255, 255, 255));
 		JPanel panelTotalPiezas = new JPanel(new BorderLayout());
+		panelTotalPiezas.setBackground(new Color(255, 255, 255));
 
 		final DefaultTableModel modelTotalPiezas = new DefaultTableModel(columnNames, 0) {
 			private static final long serialVersionUID = 1L;
@@ -136,6 +153,7 @@ public class ListadoDeProductos extends JDialog {
 			}
 		};
 		tableBocinas = new JTable(modelBocinas);
+		tableBocinas.setBackground(new Color(255, 255, 255));
 		tableBocinas.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -160,7 +178,9 @@ public class ListadoDeProductos extends JDialog {
 			}
 		});
 		tableBocinas.getTableHeader().setReorderingAllowed(false);
-		panelBocinas.add(new JScrollPane(tableBocinas), BorderLayout.CENTER);
+		JScrollPane scrollPane_1 = new JScrollPane(tableBocinas);
+		scrollPane_1.setBackground(new Color(255, 255, 255));
+		panelBocinas.add(scrollPane_1, BorderLayout.CENTER);
 
 		final DefaultTableModel modelDiscos = new DefaultTableModel(columnNames, 0) {
 			private static final long serialVersionUID = 1L;
@@ -195,7 +215,9 @@ public class ListadoDeProductos extends JDialog {
 			}
 		});
 		tableDiscos.getTableHeader().setReorderingAllowed(false);
-		panelDiscos.add(new JScrollPane(tableDiscos), BorderLayout.CENTER);
+		JScrollPane scrollPane_2 = new JScrollPane(tableDiscos);
+		scrollPane_2.setBackground(new Color(255, 255, 255));
+		panelDiscos.add(scrollPane_2, BorderLayout.CENTER);
 
 		final DefaultTableModel modelFuentes = new DefaultTableModel(columnNames, 0) {
 			private static final long serialVersionUID = 1L;
@@ -230,7 +252,9 @@ public class ListadoDeProductos extends JDialog {
 			}
 		});
 		tableFuentes.getTableHeader().setReorderingAllowed(false);
-		panelFuentes.add(new JScrollPane(tableFuentes), BorderLayout.CENTER);
+		JScrollPane scrollPane_3 = new JScrollPane(tableFuentes);
+		scrollPane_3.setBackground(new Color(255, 255, 255));
+		panelFuentes.add(scrollPane_3, BorderLayout.CENTER);
 
 		final DefaultTableModel modelMicros = new DefaultTableModel(columnNames, 0) {
 			private static final long serialVersionUID = 1L;
@@ -265,7 +289,9 @@ public class ListadoDeProductos extends JDialog {
 			}
 		});
 		tableMicros.getTableHeader().setReorderingAllowed(false);
-		panelMicros.add(new JScrollPane(tableMicros), BorderLayout.CENTER);
+		JScrollPane scrollPane_4 = new JScrollPane(tableMicros);
+		scrollPane_4.setBackground(new Color(255, 255, 255));
+		panelMicros.add(scrollPane_4, BorderLayout.CENTER);
 
 		final DefaultTableModel modelMonitores = new DefaultTableModel(columnNames, 0) {
 			private static final long serialVersionUID = 1L;
@@ -300,7 +326,9 @@ public class ListadoDeProductos extends JDialog {
 			}
 		});
 		tableMonitores.getTableHeader().setReorderingAllowed(false);
-		panelMonitores.add(new JScrollPane(tableMonitores), BorderLayout.CENTER);
+		JScrollPane scrollPane_5 = new JScrollPane(tableMonitores);
+		scrollPane_5.setBackground(new Color(255, 255, 255));
+		panelMonitores.add(scrollPane_5, BorderLayout.CENTER);
 
 		final DefaultTableModel modelMotherboards = new DefaultTableModel(columnNames, 0) {
 			private static final long serialVersionUID = 1L;
@@ -335,7 +363,9 @@ public class ListadoDeProductos extends JDialog {
 			}
 		});
 		tableMotherboards.getTableHeader().setReorderingAllowed(false);
-		panelMotherboards.add(new JScrollPane(tableMotherboards), BorderLayout.CENTER);
+		JScrollPane scrollPane_6 = new JScrollPane(tableMotherboards);
+		scrollPane_6.setBackground(new Color(255, 255, 255));
+		panelMotherboards.add(scrollPane_6, BorderLayout.CENTER);
 
 		final DefaultTableModel modelMouse = new DefaultTableModel(columnNames, 0) {
 			private static final long serialVersionUID = 1L;
@@ -370,7 +400,9 @@ public class ListadoDeProductos extends JDialog {
 			}
 		});
 		tableMouses.getTableHeader().setReorderingAllowed(false);
-		panelMouse.add(new JScrollPane(tableMouses), BorderLayout.CENTER);
+		JScrollPane scrollPane_7 = new JScrollPane(tableMouses);
+		scrollPane_7.setBackground(new Color(255, 255, 255));
+		panelMouse.add(scrollPane_7, BorderLayout.CENTER);
 
 		final DefaultTableModel modelRAM = new DefaultTableModel(columnNames, 0) {
 			private static final long serialVersionUID = 1L;
@@ -405,7 +437,9 @@ public class ListadoDeProductos extends JDialog {
 			}
 		});
 		tableRAM.getTableHeader().setReorderingAllowed(false);
-		panelRAM.add(new JScrollPane(tableRAM), BorderLayout.CENTER);
+		JScrollPane scrollPane_8 = new JScrollPane(tableRAM);
+		scrollPane_8.setBackground(new Color(255, 255, 255));
+		panelRAM.add(scrollPane_8, BorderLayout.CENTER);
 
 		final DefaultTableModel modelTarjetas = new DefaultTableModel(columnNames, 0) {
 			private static final long serialVersionUID = 1L;
@@ -440,7 +474,9 @@ public class ListadoDeProductos extends JDialog {
 			}
 		});
 		tableTarjetas.getTableHeader().setReorderingAllowed(false);
-		panelTarjetas.add(new JScrollPane(tableTarjetas), BorderLayout.CENTER);
+		JScrollPane scrollPane_9 = new JScrollPane(tableTarjetas);
+		scrollPane_9.setBackground(new Color(255, 255, 255));
+		panelTarjetas.add(scrollPane_9, BorderLayout.CENTER);
 
 		final DefaultTableModel modelTeclados = new DefaultTableModel(columnNames, 0) {
 			private static final long serialVersionUID = 1L;
@@ -475,7 +511,9 @@ public class ListadoDeProductos extends JDialog {
 			}
 		});
 		tableTeclados.getTableHeader().setReorderingAllowed(false);
-		panelTeclados.add(new JScrollPane(tableTeclados), BorderLayout.CENTER);
+		JScrollPane scrollPane_10 = new JScrollPane(tableTeclados);
+		scrollPane_10.setBackground(new Color(255, 255, 255));
+		panelTeclados.add(scrollPane_10, BorderLayout.CENTER);
 
 		final DefaultTableModel modelAdaptadores = new DefaultTableModel(columnNames, 0) {
 			private static final long serialVersionUID = 1L;
@@ -486,6 +524,7 @@ public class ListadoDeProductos extends JDialog {
 			}
 		};
 		tableAdaptadores = new JTable(modelAdaptadores);
+		tableAdaptadores.setBackground(new Color(255, 255, 255));
 		tableAdaptadores.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -510,7 +549,9 @@ public class ListadoDeProductos extends JDialog {
 			}
 		});
 		tableAdaptadores.getTableHeader().setReorderingAllowed(false);
-		panelAdaptadores.add(new JScrollPane(tableAdaptadores), BorderLayout.CENTER);
+		JScrollPane scrollPane = new JScrollPane(tableAdaptadores);
+		scrollPane.setBackground(new Color(255, 255, 255));
+		panelAdaptadores.add(scrollPane, BorderLayout.CENTER);
 
 		tableTotalPiezas = new JTable(modelTotalPiezas);
 		tableTotalPiezas.addKeyListener(new KeyAdapter() {
@@ -547,7 +588,9 @@ public class ListadoDeProductos extends JDialog {
 			}
 		});
 		tableTotalPiezas.getTableHeader().setReorderingAllowed(false);
-		panelTotalPiezas.add(new JScrollPane(tableTotalPiezas), BorderLayout.CENTER);
+		JScrollPane scrollPane_11 = new JScrollPane(tableTotalPiezas);
+		scrollPane_11.setBackground(new Color(255, 255, 255));
+		panelTotalPiezas.add(scrollPane_11, BorderLayout.CENTER);
 
 		tabbedPane.addTab("Adaptadores", panelAdaptadores);
 		tabbedPane.addTab("Bocinas", panelBocinas);
@@ -564,6 +607,7 @@ public class ListadoDeProductos extends JDialog {
 		tabbedPane.addTab("General", panelTotalPiezas);
 
 		JPanel panelBotones = new JPanel();
+		panelBotones.setBackground(new Color(255, 255, 255));
 		btnAtras = new JButton("Atrás");
 		btnAtras.setFocusable(false);
 		btnAtras.addActionListener(new ActionListener() {
