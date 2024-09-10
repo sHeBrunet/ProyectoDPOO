@@ -112,7 +112,7 @@ public class Facturas extends JDialog {
 				System.out.println("Componente: " + fac.getCom().get(i));
 				model.addRow(new Object[]{
 						fac.getFecha(),
-						fac.getEnsamblado().get(i),
+						//fac.getEnsamblado().get(i),
 						fac.getCom().get(i).getClass().getSimpleName(),
 						fac.getCom().get(i).getMarca(),
 						fac.getCom().get(i).getModelo(),
@@ -122,7 +122,6 @@ public class Facturas extends JDialog {
 			}
 
 		}
-
 		model.fireTableDataChanged();
 		table.revalidate();
 		table.repaint();

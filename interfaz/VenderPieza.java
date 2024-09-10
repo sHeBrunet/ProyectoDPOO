@@ -51,6 +51,54 @@ import java.time.LocalDate;
 import javax.swing.SwingConstants;
 
 
+import javax.swing.border.MatteBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
+
+import java.awt.Color;
+import java.awt.Container;
+
+import javax.swing.border.LineBorder;
+import javax.swing.JSpinner;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JLabel;
+import java.awt.Font;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.swing.JComboBox;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.JRadioButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JCheckBox;
+import javax.print.attribute.DateTimeSyntax;
+import javax.swing.ImageIcon;
+import javax.swing.border.BevelBorder;
+import javax.swing.UIManager;
+import java.awt.event.MouseMotionAdapter;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.SpinnerModel;
+import javax.swing.SwingConstants;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormSpecs;
+import com.jgoodies.forms.layout.RowSpec;
+import net.miginfocom.swing.MigLayout;
+import java.awt.Canvas;
+
 
 public class VenderPieza extends JDialog {
 	/**
@@ -67,6 +115,12 @@ public class VenderPieza extends JDialog {
 	@SuppressWarnings("rawtypes")
 	private JComboBox comboBoxModelo;
 	private String nombre;
+<<<<<<< HEAD
+=======
+	private String seleccionado;
+	private JTextField Atributo1;
+	private JTextField Atributo2;
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 	private JComboBox<String> comboBoxAtributo1;
 	private ArrayList<String> modelo; 
 	private JTextField nombretext;
@@ -90,17 +144,25 @@ public class VenderPieza extends JDialog {
 	private JPanel panelInfoTarjetaMadre;
 	private JComboBox<String> comboBoxCDisco;
 	private JComboBox<String> comboBoxCRAM;
+<<<<<<< HEAD
 	private TarjetaMadre m = null;
+=======
+	TarjetaMadre m = null;
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 	private JTextField txtMicroprocesadores;
 	private JComboBox<String> comboBoxCMicro;
 	private JSpinner spinner;
 	private JButton okButton_1;
 	private JButton btnCarrito;
+<<<<<<< HEAD
 	private JButton ensamblar;
 	private ArrayList <Boolean> ensamblado;
 	private JLabel Atributo1;
 	private JLabel Atributo2;
 	@SuppressWarnings({ "unchecked", "rawtypes" })
+=======
+	@SuppressWarnings("unchecked")
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 
 	public VenderPieza(Principal principal, TiendaDeComputadoras tienda, String nombreDeComponente) {
 		super(principal, true);
@@ -110,7 +172,10 @@ public class VenderPieza extends JDialog {
 		tiendaC = tienda;
 		modelo = new ArrayList<>();
 		cant = new ArrayList<Integer>();
+<<<<<<< HEAD
 		ensamblado = new ArrayList<Boolean>();
+=======
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 		setBounds(100, 100, 906, 783);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -120,13 +185,19 @@ public class VenderPieza extends JDialog {
 		{
 			extraida  =new ArrayList<Integer>();
 			componentes = new ArrayList<>();
+<<<<<<< HEAD
 			new ArrayList<ComponenteOrdenador>();
+=======
+			tablaC = new ArrayList<ComponenteOrdenador>();
+			ArrayList<String> itemExp = new ArrayList<String>();
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 			JPanel FiltradodeProducto = new JPanel();
 			FiltradodeProducto.setBackground(Color.WHITE);
 			FiltradodeProducto.setBorder(new MatteBorder(2, 2, 0, 0, (Color) new Color(0, 0, 0)));
 			FiltradodeProducto.setBounds(0, 0, 466, 462);
 			contentPanel.add(FiltradodeProducto);
 			FiltradodeProducto.setLayout(null);
+<<<<<<< HEAD
 			panelInfoTarjetaMadre = new JPanel();
 			panelInfoTarjetaMadre.setBorder(new TitledBorder(new LineBorder(new Color(0, 88, 168)), "Informaci\u00F3n de Componentes Compatibles", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 			panelInfoTarjetaMadre.setBackground(Color.WHITE);
@@ -134,6 +205,17 @@ public class VenderPieza extends JDialog {
 			FiltradodeProducto.add(panelInfoTarjetaMadre);
 			panelInfoTarjetaMadre.setLayout(null);
 
+=======
+			SpinnerNumberModel modelo = new SpinnerNumberModel(0,0,100,1);
+
+			panelInfoTarjetaMadre = new JPanel();
+			panelInfoTarjetaMadre.setBorder(new TitledBorder(new LineBorder(new Color(0, 88, 168)), "Informaci\u00F3n de Componentes Compatibles", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+			panelInfoTarjetaMadre.setBackground(Color.WHITE);
+			panelInfoTarjetaMadre.setBounds(12, 217, 442, 174);
+			FiltradodeProducto.add(panelInfoTarjetaMadre);
+			panelInfoTarjetaMadre.setLayout(null);
+
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 			txtMemoriaRamCompatible = new JTextField();
 			txtMemoriaRamCompatible.setBounds(12, 25, 124, 19);
 			txtMemoriaRamCompatible.setText("Memoria RAM:");
@@ -150,9 +232,15 @@ public class VenderPieza extends JDialog {
 					int index = comboBoxCRAM.getSelectedIndex();
 					if(index != -1) {
 						String tooltipText = "<html><fontface = 'Arial' size ='3'> Datos de la RAM: <br>" +
+<<<<<<< HEAD
 								"Tipo de memoria:" + "  " +  m.getMemoriasR().get(index).getTipoDeMemoria() + "<br>" +
 								"Cantidad de Espacio:" + "  " + m.getMemoriasR().get(index).getCantEspacio() + "<br>" +
 								"Precio:"             +  "   " + m.getMemoriasR().get(index).getPrecio();
+=======
+						"Tipo de memoria:" + "  " +  m.getMemoriasR().get(index).getTipoDeMemoria() + "<br>" +
+						"Cantidad de Espacio:" + "  " + m.getMemoriasR().get(index).getCantEspacio() + "<br>" +
+						 "Precio:"             +  "   " + m.getMemoriasR().get(index).getPrecio();
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 						comboBoxCRAM.setToolTipText(tooltipText);
 					}
 				}
@@ -162,7 +250,11 @@ public class VenderPieza extends JDialog {
 			});
 			comboBoxCRAM.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+<<<<<<< HEAD
 
+=======
+					//actualizarPrecio(m, comboBoxCRAM.getSelectedIndex());
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 				}
 			});
 			comboBoxCRAM.setBounds(175, 25, 255, 20);
@@ -184,17 +276,28 @@ public class VenderPieza extends JDialog {
 				public void mouseMoved(MouseEvent e) {
 					int index = comboBoxCDisco.getSelectedIndex();
 					if(index != -1) {
+<<<<<<< HEAD
 						String tooltipText = "<html><fontface = 'Arial' size ='3'> Datos del Disco Duro: <br>" +
 								"Tipo de conexión:" + "  " +  m.getDiscos().get(index).getTipoDeConexion() + "<br>" +
 								"Cantidad de Espacio:" + "  " + m.getDiscos().get(index).getCapacidad() + "<br>" +
 								"Precio:"             +  "   " + m.getDiscos().get(index).getPrecio();
+=======
+						String tooltipText = "<html><fontface = 'Arial' size ='3'> Datos de la RAM: <br>" +
+						"Tipo de conexión:" + "  " +  m.getDiscos().get(index).getTipoDeConexion() + "<br>" +
+						"Cantidad de Espacio:" + "  " + m.getDiscos().get(index).getCapacidad() + "<br>" +
+						 "Precio:"             +  "   " + m.getDiscos().get(index).getPrecio();
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 						comboBoxCDisco.setToolTipText(tooltipText);
 					}
 				}
 			});
 			comboBoxCDisco.setBounds(175, 72, 255, 20);
 			panelInfoTarjetaMadre.add(comboBoxCDisco);
+<<<<<<< HEAD
 
+=======
+			
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 			txtMicroprocesadores = new JTextField();
 			txtMicroprocesadores.setText("Microprocesadores:");
 			txtMicroprocesadores.setHorizontalAlignment(SwingConstants.LEFT);
@@ -204,17 +307,28 @@ public class VenderPieza extends JDialog {
 			txtMicroprocesadores.setBorder(null);
 			txtMicroprocesadores.setBounds(12, 123, 152, 20);
 			panelInfoTarjetaMadre.add(txtMicroprocesadores);
+<<<<<<< HEAD
 
+=======
+			
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 			comboBoxCMicro = new JComboBox<String>();
 			comboBoxCMicro.addMouseMotionListener(new MouseMotionAdapter() {
 				@Override
 				public void mouseMoved(MouseEvent e) {
 					int index = comboBoxCMicro.getSelectedIndex();
 					if(index != -1) {
+<<<<<<< HEAD
 						String tooltipText = "<html><fontface = 'Arial' size ='3'> Datos del Microprocesador: <br>" +
 								"Tipo de conexión:" + "  " +  m.getMicro().getTipoDeConexion() + "<br>" +
 								"Velocidad de Procesamiento:" + "  " + m.getMicro().getVelocidadDeProcesamiento() + "<br>" +
 								"Precio:"             +  "   " + m.getMicro().getPrecio();
+=======
+						String tooltipText = "<html><fontface = 'Arial' size ='3'> Datos de la RAM: <br>" +
+						"Tipo de conexión:" + "  " +  m.getMicro().getTipoDeConexion() + "<br>" +
+						"Velocidad de Procesamiento:" + "  " + m.getMicro().getVelocidadDeProcesamiento() + "<br>" +
+						 "Precio:"             +  "   " + m.getMicro().getPrecio();
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 						comboBoxCMicro.setToolTipText(tooltipText);
 					}
 				}
@@ -223,10 +337,35 @@ public class VenderPieza extends JDialog {
 			panelInfoTarjetaMadre.add(comboBoxCMicro);
 			panelInfoTarjetaMadre.setVisible(false);
 
+<<<<<<< HEAD
 			comboBoxAtributo2 = new JComboBox();
 			comboBoxAtributo2.setBounds(176, 157, 277, 20);
 			FiltradodeProducto.add(comboBoxAtributo2);
 
+=======
+			Atributo1 = new JTextField();
+			Atributo1.setEditable(false);
+			Atributo1.setText("Atributo1");
+			Atributo1.setFont(new Font("Tahoma", Font.BOLD, 15));
+			Atributo1.setBorder(null);
+			Atributo1.setBounds(12, 130, 162, 20);
+			FiltradodeProducto.add(Atributo1);
+			Atributo1.setColumns(10);
+
+			Atributo2 = new JTextField();
+			Atributo2.setEditable(false);
+			Atributo2.setBorder(null);
+			Atributo2.setFont(new Font("Tahoma", Font.BOLD, 15));
+			Atributo2.setText("Atributo2");
+			Atributo2.setColumns(10);
+			Atributo2.setBounds(12, 157, 162, 20);
+			FiltradodeProducto.add(Atributo2);
+
+			comboBoxAtributo2 = new JComboBox();
+			comboBoxAtributo2.setBounds(176, 157, 277, 20);
+			FiltradodeProducto.add(comboBoxAtributo2);
+
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 			primeraVisualizacionAtributo();
 
 
@@ -261,6 +400,26 @@ public class VenderPieza extends JDialog {
 			lblMarca.setFont(new Font("Tahoma", Font.BOLD, 15));
 			lblMarca.setBounds(12, 106, 162, 16);
 			FiltradodeProducto.add(lblMarca);
+<<<<<<< HEAD
+=======
+
+			ensamblarCheckBox = new JCheckBox("Ensamblar");
+			ensamblarCheckBox.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					if(comboBoxComponenetes.getSelectedItem().equals("Tarjeta Madre")) {
+					}else {
+
+					}
+				}
+			});
+			ensamblarCheckBox.setFont(new Font("Tahoma", Font.BOLD, 15));
+			ensamblarCheckBox.setBackground(Color.WHITE);
+			ensamblarCheckBox.setBounds(350, 49, 115, 20);
+			FiltradodeProducto.add(ensamblarCheckBox);
+			SpinnerNumberModel modelo1 = new SpinnerNumberModel(1,1,64,0.5);
+
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 			comboBoxModelo = new JComboBox();
 			comboBoxModelo.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -277,7 +436,11 @@ public class VenderPieza extends JDialog {
 				Atributo1.setText("Retroiluminacion:");
 				componenetesVentaLibreNV();
 				comboBoxAtributo2.setVisible(false);
+<<<<<<< HEAD
 				ensamblar.setVisible(false);
+=======
+				ensamblarCheckBox.setVisible(false);
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 				Atributo2.setVisible(false);
 			} else {
 				List<String> itemExp1 = inicializaciones.InicializacionDeDatos.nameComponente();
@@ -296,6 +459,13 @@ public class VenderPieza extends JDialog {
 			comboBoxAtributo1 = new JComboBox();
 			comboBoxAtributo1.setBounds(177, 130, 276, 20);
 
+<<<<<<< HEAD
+=======
+
+
+			FiltradodeProducto.add(comboBoxAtributo1);
+
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 			JButton btnNewButton = new JButton("Buscar");
 			btnNewButton.setContentAreaFilled(false);
 			btnNewButton.setBorder(UIManager.getBorder("Button.border"));
@@ -351,6 +521,7 @@ public class VenderPieza extends JDialog {
 
 			btnNewButton.setBounds(12, 431, 124, 20);
 			FiltradodeProducto.add(btnNewButton);
+<<<<<<< HEAD
 			ensamblar = new JButton("Ensamblar");
 			ensamblar.setVisible(false);
 			ensamblar.addActionListener(new ActionListener() {
@@ -372,6 +543,9 @@ public class VenderPieza extends JDialog {
 			});
 			ensamblar.setBounds(385, 43, 70, 22);
 			FiltradodeProducto.add(ensamblar);
+=======
+
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 
 
 			FiltradodeProducto.add(comboBoxAtributo1);
@@ -393,6 +567,10 @@ public class VenderPieza extends JDialog {
 
 		}
 		{
+<<<<<<< HEAD
+=======
+			SpinnerNumberModel modelo = new SpinnerNumberModel(0,0,100,1);
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 		}
 		{
 			JPanel panel = new JPanel();
@@ -444,8 +622,11 @@ public class VenderPieza extends JDialog {
 						int pos = table.getSelectedRow();
 						if (pos != -1) {
 							componentes.remove(pos);
+<<<<<<< HEAD
 							ComponenteOrdenador c = tiendaC.buscarComponente((String)table.getValueAt(pos, 0));
 							tiendaC.actualizarCantidadComponenteAgregar(c, cantidad);
+=======
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 							((DefaultTableModel) table.getModel()).removeRow(pos);
 							actualizarTotal();
 
@@ -547,7 +728,11 @@ public class VenderPieza extends JDialog {
 			btnCarrito.setBorder(null);
 			btnCarrito.setBackground(Color.WHITE);
 			btnCarrito.setIcon(new ImageIcon(VenderPieza.class.getResource("/gui/icons/carritovaciom.jpg")));
+<<<<<<< HEAD
 			btnCarrito.setBounds(367, 423, 42, 34);
+=======
+			btnCarrito.setBounds(361, 423, 42, 34);
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 			ProductoEncontrado.add(btnCarrito);
 			btnCarrito.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -563,6 +748,7 @@ public class VenderPieza extends JDialog {
 							JOptionPane.showMessageDialog(VenderPieza.this, "Error. La cantidad deseada no esta disponible");  
 						}
 						else {
+							btnCarrito.setIcon(new ImageIcon(VenderPieza.class.getResource("/gui/icons/photo_5062105677371124742_m.jpg")));
 							ComponenteOrdenador c = null;
 							String numSerie = notext.getText();
 							float precio = Float.parseFloat(preciotext.getText());
@@ -577,8 +763,11 @@ public class VenderPieza extends JDialog {
 							cantidadtxt.setText(String.valueOf(c.getCantDisponible()));
 							cant.add(cantidad);
 							actualizarTotal();
+<<<<<<< HEAD
 							btnCarrito.setIcon(new ImageIcon(VenderPieza.class.getResource("/gui/icons/photo_5062105677371124742_m.jpg")));
 							ensamblado.add(false);
+=======
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 						}
 					}
 					else {
@@ -653,13 +842,33 @@ public class VenderPieza extends JDialog {
 
 	}
 
+<<<<<<< HEAD
+=======
+	/*protected void actualizarPrecio(TarjetaMadre TM, int j) {
+		float precio = 0;
+	for(int i = 0; i < TM.getMemoriasR().size(); i++ ) {
+		if(TM.getMemoriasR().get(i).equals(m.getMemoriasR().get(j))) {
+			precio = TM.getMemoriasR().get(i).getPrecio();
+			
+		}		
+	}
+	precioRAM.setText("");
+	precioRAM.setText(String.valueOf(precio));
+	
+	}*/
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 
 	private boolean actualizarLista() {
 		boolean act = false;
 		obtenerObjeto();
 		if (!componentes.isEmpty() ) {
+<<<<<<< HEAD
 			LocalDate fecha = LocalDate.now();
 			f = new Factura(fecha);
+=======
+			LocalDate fechaFactura = LocalDate.now();
+			f = new Factura(fechaFactura);
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 			f.setCantidadXPieza(cant);
 			f.setCom(componentes);
 			f.setEnsamblado(ensamblado);
@@ -704,7 +913,11 @@ public class VenderPieza extends JDialog {
 	private void componenetesVentaLibreNV() {
 		if (Atributo2 != null) Atributo2.setVisible(false);
 		if (comboBoxAtributo2 != null) comboBoxAtributo2.setVisible(false);
+<<<<<<< HEAD
 		if(ensamblar!= null) ensamblar.setVisible(false);
+=======
+		if(ensamblarCheckBox != null) ensamblarCheckBox.setVisible(false);
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 	}
 
 	private void componenetesVentaLibreV() {
@@ -746,7 +959,11 @@ public class VenderPieza extends JDialog {
 				Atributo1.setText("Retroiluminacion:");
 				llenarComboBox(comboBoxAtributo1, Decision);
 				componenetesVentaLibreNV();
+<<<<<<< HEAD
 				ensamblar.setVisible(false);
+=======
+				ensamblarCheckBox.setVisible(false);
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 				comboBoxAtributo2.setVisible(false);
 				panelInfoTarjetaMadre.setVisible(false);
 				break;
@@ -757,7 +974,11 @@ public class VenderPieza extends JDialog {
 				llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.refrigeracion());
 				componenetesVentaLibreNV();
 				comboBoxModelo.removeAllItems();
+<<<<<<< HEAD
 				ensamblar.setVisible(false);
+=======
+				ensamblarCheckBox.setVisible(false);
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 				comboBoxAtributo2.setVisible(false);
 				panelInfoTarjetaMadre.setVisible(false);
 				break;
@@ -768,7 +989,11 @@ public class VenderPieza extends JDialog {
 				llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.conectores());
 				componenetesVentaLibreMicro();
 				Atributo2.setVisible(false);
+<<<<<<< HEAD
 				ensamblar.setVisible(false);
+=======
+				ensamblarCheckBox.setVisible(true);
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 				comboBoxModelo.removeAllItems();
 				comboBoxAtributo2.setVisible(false);
 				panelInfoTarjetaMadre.setVisible(false);
@@ -796,7 +1021,11 @@ public class VenderPieza extends JDialog {
 				comboBoxAtributo1.setVisible(false);
 				componenetesVentaLibreNV();
 				comboBoxModelo.removeAllItems();
+<<<<<<< HEAD
 				ensamblar.setVisible(false);
+=======
+				ensamblarCheckBox.setVisible(false);
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 				comboBoxAtributo2.setVisible(false);
 				panelInfoTarjetaMadre.setVisible(false);
 				break;
@@ -807,7 +1036,11 @@ public class VenderPieza extends JDialog {
 				llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.conectividad());
 				componenetesVentaLibreNV();
 				comboBoxModelo.removeAllItems();
+<<<<<<< HEAD
 				ensamblar.setVisible(false);
+=======
+				ensamblarCheckBox.setVisible(false);
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 				comboBoxAtributo2.setVisible(false);
 				panelInfoTarjetaMadre.setVisible(false);
 				break;
@@ -818,7 +1051,11 @@ public class VenderPieza extends JDialog {
 				llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.resolucionVideo());
 				componenetesVentaLibreNV();
 				comboBoxModelo.removeAllItems();
+<<<<<<< HEAD
 				ensamblar.setVisible(false);
+=======
+				ensamblarCheckBox.setVisible(false);
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 				comboBoxAtributo2.setVisible(false);
 				panelInfoTarjetaMadre.setVisible(false);
 				break;
@@ -829,7 +1066,11 @@ public class VenderPieza extends JDialog {
 				llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.conectividad());
 				componenetesVentaLibreNV();
 				comboBoxModelo.removeAllItems();
+<<<<<<< HEAD
 				ensamblar.setVisible(false);
+=======
+				ensamblarCheckBox.setVisible(false);
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 				comboBoxAtributo2.setVisible(false);
 				panelInfoTarjetaMadre.setVisible(false);
 				break;
@@ -853,7 +1094,11 @@ public class VenderPieza extends JDialog {
 				llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.materialesChasis());
 				componenetesVentaLibreNV();
 				comboBoxModelo.removeAllItems();
+<<<<<<< HEAD
 				ensamblar.setVisible(false);
+=======
+				ensamblarCheckBox.setVisible(false);
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 				comboBoxAtributo2.setVisible(false);
 				panelInfoTarjetaMadre.setVisible(false);
 				break;		
@@ -876,7 +1121,11 @@ public class VenderPieza extends JDialog {
 				llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.eficiencia());
 				componenetesVentaLibreNV();
 				comboBoxModelo.removeAllItems();
+<<<<<<< HEAD
 				ensamblar.setVisible(false);
+=======
+				ensamblarCheckBox.setVisible(false);
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 				comboBoxAtributo2.setVisible(false);
 				panelInfoTarjetaMadre.setVisible(false);
 				break;
@@ -890,7 +1139,11 @@ public class VenderPieza extends JDialog {
 	@SuppressWarnings("unused")
 	public void actualizarDatos(String combobox1, String combobox2,String componente, String modelo) {
 		try {
+<<<<<<< HEAD
 			panelInfoTarjetaMadre.setVisible(true);
+=======
+		panelInfoTarjetaMadre.setVisible(true);
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 			comboBoxCRAM.removeAllItems();
 			comboBoxCDisco.removeAllItems();
 			m = tiendaC.encontComponente(combobox1, combobox2, componente, modelo);
@@ -906,6 +1159,7 @@ public class VenderPieza extends JDialog {
 			else {
 				limpiar();
 			}
+<<<<<<< HEAD
 			for(int i = 0; i < m.getDiscos().size(); i++) {
 				discoList.add(i, m.getDiscos().get(i).getMarca() + "   " +  m.getDiscos().get(i).getModelo());
 			}
@@ -926,6 +1180,28 @@ public class VenderPieza extends JDialog {
 		}
 		catch(Exception e) {
 
+=======
+				for(int i = 0; i < m.getDiscos().size(); i++) {
+					discoList.add(i, m.getDiscos().get(i).getMarca() + "   " +  m.getDiscos().get(i).getModelo());
+				}
+				if(discoList != null) {
+					llenarComboBox(comboBoxCDisco, discoList);
+				}
+				else {
+					limpiar();
+				}
+					microList.add(m.getMicro().getMarca() + "   " +  m.getMicro().getModelo());
+					
+					if(microList!= null) {
+						llenarComboBox(comboBoxCMicro, microList);
+					}
+					else {
+						limpiar();
+					}
+		}
+		catch(Exception e) {
+			
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 		}
 	}
 
@@ -1090,7 +1366,10 @@ public class VenderPieza extends JDialog {
 		}
 	}
 	/***********************************Microprocesador*******************************************/
+<<<<<<< HEAD
 	@SuppressWarnings("unchecked")
+=======
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 	private void actualizarModeloMicroprocesador(String combo1, String combo2, String combo3) {
 		try {
 			modelo.clear();
@@ -1109,7 +1388,10 @@ public class VenderPieza extends JDialog {
 		}
 	}
 	/***********************************DiscoDuro*******************************************/
+<<<<<<< HEAD
 	@SuppressWarnings("unchecked")
+=======
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 	private void actualizarModeloDiscoDuro(String combo1, String combo3, String combo2) {
 		try {
 			modelo.clear();
@@ -1128,12 +1410,17 @@ public class VenderPieza extends JDialog {
 		}
 	}
 	/*************************************Memoria RAM*********************************************/
+<<<<<<< HEAD
 	@SuppressWarnings("unchecked")
+=======
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 	private void actualizarModeloMemoriaRAM(String combo1, String combo3, String combo2) {
 		try {
 			modelo.clear();
 			comboBoxModelo.removeAllItems();
 			modelo = tiendaC.modeloMemoriaRam("MemoriaRAM", combo1, combo3, combo2);
+<<<<<<< HEAD
+=======
 			if (modelo != null && !modelo.isEmpty()) {
 				llenarComboBox(comboBoxModelo, modelo);	
 				comboBoxModelo.setEnabled(true);
@@ -1145,6 +1432,29 @@ public class VenderPieza extends JDialog {
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(VenderPieza.this, "Error al actualizar el modelo: " + e.getMessage());
 		}
+	}
+	/*************************************Tarjeta Madre*********************************************/
+	private void actualizarModeloTarjetaMadre(String combo1, String combo2) {
+		try {
+			modelo.clear();
+			comboBoxModelo.removeAllItems();
+			ArrayList<TarjetaMadre> m = new ArrayList<TarjetaMadre>();
+			m = tiendaC.modeloTarjetaMadre("TarjetaMadre", combo1, combo2);
+			for(int i = 0; i< m.size(); i++) {
+				modelo.add(m.get(i).getModelo());
+			}
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
+			if (modelo != null && !modelo.isEmpty()) {
+				llenarComboBox(comboBoxModelo, modelo);	
+				comboBoxModelo.setEnabled(true);
+			} else {
+				limpiarDatos();
+				comboBoxModelo.setEnabled(false);
+				JOptionPane.showMessageDialog(VenderPieza.this, "Componente no encontrado");
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(VenderPieza.this, "Error al actualizar el modelo: " + e.getMessage());
+		}	
 	}
 	/*************************************Tarjeta Madre*********************************************/
 	@SuppressWarnings("unchecked")
@@ -1382,7 +1692,30 @@ public class VenderPieza extends JDialog {
 			catch(Exception e) {
 			}
 			break;
+<<<<<<< HEAD
+=======
+		case "Tarjeta Madre":
+			actualizarDatos((String)comboBoxMarca.getSelectedItem(), (String)comboBoxAtributo1.getSelectedItem(), componente, modelo);
+			try {
+				if(m != null) {
+			nombretext.setText("Tarjeta MAdre");
+			MarcaEncontText.setText(m.getMarca());
+			modelotext.setText(m.getModelo());
+			notext.setText(m.getNumSerie());
+			preciotext.setText(String.valueOf(m.getPrecio()));
+			cantidadtxt.setText(String.valueOf(m.getCantDisponible()));
+				}
+				else {
+					limpiarDatos();
+				}
+			}
+			catch(Exception e) {
+				JOptionPane.showMessageDialog(VenderPieza.this, "Error al actualizar el componente: " + e.getMessage());
+			}
+			break;
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 		default:
+
 			break;
 		}
 	}
@@ -1404,11 +1737,28 @@ public class VenderPieza extends JDialog {
 
 	}
 	private void actualizarTotal() {
+<<<<<<< HEAD
 		float totalF = 0;
 		float t = 0;
 		for(int i = 0; i < tableModel.getRowCount(); i++) {
 			totalF = Float.valueOf((String) tableModel.getValueAt(i, 5));
 			t += Float.valueOf(totalF);
+=======
+		Object totalF = 0;
+		float t = 0;
+		for(int i = 0; i < tableModel.getRowCount(); i++) {
+			totalF = tableModel.getValueAt(i, 4);
+			t += Float.valueOf((String) totalF);
+		}
+		totalFactura.setText(String.valueOf(t));
+	}
+	private void actualizarCantidadTXT() {
+		Object totalF = 0;
+		float t = 0;
+		for(int i = 0; i < tableModel.getRowCount(); i++) {
+			totalF = tableModel.getValueAt(i, 3);
+			t += Float.valueOf((String) totalF);
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 		}
 		totalFactura.setText(String.valueOf(t));
 	}

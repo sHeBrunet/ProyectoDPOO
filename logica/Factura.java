@@ -6,14 +6,20 @@ import java.util.ArrayList;
 
 public class Factura {
 	private ArrayList<ComponenteOrdenador> com;
+<<<<<<< HEAD
 	private ArrayList <Integer> cantidadXPieza;
 	private LocalDate fecha;
 	private ArrayList <Boolean> ensamblado;
 	private float precioEnsamblado;
+=======
+	private ArrayList<Integer> cantidadXPieza;
+	private LocalDate fecha;
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 
 	public Factura(LocalDate fecha) {
 		com = new ArrayList<>();
 		cantidadXPieza = new ArrayList<>();
+<<<<<<< HEAD
 		ensamblado = new ArrayList<Boolean>();
 		setFecha(fecha);
 		setPrecioEnsamblado(precioEnsamblado);
@@ -45,6 +51,11 @@ public class Factura {
 	}
 
 
+=======
+		setFecha(fecha);
+	}
+
+>>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 	public LocalDate getFecha() {
 		return fecha;
 	}

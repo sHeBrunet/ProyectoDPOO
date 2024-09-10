@@ -1,5 +1,4 @@
 package inicializaciones;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -102,19 +101,6 @@ public class InicializacionDeDatos {
 	}
 
 	//Datos para los productos
-	/*********************************Adaptadores*************************************************************/
-	public static void inicializarAdaptadores(TiendaDeComputadoras tienda) {
-		ArrayList<Adaptador> adaptadores = new ArrayList<>();
-		adaptadores.add(new Adaptador(10, "A45", "Anker", "Hub 7en1 Thunderbolt 3", 12.99f));
-		adaptadores.add(new Adaptador(10, "A12345", "Amazon Basics", "USB-C a USB-A", 16.99f));
-		adaptadores.add(new Adaptador(10, "A2345", "Apple", "USB-C a Ethernet", 20.99f));
-		adaptadores.add(new Adaptador(10, "App2345", "Belkin", "USB-C a HDMI", 24.99f));
-		adaptadores.add(new Adaptador(10, "Ae12345", "ViTech", "HDMI a VGA", 28.99f));
-
-		ArrayList<ComponenteOrdenador> c = new ArrayList<ComponenteOrdenador>();
-		c.addAll(adaptadores);
-		tienda.agregarComponenteI(c);
-	}
 	public static ArrayList<String> capacidadDiscoDuroTB(){
 		ArrayList<String> c = new ArrayList<String>();
 		c.add("1");
@@ -128,12 +114,11 @@ public class InicializacionDeDatos {
 	public static ArrayList<String> velocidadaMicro(){// En GHz
 		ArrayList<String> c = new ArrayList<String>();
 		c.add("2");
-		c.add("2.5");
-		c.add("3");
 		c.add("3.5");
 		c.add("4");
-		c.add("4.5");
-		c.add("5");
+		c.add("5.5");
+		c.add("6");
+		c.add("7.5");
 		return c;
 	}	
 	public static ArrayList<String> espacioRAM(){// En GB
@@ -142,8 +127,23 @@ public class InicializacionDeDatos {
 		c.add("8");
 		c.add("16");
 		c.add("32");
+		c.add("64");
 		return c;
 	}	
+	
+	/*********************************Adaptadores*************************************************************/
+	public static void inicializarAdaptadores(TiendaDeComputadoras tienda) {
+		ArrayList<Adaptador> adaptadores = new ArrayList<>();
+		adaptadores.add(new Adaptador(10, "A45", "Anker", "Hub 7en1 Thunderbolt 3", 12.99f));
+		adaptadores.add(new Adaptador(10, "A12345", "Amazon Basics", "USB-C a USB-A", 16.99f));
+		adaptadores.add(new Adaptador(10, "A2345", "Apple", "USB-C a Ethernet", 20.99f));
+		adaptadores.add(new Adaptador(10, "App2345", "Belkin", "USB-C a HDMI", 24.99f));
+		adaptadores.add(new Adaptador(10, "Ae12345", "ViTech", "HDMI a VGA", 28.99f));
+
+		ArrayList<ComponenteOrdenador> c = new ArrayList<ComponenteOrdenador>();
+		c.addAll(adaptadores);
+		tienda.agregarComponenteI(c);
+	}
 
 	/**********************************Bocina***************************************************************/
 	public static void inicializarBocinas(TiendaDeComputadoras tienda) {
@@ -481,8 +481,8 @@ public class InicializacionDeDatos {
 
 	public static ArrayList<String> nameComponente() {
 		ArrayList<String> names= new ArrayList<String>();
-		names.add("Adaptador");
-		names.add("Bocina");
+		names.add("Adaptador");	
+		names.add("Bocina");		
 		names.add("Chasis");
 		names.add("Disco Duro");
 		names.add("Fuente");
