@@ -529,6 +529,39 @@ public class AgregarTrabajador extends JDialog {
 	}
 
 
+	/***************Otra validacion CI********************/
+	/*public static boolean validarCarnet(String carnet) {
+		boolean e = false;
+
+		String regex = "^(\\d{2})(\\d{2})(\\d{2})(\\d{5})$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(carnet);
+		String dia = matcher.group(1);
+		String mes = matcher.group(2);
+		String anno = matcher.group(3);
+		String resto = matcher.group(4);
+		int year = Integer.parseInt(anno);
+		year +=(year < 50) ? 2000: 1900;
+		while(!e) {
+			if(carnet.length() == 11) {
+				if(matcher.matches()) {	
+					if(year >= 1950) {
+						e = true;
+					}
+				}
+			}
+			String fechaStr =  String.format("%02d-%02d-%04d", Integer.parseInt(dia), Integer.parseInt(mes), year);
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+			try {
+				LocalDate fecha = LocalDate.parse(fechaStr, formatter);
+			}
+			catch(DateTimeException e1) {
+				e = true;
+			}
+		}
+		return e;
+	}*/
+
 	private void agregarTabla() {
 		int count = tienda.getCantTrabajadores();
 		for(Trabajador t: trabaj) {

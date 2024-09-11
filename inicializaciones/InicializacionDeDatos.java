@@ -130,7 +130,7 @@ public class InicializacionDeDatos {
 		c.add("64");
 		return c;
 	}	
-	
+
 	/*********************************Adaptadores*************************************************************/
 	public static void inicializarAdaptadores(TiendaDeComputadoras tienda) {
 		ArrayList<Adaptador> adaptadores = new ArrayList<>();
@@ -1100,5 +1100,4 @@ public class InicializacionDeDatos {
 		eficiencias.add("Platinum");
 		return eficiencias;
 	}
-
 }

@@ -139,6 +139,36 @@ public class TiendaDeComputadoras {
 		return act;
 	}
 
+	/*public boolean agregarP(ComponenteOrdenador c, ArrayList<ComponenteOrdenador> piezasAgregadas) {
+		boolean act = false;
+		boolean stop = false;
+		int j = 1;
+		if(!piezasAgregadas.isEmpty()) {
+			for(int i = 0; i < piezasAgregadas.size() && !stop; i++) {
+				while(j < piezasAgregadas.size() && !stop) {
+					if(piezasAgregadas.get(i).getMarca().equalsIgnoreCase(c.getMarca())) {
+						if(piezasAgregadas.get(i).getModelo().equalsIgnoreCase(c.getModelo())) {
+							if(piezasAgregadas.get(i).getNumSerie().equalsIgnoreCase(c.getNumSerie())) {
+								act = true;
+								stop = true;
+								int cantidadActual = piezasAgregadas.get(i).getCantDisponible();
+								piezasAgregadas.get(i).setCantDisponible(cantidadActual + c.getCantDisponible());
+							}
+							else
+								j++;
+						}
+						else
+							j++;
+					}
+					else
+						j++;
+				}
+				j = 1;
+			}
+		}
+		return act;
+	}*/
+
 	public int getUltimoNoTrabajador() {
 		return trabajadores.size();
 	}
@@ -155,7 +185,7 @@ public class TiendaDeComputadoras {
 
 	public void actualizarTrabajador(ArrayList<Trabajador> t) {
 		for(Trabajador trabajador: trabajadores) {
-			for(Trabajador trab: t) {
+			for(Trabajador tra: t) {
 				if(!t.contains(trabajador)) {
 					trabajadores.remove(trabajador);
 				}
@@ -786,11 +816,7 @@ public class TiendaDeComputadoras {
 
 	private ArrayList<Microprocesador> encontrarModeloMicroprocesador(String nombre, String marca,
 			String tipoDeConexion, String velocidad) {
-<<<<<<< HEAD
 		double velocidad1 = Double.parseDouble(velocidad);
-=======
-		float velocidad1 = Integer.parseInt(velocidad);
->>>>>>> 021edd5cabcbeb23c277cd230348697e0267e1eb
 		ArrayList<Microprocesador> f = new ArrayList<>();
 		if (componentes != null) {
 			for (ComponenteOrdenador c : componentes) {
