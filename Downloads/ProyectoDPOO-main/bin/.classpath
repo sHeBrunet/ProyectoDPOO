@@ -7,12 +7,12 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="jgoodies-forms-1.8.0.jar" sourcepath="jgoodies-forms-1.8.0-sources.jar"/>
-	<classpathentry kind="lib" path="C:/Users/kbrun/OneDrive/Documents/api-2024.06.08.jar"/>
-	<classpathentry kind="lib" path="C:/Users/kbrun/OneDrive/Documents/bibliotecas Look and feel/JTattoo-1.6.11.jar"/>
-	<classpathentry kind="lib" path="C:/Users/kbrun/OneDrive/Documents/bibliotecas Look and feel/LiquidLnF.jar"/>
-	<classpathentry kind="lib" path="C:/Users/kbrun/OneDrive/Documents/bibliotecas Look and feel/Looks-2.0-rc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/kbrun/OneDrive/Documents/bibliotecas Look and feel/NimrodLF.jar"/>
-	<classpathentry kind="lib" path="C:/Users/kbrun/OneDrive/Documents/bibliotecas Look and feel/TinyLaF.jar"/>
-	<classpathentry kind="lib" path="C:/Users/kbrun/OneDrive/Documents/bibliotecas Look and feel/TonicLF.jar"/>
+	<classpathentry kind="lib" path="C:/Users/kbrun/Downloads/ProyectoDPOO-main/api-2024.06.08.jar"/>
+	<classpathentry kind="lib" path="C:/Users/kbrun/Downloads/ProyectoDPOO-main/JTattoo-1.6.11.jar"/>
+	<classpathentry kind="lib" path="C:/Users/kbrun/Downloads/ProyectoDPOO-main/LiquidLnF.jar"/>
+	<classpathentry kind="lib" path="C:/Users/kbrun/Downloads/ProyectoDPOO-main/Looks-2.0-rc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/kbrun/Downloads/ProyectoDPOO-main/NimrodLF.jar"/>
+	<classpathentry kind="lib" path="C:/Users/kbrun/Downloads/ProyectoDPOO-main/TinyLaF.jar"/>
+	<classpathentry kind="lib" path="C:/Users/kbrun/Downloads/ProyectoDPOO-main/TonicLF.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

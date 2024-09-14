@@ -29,5 +29,9 @@ private String refrigeracion; //En celsius
 			throw new IllegalArgumentException("La refrigeracion debe de ser de tipo (aire, líquido, pasivo, mixto)");
 		}
 	}
+	
+	public void setPrecio(float precio) {
+		this.precio = 115.99f + precio;
+	}
 
 }

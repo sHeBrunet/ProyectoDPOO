@@ -19,4 +19,8 @@ public class Bocina extends ComponenteOrdenador {
 			throw new IllegalArgumentException("El tipo de conectividad debe de ser inalámbrica o por cable");
 		}
 	}
+	
+	public void setPrecio(float precio) {
+		this.precio = 14.99f + precio;
+	}
 }

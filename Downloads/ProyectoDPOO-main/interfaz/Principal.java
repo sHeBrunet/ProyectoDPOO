@@ -56,8 +56,6 @@ public class Principal extends JFrame {
 	private JMenuItem AgregarProductos;
 	private JMenuItem ListaDeProductos;
 	private JMenuItem Facturas;
-	private JMenuItem DineroR;
-	private JMenuItem PagoTrab;
 	private JMenuItem ListaDeTrabajadores;
 	private JMenuItem AgregarTrabajador;
 
@@ -80,7 +78,7 @@ public class Principal extends JFrame {
 		JMenu MenuInicio = new JMenu("Inicio");
 		MenuInicio.setBackground(Color.WHITE);
 		menuBar.add(MenuInicio);
-		
+
 		Informacion = new JMenuItem("Informaci\u00F3n");
 		Informacion.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		Informacion.setBackground(Color.WHITE);
@@ -98,7 +96,7 @@ public class Principal extends JFrame {
 		});
 		Informacion.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, InputEvent.CTRL_MASK));
 		MenuInicio.add(Informacion);
-		
+
 		CerrarSesion = new JMenuItem("Cerrar Sesi\u00F3n");
 		CerrarSesion.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		CerrarSesion.addActionListener(new ActionListener() {
@@ -137,7 +135,7 @@ public class Principal extends JFrame {
 		JMenu MenuProductos = new JMenu("Productos");
 		MenuProductos.setBackground(Color.WHITE);
 		menuBar.add(MenuProductos);
-		
+
 		ListaDeProductos = new JMenuItem("Listado de Productos");
 		ListaDeProductos.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		ListaDeProductos.addActionListener(new ActionListener() {
@@ -155,7 +153,7 @@ public class Principal extends JFrame {
 		ListaDeProductos.setBackground(Color.WHITE);
 		ListaDeProductos.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_MASK));
 		MenuProductos.add(ListaDeProductos);
-		
+
 		AgregarProductos = new JMenuItem("Agregar Productos ");
 		AgregarProductos.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		AgregarProductos.addActionListener(new ActionListener() {
@@ -195,21 +193,25 @@ public class Principal extends JFrame {
 		VenderProductos.setBackground(Color.WHITE);
 		VenderProductos.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_MASK));
 		MenuProductos.add(VenderProductos);
-	
+
 		Facturas = new JMenuItem("Facturas");
 		Facturas.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		Facturas.setBackground(Color.WHITE);
 		Facturas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-					try {
+				try {
+					if(!tiendaC.getFacturas().isEmpty()) {
 						Facturas dialog = new Facturas(Principal.this, tiendaC);
 						dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 						dialog.setLocationRelativeTo(null);
 						dialog.setVisible(true);
-					} catch (Exception e8) {
-						e8.printStackTrace();
 					}
+					else
+						JOptionPane.showMessageDialog(Principal.this, "Mientras no se haya vendido ninguna pieza, no se mostrarán las facturas");
+				} catch (Exception e8) {
+					e8.printStackTrace();
 				}
+			}
 		});
 		Facturas.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, InputEvent.CTRL_MASK));
 		MenuProductos.add(Facturas);
@@ -270,24 +272,127 @@ public class Principal extends JFrame {
 		MenuReportes.setBackground(Color.WHITE);
 		menuBar.add(MenuReportes);
 
-		DineroR = new JMenuItem("Dinero Recaudado");
-		DineroR.setBackground(Color.WHITE);
-		MenuReportes.add(DineroR);
-
-		PagoTrab = new JMenuItem("Pago de los Trabajadores");
-		PagoTrab.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {	
+		JMenuItem CantidadPiezas = new JMenuItem("Cantidad de piezas");
+		CantidadPiezas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					CantidadDePiezas dialog = new CantidadDePiezas(null, tiendaC);
+					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+					dialog.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		});
-		PagoTrab.setBackground(Color.WHITE);
-		MenuReportes.add(PagoTrab);
+		CantidadPiezas.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.ALT_MASK));
+		CantidadPiezas.setBackground(Color.WHITE);
+		MenuReportes.add(CantidadPiezas);
 		
+		JMenuItem PiezasMasCarasBtn = new JMenuItem("Piezas m\u00E1s caras");
+		PiezasMasCarasBtn.addActionListener(new ActionListener() {
+			
+		public void actionPerformed(ActionEvent arg0) {
+			try {
+				PiezasMasCaras dialog = new PiezasMasCaras(null, tiendaC);
+				dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+				dialog.setVisible(true);
+			} catch (Exception e7) {
+				e7.printStackTrace();
+			}
+		}
+	});
+		PiezasMasCarasBtn.setBackground(Color.WHITE);
+		PiezasMasCarasBtn.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.ALT_MASK));
+		MenuReportes.add(PiezasMasCarasBtn);
+		
+		JMenuItem DineroTotalRecaudado = new JMenuItem("Dinero Total Recaudado");
+		DineroTotalRecaudado.addActionListener(new ActionListener() {
+			 	public void actionPerformed(ActionEvent arg0) {
+				try {
+					if(tiendaC.getFacturas().isEmpty()) {
+						JOptionPane.showMessageDialog(null, "Error. Todavia no se ha ejecutado ninguna venta" );
+					} 
+					else {
+					DineroTotalRecaudado dialog = new DineroTotalRecaudado(null, tiendaC);
+					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+					dialog.setVisible(true);
+					}
+				} catch (Exception e8) {
+					e8.printStackTrace();
+				}
+			}
+		});
+		DineroTotalRecaudado.setBackground(Color.WHITE);
+		DineroTotalRecaudado.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.ALT_MASK));
+		MenuReportes.add(DineroTotalRecaudado);
+		
+		JMenuItem DineroPorVenta = new JMenuItem("Dinero por venta de una pieza dada");
+		DineroPorVenta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					if(tiendaC.getFacturas().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Error. Todavia no se ha ejecutado ninguna venta" );
+				} 
+				else {
+					DineroTotalRecaudado dialog = new DineroTotalRecaudado(null, tiendaC);
+					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+					dialog.setVisible(true);
+				}
+				} catch (Exception e9) {
+					e9.printStackTrace();
+				}
+			}
+		});
+		DineroPorVenta.setBackground(Color.WHITE);
+		DineroPorVenta.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.ALT_MASK));
+		MenuReportes.add(DineroPorVenta);
+		
+		
+		JMenuItem SalarioTotal = new JMenuItem("Salario Total ");
+		SalarioTotal.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					SalarioTotal dialog = new SalarioTotal(null, tiendaC);
+					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+					dialog.setVisible(true);
+				} catch (Exception e4) {
+					e4.printStackTrace();
+				}
+			}
+		});
+		SalarioTotal.setBackground(Color.WHITE);
+		SalarioTotal.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, InputEvent.ALT_MASK));
+		MenuReportes.add(SalarioTotal);
+		
+		JMenuItem PiezasVendidasPor = new JMenuItem("Piezas vendidas por encima de precio dado");
+		PiezasVendidasPor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					if(tiendaC.getFacturas().isEmpty()) {
+						JOptionPane.showMessageDialog(null, "Error. Todavia no se ha ejecutado ninguna venta" );
+					} 
+					else {
+					PiezasVendidasPrecios dialog = new PiezasVendidasPrecios(null, tiendaC);
+					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+					dialog.setVisible(true);
+					}
+				} catch (Exception e11) {
+					e11.printStackTrace();
+				}
+			}
+		});
+		PiezasVendidasPor.setBackground(Color.WHITE);
+		PiezasVendidasPor.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, InputEvent.ALT_MASK));
+		MenuReportes.add(PiezasVendidasPor);
+		
+		
+
 		panelGeneral = new JPanel();
 		panelGeneral.setBackground(Color.WHITE);
 		panelGeneral.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(panelGeneral);
 		panelGeneral.setLayout(null);
-		
+
 		JPanel panelPrincipal = new JPanel();
 		panelPrincipal.setBorder(null);
 		panelPrincipal.setBackground(Color.WHITE);

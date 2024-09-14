@@ -20,6 +20,8 @@ public class Fuente extends ComponenteOrdenador {
 			throw new IllegalArgumentException("El tipo de eficiencia debe de ser de tipo (80 PLUS, Bronze, Silver, Gold, Platinum)");
 		}
 	}
-	
+	public void setPrecio(float precio) {
+		this.precio = 25.99f + precio;
+	}
 
 }

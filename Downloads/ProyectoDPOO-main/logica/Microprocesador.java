@@ -64,5 +64,8 @@ public class Microprocesador extends ComponenteOrdenador {
 		this.velocidad = velocidad;
 	}
 
+	public void setPrecio(float precio) {
+		this.precio = 55.99f + precio;
+	}
 
 }

@@ -1,11 +1,14 @@
 package interfaz;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -31,16 +34,17 @@ import logica.TarjetaDeVideo;
 import logica.TarjetaMadre;
 import logica.Teclado;
 import logica.TiendaDeComputadoras;
-import java.awt.Color;
+import javax.swing.border.MatteBorder;
 
 public class ListadoDeProductos extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 
 	private static TiendaDeComputadoras tienda;
+	private static Principal p;
 	private JButton btnBorrar;
 	private JButton btnAtras;
-	private JButton btnAceptar;
+	private JButton btnGuardar;
 	private String[] columnNames = {"No.", "Marca", "Modelo", "Precio", "Cantidad", "No. Serie"};
 	private static JTable tableBocinas;
 	private static JTable tableChasis;
@@ -55,6 +59,7 @@ public class ListadoDeProductos extends JDialog {
 	private static JTable tableTeclados;
 	private static JTable tableAdaptadores;
 	private static JTable tableTotalPiezas;
+	private static String ID;
 	private boolean cambios = false;
 	private static ArrayList <String> piezasAElim = new ArrayList <>();
 	private static int count;
@@ -71,7 +76,9 @@ public class ListadoDeProductos extends JDialog {
 		setLocationRelativeTo(null);
 
 		JTabbedPane tabbedPane = new JTabbedPane();
-		tabbedPane.setBackground(new Color(255, 255, 255));
+		tabbedPane.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(135, 206, 235)));
+		tabbedPane.setFocusable(false);
+		tabbedPane.setBackground(Color.WHITE);
 
 		JPanel panelChasis = new JPanel(new BorderLayout());
 		panelChasis.setBackground(new Color(255, 255, 255));
@@ -118,6 +125,19 @@ public class ListadoDeProductos extends JDialog {
 			}
 		};
 		tableChasis = new JTable(modelChasis);
+		tableChasis.setGridColor(new Color(135, 206, 235));
+		tableChasis.setFocusable(false);
+		tableChasis.setToolTipText("<html><fontface = 'Arial' size ='3'> Si da doble click encima de cualquier pieza, <br>" + "se mostrar\u00E1 m\u00E1s informaci\u00F3n sobre esta.");
+		tableChasis.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent event) {
+				if (event.getClickCount()> 1) {
+					int pos = tableChasis.getSelectedRow();
+					ID = (String) tableChasis.getValueAt(pos, 5);
+					informacionProd();
+				}
+			}
+		});
 		tableChasis.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -127,7 +147,7 @@ public class ListadoDeProductos extends JDialog {
 						int pos = tableChasis.getSelectedRow();
 						if (pos != -1) {
 							cambios = true;
-							String ID = (String) tableChasis.getValueAt(pos, 5);
+							ID = (String) tableChasis.getValueAt(pos, 5);
 							piezasAElim.add(ID);
 							((DefaultTableModel) tableChasis.getModel()).removeRow(pos);
 							limpiarChasis();
@@ -142,7 +162,9 @@ public class ListadoDeProductos extends JDialog {
 			}
 		});
 		tableChasis.getTableHeader().setReorderingAllowed(false);
-		panelChasis.add(new JScrollPane(tableChasis), BorderLayout.CENTER);
+		JScrollPane scrollPane_12 = new JScrollPane(tableChasis);
+		scrollPane_12.setFocusable(false);
+		panelChasis.add(scrollPane_12, BorderLayout.CENTER);
 
 		final DefaultTableModel modelBocinas = new DefaultTableModel(columnNames, 0) {
 			private static final long serialVersionUID = 1L;
@@ -153,6 +175,19 @@ public class ListadoDeProductos extends JDialog {
 			}
 		};
 		tableBocinas = new JTable(modelBocinas);
+		tableBocinas.setGridColor(new Color(135, 206, 235));
+		tableBocinas.setFocusable(false);
+		tableBocinas.setToolTipText("<html><fontface = 'Arial' size ='3'> Si da doble click encima de cualquier pieza, <br>" + "se mostrar\u00E1 m\u00E1s informaci\u00F3n sobre esta.");
+		tableBocinas.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent event) {
+				if (event.getClickCount()> 1) {
+					int pos = tableBocinas.getSelectedRow();
+					ID = (String) tableBocinas.getValueAt(pos, 5);
+					informacionProd();
+				}
+			}
+		});
 		tableBocinas.setBackground(new Color(255, 255, 255));
 		tableBocinas.addKeyListener(new KeyAdapter() {
 			@Override
@@ -163,7 +198,7 @@ public class ListadoDeProductos extends JDialog {
 						int pos = tableBocinas.getSelectedRow();
 						if (pos != -1) {
 							cambios = true;
-							String ID = (String) tableBocinas.getValueAt(pos, 5);
+							ID = (String) tableBocinas.getValueAt(pos, 5);
 							piezasAElim.add(ID);
 							((DefaultTableModel) tableBocinas.getModel()).removeRow(pos);
 							limpiarBocinas();
@@ -179,6 +214,7 @@ public class ListadoDeProductos extends JDialog {
 		});
 		tableBocinas.getTableHeader().setReorderingAllowed(false);
 		JScrollPane scrollPane_1 = new JScrollPane(tableBocinas);
+		scrollPane_1.setFocusable(false);
 		scrollPane_1.setBackground(new Color(255, 255, 255));
 		panelBocinas.add(scrollPane_1, BorderLayout.CENTER);
 
@@ -191,6 +227,19 @@ public class ListadoDeProductos extends JDialog {
 			}
 		};
 		tableDiscos = new JTable(modelDiscos);
+		tableDiscos.setGridColor(new Color(135, 206, 235));
+		tableDiscos.setFocusable(false);
+		tableDiscos.setToolTipText("<html><fontface = 'Arial' size ='3'> Si da doble click encima de cualquier pieza, <br>" + "se mostrar\u00E1 m\u00E1s informaci\u00F3n sobre esta.");
+		tableDiscos.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent event) {
+				if (event.getClickCount()> 1) {
+					int pos = tableDiscos.getSelectedRow();
+					ID = (String) tableDiscos.getValueAt(pos, 5);
+					informacionProd();
+				}
+			}
+		});
 		tableDiscos.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -200,7 +249,7 @@ public class ListadoDeProductos extends JDialog {
 						int pos = tableDiscos.getSelectedRow();
 						if (pos != -1) {
 							cambios = true;
-							String ID = (String) tableDiscos.getValueAt(pos, 5);
+							ID = (String) tableDiscos.getValueAt(pos, 5);
 							piezasAElim.add(ID);
 							((DefaultTableModel) tableDiscos.getModel()).removeRow(pos);
 							limpiarDiscos();
@@ -216,6 +265,7 @@ public class ListadoDeProductos extends JDialog {
 		});
 		tableDiscos.getTableHeader().setReorderingAllowed(false);
 		JScrollPane scrollPane_2 = new JScrollPane(tableDiscos);
+		scrollPane_2.setFocusable(false);
 		scrollPane_2.setBackground(new Color(255, 255, 255));
 		panelDiscos.add(scrollPane_2, BorderLayout.CENTER);
 
@@ -228,6 +278,19 @@ public class ListadoDeProductos extends JDialog {
 			}
 		};
 		tableFuentes = new JTable(modelFuentes);
+		tableFuentes.setGridColor(new Color(135, 206, 235));
+		tableFuentes.setFocusable(false);
+		tableFuentes.setToolTipText("<html><fontface = 'Arial' size ='3'> Si da doble click encima de cualquier pieza, <br>" + "se mostrar\u00E1 m\u00E1s informaci\u00F3n sobre esta.");
+		tableFuentes.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent event) {
+				if (event.getClickCount()> 1) {
+					int pos = tableFuentes.getSelectedRow();
+					ID = (String) tableFuentes.getValueAt(pos, 5);
+					informacionProd();
+				}
+			}
+		});
 		tableFuentes.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -237,7 +300,7 @@ public class ListadoDeProductos extends JDialog {
 						int pos = tableFuentes.getSelectedRow();
 						if (pos != -1) {
 							cambios = true;
-							String ID = (String) tableFuentes.getValueAt(pos, 5);
+							ID = (String) tableFuentes.getValueAt(pos, 5);
 							piezasAElim.add(ID);
 							((DefaultTableModel) tableFuentes.getModel()).removeRow(pos);
 							limpiarFuentes();
@@ -253,6 +316,7 @@ public class ListadoDeProductos extends JDialog {
 		});
 		tableFuentes.getTableHeader().setReorderingAllowed(false);
 		JScrollPane scrollPane_3 = new JScrollPane(tableFuentes);
+		scrollPane_3.setFocusable(false);
 		scrollPane_3.setBackground(new Color(255, 255, 255));
 		panelFuentes.add(scrollPane_3, BorderLayout.CENTER);
 
@@ -265,6 +329,19 @@ public class ListadoDeProductos extends JDialog {
 			}
 		};
 		tableMicros = new JTable(modelMicros);
+		tableMicros.setGridColor(new Color(135, 206, 235));
+		tableMicros.setFocusable(false);
+		tableMicros.setToolTipText("<html><fontface = 'Arial' size ='3'> Si da doble click encima de cualquier pieza, <br>" + "se mostrar\u00E1 m\u00E1s informaci\u00F3n sobre esta.");
+		tableMicros.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent event) {
+				if (event.getClickCount()> 1) {
+					int pos = tableMicros.getSelectedRow();
+					ID = (String) tableMicros.getValueAt(pos, 5);
+					informacionProd();
+				}
+			}
+		});
 		tableMicros.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -274,7 +351,7 @@ public class ListadoDeProductos extends JDialog {
 						int pos = tableMicros.getSelectedRow();
 						if (pos != -1) {
 							cambios = true;
-							String ID = (String) tableMicros.getValueAt(pos, 5);
+							ID = (String) tableMicros.getValueAt(pos, 5);
 							piezasAElim.add(ID);
 							((DefaultTableModel) tableMicros.getModel()).removeRow(pos);
 							limpiarMicros();
@@ -290,6 +367,7 @@ public class ListadoDeProductos extends JDialog {
 		});
 		tableMicros.getTableHeader().setReorderingAllowed(false);
 		JScrollPane scrollPane_4 = new JScrollPane(tableMicros);
+		scrollPane_4.setFocusable(false);
 		scrollPane_4.setBackground(new Color(255, 255, 255));
 		panelMicros.add(scrollPane_4, BorderLayout.CENTER);
 
@@ -302,6 +380,19 @@ public class ListadoDeProductos extends JDialog {
 			}
 		};
 		tableMonitores = new JTable(modelMonitores);
+		tableMonitores.setGridColor(new Color(135, 206, 235));
+		tableMonitores.setFocusable(false);
+		tableMonitores.setToolTipText("<html><fontface = 'Arial' size ='3'> Si da doble click encima de cualquier pieza, <br>" + "se mostrar\u00E1 m\u00E1s informaci\u00F3n sobre esta.");
+		tableMonitores.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent event) {
+				if (event.getClickCount()> 1) {
+					int pos = tableMonitores.getSelectedRow();
+					ID = (String) tableMonitores.getValueAt(pos, 5);
+					informacionProd();
+				}
+			}
+		});
 		tableMonitores.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -311,7 +402,7 @@ public class ListadoDeProductos extends JDialog {
 						int pos = tableMonitores.getSelectedRow();
 						if (pos != -1) {
 							cambios = true;
-							String ID = (String) tableMonitores.getValueAt(pos, 5);
+							ID = (String) tableMonitores.getValueAt(pos, 5);
 							piezasAElim.add(ID);
 							((DefaultTableModel) tableMonitores.getModel()).removeRow(pos);
 							limpiarMonitores();
@@ -327,6 +418,7 @@ public class ListadoDeProductos extends JDialog {
 		});
 		tableMonitores.getTableHeader().setReorderingAllowed(false);
 		JScrollPane scrollPane_5 = new JScrollPane(tableMonitores);
+		scrollPane_5.setFocusable(false);
 		scrollPane_5.setBackground(new Color(255, 255, 255));
 		panelMonitores.add(scrollPane_5, BorderLayout.CENTER);
 
@@ -339,6 +431,19 @@ public class ListadoDeProductos extends JDialog {
 			}
 		};
 		tableMotherboards = new JTable(modelMotherboards);
+		tableMotherboards.setGridColor(new Color(135, 206, 235));
+		tableMotherboards.setFocusable(false);
+		tableMotherboards.setToolTipText("<html><fontface = 'Arial' size ='3'> Si da doble click encima de cualquier pieza, <br>" + "se mostrar\u00E1 m\u00E1s informaci\u00F3n sobre esta.");
+		tableMotherboards.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent event) {
+				if (event.getClickCount()> 1) {
+					int pos = tableMotherboards.getSelectedRow();
+					ID = (String) tableMotherboards.getValueAt(pos, 5);
+					informacionProd();
+				}
+			}
+		});
 		tableMotherboards.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -348,7 +453,7 @@ public class ListadoDeProductos extends JDialog {
 						int pos = tableMotherboards.getSelectedRow();
 						if (pos != -1) {
 							cambios = true;
-							String ID = (String) tableMotherboards.getValueAt(pos, 5);
+							ID = (String) tableMotherboards.getValueAt(pos, 5);
 							piezasAElim.add(ID);
 							((DefaultTableModel) tableMotherboards.getModel()).removeRow(pos);
 							limpiarMotherboards();
@@ -364,6 +469,7 @@ public class ListadoDeProductos extends JDialog {
 		});
 		tableMotherboards.getTableHeader().setReorderingAllowed(false);
 		JScrollPane scrollPane_6 = new JScrollPane(tableMotherboards);
+		scrollPane_6.setFocusable(false);
 		scrollPane_6.setBackground(new Color(255, 255, 255));
 		panelMotherboards.add(scrollPane_6, BorderLayout.CENTER);
 
@@ -376,6 +482,19 @@ public class ListadoDeProductos extends JDialog {
 			}
 		};
 		tableMouses = new JTable(modelMouse);
+		tableMouses.setGridColor(new Color(135, 206, 235));
+		tableMouses.setFocusable(false);
+		tableMouses.setToolTipText("<html><fontface = 'Arial' size ='3'> Si da doble click encima de cualquier pieza, <br>" + "se mostrar\u00E1 m\u00E1s informaci\u00F3n sobre esta.");
+		tableMouses.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent event) {
+				if (event.getClickCount()> 1) {
+					int pos = tableMouses.getSelectedRow();
+					ID = (String) tableMouses.getValueAt(pos, 5);
+					informacionProd();
+				}
+			}
+		});
 		tableMouses.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -385,7 +504,7 @@ public class ListadoDeProductos extends JDialog {
 						int pos = tableMouses.getSelectedRow();
 						if (pos != -1) {
 							cambios = true;
-							String ID = (String) tableMouses.getValueAt(pos, 5);
+							ID = (String) tableMouses.getValueAt(pos, 5);
 							piezasAElim.add(ID);
 							((DefaultTableModel) tableMouses.getModel()).removeRow(pos);
 							limpiarMouses();
@@ -401,6 +520,7 @@ public class ListadoDeProductos extends JDialog {
 		});
 		tableMouses.getTableHeader().setReorderingAllowed(false);
 		JScrollPane scrollPane_7 = new JScrollPane(tableMouses);
+		scrollPane_7.setFocusable(false);
 		scrollPane_7.setBackground(new Color(255, 255, 255));
 		panelMouse.add(scrollPane_7, BorderLayout.CENTER);
 
@@ -413,6 +533,19 @@ public class ListadoDeProductos extends JDialog {
 			}
 		};
 		tableRAM = new JTable(modelRAM);
+		tableRAM.setGridColor(new Color(135, 206, 235));
+		tableRAM.setFocusable(false);
+		tableRAM.setToolTipText("<html><fontface = 'Arial' size ='3'> Si da doble click encima de cualquier pieza, <br>" + "se mostrar\u00E1 m\u00E1s informaci\u00F3n sobre esta.");
+		tableRAM.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent event) {
+				if (event.getClickCount()> 1) {
+					int pos = tableRAM.getSelectedRow();
+					ID = (String) tableRAM.getValueAt(pos, 5);
+					informacionProd();
+				}
+			}
+		});
 		tableRAM.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -422,7 +555,7 @@ public class ListadoDeProductos extends JDialog {
 						int pos = tableRAM.getSelectedRow();
 						if (pos != -1) {
 							cambios = true;
-							String ID = (String) tableRAM.getValueAt(pos, 5);
+							ID = (String) tableRAM.getValueAt(pos, 5);
 							piezasAElim.add(ID);
 							((DefaultTableModel) tableRAM.getModel()).removeRow(pos);
 							limpiarRAM();
@@ -438,6 +571,7 @@ public class ListadoDeProductos extends JDialog {
 		});
 		tableRAM.getTableHeader().setReorderingAllowed(false);
 		JScrollPane scrollPane_8 = new JScrollPane(tableRAM);
+		scrollPane_8.setFocusable(false);
 		scrollPane_8.setBackground(new Color(255, 255, 255));
 		panelRAM.add(scrollPane_8, BorderLayout.CENTER);
 
@@ -450,6 +584,19 @@ public class ListadoDeProductos extends JDialog {
 			}
 		};
 		tableTarjetas = new JTable(modelTarjetas);
+		tableTarjetas.setGridColor(new Color(135, 206, 235));
+		tableTarjetas.setFocusable(false);
+		tableTarjetas.setToolTipText("<html><fontface = 'Arial' size ='3'> Si da doble click encima de cualquier pieza, <br>" + "se mostrar\u00E1 m\u00E1s informaci\u00F3n sobre esta.");
+		tableTarjetas.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent event) {
+				if (event.getClickCount()> 1) {
+					int pos = tableTarjetas.getSelectedRow();
+					ID = (String) tableTarjetas.getValueAt(pos, 5);
+					informacionProd();
+				}
+			}
+		});
 		tableTarjetas.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -459,7 +606,7 @@ public class ListadoDeProductos extends JDialog {
 						int pos = tableTarjetas.getSelectedRow();
 						if (pos != -1) {
 							cambios = true;
-							String ID = (String) tableTarjetas.getValueAt(pos, 5);
+							ID = (String) tableTarjetas.getValueAt(pos, 5);
 							piezasAElim.add(ID);
 							((DefaultTableModel) tableTarjetas.getModel()).removeRow(pos);
 							limpiarTarjetas();
@@ -475,6 +622,7 @@ public class ListadoDeProductos extends JDialog {
 		});
 		tableTarjetas.getTableHeader().setReorderingAllowed(false);
 		JScrollPane scrollPane_9 = new JScrollPane(tableTarjetas);
+		scrollPane_9.setFocusable(false);
 		scrollPane_9.setBackground(new Color(255, 255, 255));
 		panelTarjetas.add(scrollPane_9, BorderLayout.CENTER);
 
@@ -487,6 +635,19 @@ public class ListadoDeProductos extends JDialog {
 			}
 		};
 		tableTeclados = new JTable(modelTeclados);
+		tableTeclados.setGridColor(new Color(135, 206, 235));
+		tableTeclados.setFocusable(false);
+		tableTeclados.setToolTipText("<html><fontface = 'Arial' size ='3'> Si da doble click encima de cualquier pieza, <br>" + "se mostrar\u00E1 m\u00E1s informaci\u00F3n sobre esta.");
+		tableTeclados.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent event) {
+				if (event.getClickCount()> 1) {
+					int pos = tableTeclados.getSelectedRow();
+					ID = (String) tableTeclados.getValueAt(pos, 5);
+					informacionProd();
+				}
+			}
+		});
 		tableTeclados.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -496,7 +657,7 @@ public class ListadoDeProductos extends JDialog {
 						int pos = tableTeclados.getSelectedRow();
 						if (pos != -1) {
 							cambios = true;
-							String ID = (String) tableTeclados.getValueAt(pos, 5);
+							ID = (String) tableTeclados.getValueAt(pos, 5);
 							piezasAElim.add(ID);
 							((DefaultTableModel) tableTeclados.getModel()).removeRow(pos);
 							limpiarTeclados();
@@ -512,6 +673,7 @@ public class ListadoDeProductos extends JDialog {
 		});
 		tableTeclados.getTableHeader().setReorderingAllowed(false);
 		JScrollPane scrollPane_10 = new JScrollPane(tableTeclados);
+		scrollPane_10.setFocusable(false);
 		scrollPane_10.setBackground(new Color(255, 255, 255));
 		panelTeclados.add(scrollPane_10, BorderLayout.CENTER);
 
@@ -524,6 +686,17 @@ public class ListadoDeProductos extends JDialog {
 			}
 		};
 		tableAdaptadores = new JTable(modelAdaptadores);
+		tableAdaptadores.setGridColor(new Color(135, 206, 235));
+		tableAdaptadores.setFocusable(false);
+		tableAdaptadores.setToolTipText("<html><fontface = 'Arial' size ='3'> Si da doble click encima de cualquier pieza, <br>" + "se mostrar\u00E1 m\u00E1s informaci\u00F3n sobre esta.");
+		tableAdaptadores.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent event) {
+				if (event.getClickCount()> 1) {
+					JOptionPane.showMessageDialog(ListadoDeProductos.this, "No hay más información que mostrar sobre esta pieza");
+				}
+			}
+		});
 		tableAdaptadores.setBackground(new Color(255, 255, 255));
 		tableAdaptadores.addKeyListener(new KeyAdapter() {
 			@Override
@@ -534,7 +707,7 @@ public class ListadoDeProductos extends JDialog {
 						int pos = tableAdaptadores.getSelectedRow();
 						if (pos != -1) {
 							cambios = true;
-							String ID = (String) tableAdaptadores.getValueAt(pos, 5);
+							ID = (String) tableAdaptadores.getValueAt(pos, 5);
 							piezasAElim.add(ID);
 							((DefaultTableModel) tableAdaptadores.getModel()).removeRow(pos);
 							limpiarAdaptadores();
@@ -550,10 +723,29 @@ public class ListadoDeProductos extends JDialog {
 		});
 		tableAdaptadores.getTableHeader().setReorderingAllowed(false);
 		JScrollPane scrollPane = new JScrollPane(tableAdaptadores);
+		scrollPane.setFocusable(false);
 		scrollPane.setBackground(new Color(255, 255, 255));
 		panelAdaptadores.add(scrollPane, BorderLayout.CENTER);
 
 		tableTotalPiezas = new JTable(modelTotalPiezas);
+		tableTotalPiezas.setGridColor(new Color(135, 206, 235));
+		tableTotalPiezas.setFocusable(false);
+		tableTotalPiezas.setToolTipText("<html><fontface = 'Arial' size ='3'> Si da doble click encima de cualquier pieza, <br>" + "se mostrar\u00E1 m\u00E1s informaci\u00F3n sobre esta.");
+		tableTotalPiezas.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent event) {
+				if (event.getClickCount()> 1) {
+					int pos = tableTotalPiezas.getSelectedRow();
+					ID = (String) tableTotalPiezas.getValueAt(pos, 5);	
+					ComponenteOrdenador c = tienda.buscarComponente(ID);
+					if(c instanceof Adaptador) {
+						JOptionPane.showMessageDialog(ListadoDeProductos.this, "No hay más información que mostrar sobre esta pieza");
+					} 
+					else
+						informacionProd();	
+				}
+			}
+		});
 		tableTotalPiezas.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -563,7 +755,7 @@ public class ListadoDeProductos extends JDialog {
 						int pos = tableTotalPiezas.getSelectedRow();
 						if (pos != -1) {
 							cambios = true;
-							String ID = (String) tableTotalPiezas.getValueAt(pos, 5);
+							ID = (String) tableTotalPiezas.getValueAt(pos, 5);
 							piezasAElim.add(ID);
 							((DefaultTableModel) tableTotalPiezas.getModel()).removeRow(pos);		
 							limpiarTodo();
@@ -589,6 +781,7 @@ public class ListadoDeProductos extends JDialog {
 		});
 		tableTotalPiezas.getTableHeader().setReorderingAllowed(false);
 		JScrollPane scrollPane_11 = new JScrollPane(tableTotalPiezas);
+		scrollPane_11.setFocusable(false);
 		scrollPane_11.setBackground(new Color(255, 255, 255));
 		panelTotalPiezas.add(scrollPane_11, BorderLayout.CENTER);
 
@@ -630,9 +823,10 @@ public class ListadoDeProductos extends JDialog {
 		getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		getContentPane().add(panelBotones, BorderLayout.SOUTH);
 
-		btnAceptar = new JButton("Aceptar");
-		btnAceptar.setFocusable(false);
-		btnAceptar.addActionListener(new ActionListener() {
+		btnGuardar = new JButton("Guardar");
+		btnGuardar.setToolTipText("Luego de realizados los cambios, presione este bot\u00F3n para que estos se guarden.");
+		btnGuardar.setFocusable(false);
+		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(cambios) {
 					int count = tienda.eliminarPiezas(piezasAElim);
@@ -645,9 +839,10 @@ public class ListadoDeProductos extends JDialog {
 					JOptionPane.showMessageDialog(ListadoDeProductos.this, "No ha realizado ningún cambio");	
 			}
 		});
-		panelBotones.add(btnAceptar);
+		panelBotones.add(btnGuardar);
 
 		btnBorrar = new JButton("Borrar");
+		btnBorrar.setToolTipText("Seleccione una de las piezas y luego presione este bot\u00F3n o la tecla Delete, para eliminarla del almac\u00E9n.");
 		btnBorrar.setFocusable(false);
 		btnBorrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -668,7 +863,7 @@ public class ListadoDeProductos extends JDialog {
 					int posT = tableTeclados.getSelectedRow();
 					int posPT = tableTotalPiezas.getSelectedRow();
 					if (posAd != -1) {
-						String ID = (String) tableAdaptadores.getValueAt(posAd, 5);
+						ID = (String) tableAdaptadores.getValueAt(posAd, 5);
 						piezasAElim.add(ID);
 						((DefaultTableModel) tableAdaptadores.getModel()).removeRow(posAd);
 						limpiarAdaptadores();
@@ -676,7 +871,7 @@ public class ListadoDeProductos extends JDialog {
 						llenarTablaAdaptadores(modelAdaptadores);
 						llenarTablaTotalPiezas(modelTotalPiezas);
 					} else if (posB != -1) {
-						String ID = (String) tableBocinas.getValueAt(posB, 5);
+						ID = (String) tableBocinas.getValueAt(posB, 5);
 						piezasAElim.add(ID);
 						((DefaultTableModel) tableBocinas.getModel()).removeRow(posB);
 						limpiarBocinas();
@@ -684,7 +879,7 @@ public class ListadoDeProductos extends JDialog {
 						llenarTablaBocinas(modelBocinas);
 						llenarTablaTotalPiezas(modelTotalPiezas);
 					} else if (posC != -1) {
-						String ID = (String) tableChasis.getValueAt(posC, 5);
+						ID = (String) tableChasis.getValueAt(posC, 5);
 						piezasAElim.add(ID);
 						((DefaultTableModel) tableChasis.getModel()).removeRow(posC);
 						limpiarChasis();
@@ -692,7 +887,7 @@ public class ListadoDeProductos extends JDialog {
 						llenarTablaChasis(modelChasis);
 						llenarTablaTotalPiezas(modelTotalPiezas);
 					} else if (posD != -1) {
-						String ID = (String) tableDiscos.getValueAt(posD, 5);
+						ID = (String) tableDiscos.getValueAt(posD, 5);
 						piezasAElim.add(ID);
 						((DefaultTableModel) tableDiscos.getModel()).removeRow(posD);
 						limpiarDiscos();
@@ -700,7 +895,7 @@ public class ListadoDeProductos extends JDialog {
 						llenarTablaDiscos(modelDiscos);
 						llenarTablaTotalPiezas(modelTotalPiezas);
 					} else if (posF != -1) {
-						String ID = (String) tableFuentes.getValueAt(posF, 5);
+						ID = (String) tableFuentes.getValueAt(posF, 5);
 						piezasAElim.add(ID);
 						((DefaultTableModel) tableFuentes.getModel()).removeRow(posF);
 						limpiarFuentes();
@@ -708,7 +903,7 @@ public class ListadoDeProductos extends JDialog {
 						llenarTablaFuentes(modelFuentes);
 						llenarTablaTotalPiezas(modelTotalPiezas);
 					} else if (posMic != -1) {
-						String ID = (String) tableMicros.getValueAt(posMic, 5);
+						ID = (String) tableMicros.getValueAt(posMic, 5);
 						piezasAElim.add(ID);
 						((DefaultTableModel) tableMicros.getModel()).removeRow(posMic);
 						limpiarMicros();
@@ -716,7 +911,7 @@ public class ListadoDeProductos extends JDialog {
 						llenarTablaMicros(modelMicros);
 						llenarTablaTotalPiezas(modelTotalPiezas);
 					} else if (posMon != -1) {
-						String ID = (String) tableMonitores.getValueAt(posMon, 5);
+						ID = (String) tableMonitores.getValueAt(posMon, 5);
 						piezasAElim.add(ID);
 						((DefaultTableModel) tableMonitores.getModel()).removeRow(posMon);
 						limpiarMonitores();
@@ -724,7 +919,7 @@ public class ListadoDeProductos extends JDialog {
 						llenarTablaMonitores(modelMonitores);
 						llenarTablaTotalPiezas(modelTotalPiezas);
 					} else if (posMoth != -1) {
-						String ID = (String) tableMotherboards.getValueAt(posMoth, 5);
+						ID = (String) tableMotherboards.getValueAt(posMoth, 5);
 						piezasAElim.add(ID);
 						((DefaultTableModel) tableMotherboards.getModel()).removeRow(posMoth);
 						limpiarMotherboards();
@@ -732,7 +927,7 @@ public class ListadoDeProductos extends JDialog {
 						llenarTablaMotherboards(modelMotherboards);
 						llenarTablaTotalPiezas(modelTotalPiezas);
 					} else if (posMous != -1) {
-						String ID = (String) tableMouses.getValueAt(posMous, 5);
+						ID = (String) tableMouses.getValueAt(posMous, 5);
 						piezasAElim.add(ID);
 						((DefaultTableModel) tableMouses.getModel()).removeRow(posMous);
 						limpiarMouses();
@@ -740,7 +935,7 @@ public class ListadoDeProductos extends JDialog {
 						llenarTablaMouses(modelMouse);
 						llenarTablaTotalPiezas(modelTotalPiezas);
 					} else if (posR != -1) {
-						String ID = (String) tableRAM.getValueAt(posR, 5);
+						ID = (String) tableRAM.getValueAt(posR, 5);
 						piezasAElim.add(ID);
 						((DefaultTableModel) tableRAM.getModel()).removeRow(posR);
 						limpiarRAM();
@@ -748,7 +943,7 @@ public class ListadoDeProductos extends JDialog {
 						llenarTablaRAM(modelRAM);
 						llenarTablaTotalPiezas(modelTotalPiezas);
 					} else if (posTV != -1) {
-						String ID = (String) tableTarjetas.getValueAt(posTV, 5);
+						ID = (String) tableTarjetas.getValueAt(posTV, 5);
 						piezasAElim.add(ID);
 						((DefaultTableModel) tableTarjetas.getModel()).removeRow(posTV);
 						limpiarTarjetas();
@@ -756,7 +951,7 @@ public class ListadoDeProductos extends JDialog {
 						llenarTablaTarjetaVideo(modelTarjetas);
 						llenarTablaTotalPiezas(modelTotalPiezas);
 					} else if (posT != -1) {
-						String ID = (String) tableTeclados.getValueAt(posT, 5);
+						ID = (String) tableTeclados.getValueAt(posT, 5);
 						piezasAElim.add(ID);
 						((DefaultTableModel) tableTeclados.getModel()).removeRow(posT);		
 						limpiarTeclados();
@@ -764,7 +959,7 @@ public class ListadoDeProductos extends JDialog {
 						llenarTablaTeclados(modelTeclados);
 						llenarTablaTotalPiezas(modelTotalPiezas);
 					} else if (posPT != -1) {
-						String ID = (String) tableTotalPiezas.getValueAt(posPT, 5);
+						ID = (String) tableTotalPiezas.getValueAt(posPT, 5);
 						piezasAElim.add(ID);
 						((DefaultTableModel) tableTotalPiezas.getModel()).removeRow(posPT);		
 						limpiarTodo();
@@ -817,10 +1012,10 @@ public class ListadoDeProductos extends JDialog {
 						}
 					}
 					if(!encontrado)
-						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), (String.format("%.2f", c.getPrecio())), c.getCantDisponible(), c.getNumSerie()});
 				}
 				else {
-					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), (String.format("%.2f", c.getPrecio())), c.getCantDisponible(), c.getNumSerie()});
 				}
 		}
 	}
@@ -837,10 +1032,10 @@ public class ListadoDeProductos extends JDialog {
 						}
 					}
 					if(!encontrado)
-						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), (String.format("%.2f", c.getPrecio())), c.getCantDisponible(), c.getNumSerie()});
 				}
 				else {
-					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), (String.format("%.2f", c.getPrecio())), c.getCantDisponible(), c.getNumSerie()});
 				}
 		}
 	}
@@ -857,10 +1052,10 @@ public class ListadoDeProductos extends JDialog {
 						}
 					}
 					if(!encontrado)
-						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), (String.format("%.2f", c.getPrecio())), c.getCantDisponible(), c.getNumSerie()});
 				}
 				else {
-					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), (String.format("%.2f", c.getPrecio())), c.getCantDisponible(), c.getNumSerie()});
 				}
 		}
 	}
@@ -877,10 +1072,10 @@ public class ListadoDeProductos extends JDialog {
 						}
 					}
 					if(!encontrado)
-						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), (String.format("%.2f", c.getPrecio())), c.getCantDisponible(), c.getNumSerie()});
 				}
 				else {
-					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), (String.format("%.2f", c.getPrecio())), c.getCantDisponible(), c.getNumSerie()});
 				}
 		}
 	}
@@ -897,10 +1092,10 @@ public class ListadoDeProductos extends JDialog {
 						}
 					}
 					if(!encontrado)
-						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), (String.format("%.2f", c.getPrecio())), c.getCantDisponible(), c.getNumSerie()});
 				}
 				else {
-					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), (String.format("%.2f", c.getPrecio())), c.getCantDisponible(), c.getNumSerie()});
 				}
 		}
 	}
@@ -917,10 +1112,10 @@ public class ListadoDeProductos extends JDialog {
 						}
 					}
 					if(!encontrado)
-						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), (String.format("%.2f", c.getPrecio())), c.getCantDisponible(), c.getNumSerie()});
 				}
 				else {
-					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), (String.format("%.2f", c.getPrecio())), c.getCantDisponible(), c.getNumSerie()});
 				}
 		}
 	}
@@ -937,10 +1132,10 @@ public class ListadoDeProductos extends JDialog {
 						}
 					}
 					if(!encontrado)
-						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), (String.format("%.2f", c.getPrecio())), c.getCantDisponible(), c.getNumSerie()});
 				}
 				else {
-					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), (String.format("%.2f", c.getPrecio())), c.getCantDisponible(), c.getNumSerie()});
 				}
 		}
 	}
@@ -957,10 +1152,10 @@ public class ListadoDeProductos extends JDialog {
 						}
 					}
 					if(!encontrado)
-						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), (String.format("%.2f", c.getPrecio())), c.getCantDisponible(), c.getNumSerie()});
 				}
 				else {
-					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), (String.format("%.2f", c.getPrecio())), c.getCantDisponible(), c.getNumSerie()});
 				}
 		}
 	}
@@ -977,10 +1172,10 @@ public class ListadoDeProductos extends JDialog {
 						}
 					}
 					if(!encontrado)
-						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), (String.format("%.2f", c.getPrecio())), c.getCantDisponible(), c.getNumSerie()});
 				}
 				else {
-					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), (String.format("%.2f", c.getPrecio())), c.getCantDisponible(), c.getNumSerie()});
 				}
 		}
 	}
@@ -997,10 +1192,10 @@ public class ListadoDeProductos extends JDialog {
 						}
 					}
 					if(!encontrado)
-						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), (String.format("%.2f", c.getPrecio())), c.getCantDisponible(), c.getNumSerie()});
 				}
 				else {
-					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), (String.format("%.2f", c.getPrecio())), c.getCantDisponible(), c.getNumSerie()});
 				}
 		}
 	}
@@ -1017,10 +1212,10 @@ public class ListadoDeProductos extends JDialog {
 						}
 					}
 					if(!encontrado)
-						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), (String.format("%.2f", c.getPrecio())), c.getCantDisponible(), c.getNumSerie()});
 				}
 				else {
-					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), (String.format("%.2f", c.getPrecio())), c.getCantDisponible(), c.getNumSerie()});
 				}
 		}
 	}
@@ -1037,10 +1232,10 @@ public class ListadoDeProductos extends JDialog {
 						}
 					}
 					if(!encontrado)
-						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), (String.format("%.2f", c.getPrecio())), c.getCantDisponible(), c.getNumSerie()});
 				}
 				else {
-					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), (String.format("%.2f", c.getPrecio())), c.getCantDisponible(), c.getNumSerie()});
 				}
 		}
 	}
@@ -1057,10 +1252,10 @@ public class ListadoDeProductos extends JDialog {
 						}
 					}
 					if(!encontrado)
-						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+						model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), (String.format("%.2f", c.getPrecio())), c.getCantDisponible(), c.getNumSerie()});
 				}
 				else {
-					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), c.getPrecio(), c.getCantDisponible(), c.getNumSerie()});
+					model.addRow(new Object[]{count++, c.getMarca(), c.getModelo(), (String.format("%.2f", c.getPrecio())), c.getCantDisponible(), c.getNumSerie()});
 				}
 			}
 		}
@@ -1145,6 +1340,17 @@ public class ListadoDeProductos extends JDialog {
 		limpiarTarjetas();
 		limpiarTeclados();
 		limpiarTotalPiezas();
+	}
+
+	private void informacionProd() {
+		try {
+			InformacionProductos dialog = new InformacionProductos(p, tienda, ID);
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setLocationRelativeTo(null);
+			dialog.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
 

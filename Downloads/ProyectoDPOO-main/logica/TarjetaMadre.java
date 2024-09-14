@@ -44,7 +44,7 @@ private Microprocesador micro;
 		return memoriasR;
 	}
 	 public void agregarDiscoDuroCompatible(DiscoDuro d) {
-		 if(d != null) {// Validar DiscoDuro compatibles
+		 if(d != null) {
 		 discos.add(d); 
 		 }
 		 else
@@ -53,7 +53,7 @@ private Microprocesador micro;
 		 }
 	 }
 	 public void agregarMemoriaRAMCompatible(MemoriaRam m) {
-		 if(m != null) { //Validar MemoriasRAM compatibles
+		 if(m != null) {
 			 memoriasR.add(m); 
 			 }
 			 else
@@ -66,9 +66,11 @@ private Microprocesador micro;
 		}
 		
 	 public void setProcesadorCompatible(Microprocesador micro) {
- //Validar Microprocesadores compatibles
 		this.micro =micro;
 	 }
 	
+	 public void setPrecio(float precio) {
+			this.precio = 55.99f + precio;
+		}
 
 }

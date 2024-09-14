@@ -70,6 +70,7 @@ public class ListadoDeTrabajadores extends JDialog {
 			}
 		};
 		tableGerentes = new JTable(modelGerentes);
+		tableGerentes.setGridColor(new Color(135, 206, 235));
 		tableGerentes.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -112,6 +113,8 @@ public class ListadoDeTrabajadores extends JDialog {
 			}
 		};
 		tableTrabajadores = new JTable(modelTrabajadores);
+		tableTrabajadores.setGridColor(new Color(135, 206, 235));
+		tableTrabajadores.setFocusable(false);
 		tableTrabajadores.setBackground(new Color(255, 255, 255));
 		tableTrabajadores.addKeyListener(new KeyAdapter() {
 			@Override

@@ -24,7 +24,7 @@ public class Facturas extends JDialog {
 	private JTextField textTotalRecaudado;
 	private JTextField ensambladoT;
 	private float t = 0;
-	
+
 	public Facturas(Principal principal, TiendaDeComputadoras tiendaC) {
 		super(principal, true);
 		setResizable(false);
@@ -44,11 +44,19 @@ public class Facturas extends JDialog {
 		@SuppressWarnings("unused")
 		JPanel panel = new JPanel(new BorderLayout());
 		String[] columnNames = {"Fecha","Ensamblado","Nombre", "Marca", "Modelo", "Cantidad", "Costo Total"};
-		model = new DefaultTableModel(columnNames, 0);
+		model = new DefaultTableModel(columnNames, 0) {
+			private static final long serialVersionUID = 1L;
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 		table = new JTable(model);
+		table.setGridColor(new Color(135, 206, 235));
 		table.setSurrendersFocusOnKeystroke(true);
 		table.setRowSelectionAllowed(false);
 		table.setEnabled(false);
+		table.getTableHeader().setReorderingAllowed(false);
 		scrollPane.setViewportView(table);
 
 		JPanel panel_1 = new JPanel();
@@ -87,7 +95,7 @@ public class Facturas extends JDialog {
 
 		actualizarTabla();
 		actualizarEnsamblado();
-		
+
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		getContentPane().add(buttonPane, BorderLayout.SOUTH);

@@ -6,6 +6,8 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -57,10 +59,7 @@ public class AgregarProducto extends JDialog {
 	private JTextField txtPrecio;
 	private JTextFieldModificado txtNoSerieMovible;
 	private JSpinner spinner;
-	private JSpinner spinnerAtributo2;
-	private JComboBox<String> comboBoxMarca;
 	private JComboBox<String> comboBoxComponente;
-	private JComboBox<String> comboBoxModelo;
 	private JComboBox<String> comboBoxAtributo1;
 	private JButton btnEliminar;
 	private JButton btnGuardar;
@@ -70,11 +69,11 @@ public class AgregarProducto extends JDialog {
 	private DefaultTableModel tableModel;	
 	private static int cantidad;
 	private static float precio;
-	private static String pieza;
 	private static String marca;
 	private static String modelo;
 	private static String noSerie;	
 	private static String primAtrib;
+	private static String segundoAtrib;
 	private static JLabel lblNoSerie;
 	private static JLabel lblCantidad;
 	private static JLabel lblPrecio;
@@ -82,10 +81,14 @@ public class AgregarProducto extends JDialog {
 	private static JLabel Atributo2;
 	private static JLabel lblAtributo2;
 	private static Object compSeleccionado = null;
+	private JComboBox<String> comboBoxMarca;
+	private JComboBox<String> comboBoxModelo;
+	private JComboBox<String> comboBoxAtributo2;
 
 
 	public AgregarProducto(Principal principal, TiendaDeComputadoras tiendaC) {
 		super(principal, true);
+		setResizable(false);
 		piezasAgreg = new ArrayList<ComponenteOrdenador>();
 		tienda = tiendaC;
 
@@ -166,7 +169,7 @@ public class AgregarProducto extends JDialog {
 		txtNoSerieMovible.setBorder(new MatteBorder(1, 0, 1, 1, (Color) new Color(0, 0, 0)));
 		txtNoSerieMovible.setFont(new Font("Arial", Font.PLAIN, 15));
 		txtNoSerieMovible.setForeground(UIManager.getColor("Button.foreground"));
-		txtNoSerieMovible.setBounds(269, 157, 48, 20);
+		txtNoSerieMovible.setBounds(455, 212, 48, 20);
 		panelAgregarPiezas.add(txtNoSerieMovible);
 		txtNoSerieMovible.setColumns(10);
 		txtNoSerieMovible.setLimite(5);
@@ -177,15 +180,31 @@ public class AgregarProducto extends JDialog {
 		txtNoSerieFijo.setBorder(new MatteBorder(1, 1, 1, 0, (Color) new Color(0, 0, 0)));
 		txtNoSerieFijo.setFont(new Font("Arial", Font.PLAIN, 15));
 		txtNoSerieFijo.setForeground(UIManager.getColor("Button.foreground"));
-		txtNoSerieFijo.setBounds(247, 157, 25, 20);
+		txtNoSerieFijo.setBounds(353, 212, 70, 20);
 		panelAgregarPiezas.add(txtNoSerieFijo);
 		txtNoSerieFijo.setColumns(10);
 
 		txtPrecio = new JTextField();
-		txtPrecio.setDisabledTextColor(Color.WHITE);
+		txtPrecio.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(txtPrecio.getText().length() < 10) {
+					char t = e.getKeyChar();
+					if((t- '0' > 9 || t- '0' < 0) && t!= 8 && t!= '.') {
+						JOptionPane.showMessageDialog(null, "Solo se pueden introducir numeros en este campo", "Datos erróneos", JOptionPane.ERROR_MESSAGE);
+						e.consume();
+					}
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "El precio no puede exceder de 10 dígitos", "Datos erróneos", JOptionPane.ERROR_MESSAGE);
+					e.consume();
+				}
+			}
+		});
 		txtPrecio.setEditable(false);
+		txtPrecio.setDisabledTextColor(Color.WHITE);
 		txtPrecio.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-		txtPrecio.setFont(new Font("Arial", Font.PLAIN, 15));
+		txtPrecio.setFont(new Font("Arial", Font.PLAIN, 13));
 		txtPrecio.setColumns(10);
 		txtPrecio.setBounds(247, 212, 70, 20);
 		panelAgregarPiezas.add(txtPrecio);
@@ -203,7 +222,7 @@ public class AgregarProducto extends JDialog {
 		lblAtributo2.setText("t");
 		lblAtributo2.setFont(new Font("Tahoma", Font.BOLD, 15));
 		panelAgregarPiezas.add(lblAtributo2);
-		lblAtributo2.setBounds(327, 155, 37, 19);
+		lblAtributo2.setBounds(770, 155, 37, 19);
 
 		Atributo2 = new JLabel();
 		Atributo2.setVisible(false);
@@ -213,15 +232,64 @@ public class AgregarProducto extends JDialog {
 		Atributo2.setBounds(12, 155, 162, 20);
 		panelAgregarPiezas.add(Atributo2);
 
-		comboBoxModelo = new JComboBox<String>();	
-		comboBoxModelo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				int compSelecc = comboBoxComponente.getSelectedIndex();
-				int marcaSelecc = comboBoxMarca.getSelectedIndex();
-				int modeloSelecc = comboBoxModelo.getSelectedIndex();
-				int atrib1Selecc = comboBoxAtributo1.getSelectedIndex();
-				precio = obtenerPrecioComp(compSelecc, marcaSelecc, modeloSelecc, atrib1Selecc);
-				txtPrecio.setText(Float.toString(precio));
+		comboBoxMarca = new JComboBox<String>();
+		comboBoxMarca.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent event) {
+				if (event.getStateChange() == ItemEvent.SELECTED) {
+					inicializarComboBoxAtrib();
+					if(compSeleccionado != null) {
+						elegirModelo(compSeleccionado, comboBoxMarca.getSelectedItem());							
+						String numSerie = obtenerNoSerie();
+						ComponenteOrdenador c = tienda.buscarComponente(numSerie);
+						if(numSerie != "") {			
+							precio = tienda.obtenerPrecioComp(c, comboBoxComponente.getSelectedIndex(), comboBoxMarca.getSelectedIndex(), comboBoxModelo.getSelectedIndex(), comboBoxAtributo1.getSelectedIndex(), comboBoxAtributo2.getSelectedIndex());
+							txtPrecio.setText(String.format("%.2f", precio));
+							txtNoSerieMovible.setText("");
+							txtNoSerieFijo.setText(numSerie);				
+						}
+						else {
+							precio = tienda.obtenerPrecioComp(c, comboBoxComponente.getSelectedIndex(), comboBoxMarca.getSelectedIndex(), comboBoxModelo.getSelectedIndex(), comboBoxAtributo1.getSelectedIndex(), comboBoxAtributo2.getSelectedIndex());
+							txtPrecio.setText(String.format("%.2f", precio));
+							ponerNoSeriePiezasNuevas();
+							txtNoSerieMovible.setVisible(true);
+						}
+					}
+
+				}
+			}
+		});
+		comboBoxMarca.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if(c==KeyEvent.VK_ENTER)
+					btnAgregar.doClick();
+			}
+		});
+		comboBoxMarca.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		comboBoxMarca.setBounds(247, 71, 560, 20);	
+		panelAgregarPiezas.add(comboBoxMarca);
+
+		comboBoxModelo = new JComboBox<String>();
+		comboBoxModelo.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent event) {
+				if (event.getStateChange() == ItemEvent.SELECTED) {
+					inicializarComboBoxAtrib();
+					String numSerie = obtenerNoSerie();
+					ComponenteOrdenador c = tienda.buscarComponente(numSerie);
+					if(numSerie != "") {			
+						precio = tienda.obtenerPrecioComp(c, comboBoxComponente.getSelectedIndex(), comboBoxMarca.getSelectedIndex(), comboBoxModelo.getSelectedIndex(), comboBoxAtributo1.getSelectedIndex(), comboBoxAtributo2.getSelectedIndex());
+						txtPrecio.setText(String.format("%.2f", precio));
+						txtNoSerieMovible.setText("");
+						txtNoSerieFijo.setText(numSerie);				
+					}
+					else {
+						precio = tienda.obtenerPrecioComp(c, comboBoxComponente.getSelectedIndex(), comboBoxMarca.getSelectedIndex(), comboBoxModelo.getSelectedIndex(), comboBoxAtributo1.getSelectedIndex(), comboBoxAtributo2.getSelectedIndex());
+						txtPrecio.setText(String.format("%.2f", precio));
+						ponerNoSeriePiezasNuevas();
+						txtNoSerieMovible.setVisible(true);
+					}
+				}
 			}
 		});
 		comboBoxModelo.addKeyListener(new KeyAdapter() {
@@ -235,6 +303,73 @@ public class AgregarProducto extends JDialog {
 		comboBoxModelo.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		comboBoxModelo.setBounds(247, 98, 560, 20);
 		panelAgregarPiezas.add(comboBoxModelo);
+
+		comboBoxAtributo1 = new JComboBox<String>();
+		comboBoxAtributo1.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent event) {
+				if (event.getStateChange() == ItemEvent.SELECTED) {
+					String numSerie = obtenerNoSerie();
+					ComponenteOrdenador c = tienda.buscarComponente(numSerie);
+					if(numSerie != "") {			
+						precio = tienda.obtenerPrecioComp(c, comboBoxComponente.getSelectedIndex(), comboBoxMarca.getSelectedIndex(), comboBoxModelo.getSelectedIndex(), comboBoxAtributo1.getSelectedIndex(), comboBoxAtributo2.getSelectedIndex());
+						txtPrecio.setText(String.format("%.2f", precio));
+						txtNoSerieMovible.setText("");
+						txtNoSerieFijo.setText(numSerie);				
+					}
+					else {
+						precio = tienda.obtenerPrecioComp(c, comboBoxComponente.getSelectedIndex(), comboBoxMarca.getSelectedIndex(), comboBoxModelo.getSelectedIndex(), comboBoxAtributo1.getSelectedIndex(), comboBoxAtributo2.getSelectedIndex());
+						txtPrecio.setText(String.format("%.2f", precio));
+						ponerNoSeriePiezasNuevas();
+						txtNoSerieMovible.setVisible(true);
+					}
+				}
+			}
+		});
+		comboBoxAtributo1.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if(c==KeyEvent.VK_ENTER)
+					btnAgregar.doClick();
+			}
+		});
+		comboBoxAtributo1.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		comboBoxAtributo1.setBounds(247, 128, 560, 20);
+		panelAgregarPiezas.add(comboBoxAtributo1);
+
+		comboBoxAtributo2 = new JComboBox<String>();
+		comboBoxAtributo2.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent event) {
+				if (event.getStateChange() == ItemEvent.SELECTED) {
+					String numSerie = obtenerNoSerie();
+					ComponenteOrdenador c = tienda.buscarComponente(numSerie);
+					if(numSerie != "") {			
+						precio = tienda.obtenerPrecioComp(c, comboBoxComponente.getSelectedIndex(), comboBoxMarca.getSelectedIndex(), comboBoxModelo.getSelectedIndex(), comboBoxAtributo1.getSelectedIndex(), comboBoxAtributo2.getSelectedIndex());
+						txtPrecio.setText(String.format("%.2f", precio));
+						txtNoSerieMovible.setText("");
+						txtNoSerieFijo.setText(numSerie);				
+					}
+					else {
+						precio = tienda.obtenerPrecioComp(c, comboBoxComponente.getSelectedIndex(), comboBoxMarca.getSelectedIndex(), comboBoxModelo.getSelectedIndex(), comboBoxAtributo1.getSelectedIndex(), comboBoxAtributo2.getSelectedIndex());
+						txtPrecio.setText(String.format("%.2f", precio));
+						ponerNoSeriePiezasNuevas();
+						txtNoSerieMovible.setVisible(true);
+					}
+				}
+			}
+		});
+		comboBoxAtributo2.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if(c==KeyEvent.VK_ENTER)
+					btnAgregar.doClick();
+			}
+		});
+		comboBoxAtributo2.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		comboBoxAtributo2.setBounds(247, 157, 513, 20);
+		panelAgregarPiezas.add(comboBoxAtributo2);
+
 
 		comboBoxComponente = new JComboBox<String>();
 		comboBoxComponente.addKeyListener(new KeyAdapter() {
@@ -252,102 +387,55 @@ public class AgregarProducto extends JDialog {
 				comboBoxMarca.removeAllItems();
 				elegirMarca(compSeleccionado);
 				elegirModelo(compSeleccionado, comboBoxMarca.getSelectedItem());
-				txtPrecio.setText(Float.toString(precio));
+				inicializarComboBoxAtrib();
+				String numSerie = obtenerNoSerie();
+				ComponenteOrdenador c = tienda.buscarComponente(numSerie);
+				if(numSerie != "") {			
+					precio = tienda.obtenerPrecioComp(c, comboBoxComponente.getSelectedIndex(), comboBoxMarca.getSelectedIndex(), comboBoxModelo.getSelectedIndex(), comboBoxAtributo1.getSelectedIndex(), comboBoxAtributo2.getSelectedIndex());
+					txtPrecio.setText(String.format("%.2f", precio));
+					txtNoSerieMovible.setText("");
+					txtNoSerieFijo.setText(numSerie);				
+				}
+				else {
+					precio = tienda.obtenerPrecioComp(c, comboBoxComponente.getSelectedIndex(), comboBoxMarca.getSelectedIndex(), comboBoxModelo.getSelectedIndex(), comboBoxAtributo1.getSelectedIndex(), comboBoxAtributo2.getSelectedIndex());
+					txtPrecio.setText(String.format("%.2f", precio));
+					ponerNoSeriePiezasNuevas();
+					txtNoSerieMovible.setVisible(true);
+				}
 			}
 		});
 		comboBoxComponente.setBounds(247, 44, 560, 20);
 		panelAgregarPiezas.add(comboBoxComponente);
 
-		comboBoxMarca = new JComboBox<String>();
-		comboBoxMarca.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				char c = e.getKeyChar();
-				if(c == KeyEvent.VK_ENTER)
-					btnAgregar.doClick();
-			}
-		});
-		comboBoxMarca.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-		comboBoxMarca.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(compSeleccionado != null) {
-					elegirModelo(compSeleccionado, comboBoxMarca.getSelectedItem());
-					int compSelecc = comboBoxComponente.getSelectedIndex();
-					int marcaSelecc = comboBoxMarca.getSelectedIndex();
-					int modeloSelecc = comboBoxModelo.getSelectedIndex();
-					int atrib1Selecc = comboBoxAtributo1.getSelectedIndex();
-					precio = obtenerPrecioComp(compSelecc, marcaSelecc, modeloSelecc, atrib1Selecc);
-					txtPrecio.setText(Float.toString(precio));
-				}
-			}
-		});
-		comboBoxMarca.setBounds(247, 71, 560, 20);
-		panelAgregarPiezas.add(comboBoxMarca);
-
-		comboBoxAtributo1 = new JComboBox<String>();
-		comboBoxAtributo1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				int compSelecc = comboBoxComponente.getSelectedIndex();
-				int marcaSelecc = comboBoxMarca.getSelectedIndex();
-				int modeloSelecc = comboBoxModelo.getSelectedIndex();
-				int atrib1Selecc = comboBoxAtributo1.getSelectedIndex();
-				precio = obtenerPrecioComp(compSelecc, marcaSelecc, modeloSelecc, atrib1Selecc);
-				txtPrecio.setText(Float.toString(precio));
-			}
-		});
-		comboBoxAtributo1.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				char c = e.getKeyChar();
-				if(c==KeyEvent.VK_ENTER)
-					btnAgregar.doClick();
-			}
-		});
-		comboBoxAtributo1.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-		comboBoxAtributo1.setBounds(247, 128, 560, 20);
-		panelAgregarPiezas.add(comboBoxAtributo1);
-
-		spinnerAtributo2 = new JSpinner(new SpinnerNumberModel(1,1,100,.5));
-		spinnerAtributo2.setVisible(false);
-		spinnerAtributo2.setFont(new Font("Arial", Font.PLAIN, 15));
-		spinnerAtributo2.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-		spinnerAtributo2.setBounds(247, 155, 70, 22);
-		spinnerAtributo2.setModel(new SpinnerNumberModel(1, 1, 100, .5));
-		panelAgregarPiezas.add(spinnerAtributo2);
-
 		llenarComboBox(comboBoxComponente, inicializaciones.InicializacionDeDatos.nameComponente());
 		llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasAdaptadores());
-		int compSelecc = comboBoxComponente.getSelectedIndex();
-		int marcaSelecc = comboBoxMarca.getSelectedIndex();
-		int modeloSelecc = comboBoxModelo.getSelectedIndex();
-		int atrib1Selecc = comboBoxAtributo1.getSelectedIndex();
-		precio = obtenerPrecioComp(compSelecc, marcaSelecc, modeloSelecc, atrib1Selecc);
-		txtPrecio.setText(Float.toString(precio));
+		inicializarComboBoxAtrib();
+		txtNoSerieFijo.setText(obtenerNoSerie());
 
-		JButton btnBorrar = new JButton("Limpiar");
-		btnBorrar.addActionListener(new ActionListener() {
+		JButton btnLimpiar = new JButton("Limpiar");
+		btnLimpiar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				limpiarDatos();
 			}
 		});
-		btnBorrar.setBounds(737, 263, 70, 22);
-		panelAgregarPiezas.add(btnBorrar);
+		btnLimpiar.setBounds(737, 263, 70, 22);
+		panelAgregarPiezas.add(btnLimpiar);
 
 		btnAgregar = new JButton("Agregar");
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String numSerie = obtenerNoSerie();
 				boolean datoIncorrecto = false;
 				boolean cantidadCero = false;
 				boolean IDRepetido = false;
-				boolean IDRepetido2 = false;
 				noSerie = txtNoSerieFijo.getText() + txtNoSerieMovible.getText();
 				cantidad = (int) spinner.getValue();
-				pieza = (String) comboBoxComponente.getSelectedItem();
 				marca = (String) comboBoxMarca.getSelectedItem();
 				modelo = (String) comboBoxModelo.getSelectedItem();
 				primAtrib = (String) comboBoxAtributo1.getSelectedItem();
+				segundoAtrib = (String) comboBoxAtributo2.getSelectedItem();
 
-				if (txtNoSerieMovible.getText().length() == 0) {
+				if (numSerie == "" && txtNoSerieMovible.getText().length() == 0) {
 					lblNoSerie.setForeground(Color.RED);
 					datoIncorrecto = true;
 				} else {
@@ -361,15 +449,12 @@ public class AgregarProducto extends JDialog {
 							IDRepetido = true;
 						}
 					}
-					if(!IDRepetido) {
-
-						for(int i = 0; i < piezasAgreg.size() && !stop; i++) {
-							if(piezasAgreg.get(i).getNumSerie().equalsIgnoreCase(noSerie)){
-								stop = true;
-								IDRepetido2 = true;
-							}
-						}
-					}
+				}
+				if (txtPrecio.getText().trim().isEmpty()) {
+					lblPrecio.setForeground(Color.RED);
+					datoIncorrecto = true;
+				} else {
+					lblPrecio.setForeground(Color.BLACK);
 				}
 				if (cantidad == 0) 
 					cantidadCero = true;
@@ -383,57 +468,65 @@ public class AgregarProducto extends JDialog {
 				else if (IDRepetido) {
 					JOptionPane.showMessageDialog(AgregarProducto.this, "Ya existe una pieza distinta en el almacén con ese No de Serie.");
 				}
-				else if (IDRepetido2) {
-					JOptionPane.showMessageDialog(AgregarProducto.this, "Ya existe una pieza con ese No de Serie en la bandeja de entrada al almacén");
-				}
 				else if (cantidadCero) {
 					JOptionPane.showMessageDialog(AgregarProducto.this, "La cantidad de piezas a agregar no puede ser 0");
 				}
 				else {
-					ComponenteOrdenador comp = null;
-					if(noSerie.startsWith("A")) {
-						comp = new Adaptador(cantidad, noSerie, marca, modelo, precio);
+					try {
+						precio = Float.parseFloat(txtPrecio.getText());
+						if(precio > 0 ) {
+							ComponenteOrdenador comp = null;
+							if(noSerie.startsWith("A")) {
+								comp = new Adaptador(cantidad, noSerie, marca, modelo, precio);
+							}
+							else if(noSerie.startsWith("B")) {
+								comp = new Bocina(cantidad, noSerie, marca, modelo, precio, primAtrib);
+							}
+							else if(noSerie.startsWith("C")) {
+								comp = new Chasis(cantidad, noSerie, marca, modelo, precio, primAtrib);
+							}
+							else if(noSerie.startsWith("DD")) {
+								comp = new DiscoDuro(cantidad, noSerie, marca, modelo, precio, false, Double.parseDouble(segundoAtrib), primAtrib);
+							}
+							else if(noSerie.startsWith("F")) {
+								comp = new Fuente(cantidad, noSerie, marca, modelo, precio, primAtrib);
+							}
+							else if(noSerie.startsWith("MP")) {
+								comp = new Microprocesador(cantidad, noSerie, marca, modelo, precio, primAtrib, Double.parseDouble(segundoAtrib));
+							}
+							else if(noSerie.startsWith("MN")) {
+								comp = new Monitor(cantidad, noSerie, marca, modelo, precio, primAtrib);
+							}
+							else if(noSerie.startsWith("MR")) {
+								comp = new MemoriaRam(cantidad, noSerie, marca, modelo, precio, false, Double.parseDouble(segundoAtrib), primAtrib);
+							}
+							else if(noSerie.startsWith("R")) {
+								comp = new Mouse(cantidad, noSerie, marca, modelo, precio, primAtrib);
+							}
+							else if(noSerie.startsWith("TM")) {
+								comp = new TarjetaMadre(cantidad, noSerie, marca, modelo, precio, primAtrib);
+							}
+							else if(noSerie.startsWith("TV")) {
+								comp = new TarjetaDeVideo(cantidad, noSerie, marca, modelo, precio, primAtrib);
+							}
+							else {
+								if(primAtrib == "Sí")
+									comp = new Teclado(cantidad, noSerie, marca, modelo, precio, 1);
+								else
+									comp = new Teclado(cantidad, noSerie, marca, modelo, precio, 0);
+							}
+							componente = comp;
+							piezasAgreg.add(componente);
+							agregarTabla();
+							JOptionPane.showMessageDialog(AgregarProducto.this, "Pieza agregada a la tabla de manera satisfactoria");
+						}
+						else {
+							JOptionPane.showMessageDialog(AgregarProducto.this, "El precio debe ser mayor que cero");	
+						}
+					} catch (NumberFormatException ex) {
+						JOptionPane.showMessageDialog(AgregarProducto.this, "El precio debe ser un número válido.");
 					}
-					else if(noSerie.startsWith("B")) {
-						comp = new Bocina(cantidad, noSerie, marca, modelo, precio, primAtrib);
-					}
-					else if(noSerie.startsWith("C")) {
-						comp = new Chasis(cantidad, noSerie, marca, modelo, precio, primAtrib);
-					}
-					else if(noSerie.startsWith("DD")) {
-						comp = new DiscoDuro(cantidad, noSerie, marca, modelo, precio, false, (double) spinnerAtributo2.getValue(), primAtrib);
-					}
-					else if(noSerie.startsWith("F")) {
-						comp = new Fuente(cantidad, noSerie, marca, modelo, precio, primAtrib);
-					}
-					else if(noSerie.startsWith("MP")) {
-						comp = new Microprocesador(cantidad, noSerie, marca, modelo, precio, primAtrib, (double) spinnerAtributo2.getValue());
-					}
-					else if(noSerie.startsWith("MN")) {
-						comp = new Monitor(cantidad, noSerie, marca, modelo, precio, primAtrib);
-					}
-					else if(noSerie.startsWith("MR")) {
-						comp = new MemoriaRam(cantidad, noSerie, marca, modelo, precio, false, (double) spinnerAtributo2.getValue(), primAtrib);
-					}
-					else if(noSerie.startsWith("R")) {
-						comp = new Mouse(cantidad, noSerie, marca, modelo, precio, primAtrib);
-					}
-					else if(noSerie.startsWith("TM")) {
-						comp = new TarjetaMadre(cantidad, noSerie, marca, modelo, precio, primAtrib);
-					}
-					else if(noSerie.startsWith("TV")) {
-						comp = new TarjetaDeVideo(cantidad, noSerie, marca, modelo, precio, primAtrib);
-					}
-					else {
-						if(primAtrib == "Sí")
-							comp = new Teclado(cantidad, noSerie, marca, modelo, precio, true);
-						else
-							comp = new Teclado(cantidad, noSerie, marca, modelo, precio, false);
-					}
-					componente = comp;
-					piezasAgreg.add(componente);
-					JOptionPane.showMessageDialog(AgregarProducto.this, "Pieza agregada a la tabla de manera satisfactoria");
-					tableModel.addRow(new Object[]{pieza, marca, modelo, precio, cantidad, noSerie});
+
 				}		
 				limpiarDatos();
 			}
@@ -465,6 +558,8 @@ public class AgregarProducto extends JDialog {
 		tableModel.addColumn("No. Serie");
 
 		table = new JTable(tableModel);
+		table.setGridColor(new Color(135, 206, 235));
+		table.setFocusable(false);
 		table.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -496,7 +591,7 @@ public class AgregarProducto extends JDialog {
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar la pieza seleccionada?", "", 0, 3);
-				if(i == 0) {		
+				if(i==0) {		
 					int pos = table.getSelectedRow();
 					if (pos != -1) {
 						piezasAgreg.remove(pos);
@@ -525,8 +620,10 @@ public class AgregarProducto extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				if(actualizarLista() == true) {
 					int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea salir? Los cambios realizados no serán guardados", "", 0, 3);
-					if(i==0) 
+					if(i==0) {
 						dispose();
+						piezasAgreg.clear();
+					}
 				}
 				else
 					dispose();
@@ -570,126 +667,94 @@ public class AgregarProducto extends JDialog {
 	}
 
 	private void limpiarDatos() {
+		comboBoxComponente.setSelectedIndex(0);
+		comboBoxMarca.setSelectedIndex(0);
+		comboBoxModelo.setSelectedIndex(0);
 		spinner.setValue(0);
-		spinnerAtributo2.setValue(0);
 		txtNoSerieMovible.setText("");
 	}
 
 	private void elegirMarca(Object compSeleccionado) {
 		if (comboBoxMarca != null) {	
 			String comp = compSeleccionado.toString();
-			ArrayList <String> decision = new ArrayList<>();
-			decision.add("No");
-			decision.add("Sí");
 			switch (comp) {
 			case "Teclado":
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasTeclado());
 				organizarLabelsUnAtrib();
-				txtNoSerieFijo.setText("TE");	
 				Atributo1.setText("Retroiluminación");
-				llenarComboBox(comboBoxAtributo1, decision);
 				break;
 			case "Tarjeta de Video":	
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasTarjetaVideos());
-				txtNoSerieFijo.setText("TT");
 				organizarLabelsUnAtrib();
 				Atributo1.setText("Refrigeración");
-				llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.refrigeracion());
 				break;
 			case "Tarjeta Madre":
-				precio = 150;
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasTarjetaMadre());
-				txtNoSerieFijo.setText("TM");
 				organizarLabelsUnAtrib();
 				Atributo1.setText("Conector");
-				llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.conectores());
 				break;
 			case "Microprocesador":
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasMicroProcesadores());
-				txtNoSerieFijo.setText("MP");
 				organizarLabelsDosAtrib();
 				Atributo1.setText("Conexión");
 				Atributo2.setText("Procesamiento");
 				lblAtributo2.setText("GHz");
-				spinnerAtributo2.setModel(new SpinnerNumberModel(1, 1, 100, .5));
+				llenarComboBox(comboBoxAtributo2, inicializaciones.InicializacionDeDatos.velocidadaMicro());
 				break;
 			case "Adaptador":
 				Atributo1.setVisible(false);
 				Atributo2.setVisible(false);
 				comboBoxAtributo1.setVisible(false);
-				spinnerAtributo2.setVisible(false);
+				comboBoxAtributo2.setVisible(false);
 				lblNoSerie.setBounds(12, 125, 128, 16);
 				lblCantidad.setBounds(12, 152, 128, 16);
 				lblPrecio.setBounds(12, 179, 128, 16);
 				lblAtributo2.setVisible(false);
-				txtNoSerieFijo.setBounds(247, 124, 24, 20);
+				txtNoSerieFijo.setBounds(247, 124, 70, 20);
 				spinner.setBounds(247, 151, 70, 22);
 				txtPrecio.setBounds(247, 178, 70, 20);
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasAdaptadores());
-				txtNoSerieFijo.setText("A");
 				txtNoSerieMovible.setBounds(267, 124, 50, 20);
 				break;
 			case "Bocina":	
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasBocinas());
-				txtNoSerieFijo.setText("B");
 				organizarLabelsUnAtrib();	
 				Atributo1.setText("Conectividad");
-				llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.conectividad());
 				break;
 			case "Monitor":
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasPantalla());
-				txtNoSerieFijo.setText("MN");
 				organizarLabelsUnAtrib();
 				Atributo1.setText("Resolución");
-				llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.resolucionVideo());
 				break;
 			case "Ratón":
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasRaton());
-				txtNoSerieFijo.setText("R");
 				organizarLabelsUnAtrib();
 				Atributo1.setText("Conectividad");
-				llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.conectividad());
 				break;
 			case "Memoria RAM":
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasMemoriasRAM());
-				txtNoSerieFijo.setText("MR");
 				organizarLabelsDosAtrib();
 				Atributo1.setText("Tipo de Memoria");
 				Atributo2.setText("Espacio");
 				lblAtributo2.setText("Gb");
-				llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.tiposDeMemoriaRAM());
-				spinnerAtributo2.setModel(new SpinnerNumberModel(1, null, 8, 1) {
-					private static final long serialVersionUID = 1L;
-					@Override
-					public Object getNextValue() {                
-						Object nextValue = super.getValue();
-						int x = Integer.valueOf(nextValue.toString())*2;
-						return x;
-					}
-				});
+				llenarComboBox(comboBoxAtributo2, inicializaciones.InicializacionDeDatos.espacioRAM());
 				break;
 			case "Chasis":
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasChasis());
-				txtNoSerieFijo.setText("C");
 				organizarLabelsUnAtrib();
 				Atributo1.setText("Material");
-				llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.materialesChasis());
 				break;		
 			case "Disco Duro":
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasDiscoD());
-				txtNoSerieFijo.setText("DD");
 				organizarLabelsDosAtrib();
 				Atributo1.setText("Conexión");
 				Atributo2.setText("Capacidad");
 				lblAtributo2.setText("Tb");
-				llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.conexionesDiscoDuro());
 				break;
 			case "Fuente":	
 				llenarComboBox(comboBoxMarca, inicializaciones.InicializacionDeDatos.marcasFuente());
-				txtNoSerieFijo.setText("F");
 				organizarLabelsUnAtrib();
 				Atributo1.setText("Eficiencia");
-				llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.eficiencia());
 				break;
 			default:
 			}
@@ -742,11 +807,9 @@ public class AgregarProducto extends JDialog {
 			case "Microprocesador":
 				if(marca.equalsIgnoreCase("AMD")) {
 					llenarComboBox(comboBoxModelo, inicializaciones.InicializacionDeDatos.microprocesadoresAMD());
-					llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.conexionesAMD());
 				}
 				else {
 					llenarComboBox(comboBoxModelo, inicializaciones.InicializacionDeDatos.microprocesadoresIntel());
-					llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.conexionesIntel());
 				}
 				break;
 			case "Adaptador": 
@@ -808,7 +871,7 @@ public class AgregarProducto extends JDialog {
 					llenarComboBox(comboBoxModelo, inicializaciones.InicializacionDeDatos.memoriasCorsair());
 				else if(marca.equalsIgnoreCase("Crucial"))
 					llenarComboBox(comboBoxModelo, inicializaciones.InicializacionDeDatos.memoriasCrucial());
-				else if(marca.equalsIgnoreCase("GSkill"))
+				else if(marca.equalsIgnoreCase("G.Skill"))
 					llenarComboBox(comboBoxModelo, inicializaciones.InicializacionDeDatos.memoriasGSkill());
 				else if(marca.equalsIgnoreCase("HyperX"))
 					llenarComboBox(comboBoxModelo, inicializaciones.InicializacionDeDatos.memoriasHyperX());
@@ -855,189 +918,209 @@ public class AgregarProducto extends JDialog {
 		}
 	}
 
-	private float obtenerPrecioComp(int compSelecc, int marcaSelecc, int modeloSelecc, int atrib1Selecc) {
-		float precio = 0;
-		switch(compSelecc) {
-		case 0:
-			precio = 5.99f;
-			precio = obtenerPrecioMarca(precio, marcaSelecc);
-			precio = obtenerPrecioModelo(precio, modeloSelecc);	
-			break;
-		case 1:
-			precio = 14.99f;
-			precio = obtenerPrecioMarca(precio, marcaSelecc);
-			precio = obtenerPrecioModelo(precio, modeloSelecc);	
-			precio = obtenerPrecioAtributo(precio, atrib1Selecc);
-			break;
-		case 2:
-			precio = 40.99f;
-			precio = obtenerPrecioMarca(precio, marcaSelecc);
-			precio = obtenerPrecioModelo(precio, modeloSelecc);	
-			precio = obtenerPrecioAtributo(precio, atrib1Selecc);
-			break;
-		case 3:
-			precio = 20.99f;
-			precio = obtenerPrecioMarca(precio, marcaSelecc);
-			precio = obtenerPrecioModelo(precio, modeloSelecc);	
-			precio = obtenerPrecioAtributo(precio, atrib1Selecc);
-			//precio = obtenerPrecioAtributo2(precio, atrib2Selecc);
-			break;
-		case 4:
-			precio = 25.99f;
-			precio = obtenerPrecioMarca(precio, marcaSelecc);
-			precio = obtenerPrecioModelo(precio, modeloSelecc);	
-			precio = obtenerPrecioAtributo(precio, atrib1Selecc);
-			break;
-		case 5:
-			precio = 35.99f;
-			precio = obtenerPrecioMarca(precio, marcaSelecc);
-			precio = obtenerPrecioModelo(precio, modeloSelecc);	
-			precio = obtenerPrecioAtributo(precio, atrib1Selecc);
-			//precio = obtenerPrecioAtributo2(precio, atrib2Selecc);
-			break;
-		case 6:
-			precio = 15.99f;
-			precio = obtenerPrecioMarca(precio, marcaSelecc);
-			precio = obtenerPrecioModelo(precio, modeloSelecc);	
-			precio = obtenerPrecioAtributo(precio, atrib1Selecc);
-			//precio = obtenerPrecioAtributo2(precio, atrib2Selecc);
-			break;
-		case 7:
-			precio = 20.99f;
-			precio = obtenerPrecioMarca(precio, marcaSelecc);
-			precio = obtenerPrecioModelo(precio, modeloSelecc);	
-			precio = obtenerPrecioAtributo(precio, atrib1Selecc);
-			break;
-		case 8:
-			precio = 10.99f;
-			precio = obtenerPrecioMarca(precio, marcaSelecc);
-			precio = obtenerPrecioModelo(precio, modeloSelecc);	
-			precio = obtenerPrecioAtributo(precio, atrib1Selecc);
-			break;
-		case 9:
-			precio = 115.99f;
-			precio = obtenerPrecioMarca(precio, marcaSelecc);
-			precio = obtenerPrecioModelo(precio, modeloSelecc);	
-			precio = obtenerPrecioAtributo(precio, atrib1Selecc);
-			break;
-		case 10:
-			precio = 55.99f;
-			precio = obtenerPrecioMarca(precio, marcaSelecc);
-			precio = obtenerPrecioModelo(precio, modeloSelecc);	
-			precio = obtenerPrecioAtributo(precio, atrib1Selecc);
-			break;
-		case 11:
-			precio = 15.99f;
-			precio = obtenerPrecioMarca(precio, marcaSelecc);
-			precio = obtenerPrecioModelo(precio, modeloSelecc);	
-			if(atrib1Selecc == 1) {
-				precio += 15;
+	private String obtenerNoSerie() {
+		String noSerie = "";
+		if(comboBoxMarca != null && comboBoxModelo != null) {	
+			int compSelecc = comboBoxComponente.getSelectedIndex();
+			String marcaSelecc = comboBoxMarca.getSelectedItem().toString();
+			String modeloSelecc = comboBoxModelo.getSelectedItem().toString();	
+			String atribSelecc = "";
+			String primAtrib = "";
+			Double segundoAtrib = 0.0;
+			boolean stop = false;
+			for(int i = 0; i < tienda.getComponentes().size() && !stop; i++) {
+				segundoAtrib = 0.0;
+				ComponenteOrdenador c = tienda.getComponentes().get(i);
+				if(c.getMarca().equalsIgnoreCase(marcaSelecc)) {
+					if(c.getModelo().equalsIgnoreCase(modeloSelecc)) {
+						if(compSelecc == 1 && c instanceof Bocina) {					
+							primAtrib = ((Bocina) c).getConectividad(); 
+						}
+						else if(compSelecc == 2 && c instanceof Chasis) {
+							primAtrib = ((Chasis) c).getMaterial();
+						}
+						else if(compSelecc == 3 && c instanceof DiscoDuro) {
+							primAtrib = ((DiscoDuro) c).getTipoDeConexion();		
+							segundoAtrib = ((DiscoDuro) c).getCapacidad();						
+						}
+						else if(compSelecc == 4 && c instanceof Fuente) {
+							primAtrib = ((Fuente) c).getEficiencia();
+						}
+						else if(compSelecc == 5 && c instanceof Microprocesador) {
+							primAtrib = ((Microprocesador) c).getTipoDeConexion();
+							segundoAtrib = ((Microprocesador) c).getVelocidadDeProcesamiento();
+						}
+						else if(compSelecc == 6 && c instanceof MemoriaRam) {
+							primAtrib = ((MemoriaRam) c).getTipoDeMemoria();
+							segundoAtrib = ((MemoriaRam) c).getCantEspacio();
+						}
+						else if(compSelecc == 7 && c instanceof Monitor) {
+							primAtrib = ((Monitor) c).getResolucion();
+						}
+						else if(compSelecc == 8 && c instanceof Mouse) {
+							primAtrib = ((Mouse) c).getConectividad();
+						}	
+						else if(compSelecc == 9 && c instanceof TarjetaMadre) {
+							primAtrib = ((TarjetaMadre) c).getTipoDeConector();
+
+						}
+						else if(compSelecc == 10 && c instanceof TarjetaDeVideo) {
+							primAtrib = ((TarjetaDeVideo) c).getRefrigeracion();
+						}
+						if(c instanceof Adaptador) {
+							noSerie = tienda.getComponentes().get(i).getNumSerie();
+							stop = true;
+							txtNoSerieMovible.setVisible(false);
+							txtNoSerieFijo.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+						}
+						else if(c instanceof Teclado) {
+							int retroTeclado = ((Teclado) c).getRetroiluminacion();
+							if(retroTeclado == comboBoxAtributo1.getSelectedIndex()) {
+								noSerie = tienda.getComponentes().get(i).getNumSerie();
+								stop = true;
+								txtNoSerieMovible.setVisible(false);
+								txtNoSerieFijo.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+							}
+						}
+						else {
+							atribSelecc = comboBoxAtributo1.getSelectedItem().toString();
+							if(primAtrib.equalsIgnoreCase(atribSelecc))
+								if(segundoAtrib > 0 && segundoAtrib == Double.parseDouble(comboBoxAtributo2.getSelectedItem().toString())) {
+									noSerie = tienda.getComponentes().get(i).getNumSerie();
+									stop = true;
+									txtNoSerieMovible.setVisible(false);
+									txtNoSerieFijo.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+								}
+								else if(segundoAtrib == 0) {
+									noSerie = tienda.getComponentes().get(i).getNumSerie();
+									stop = true;
+									txtNoSerieMovible.setVisible(false);
+									txtNoSerieFijo.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+								}
+						}
+					}
+				}	
 			}
-			break;
-		}		
-		return precio;
-	}
+			if(!stop) {
+				for(int i = 0; i < piezasAgreg.size() && !stop; i++) {
+					ComponenteOrdenador p = piezasAgreg.get(i);
+					if(p.getMarca().equalsIgnoreCase(marcaSelecc)) {
+						if(p.getModelo().equalsIgnoreCase(modeloSelecc)) {
+							if(compSelecc == 1 && p instanceof Bocina) {					
+								primAtrib = ((Bocina) p).getConectividad(); 
+							}
+							else if(compSelecc == 2 && p instanceof Chasis) {
+								primAtrib = ((Chasis) p).getMaterial();
+							}
+							else if(compSelecc == 3 && p instanceof DiscoDuro) {
+								primAtrib = ((DiscoDuro) p).getTipoDeConexion();		
+								segundoAtrib = ((DiscoDuro) p).getCapacidad();						
+							}
+							else if(compSelecc == 4 && p instanceof Fuente) {
+								primAtrib = ((Fuente) p).getEficiencia();
+							}
+							else if(compSelecc == 5 && p instanceof Microprocesador) {
+								primAtrib = ((Microprocesador) p).getTipoDeConexion();
+								segundoAtrib = ((Microprocesador) p).getVelocidadDeProcesamiento();
+							}
+							else if(compSelecc == 6 && p instanceof MemoriaRam) {
+								primAtrib = ((MemoriaRam) p).getTipoDeMemoria();
+								segundoAtrib = ((MemoriaRam) p).getCantEspacio();
+							}
+							else if(compSelecc == 7 && p instanceof Monitor) {
+								primAtrib = ((Monitor) p).getResolucion();
+							}
+							else if(compSelecc == 8 && p instanceof Mouse) {
+								primAtrib = ((Mouse) p).getConectividad();
+							}	
+							else if(compSelecc == 9 && p instanceof TarjetaMadre) {
+								primAtrib = ((TarjetaMadre) p).getTipoDeConector();
 
-	private float obtenerPrecioMarca(float precio, int marcaSelecc) {
-		switch(marcaSelecc) {
-		case 0:
-			precio += 4;
-			break;
-		case 1:
-			precio += 8;
-			break;
-		case 2: 
-			precio += 12;
-			break;
-		case 3:
-			precio += 16;
-			break;
-		case 4:
-			precio += 20;
-			break;
+							}
+							else if(compSelecc == 10 && p instanceof TarjetaDeVideo) {
+								primAtrib = ((TarjetaDeVideo) p).getRefrigeracion();
+							}						
+							if(p instanceof Adaptador) {
+								noSerie = p.getNumSerie();
+								stop = true;
+								txtNoSerieMovible.setVisible(false);
+								txtNoSerieFijo.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+							}
+							else if(p instanceof Teclado) {
+								int retroTeclado = ((Teclado) p).getRetroiluminacion();
+								if(retroTeclado == comboBoxAtributo1.getSelectedIndex()) {						
+									noSerie = p.getNumSerie();
+									stop = true;
+									txtNoSerieMovible.setVisible(false);
+									txtNoSerieFijo.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+								}
+							}
+							else {
+								atribSelecc = comboBoxAtributo1.getSelectedItem().toString();
+								System.out.println(primAtrib);
+								if(primAtrib.equalsIgnoreCase(atribSelecc))
+									if(segundoAtrib > 0 && segundoAtrib == Double.parseDouble(comboBoxAtributo2.getSelectedItem().toString())) {		
+										noSerie = p.getNumSerie();
+										stop = true;
+										txtNoSerieMovible.setVisible(false);
+										txtNoSerieFijo.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+									}
+									else if(segundoAtrib == 0) {
+										noSerie = p.getNumSerie();
+										stop = true;
+										txtNoSerieMovible.setVisible(false);
+										txtNoSerieFijo.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+									}
+							}
+						}
+					}
+				}
+			}
 		}
-		return precio;
+		return noSerie;
 	}
 
-	private float obtenerPrecioModelo(float precio, int modeloSelecc) {
-		switch(modeloSelecc) {
-		case 0:
-			precio += 3;
+	private void ponerNoSeriePiezasNuevas() {
+		int compSelecc = comboBoxComponente.getSelectedIndex();
+		txtNoSerieFijo.setText("");
+		switch (compSelecc) {
+		case 0: 
+			txtNoSerieFijo.setText("A");
 			break;
-		case 1:
-			precio += 6;
-			break;
-		case 2: 
-			precio += 9;
-			break;
-		case 3:
-			precio += 12;
-			break;
-		case 4:
-			precio += 15;
-			break;
-		}
-		return precio;
-	}
-
-	private float obtenerPrecioAtributo(float precio, int atribSelecc) {
-		switch(atribSelecc) {
-		case 0:
-			precio += 10;
-			break;
-		case 1:
-			precio += 15;
+		case 1: 
+			txtNoSerieFijo.setText("B");
 			break;
 		case 2: 
-			precio += 20;
+			txtNoSerieFijo.setText("C");
 			break;
-		case 3:
-			precio += 25;
+		case 3: 
+			txtNoSerieFijo.setText("DD");
 			break;
-		case 4:
-			precio += 30;
+		case 4: 
+			txtNoSerieFijo.setText("F");
 			break;
-		case 5:
-			precio += 35;
-			break;
-		case 6:
-			precio += 40;
-			break;
-		case 7:
-			precio += 45;
-			break;
-		}
-		return precio;
-	}
-
-	private float obtenerPrecioAtributo2(float precio, int atribSelecc) {
-		switch(atribSelecc) {
-		case 0:
-			precio += 2;
-			break;
-		case 1:
-			precio += 4;
-			break;
-		case 2: 
-			precio += 6;
-			break;
-		case 3:
-			precio += 8;
-			break;
-		case 4:
-			precio += 10;
-			break;
-		case 5:
-			precio += 12;
+		case 5: 
+			txtNoSerieFijo.setText("MP");
 			break;
 		case 6: 
-			precio += 14;
+			txtNoSerieFijo.setText("MR");
 			break;
-		case 7:
-			precio += 16;
+		case 7: 
+			txtNoSerieFijo.setText("MN");
+			break;
+		case 8: 
+			txtNoSerieFijo.setText("R");
+			break;
+		case 9: 
+			txtNoSerieFijo.setText("TM");
+			break;
+		case 10: 
+			txtNoSerieFijo.setText("TV");
+			break;
+		case 11: 
+			txtNoSerieFijo.setText("TE");
 			break;
 		}
-		return precio;
 	}
 
 	private void organizarLabelsUnAtrib() {
@@ -1049,9 +1132,9 @@ public class AgregarProducto extends JDialog {
 		lblCantidad.setBounds(12, 186, 128, 16);
 		spinner.setBounds(247, 184, 70, 22);
 		lblNoSerie.setBounds(12, 155, 162, 20);
-		txtNoSerieFijo.setBounds(247, 157, 24, 20);
+		txtNoSerieFijo.setBounds(247, 157, 70, 20);
 		txtNoSerieMovible.setBounds(269, 157, 48, 20);
-		spinnerAtributo2.setVisible(false);
+		comboBoxAtributo2.setVisible(false);
 		lblAtributo2.setVisible(false);
 	}
 
@@ -1059,9 +1142,9 @@ public class AgregarProducto extends JDialog {
 		Atributo1.setVisible(true);	
 		comboBoxAtributo1.setVisible(true);
 		Atributo2.setVisible(true);	
-		spinnerAtributo2.setVisible(true);
+		comboBoxAtributo2.setVisible(true);
 		lblNoSerie.setBounds(12, 186, 128, 16);
-		txtNoSerieFijo.setBounds(247, 185, 24, 20);
+		txtNoSerieFijo.setBounds(247, 185, 70, 20);
 		lblCantidad.setBounds(12, 213, 128, 16);
 		spinner.setBounds(247, 211, 70, 22);
 		lblPrecio.setBounds(12, 240, 128, 16);
@@ -1069,6 +1152,85 @@ public class AgregarProducto extends JDialog {
 		txtNoSerieMovible.setBounds(269, 185, 48, 20);
 		lblAtributo2.setVisible(true);
 	}
+
+	private void agregarTabla() {
+		int cantFilas = table.getModel().getRowCount();
+		boolean stop = false;
+		for(int i = 0; i < cantFilas && !stop; i++) {
+			String NoSerie = (String) table.getValueAt(i, 5);
+			if(noSerie.equalsIgnoreCase(NoSerie)) {
+				stop = true;
+				piezasAgreg.get(i).setCantDisponible(piezasAgreg.get(i).getCantDisponible() + cantidad);
+				if(piezasAgreg.size() > 1) {
+					int lastIndex = piezasAgreg.size() - 1;
+					piezasAgreg.remove(lastIndex);
+				}
+			}					
+		}		
+		while(((DefaultTableModel) table.getModel()).getRowCount() > 0)
+			((DefaultTableModel) table.getModel()).removeRow(0);
+		for(ComponenteOrdenador p: piezasAgreg) {
+			tableModel.addRow(new Object[]{p.getClass().getSimpleName(), p.getMarca(), p.getModelo(), p.getPrecio(), p.getCantDisponible(), p.getNumSerie()});
+		}
+	}
+
+	private void inicializarComboBoxAtrib() {
+		int comp = comboBoxComponente.getSelectedIndex();
+		switch(comp) {
+		case 1: 
+			llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.conectividad());
+			break;
+		case 2: 
+			llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.materialesChasis());
+			break;
+		case 3: 
+			llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.conexionesDiscoDuro());
+			llenarComboBox(comboBoxAtributo2, inicializaciones.InicializacionDeDatos.capacidadDiscoDuroTB());
+			break;
+		case 4: 
+			llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.eficiencia());
+			break;
+		case 5: 
+			int marca = comboBoxMarca.getSelectedIndex();
+			if(marca == 0)
+				llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.conexionesAMD());
+			else
+				llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.conexionesIntel());
+			llenarComboBox(comboBoxAtributo2, inicializaciones.InicializacionDeDatos.velocidadaMicro());
+			break;
+		case 6: 
+			llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.tiposDeMemoriaRAM());
+			llenarComboBox(comboBoxAtributo2, inicializaciones.InicializacionDeDatos.espacioRAM());
+			break;
+		case 7: 
+			llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.resolucionVideo());
+			break;
+		case 8: 
+			llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.conectividad());
+			break;
+		case 9: 
+			llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.conectores());
+			break;
+		case 10: 
+			llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.refrigeracion());
+			break;
+		case 11: 
+			llenarComboBox(comboBoxAtributo1, inicializaciones.InicializacionDeDatos.retroiluminacionTeclados());
+			break;
+		}
+	}
+	
+	/*private float obtenerPrecioAgg(String noSerie) {
+		float precio = 0;
+		boolean stop = false;
+		for(int i = 0; i < piezasAgreg.size() && !stop; i++) {
+			if(piezasAgreg.get(i).getNumSerie().equalsIgnoreCase(noSerie)) {
+				stop = true;
+				precio = piezasAgreg.get(i).getPrecio();
+			}
+		}
+		return precio;
+	}*/
 }
 
 

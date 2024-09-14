@@ -18,6 +18,10 @@ public class Chasis extends ComponenteOrdenador {
 			throw new IllegalArgumentException("El nombre del material no debe de estar vacío");
 		}
 	}
+	
+	public void setPrecio(float precio) {
+		this.precio = 40.99f + precio;
+	}
 
 
 }

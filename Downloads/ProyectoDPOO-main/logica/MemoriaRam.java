@@ -34,11 +34,11 @@ public class MemoriaRam extends ComponenteOrdenador {
 		return tipoDeMemoria;
 	}
 	public void setTipoDeMemoria(String tipoDeMemoria) {
-		if(tipoDeMemoria.equalsIgnoreCase("DDR")|| tipoDeMemoria.equalsIgnoreCase("DDR-2" )|| tipoDeMemoria.equalsIgnoreCase("DDR-3") || tipoDeMemoria.equalsIgnoreCase("DDR-4")|| tipoDeMemoria.equalsIgnoreCase("DDR-5")) {
+		if(tipoDeMemoria.equalsIgnoreCase("DDR-3") || tipoDeMemoria.equalsIgnoreCase("DDR-4")|| tipoDeMemoria.equalsIgnoreCase("DDR-5")) {
 			this.tipoDeMemoria = tipoDeMemoria;
 		}
 		else {
-			throw new IllegalArgumentException("El tipo de memoria debe de ser de tipo (DDR, DDR-2, DDR-3, DDR-4, DDR-5)");
+			throw new IllegalArgumentException("El tipo de memoria debe de ser de tipo (DDR-3, DDR-4, DDR-5)");
 		}
 	}
 
@@ -48,6 +48,9 @@ public class MemoriaRam extends ComponenteOrdenador {
 
 	public void setEspacio(boolean espacio) {
 		this.espacio = espacio;
+	}
+	public void setPrecio(float precio) {
+		this.precio = 25.99f + precio;
 	}
 
 

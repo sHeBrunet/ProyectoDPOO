@@ -16,12 +16,12 @@ public class DiscoDuro extends ComponenteOrdenador {
 	}
 	public void setCapacidad(double capacidad) {
 		if(isAlmacenamiento() == true) {
-			if(capacidad >= 500 && capacidad <= 20000) {
+			if(capacidad >= 1000 && capacidad <= 20000) {
 		this.capacidad = capacidad;
 			}
 		}
 		else if(isAlmacenamiento() == false) {
-			if(capacidad >= 0.488 && capacidad <= 20) {
+			if(capacidad >= 1 && capacidad <= 20) {
 				this.capacidad = capacidad;
 			}
 		}
@@ -33,11 +33,11 @@ public class DiscoDuro extends ComponenteOrdenador {
 		return tipoDeConexion;
 	}
 	public void setTipoDeConexion(String tipoDeConexion) {
-		if(tipoDeConexion.equalsIgnoreCase("IDE") || tipoDeConexion.equalsIgnoreCase("SATA")|| tipoDeConexion.equalsIgnoreCase("SATA-2")|| tipoDeConexion.equalsIgnoreCase("SATA-3")) {
+		if(tipoDeConexion.equalsIgnoreCase("IDE") || tipoDeConexion.equalsIgnoreCase("SAS") || tipoDeConexion.equalsIgnoreCase("SATA-3")) {
 		this.tipoDeConexion = tipoDeConexion;
 		}
 		else {
-			throw new IllegalArgumentException("El tipo de conexion del disco duro debe de ser de tipo (IDE, SATA, SATA-2, SATA-3)");
+			throw new IllegalArgumentException("El tipo de conexion del disco duro debe de ser de tipo (IDE, SAS, SATA-3)");
 		}
 		
 	}
@@ -46,6 +46,9 @@ public class DiscoDuro extends ComponenteOrdenador {
 	}
 	public void setAlmacenamiento(boolean almacenamiento) {
 		this.almacenamiento = almacenamiento;
+	}
+	public void setPrecio(float precio) {
+		this.precio = 20.99f + precio;
 	}
 
 }

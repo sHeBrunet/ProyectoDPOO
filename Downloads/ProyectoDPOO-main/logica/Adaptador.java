@@ -6,5 +6,8 @@ public class Adaptador extends ComponenteOrdenador{
 		super(cantDisponible, numSerie, marca, modelo, precio);
 
 	}
-
+	
+	public void setPrecio(float precio) {
+		this.precio = 5.99f + precio;
+	}
 }

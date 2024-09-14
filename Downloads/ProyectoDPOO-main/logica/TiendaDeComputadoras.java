@@ -1,6 +1,7 @@
 package logica;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 
 
@@ -349,10 +350,22 @@ public class TiendaDeComputadoras {
 
 	public String generadorDeIDTrabajador(String nombre, String apellidos, String CI) {
 		String ID = null;
-		String name = nombre.substring(0);
-		String ape = apellidos.substring(0);
-		String cI = CI.substring(0);
-		return ID = name.concat(ape) + name.concat(cI);
+		String name = nombre.substring(0,1);
+		String ape = apellidos.substring(0,1);
+		String cI = CI.substring(0,2);
+		ID = name.concat(ape).concat(cI);
+		boolean stop = false;
+		for(int i = 0; i < trabajadores.size() && !stop; i++) {
+			if(trabajadores.get(i).getNumero().equalsIgnoreCase(ID)) {
+				Random rand = new Random();
+				int min = 0;
+				int max = 599;
+				int random = rand.nextInt(max - min + 1) + min;
+				stop = true;
+				ID = String.valueOf(random).concat(name).concat(ape).concat(cI);
+			}
+		}
+		return ID;
 	}
 
 	public float calcularMontoTotalfacturas() {
@@ -431,13 +444,36 @@ public class TiendaDeComputadoras {
 		}
 
 	}
+
+	/*public void actualizarCant(ArrayList <Integer> cantidades, ArrayList <ComponenteOrdenador> comp) {
+		int i = 0;
+		while(i < componentes.size() && !comp.isEmpty()) {
+			for(int j = 0; j < comp.size(); j++) {
+				if(componentes.get(i).getNumSerie().equalsIgnoreCase(comp.get(j).getNumSerie())) {
+					componentes.get(i).setCantDisponible(componentes.get(i).cantDisponible + cantidades.get(j));
+				}
+			}
+			i++;
+		}
+	}*/
+
 	public ComponenteOrdenador buscarComponente(String numSerie) {
 		ComponenteOrdenador comp = null;
-		for(ComponenteOrdenador c : componentes) {
-			if(c.getNumSerie().equals(numSerie))
-				comp = c;
+		boolean stop = false;
+		for(int i = 0; i < componentes.size() && !stop; i++) {
+			if(componentes.get(i).getNumSerie().equals(numSerie))
+				comp = componentes.get(i);
 		}
 		return comp;	
+	}
+
+	public float obtenerPrecio(String numSerie) {
+		float precio = 0;
+		ComponenteOrdenador c = buscarComponente(numSerie);
+		if(c != null) {
+			precio = c.getPrecio();
+		}
+		return precio;
 	}
 	/*******************************Teclado***********************************************/
 	public ArrayList<Teclado> encontrarModeloTeclado(String componenteNombre, String marca, String retroiluminacion) {
@@ -959,14 +995,14 @@ public class TiendaDeComputadoras {
 				if (c instanceof TarjetaMadre) {
 					if (c.getMarca().equals(marca)) {
 						if (((TarjetaMadre) c).getTipoDeConector().equals(conector)) {
-								f.add((TarjetaMadre) c);
-							}
+							f.add((TarjetaMadre) c);
 						}
 					}
 				}
 			}
-		return f;
 		}
+		return f;
+	}
 
 	public TarjetaMadre encontComponente(String marca, String conector, String componente, String modelo) {
 		ArrayList<TarjetaMadre> f = new ArrayList<>();
@@ -978,5 +1014,367 @@ public class TiendaDeComputadoras {
 			}
 		}
 		return TM;
+	}
+
+	public float obtenerPrecioComp(ComponenteOrdenador c, int compSelecc, int marcaSelecc, int modeloSelecc, int atrib1Selecc, int atrib2Selecc) {
+		float precio = 0;
+		switch(compSelecc) {
+		case 0:
+			if(c != null) {
+				precio = obtenerPrecioMarca(precio, marcaSelecc);
+				precio = obtenerPrecioModelo(precio, modeloSelecc);
+				((Adaptador)c).setPrecio(precio);
+				precio = c.getPrecio();
+			}
+			else {
+				precio = 5.99f;
+				precio = obtenerPrecioMarca(precio, marcaSelecc);
+				precio = obtenerPrecioModelo(precio, modeloSelecc);
+			}
+			break;
+		case 1:
+			if(c != null) {
+				precio = obtenerPrecioMarca(precio, marcaSelecc);
+				precio = obtenerPrecioModelo(precio, modeloSelecc);	
+				precio = obtenerPrecioAtributo(precio, atrib1Selecc);
+				((Bocina)c).setPrecio(precio);
+				precio = c.getPrecio();
+			}
+			else {
+				precio = 14.99f;
+				precio = obtenerPrecioMarca(precio, marcaSelecc);
+				precio = obtenerPrecioModelo(precio, modeloSelecc);	
+				precio = obtenerPrecioAtributo(precio, atrib1Selecc);
+			}
+			break;
+		case 2:
+			if(c != null) {
+				precio = obtenerPrecioMarca(precio, marcaSelecc);
+				precio = obtenerPrecioModelo(precio, modeloSelecc);	
+				precio = obtenerPrecioAtributo(precio, atrib1Selecc);
+				((Chasis)c).setPrecio(precio);
+				precio = c.getPrecio();
+			}
+			else {
+				precio = 40.99f;
+				precio = obtenerPrecioMarca(precio, marcaSelecc);
+				precio = obtenerPrecioModelo(precio, modeloSelecc);	
+				precio = obtenerPrecioAtributo(precio, atrib1Selecc);
+			}
+			break;
+		case 3:
+			if(c != null) {
+				precio = obtenerPrecioMarca(precio, marcaSelecc);
+				precio = obtenerPrecioModelo(precio, modeloSelecc);	
+				precio = obtenerPrecioAtributo(precio, atrib1Selecc);
+				precio = obtenerPrecioAtributo2(precio, atrib2Selecc);
+				((DiscoDuro)c).setPrecio(precio);
+				precio = c.getPrecio();
+			}
+			else {
+				precio = 20.99f;
+				precio = obtenerPrecioMarca(precio, marcaSelecc);
+				precio = obtenerPrecioModelo(precio, modeloSelecc);	
+				precio = obtenerPrecioAtributo(precio, atrib1Selecc);
+				precio = obtenerPrecioAtributo2(precio, atrib2Selecc);
+			}
+			break;
+		case 4:
+			if(c != null) {
+				precio = obtenerPrecioMarca(precio, marcaSelecc);
+				precio = obtenerPrecioModelo(precio, modeloSelecc);	
+				precio = obtenerPrecioAtributo(precio, atrib1Selecc);
+				((Fuente)c).setPrecio(precio);
+				precio = c.getPrecio();
+			}
+			else {
+				precio = 25.99f;
+				precio = obtenerPrecioMarca(precio, marcaSelecc);
+				precio = obtenerPrecioModelo(precio, modeloSelecc);	
+				precio = obtenerPrecioAtributo(precio, atrib1Selecc);
+			}
+			break;
+		case 5:
+			if(c != null) {
+				precio = obtenerPrecioMarca(precio, marcaSelecc);
+				precio = obtenerPrecioModelo(precio, modeloSelecc);	
+				precio = obtenerPrecioAtributo(precio, atrib1Selecc);
+				precio = obtenerPrecioAtributo2(precio, atrib2Selecc);
+				((Microprocesador)c).setPrecio(precio);
+				precio = c.getPrecio();
+			}
+			else {
+				precio = 55.99f;
+				precio = obtenerPrecioMarca(precio, marcaSelecc);
+				precio = obtenerPrecioModelo(precio, modeloSelecc);	
+				precio = obtenerPrecioAtributo(precio, atrib1Selecc);
+				precio = obtenerPrecioAtributo2(precio, atrib2Selecc);
+			}
+			break;
+		case 6:
+			if(c != null) {
+				precio = obtenerPrecioMarca(precio, marcaSelecc);
+				precio = obtenerPrecioModelo(precio, modeloSelecc);	
+				precio = obtenerPrecioAtributo(precio, atrib1Selecc);
+				precio = obtenerPrecioAtributo2(precio, atrib2Selecc);
+				((MemoriaRam)c).setPrecio(precio);
+				precio = c.getPrecio();
+			}
+			else {
+				precio = 25.99f;
+				precio = obtenerPrecioMarca(precio, marcaSelecc);
+				precio = obtenerPrecioModelo(precio, modeloSelecc);	
+				precio = obtenerPrecioAtributo(precio, atrib1Selecc);
+				precio = obtenerPrecioAtributo2(precio, atrib2Selecc);
+			}
+			break;
+		case 7:
+			if(c != null) {
+				precio = obtenerPrecioMarca(precio, marcaSelecc);
+				precio = obtenerPrecioModelo(precio, modeloSelecc);	
+				precio = obtenerPrecioAtributo(precio, atrib1Selecc);
+				((Monitor)c).setPrecio(precio);
+				precio = c.getPrecio();
+			}
+			else {
+				precio = 20.99f;
+				precio = obtenerPrecioMarca(precio, marcaSelecc);
+				precio = obtenerPrecioModelo(precio, modeloSelecc);	
+				precio = obtenerPrecioAtributo(precio, atrib1Selecc);
+			}
+			break;
+		case 8:
+			if(c != null) {
+				precio = obtenerPrecioMarca(precio, marcaSelecc);
+				precio = obtenerPrecioModelo(precio, modeloSelecc);	
+				precio = obtenerPrecioAtributo(precio, atrib1Selecc);
+				((Mouse)c).setPrecio(precio);
+				precio = c.getPrecio();
+			}
+			else {
+				precio = 10.99f;
+				precio = obtenerPrecioMarca(precio, marcaSelecc);
+				precio = obtenerPrecioModelo(precio, modeloSelecc);	
+				precio = obtenerPrecioAtributo(precio, atrib1Selecc);
+			}
+			break;
+		case 9:
+			if(c != null) {
+				precio = obtenerPrecioMarca(precio, marcaSelecc);
+				precio = obtenerPrecioModelo(precio, modeloSelecc);	
+				precio = obtenerPrecioAtributo(precio, atrib1Selecc);
+				((TarjetaMadre)c).setPrecio(precio);
+				precio = c.getPrecio();
+			}
+			else {
+				precio = 55.99f;
+				precio = obtenerPrecioMarca(precio, marcaSelecc);
+				precio = obtenerPrecioModelo(precio, modeloSelecc);	
+				precio = obtenerPrecioAtributo(precio, atrib1Selecc);
+			}
+			break;
+		case 10:
+			if(c != null) {
+				precio = obtenerPrecioMarca(precio, marcaSelecc);
+				precio = obtenerPrecioModelo(precio, modeloSelecc);	
+				precio = obtenerPrecioAtributo(precio, atrib1Selecc);
+				((TarjetaDeVideo)c).setPrecio(precio);
+				precio = c.getPrecio();
+			}
+			else {
+				precio = 115.99f;
+				precio = obtenerPrecioMarca(precio, marcaSelecc);
+				precio = obtenerPrecioModelo(precio, modeloSelecc);	
+				precio = obtenerPrecioAtributo(precio, atrib1Selecc);
+			}
+			break;
+		case 11:
+			if(c != null) {
+				precio = obtenerPrecioMarca(precio, marcaSelecc);
+				precio = obtenerPrecioModelo(precio, modeloSelecc);	
+				if(atrib1Selecc == 1) {
+					precio += 15;
+				}
+				((Teclado)c).setPrecio(precio);
+				precio = c.getPrecio();
+			} 
+			else {
+				precio = 15.99f;
+				precio = obtenerPrecioMarca(precio, marcaSelecc);
+				precio = obtenerPrecioModelo(precio, modeloSelecc);	
+				if(atrib1Selecc == 1) {
+					precio += 15;
+				}
+			}
+			break;
+		}		
+		return precio;
+	}
+
+	private float obtenerPrecioMarca(float precio, int marcaSelecc) {
+		switch(marcaSelecc) {
+		case 0:
+			precio += 4;
+			break;
+		case 1:
+			precio += 8;
+			break;
+		case 2: 
+			precio += 12;
+			break;
+		case 3:
+			precio += 16;
+			break;
+		case 4:
+			precio += 20;
+			break;
+		}
+		return precio;
+	}
+
+	private float obtenerPrecioModelo(float precio, int modeloSelecc) {
+		switch(modeloSelecc) {
+		case 0:
+			precio += 3;
+			break;
+		case 1:
+			precio += 6;
+			break;
+		case 2: 
+			precio += 9;
+			break;
+		case 3:
+			precio += 12;
+			break;
+		case 4:
+			precio += 15;
+			break;
+		}
+		return precio;
+	}
+
+	private float obtenerPrecioAtributo(float precio, int atribSelecc) {
+		switch(atribSelecc) {
+		case 0:
+			precio += 10;
+			break;
+		case 1:
+			precio += 15;
+			break;
+		case 2: 
+			precio += 20;
+			break;
+		case 3:
+			precio += 25;
+			break;
+		case 4:
+			precio += 30;
+			break;
+		case 5:
+			precio += 35;
+			break;
+		case 6:
+			precio += 40;
+			break;
+		case 7:
+			precio += 45;
+			break;
+		}
+		return precio;
+	}
+
+	private float obtenerPrecioAtributo2(float precio, int atribSelecc) {
+		switch(atribSelecc) {
+		case 0:
+			precio += 2;
+			break;
+		case 1:
+			precio += 4;
+			break;
+		case 2: 
+			precio += 6;
+			break;
+		case 3:
+			precio += 8;
+			break;
+		case 4:
+			precio += 10;
+			break;
+		case 5:
+			precio += 12;
+			break;
+		case 6: 
+			precio += 14;
+			break;
+		case 7:
+			precio += 16;
+			break;
+		}
+		return precio;
+	}
+
+	public ArrayList<ComponenteOrdenador> PiezasMasCaras(){
+		ArrayList<ComponenteOrdenador>PiezasMasCaras = new ArrayList<>();
+		float mayor = Float.MIN_VALUE;
+		for(ComponenteOrdenador p : componentes) {
+			if(p.getPrecio()> mayor) {
+				mayor = p.getPrecio();
+				PiezasMasCaras.clear();
+				PiezasMasCaras.add(p);
+			}
+
+			else if(p.getPrecio()== mayor) {
+				PiezasMasCaras.add(p);
+
+			}
+		}
+		return PiezasMasCaras;
+	}
+
+
+	//Reporte 2
+
+	public float DineroToTalRecaudado() {
+		return calcularTotalFactura();
+	}
+
+
+	//Reporte 3
+
+	public float DineroPorPiezaDada(String Name) {
+		float total = 0;  
+
+		for(ComponenteOrdenador c : componentes ) {
+			if(c.getClass().getSimpleName() == Name){
+				total += c.getPrecio();
+			}
+		}
+		return total;
+	}
+
+
+	//Reporte 4
+	public float salarioTotalTrabajadores(){
+		float SalarioTotal = 0;
+		for(Trabajador t: trabajadores)
+			SalarioTotal+= t.getSalarioBasico();
+
+		return SalarioTotal;
+	}
+
+
+	//Reporte 5
+
+
+
+
+	//Reporte 6
+
+	public int cantidadPiezasTotal(){
+		int CantidadPiezas = 0;
+		for(ComponenteOrdenador c: componentes )
+			CantidadPiezas+= c.getCantDisponible();
+
+		return CantidadPiezas;
 	}
 }

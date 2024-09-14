@@ -6,6 +6,10 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,9 +25,12 @@ import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import logica.Adaptador;
@@ -41,14 +48,6 @@ import logica.TarjetaDeVideo;
 import logica.TarjetaMadre;
 import logica.Teclado;
 import logica.TiendaDeComputadoras;
-import javax.swing.border.TitledBorder;
-import javax.swing.border.LineBorder;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
-import java.time.LocalDate;
-
-import javax.swing.SwingConstants;
 
 
 
@@ -73,7 +72,6 @@ public class VenderPieza extends JDialog {
 	private JTextField modelotext;
 	private JTextField notext;
 	private JTextField preciotext;
-	private int cont = 0;
 	private JTextField cantidadtxt;
 	private JTable table;
 	private DefaultTableModel tableModel;
@@ -101,6 +99,7 @@ public class VenderPieza extends JDialog {
 	private ArrayList <Boolean> ensamblado;
 	private JLabel Atributo1;
 	private JLabel Atributo2;
+	private JButton btnBuscar;
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 
 	public VenderPieza(Principal principal, TiendaDeComputadoras tienda, String nombreDeComponente) {
@@ -116,7 +115,7 @@ public class VenderPieza extends JDialog {
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		contentPanel.setLayout(null);
+		contentPanel.setLayout(null); 
 
 		{
 			extraida  =new ArrayList<Integer>();
@@ -297,16 +296,16 @@ public class VenderPieza extends JDialog {
 			comboBoxAtributo1 = new JComboBox();
 			comboBoxAtributo1.setBounds(177, 130, 276, 20);
 
-			JButton btnNewButton = new JButton("Buscar");
-			btnNewButton.setContentAreaFilled(false);
-			btnNewButton.setBorder(UIManager.getBorder("Button.border"));
-			btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 15));
-			btnNewButton.setBackground(Color.WHITE);
-			btnNewButton.setIcon(new ImageIcon(VenderPieza.class.getResource("/gui/icons/lupa.png")));
-			btnNewButton.addActionListener(new ActionListener() {
+			btnBuscar = new JButton("Buscar");
+			btnBuscar.setContentAreaFilled(false);
+			btnBuscar.setBorder(UIManager.getBorder("Button.border"));
+			btnBuscar.setFont(new Font("Tahoma", Font.BOLD, 15));
+			btnBuscar.setBackground(Color.WHITE);
+			btnBuscar.setIcon(new ImageIcon(VenderPieza.class.getResource("/gui/icons/lupa.png")));
+			btnBuscar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					String desicion = (String) comboBoxComponenetes.getSelectedItem();
-					switch (desicion) {
+					String decision = (String) comboBoxComponenetes.getSelectedItem();
+					switch (decision) {
 					case "Teclado":
 						actualizarModeloTeclado((String) comboBoxMarca.getSelectedItem(), (String) comboBoxAtributo1.getSelectedItem());
 						break;
@@ -333,6 +332,7 @@ public class VenderPieza extends JDialog {
 						break;
 					case "Memoria RAM":
 						actualizarModeloMemoriaRAM((String) comboBoxMarca.getSelectedItem(), (String) comboBoxAtributo2.getSelectedItem(), (String) comboBoxAtributo1.getSelectedItem());
+						break;
 					case "Chasis":
 						actualizarModeloChasis((String) comboBoxMarca.getSelectedItem(), (String) comboBoxAtributo1.getSelectedItem());
 						break;		
@@ -350,8 +350,8 @@ public class VenderPieza extends JDialog {
 
 
 
-			btnNewButton.setBounds(12, 431, 124, 20);
-			FiltradodeProducto.add(btnNewButton);
+			btnBuscar.setBounds(12, 431, 124, 20);
+			FiltradodeProducto.add(btnBuscar);
 			ensamblar = new JButton("Ensamblar");
 			ensamblar.setVisible(false);
 			ensamblar.addActionListener(new ActionListener() {
@@ -417,6 +417,7 @@ public class VenderPieza extends JDialog {
 			tableModel.addColumn("Precio");
 
 			table = new JTable(tableModel);
+			table.setGridColor(new Color(135, 206, 235));
 			JScrollPane scrollPane = new JScrollPane(table);
 			scrollPane.setBorder(new MatteBorder(0, 0, 0, 0, (Color) new Color(0, 0, 0)));
 			ProductosAgregados.add(scrollPane, BorderLayout.CENTER);
@@ -448,8 +449,11 @@ public class VenderPieza extends JDialog {
 							ComponenteOrdenador c = tiendaC.buscarComponente((String)table.getValueAt(pos, 0));
 							tiendaC.actualizarCantidadComponenteAgregar(c, cantidad);
 							((DefaultTableModel) table.getModel()).removeRow(pos);
+							btnBuscar.doClick();
 							actualizarTotal();
-
+							if(componentes.isEmpty()) {
+								btnCarrito.setIcon(new ImageIcon(VenderPieza.class.getResource("/gui/icons/carritovaciom.jpg")));
+							}
 						} else {
 							JOptionPane.showMessageDialog(VenderPieza.this, "Antes de eliminar debe de seleccionar producto de la tabla");
 						}
@@ -628,7 +632,11 @@ public class VenderPieza extends JDialog {
 				JButton cancelButton = new JButton("Atr\u00E1s");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						dispose();
+						int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea salir? Los cambios realizados no serán guardados", "", 0, 3);
+						if(i==0) {
+							dispose();
+							componentes.clear();
+						}
 					}
 				});
 				cancelButton.setActionCommand("Cancel");
@@ -654,7 +662,6 @@ public class VenderPieza extends JDialog {
 
 	}
 
-
 	private boolean actualizarLista() {
 		boolean act = false;
 		obtenerObjeto();
@@ -666,10 +673,6 @@ public class VenderPieza extends JDialog {
 			f.setEnsamblado(ensamblado);
 			f.setPrecioEnsamblado(0);
 			tiendaC.agregarFactura(f);
-			boolean hecho = tiendaC.eliminarCantPiezas(f);
-			if(hecho == false) {
-				JOptionPane.showMessageDialog(VenderPieza.this, "Eliminación de componenetes errónea");
-			}
 			act = true;
 		} else {
 			JOptionPane.showMessageDialog(VenderPieza.this, "No se ha realizado ningún cambio o las listas no tienen el mismo tamaño.");
@@ -740,6 +743,7 @@ public class VenderPieza extends JDialog {
 			ArrayList<String> Decision = new ArrayList<>();
 			Decision.add("Sí");
 			Decision.add("No");
+			ensamblar.setVisible(false);
 			switch (nombreC) {
 			case "Teclado":
 				Atributo1.setVisible(true);
@@ -1177,6 +1181,24 @@ public class VenderPieza extends JDialog {
 	private void actualizarComponente(String modelo, String componente) {
 		String nombreC = componente;
 		switch (nombreC) {
+		case "Memoria RAM":
+			try {
+				MemoriaRam memoriaR = tiendaC.encontMemoriaRAM("MemoriaRam", (String) comboBoxMarca.getSelectedItem(), (String) comboBoxAtributo2.getSelectedItem(), (String) comboBoxAtributo1.getSelectedItem(), modelo);
+				if (memoriaR != null) {
+					System.out.print("a");
+					nombretext.setText("Memoria RAM");
+					MarcaEncontText.setText(memoriaR.getMarca());
+					modelotext.setText(memoriaR.getModelo());
+					notext.setText(memoriaR.getNumSerie());
+					preciotext.setText(String.valueOf(memoriaR.getPrecio()));
+					cantidadtxt.setText(String.valueOf(memoriaR.getCantDisponible()));
+				} else {
+					limpiarDatos();
+				}
+			}
+			catch(Exception e) {
+			}
+			break;
 		case "Teclado":
 			try {	
 				Teclado t = tiendaC.encontTeclado("Teclado", (String) comboBoxMarca.getSelectedItem(), (String) comboBoxAtributo1.getSelectedItem(), modelo);
@@ -1191,7 +1213,6 @@ public class VenderPieza extends JDialog {
 					limpiarDatos(); 
 				}
 			} catch (Exception e) {
-				JOptionPane.showMessageDialog(VenderPieza.this, "Error al actualizar el componente: " + e.getMessage());
 			}
 			break;
 		case "Adaptador":
@@ -1208,7 +1229,6 @@ public class VenderPieza extends JDialog {
 					limpiarDatos();
 				}
 			} catch (Exception e) {
-				JOptionPane.showMessageDialog(VenderPieza.this, "Error al actualizar el componente: " + e.getMessage());
 			}
 			break;
 		case "Bocina":
@@ -1225,7 +1245,6 @@ public class VenderPieza extends JDialog {
 					limpiarDatos();
 				}
 			} catch (Exception e) {
-				JOptionPane.showMessageDialog(VenderPieza.this, "Error al actualizar el componente: " + e.getMessage());
 			}
 			break;
 		case "Chasis":
@@ -1242,7 +1261,6 @@ public class VenderPieza extends JDialog {
 					limpiarDatos();
 				}
 			} catch (Exception e) {
-				JOptionPane.showMessageDialog(VenderPieza.this, "Error al actualizar el componente: " + e.getMessage());
 			}
 			break;
 		case "Monitor":
@@ -1259,7 +1277,6 @@ public class VenderPieza extends JDialog {
 					limpiarDatos();
 				}
 			} catch (Exception e) {
-				JOptionPane.showMessageDialog(VenderPieza.this, "Error al actualizar el componente: " + e.getMessage());
 			}
 			break;
 		case "Tarjeta de Video":
@@ -1276,7 +1293,6 @@ public class VenderPieza extends JDialog {
 					limpiarDatos();
 				}
 			} catch (Exception e) {
-				JOptionPane.showMessageDialog(VenderPieza.this, "Error al actualizar el componente: " + e.getMessage());
 			}
 			break;
 		case "Ratón":
@@ -1293,7 +1309,6 @@ public class VenderPieza extends JDialog {
 					limpiarDatos();
 				}
 			} catch (Exception e) {
-				JOptionPane.showMessageDialog(VenderPieza.this, "Error al actualizar el componente: " + e.getMessage());
 			}
 			break;
 		case "Fuente":
@@ -1310,7 +1325,6 @@ public class VenderPieza extends JDialog {
 					limpiarDatos();
 				}
 			} catch (Exception e) {
-				JOptionPane.showMessageDialog(VenderPieza.this, "Error al actualizar el componente: " + e.getMessage());
 			}
 			break;
 		case "Microprocesador":
@@ -1327,7 +1341,6 @@ public class VenderPieza extends JDialog {
 					limpiarDatos();
 				}
 			} catch (Exception e) {
-				JOptionPane.showMessageDialog(VenderPieza.this, "Error al actualizar el componente: " + e.getMessage());
 			}
 			break;
 		case "Tarjeta Madre":
@@ -1347,7 +1360,6 @@ public class VenderPieza extends JDialog {
 				}
 			}
 			catch(Exception e) {
-				JOptionPane.showMessageDialog(VenderPieza.this, "Error al actualizar el componente: " + e.getMessage());
 			}
 			break;
 		case "Disco Duro":
@@ -1364,23 +1376,6 @@ public class VenderPieza extends JDialog {
 					limpiarDatos();
 				}
 			} catch (Exception e) {
-			}
-			break;
-		case "Memoria RAM":
-			try {
-				MemoriaRam m = tiendaC.encontMemoriaRAM("MemoriaRam", (String) comboBoxMarca.getSelectedItem(), (String) comboBoxAtributo2.getSelectedItem(), (String) comboBoxAtributo1.getSelectedItem(), modelo);
-				if (m != null) {
-					nombretext.setText("Memoria RAM");
-					MarcaEncontText.setText(m.getMarca());
-					modelotext.setText(m.getModelo());
-					notext.setText(m.getNumSerie());
-					preciotext.setText(String.valueOf(m.getPrecio()));
-					cantidadtxt.setText(String.valueOf(m.getCantDisponible()));
-				} else {
-					limpiarDatos();
-				}
-			}
-			catch(Exception e) {
 			}
 			break;
 		default:

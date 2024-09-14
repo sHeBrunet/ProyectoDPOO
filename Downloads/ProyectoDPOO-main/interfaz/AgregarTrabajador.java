@@ -264,12 +264,14 @@ public class AgregarTrabajador extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				boolean datoIncorrecto = false;
 				boolean ciIncorrecto = false;
+				boolean txtVacio = false;
 				String nombre = nombreT.getText();
 				String apellidos = apellidosT.getText();
 				String ci = ciT.getText(); 
 				String salarioB = salarioT.getText();
 				String cargo = (String) cargoT.getSelectedItem();
 				String nivelE = (String) NivelE.getSelectedItem();
+				String ID = tienda.generadorDeIDTrabajador(nombre, apellidos, ci);
 
 				if (numTrabajador.getText().trim().isEmpty()) {
 					JOptionPane.showMessageDialog(AgregarTrabajador.this, "El número de trabajador no puede estar vacío.");
@@ -282,14 +284,22 @@ public class AgregarTrabajador extends JDialog {
 						datoIncorrecto = true;
 					}
 				}
-				if (nombre.trim().isEmpty() || !nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$")) {
+				if (nombre.trim().isEmpty()) {
+					lblnombreT.setForeground(Color.RED);
+					txtVacio = true;
+				}
+				else if(!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$")) {
 					lblnombreT.setForeground(Color.RED);
 					datoIncorrecto = true;
 				} else {
 					lblnombreT.setForeground(Color.BLACK);
 				}
 
-				if (apellidos.isEmpty() || !apellidos.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$")) {
+				if (apellidos.trim().isEmpty()) {
+					lblApellidosT.setForeground(Color.RED);
+					txtVacio = true;
+				}
+				else if(!apellidos.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$")) {
 					lblApellidosT.setForeground(Color.RED);
 					datoIncorrecto = true;
 				} else {
@@ -309,8 +319,10 @@ public class AgregarTrabajador extends JDialog {
 				} else {
 					lblSalarioT.setForeground(Color.BLACK);
 				}
-				if (datoIncorrecto) {
+				if (txtVacio) {
 					JOptionPane.showMessageDialog(AgregarTrabajador.this, "No pueden estar vacíos los campos marcados en rojo.");
+				} else if (datoIncorrecto){
+					JOptionPane.showMessageDialog(AgregarTrabajador.this, "Los campos marcados en rojo tienen datos erróneos");
 				} else if(!ciIncorrecto){
 					try {
 						if (ci.length() == 11) {
@@ -353,9 +365,9 @@ public class AgregarTrabajador extends JDialog {
 							if(salario > 0 ) {
 								Trabajador trabajador;
 								if (cargo.equals("Gerente")) {
-									trabajador = new Gerente(Integer.toString(noTrabajador), nombre, apellidos, ci, salario, nivelE, cargo, fechaHoy);
+									trabajador = new Gerente(ID, nombre, apellidos, ci, salario, nivelE, cargo, fechaHoy);
 								} else {
-									trabajador = new Trabajador(Integer.toString(noTrabajador), nombre, apellidos, ci, salario, nivelE, cargo);
+									trabajador = new Trabajador(ID, nombre, apellidos, ci, salario, nivelE, cargo);
 								}
 								trab = trabajador;
 								trabaj.add(trab);
@@ -408,6 +420,8 @@ public class AgregarTrabajador extends JDialog {
 		tableModel.addColumn("Fecha de Ingreso");
 
 		table = new JTable(tableModel);
+		table.setGridColor(new Color(135, 206, 235));
+		table.setFocusable(false);
 		table.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(java.awt.event.KeyEvent evt) {
