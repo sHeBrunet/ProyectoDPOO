@@ -71,9 +71,11 @@ public class Factura {
 
 	public float calcularMontoXPieza(ComponenteOrdenador c) {
 		float dinero = 0;
-		for(int i = 0; i < com.size(); i++) {
+		boolean parada = false;
+		for(int i = 0; i < com.size() && !parada; i++) {
 			if(com.get(i).equals(c)) {
 				dinero = cantidadXPieza.get(i) * com.get(i).getPrecio();
+				parada = true;
 				System.out.println("Componente: " + c + ", Cantidad: " + cantidadXPieza.get(i) + ", Precio: " + com.get(i).getPrecio() + ", Monto: " + dinero);
 			}
 		}

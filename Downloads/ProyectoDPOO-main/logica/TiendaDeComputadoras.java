@@ -368,24 +368,17 @@ public class TiendaDeComputadoras {
 		return ID;
 	}
 
-	public float calcularMontoTotalfacturas() {
-		float total = 0;
-		for(int i = 0; i < facturas.size(); i++) {
-			for(int j = 0; j < facturas.get(i).getCom().size(); j++) {
-				total += facturas.get(i).calcularMontoXPieza(facturas.get(i).getCom().get(j));
-			}
-		}
-		return total;
-	}
 	public float calcularTotalFactura() {
 		float total = 0;
 		if (facturas != null) {
 			for (Factura f : facturas) {
 				if (f != null) {
-					float monto = calcularMontoTotalfacturas();
+					for(int j = 0; j < f.getCom().size(); j++) {
+					float monto = f.calcularMontoXPieza(f.getCom().get(j));
 					System.out.println("Monto de la factura: " + monto);
 					total += monto;
-				} else {
+					}
+					}else {
 					System.err.println("Error: Factura nula encontrada en la lista de facturas.");
 				}
 			}
